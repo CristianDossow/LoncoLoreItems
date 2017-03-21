@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/worldguard-6.1.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/Citizens.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/Vault.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/BossShop 2.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/itemlore/Heroes.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/itemlore/SkillAPI.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/itemlore/ArmorWeight.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/itemlore/BarAPI.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/worldedit-bukkit-6.1.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/MVdWPlaceholderAPI.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/ActionBarAPI-1.5.2.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/PaperSpigot 1.11.2.jar"/>
+	<classpathentry kind="lib" path="F:/Workspace/JARs/MineCraft Jars/itemlore/BossBarAPI_v2.4.1.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
