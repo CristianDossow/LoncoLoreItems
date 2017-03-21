@@ -726,9 +726,7 @@ import org.bukkit.Bukkit;
 public ItemStack repairbyamount(Player player, int amount, ItemStack item)
 {
 
-     if ( 
-       (item != null) && (ItemLoreStats.plugin.isTool(item.getType())) && 
-       (item.getItemMeta().hasLore())) {
+     if (true){
        setDurabilityStrings();
 
 

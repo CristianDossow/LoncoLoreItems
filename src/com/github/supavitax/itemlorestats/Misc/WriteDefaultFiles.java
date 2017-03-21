@@ -2297,7 +2297,7 @@
        this.PlayerDataConfig = new YamlConfiguration();
        this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "language-en.yml");
        
-       this.PlayerDataConfig.set("FileVersion", Integer.valueOf(Integer.parseInt(String.valueOf(formatVersion(Double.parseDouble(ItemLoreStats.plugin.getDescription().getVersion())).replace(".", "")))));
+       //this.PlayerDataConfig.set("FileVersion", Integer.valueOf(Integer.parseInt(String.valueOf(formatVersion(Double.parseDouble(ItemLoreStats.plugin.getDescription().getVersion())).replace(".", "")))));
        
        this.PlayerDataConfig.set("ErrorMessages", null);
        this.PlayerDataConfig.set("ErrorMessages.PermissionDeniedError", "&cYou do not have permission to perform that command.");

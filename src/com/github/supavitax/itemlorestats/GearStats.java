@@ -358,7 +358,7 @@ import org.bukkit.Material;
      	             for (String line : itemLore) {
      	 	            String lore = ChatColor.stripColor(line.toString());
      	 	           lore = lore.toLowerCase();
-     	 	           if (lore.replaceAll("[^A-Za-zñÑáéíóúÁÉÍÓÚ_]", "").matches(damage.toLowerCase())) {
+     	 	           if (lore.replaceAll(languageRegex, "").matches(damage.toLowerCase())) {
      	 	              
      					if (lore.contains("-")) {
      	 	                damageMinValue += Double.parseDouble(lore.split("-")[0].replaceAll("[^0-9.+-]", ""))*multiplier;

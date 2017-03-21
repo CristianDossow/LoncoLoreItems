@@ -109,8 +109,8 @@ import com.LoncoCraft.LoncoLoreItems.EspecialAtributes;
      entity.setMetadata(key, new org.bukkit.metadata.FixedMetadataValue(plugin, value));
    }
    
-   //@EventHandler(ignoreCancelled=true)
-             @EventHandler(priority = EventPriority.LOW)
+
+   @EventHandler(priority = EventPriority.LOWEST)
    public void onEntityDamage(EntityDamageByEntityEvent event) {
      if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getDamager().getWorld().getName())) {
        if (!(event.getEntity() instanceof LivingEntity)) { return;
