@@ -1,0 +1,20 @@
+main: com.github.supavitax.itemlorestats.ItemLoreStats
+name: ItemLoreStats
+version: 1
+author: LoncoCraft
+website: noweb
+description: 
+softdepend: [WorldGuard, Vault, Heroes, BarAPI, BossBarAPI, SkillAPI, Citizens, ArmorWeight,MVdWPlaceholderAPI]
+commands:
+  ils:
+    description: The core ILS command.
+permissions:
+  ils.admin: 
+    description: Player/group is granted admin privilege.
+    default: op
+  ils.repair:
+    description: Allows players to use the /ils repair command.
+    default: op
+  ils.commandlist:
+    description: Allows players to use the /ils command to view the available ils commands.
+    default: op
