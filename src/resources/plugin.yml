@@ -4,7 +4,7 @@ version: 1
 author: LoncoCraft
 website: noweb
 description: 
-softdepend: [WorldGuard, Vault, Heroes, BarAPI, BossBarAPI, SkillAPI, Citizens, ArmorWeight,MVdWPlaceholderAPI]
+softdepend: [WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI, TitleManager]
 commands:
   ils:
     description: The core ILS command.
