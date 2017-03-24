@@ -45,6 +45,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import net.citizensnpcs.Citizens;
 import net.nifheim.yitan.itemlorestats.Util.Util_ArmourWeight;
 
 import org.bukkit.Bukkit;
@@ -298,7 +299,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         ItemStack item = null;
         if (entity != null) {
             if (entity.getEquipment() != null) {
-                if (entity.getEquipment().getItemInHand().getItemInOffHand() != null) {
+                if (entity.getEquipment().getItemInOffHand() != null) {
                     item = entity.getEquipment().getItemInOffHand();
                 }
             }
@@ -966,7 +967,6 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                         try {
                             ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
-                            ItemLoreStats.this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
 
                             ItemLoreStats.this.updateHealth(playerFinal);
 
@@ -1446,7 +1446,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     entity.setMetadata("naturalSpawn", new FixedMetadataValue(ItemLoreStats.plugin, Boolean.valueOf(true)));
                 }
 
-                if ((ItemLoreStats.this.util_WorldGuard != null) && (ItemLoreStats.this.util_WorldGuard.entityInLevelRegion(entity))) {
+                /*if ((ItemLoreStats.this.util_WorldGuard != null) /*&& (ItemLoreStats.this.util_WorldGuard.entityInLevelRegion(entity))) {
                     String regionName = ItemLoreStats.this.util_WorldGuard.getRegionNameFromLocation(entityLoc);
 
                     int minLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[0]);
@@ -1461,7 +1461,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
 
                     entity.setMaxHealth(Double.valueOf(newHealth).intValue());
                     entity.setHealth(Double.valueOf(newHealth).intValue());
-                } else if (ItemLoreStats.this.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
+                } else*/ if (ItemLoreStats.this.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
                     String worldName = entity.getWorld().getName();
 
                     Location loc = new Location(entity.getWorld(), ItemLoreStats.this.getConfig().getInt("npcModifier." + worldName + ".location.x"), ItemLoreStats.this.getConfig().getInt("npcModifier." + worldName + ".location.y"), ItemLoreStats.this.getConfig().getInt("npcModifier." + worldName + ".location.z"));

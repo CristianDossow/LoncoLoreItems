@@ -1,10 +1,6 @@
 package net.nifheim.yitan.itemlorestats.Damage;
 
 import java.util.Iterator;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,8 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import net.nifheim.yitan.loncolorestats.DamageFix;
-import net.nifheim.yitan.loncolorestats.EspecialAtributes;
+import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
 
 import net.nifheim.yitan.itemlorestats.Classes;
 import net.nifheim.yitan.itemlorestats.GearStats;
@@ -113,8 +108,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
             if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
-            if ((ItemLoreStats.plugin.util_WorldGuard != null)
-                    && ((event.getEntity() instanceof Player)) && (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))) {
+            if ((ItemLoreStats.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) /*&& (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))*/) {
                 event.setCancelled(true);
                 return;
             }
@@ -229,8 +223,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         getAttacker = (Player) shooter;
                     }
                 } else if ((event.getDamager() instanceof Player)) {
-                    if (((event.getEntity() instanceof Player))
-                            && (ItemLoreStats.plugin.getWorldGuard() != null) && ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) event.getEntity())) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity())))) {
+                    if (((event.getEntity() instanceof Player)) && (ItemLoreStats.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) event.getEntity())) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity())))*/) {
                         return;
                     }
 
@@ -274,7 +267,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
             if (((getAttacker instanceof Player))
                     && ((getDefender instanceof Player))) {
-                if ((ItemLoreStats.plugin.getWorldGuard() != null) && ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) getDefender)) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) getDefender)))) {
+                if ((ItemLoreStats.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) getDefender)) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) getDefender)))*/) {
                     return;
                 }
 
