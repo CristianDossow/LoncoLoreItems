@@ -1,8 +1,8 @@
 package net.nifheim.yitan.itemlorestats;
 
-import net.nifheim.yitan.loncolorestats.DamageFix;
-import net.nifheim.yitan.loncolorestats.EventListener;
-import net.nifheim.yitan.loncolorestats.MVdWPlaceholderAPIHook;
+import net.nifheim.yitan.loncoloreitems.DamageFix;
+import net.nifheim.yitan.loncoloreitems.EventListener;
+import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
 
 import net.nifheim.yitan.itemlorestats.Commands.CreateLore_Com;
 import net.nifheim.yitan.itemlorestats.Commands.CustomMaterial_Com;
@@ -38,12 +38,14 @@ import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
 import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.zettelnet.armorweight.ArmorWeightPlugin;
 import net.milkbowl.vault.Vault;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import net.nifheim.yitan.itemlorestats.Util.Util_ArmourWeight;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -120,6 +122,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
     Util_Format util_Format = new Util_Format();
     Util_GetResponse util_GetResponse = new Util_GetResponse();
     Util_Random util_Random = new Util_Random();
+    Util_ArmourWeight util_ArmourWeight = new Util_ArmourWeight(plugin);
 
     SpigotStatCapWarning spigotStatCapWarning = new SpigotStatCapWarning();
 

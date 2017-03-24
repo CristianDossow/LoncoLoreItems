@@ -20,10 +20,6 @@
             <url>http://maven.sk89q.com/repo</url>
         </repository>
         <repository>
-            <id>zettelkasten-repo</id>
-            <url>https://bitbucket.org/Zettelkasten/mvn-repo/raw/default/releases</url>
-        </repository>
-        <repository>
             <id>puha-repo</id>
             <url>http://repo.puha.io/nexus/content/repositories/releases/</url>
         </repository>
@@ -52,6 +48,8 @@
             <groupId>com.zettelnet</groupId>
             <artifactId>armorweight</artifactId>
             <version>0.3.6</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/ArmorWeight.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.puharesource.mc</groupId>
