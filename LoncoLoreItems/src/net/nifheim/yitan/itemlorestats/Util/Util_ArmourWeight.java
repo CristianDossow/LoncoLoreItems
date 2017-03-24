@@ -19,7 +19,6 @@
      float speed = 0.0F;
      double weight = 0.0D;
      
-     
      WeightManager weightManager = ItemLoreStats.plugin.getArmourWeight().getWeightManager();
      weight = weightManager.calculateWeight(player);
      

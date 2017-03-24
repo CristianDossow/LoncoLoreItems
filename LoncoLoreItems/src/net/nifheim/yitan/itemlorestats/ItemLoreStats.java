@@ -12,16 +12,21 @@ import net.nifheim.yitan.itemlorestats.Commands.Lore_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Name_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Repair_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Version_Com;
+
 import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
 import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
 import net.nifheim.yitan.itemlorestats.Damage.PotionListener;
+
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
+
 import net.nifheim.yitan.itemlorestats.Interact.InteractEvents;
+
 import net.nifheim.yitan.itemlorestats.ItemUpgrading.ItemUpgrade;
 import net.nifheim.yitan.itemlorestats.ItemUpgrading.PlayerLevelEvents;
-import net.nifheim.yitan.itemlorestats.Misc.MetricsLite;
+
 import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
 import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
+
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
 import net.nifheim.yitan.itemlorestats.Util.Util_Citizens;
 import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -31,15 +36,15 @@ import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import net.nifheim.yitan.itemlorestats.Util.Util_Random;
 import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
 import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
+
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import net.milkbowl.vault.Vault;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
-import net.milkbowl.vault.Vault;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -47,6 +52,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
@@ -81,9 +87,9 @@ import org.bukkit.potion.PotionEffectType;
 public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
 
     public static ItemLoreStats plugin;
-    private static final Logger log = Logger.getLogger("Minecraft");
 
-    private File PlayerDataFile;
+    private FileConfiguration config;
+    private ConsoleCommandSender console;
 
     private FileConfiguration PlayerDataConfig;
 
@@ -125,6 +131,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
     Version_Com version_Com = new Version_Com();
+    String rep;
 
     private int setMinecraftBuildNumber(String buildNum) {
         String version = buildNum;
@@ -154,6 +161,9 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         Locale.setDefault(Locale.ROOT);
 
         PluginManager plma = getServer().getPluginManager();
+        /*
+        Events
+         */
         plma.registerEvents(new ItemLoreStatsListener(), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Crafting.AddedStats(), this);
         plma.registerEvents(new DamageSystem(this), this);
@@ -162,28 +172,25 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new EntityDrops(), this);
         plma.registerEvents(new PotionListener(), this);
         plma.registerEvents(new InteractEvents(), this);
-
         plma.registerEvents(new PlayerLevelEvents(), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Repair.RepairEvents(), this);
 
         plugin = this;
 
-        this.writeDefaultFiles.checkExistence();
-        try {
-            MetricsLite metrics = new MetricsLite(this);
-            metrics.start();
-        } catch (IOException localIOException) {
-        }
+        writeDefaultFiles.checkExistence();
 
         getConfig().options().copyDefaults(true);
         setMinecraftBuildNumber(Bukkit.getBukkitVersion());
-        getConfig().set("fileVersion", Integer.valueOf(Integer.parseInt(getDescription().getVersion().replace(".", ""))));
+        getConfig().set("fileVersion", Integer.parseInt(getDescription().getVersion().replace(".", "")));
         saveConfig();
 
         eventlistener = new EventListener(this);
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
-        MVdWPlaceholderAPIHook.hook(this);
+        if (getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
+            MVdWPlaceholderAPIHook.hook(this);
+            console.sendMessage(rep("&8[&cItemLoreStats&8] &7MVdWPlaceholderAPI found, hooking in this."));
+        }
 
         this.spigotStatCapWarning.updateSpigotValues();
 
@@ -191,7 +198,9 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
 
     @Override
     public void onDisable() {
-        log.info(String.format("[%s] Disabled Version %s", new Object[]{getDescription().getName(), getDescription().getVersion()}));
+        console.sendMessage(String.format("[%s] Disabled Version %s", new Object[]{
+            getDescription().getName(), getDescription().getVersion()
+        }));
     }
 
     public static ItemLoreStats getPlugin() {
@@ -200,19 +209,19 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
 
     public void checkDependencies() {
         if (getWorldGuard() != null) {
-            log.info("[ItemLoreStats] Successfully found and hooked into WorldGuard.");
+            console.sendMessage("[ItemLoreStats] Successfully found and hooked into WorldGuard.");
         } else {
-            log.info("[ItemLoreStats] Unable to find WorldGuard!");
+            console.sendMessage("[ItemLoreStats] Unable to find WorldGuard!");
         }
         if (getVault() != null) {
-            log.info("[ItemLoreStats] Successfully found and hooked into Vault.");
+            console.sendMessage("[ItemLoreStats] Successfully found and hooked into Vault.");
         } else {
-            log.info("[ItemLoreStats] Unable to find Vault!");
+            console.sendMessage("[ItemLoreStats] Unable to find Vault!");
         }
         if (getCitizens() != null) {
-            log.info("[ItemLoreStats] Successfully found and hooked into Citizens.");
+            console.sendMessage("[ItemLoreStats] Successfully found and hooked into Citizens.");
         } else {
-            log.info("[ItemLoreStats] Unable to find Citizens!");
+            console.sendMessage("[ItemLoreStats] Unable to find Citizens!");
         }
     }
 
@@ -1470,5 +1479,9 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                 }
             }
         }
+    }
+
+    public String rep(String str) {
+        return str.replaceAll("&", "§");
     }
 }
