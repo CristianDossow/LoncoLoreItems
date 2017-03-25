@@ -28,6 +28,7 @@ import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
 import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
 
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
+import net.nifheim.yitan.itemlorestats.Util.Util_ArmourWeight;
 import net.nifheim.yitan.itemlorestats.Util.Util_Citizens;
 import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
 import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
@@ -37,21 +38,35 @@ import net.nifheim.yitan.itemlorestats.Util.Util_Random;
 import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
 import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
 
+import net.citizensnpcs.Citizens;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.zettelnet.armorweight.ArmorWeightPlugin;
 import net.milkbowl.vault.Vault;
 
 import java.io.File;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import net.citizensnpcs.Citizens;
-import net.nifheim.yitan.itemlorestats.Util.Util_ArmourWeight;
+
+import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
+import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.EntityRegainHealthListener;
+import net.nifheim.yitan.itemlorestats.listeners.GamemodeChangeListener;
+import net.nifheim.yitan.itemlorestats.listeners.InventoryClickListener;
+import net.nifheim.yitan.itemlorestats.listeners.InventoryDragListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerChangeWorldListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerDeathListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerDropItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerExpChangeListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerItemHeldListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerJoinListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerPickupItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerQuitListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerRespawnListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -61,27 +76,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.enchantment.EnchantItemEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
@@ -94,7 +90,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     private FileConfiguration config;
     private ConsoleCommandSender console;
 
-    private FileConfiguration PlayerDataConfig;
+    public FileConfiguration PlayerDataConfig;
 
     public Util_Citizens util_Citizens;
     public Util_Vault util_Vault;
@@ -107,21 +103,21 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public DamageFix damagefix;
     public EventListener eventlistener;
 
-    Classes classes = new Classes();
+    public Classes classes = new Classes();
     DamageSystem damageSystem = new DamageSystem(this);
-    Durability durability = new Durability();
+    public Durability durability = new Durability();
     EnvironmentalDamage environmentalDamage = new EnvironmentalDamage();
     public GearStats gearStats = new GearStats();
-    GetSlots getSlots = new GetSlots();
+    public GetSlots getSlots = new GetSlots();
     ItemUpgrade itemUpgrade = new ItemUpgrade();
     public SetBonuses setBonuses = new SetBonuses();
-    Soulbound soulbound = new Soulbound();
+    public Soulbound soulbound = new Soulbound();
     WriteDefaultFiles writeDefaultFiles = new WriteDefaultFiles();
-    XpLevel xpLevel = new XpLevel();
+    public XpLevel xpLevel = new XpLevel();
     Util_Colours util_Colours = new Util_Colours();
     Util_EntityManager util_EntityManager = new Util_EntityManager();
     Util_Format util_Format = new Util_Format();
-    Util_GetResponse util_GetResponse = new Util_GetResponse();
+    public Util_GetResponse util_GetResponse = new Util_GetResponse();
     Util_Random util_Random = new Util_Random();
     Util_ArmourWeight util_ArmourWeight = new Util_ArmourWeight(plugin);
 
@@ -141,7 +137,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         String version = buildNum;
 
         version = version.split("-")[0].replace(".", "");
-        getConfig().set("serverVersion", Integer.valueOf(Integer.parseInt(version)));
+        getConfig().set("serverVersion", Integer.parseInt(version));
 
         return Integer.parseInt(version);
     }
@@ -166,9 +162,26 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         PluginManager plma = getServer().getPluginManager();
         /*
-        Events
+        New events clases
          */
-        plma.registerEvents(new ItemLoreStatsListener(), this);
+        plma.registerEvents(new CreatureSpawnListener(), this);
+        plma.registerEvents(new EnchantItemListener(), this);
+        plma.registerEvents(new EntityRegainHealthListener(), this);
+        plma.registerEvents(new GamemodeChangeListener(), this);
+        plma.registerEvents(new InventoryClickListener(), this);
+        plma.registerEvents(new InventoryDragListener(), this);
+        plma.registerEvents(new PlayerChangeWorldListener(), this);
+        plma.registerEvents(new PlayerDeathListener(), this);
+        plma.registerEvents(new PlayerDropItemListener(), this);
+        plma.registerEvents(new PlayerExpChangeListener(), this);
+        plma.registerEvents(new PlayerItemHeldListener(), this);
+        plma.registerEvents(new PlayerJoinListener(), this);
+        plma.registerEvents(new PlayerPickupItemListener(), this);
+        plma.registerEvents(new PlayerQuitListener(), this);
+        plma.registerEvents(new PlayerRespawnListener(), this);
+        /*
+        End new event clases
+         */
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Crafting.AddedStats(), this);
         plma.registerEvents(new DamageSystem(this), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Durability.DurabilityEvents(), this);
@@ -834,667 +847,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             }, 2L);
         } else {
             player.setWalkSpeed((float) plugin.getConfig().getDouble("baseMovementSpeed"));
-        }
-    }
-
-    public class ItemLoreStatsListener implements org.bukkit.event.Listener {
-
-        public ItemLoreStatsListener() {
-        }
-
-        @EventHandler
-        public void onRegenHealth(EntityRegainHealthEvent event) {
-            if ((event.getEntity() instanceof Player)) {
-                if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.SATIATED)) {
-                    Player player = (Player) event.getEntity();
-                    if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
-                        if (Main.plugin.getConfig().getDouble("baseHealthRegen") == 0.0D) {
-                            return;
-                        }
-                        double gearRegen = 0.0D;
-                        double modifier = 0.0D;
-
-                        if (Main.this.isTool(Main.this.itemInMainHand(player).getType())) {
-                            gearRegen += Main.this.gearStats.getHealthRegenItemInHand(Main.this.itemInMainHand(player));
-                        }
-
-                        if (Main.this.isTool(Main.this.itemInOffHand(player).getType())) {
-                            gearRegen += Main.this.gearStats.getHealthRegenItemInHand(Main.this.itemInOffHand(player));
-                        }
-
-                        gearRegen += Main.this.gearStats.getHealthRegenGear(player);
-
-                        double baseRegen = Main.this.getConfig().getDouble("baseHealthRegen");
-                        double additionalLevelRegen = Main.this.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
-                        double modifiedHealthRegen = player.getMaxHealth() / 100.0D * (gearRegen + baseRegen + Double.valueOf(player.getLevel()).doubleValue() * additionalLevelRegen + modifier);
-
-                        event.setAmount(modifiedHealthRegen);
-                    }
-                }
-
-            }
-        }
-
-        @EventHandler
-        public void expChangeEvent(PlayerExpChangeEvent event) {
-            if (event.getPlayer().hasMetadata("NPC")) {
-                return;
-            }
-            Player player = event.getPlayer();
-            double bonusExp = 0.0D;
-            double xpMultiplier = 0.0D;
-
-            if ((Main.this.isTool(Main.this.itemInMainHand(player).getType()))
-                    && (Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInMainHand(player)) > 0.0D)) {
-                xpMultiplier += Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInMainHand(player));
-            }
-
-            if ((Main.this.isTool(Main.this.itemInOffHand(player).getType()))
-                    && (Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInOffHand(player)) > 0.0D)) {
-                xpMultiplier += Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInOffHand(player));
-            }
-
-            if (Main.this.gearStats.getXPMultiplierGear(player) > 0.0D) {
-                xpMultiplier += Main.this.gearStats.getXPMultiplierGear(player);
-            }
-
-            bonusExp = event.getAmount() * xpMultiplier / 100.0D;
-            player.giveExp((int) bonusExp);
-
-        }
-
-        @EventHandler
-        public void enchantTableUse(EnchantItemEvent event) {
-            if (Main.plugin.getConfig().getBoolean("keepXPOnDeath")) {
-                final Player playerFinal = event.getEnchanter();
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Main.this.PlayerDataConfig = new YamlConfiguration();
-                            Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
-
-                            Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(playerFinal.getExp()));
-                            Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(playerFinal.getLevel()));
-                            Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("*********** Failed to save player data for " + playerFinal.getName() + " when using the enchanting table! ***********");
-                        }
-                    }
-                }, 4L);
-            }
-        }
-
-        @EventHandler
-        public void saveExpOnDeath(PlayerDeathEvent event) {
-            if (event.getEntity().hasMetadata("NPC")) {
-                return;
-            }
-            if (Main.plugin.getConfig().getBoolean("keepXPOnDeath")) {
-                Player player = event.getEntity();
-                try {
-                    Main.this.PlayerDataConfig = new YamlConfiguration();
-                    Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
-
-                    event.setDroppedExp(0);
-
-                    int lvl = player.getLevel();
-                    if (lvl == 0) {
-                        player.setExp(0);
-                    } else {
-                        player.setExp(0);
-                        player.setLevel(lvl - 1);
-                    }
-
-                    Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(player.getExp()));
-                    Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(player.getLevel()));
-                    Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("*********** Failed to save player data for " + player.getName() + " when dying! ***********");
-                }
-            }
-        }
-
-        @EventHandler
-        public void onPlayerJoin(PlayerJoinEvent event) {
-            final Player playerFinal = event.getPlayer();
-            Main.this.getServer().getScheduler().scheduleAsyncDelayedTask(Main.plugin, new Runnable() {
-                @Override
-                public void run() {
-                    if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
-                        try {
-                            Main.this.PlayerDataConfig = new YamlConfiguration();
-
-                            Main.this.updateHealth(playerFinal);
-
-                            Main.this.PlayerDataConfig.set("extra.logoutHealth", Double.valueOf(20.0D));
-                            Main.this.PlayerDataConfig.set("extra.maxHealth", Double.valueOf(20.0D));
-                            Main.this.PlayerDataConfig.set("extra.hunger", Integer.valueOf(20));
-                            Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(0.0F));
-                            Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(0));
-                            Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("*********** Failed to save player data for " + playerFinal.getName() + " when logging in! ***********");
-                        }
-                    } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
-                        try {
-                            Main.this.PlayerDataConfig = new YamlConfiguration();
-                            Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
-
-                            playerFinal.setMaxHealth(Main.this.PlayerDataConfig.getDouble("extra.maxHealth"));
-                            playerFinal.setHealth(Main.this.PlayerDataConfig.getDouble("extra.logoutHealth"));
-                            playerFinal.setFoodLevel(Main.this.PlayerDataConfig.getInt("extra.hunger"));
-
-                            if (Main.this.PlayerDataConfig.get("extra.combatLogVisible") == null) {
-                                Main.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(true));
-                            } else {
-                                Main.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(Main.this.PlayerDataConfig.getBoolean("extra.combatLogVisible")));
-                            }
-
-                            if ((Main.plugin.getConfig().getBoolean("keepXPOnDeath"))) {
-                                //playerFinal.setExp((float)ItemLoreStats.this.PlayerDataConfig.getDouble("extra.xp"));
-                                //playerFinal.setLevel(ItemLoreStats.this.PlayerDataConfig.getInt("extra.level"));
-                            }
-
-                            Main.this.updateHealth(playerFinal);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when logging in! ***********");
-                        }
-                    }
-
-                    Main.this.updateHealth(playerFinal);
-                    Main.this.updatePlayerSpeed(playerFinal);
-
-                }
-            }, 5L);
-
-            if (event.getPlayer().isOp()) {
-                Main.this.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (Main.this.getMinecraftBuildNumber(Bukkit.getBukkitVersion()) >= 1100) {
-                        }
-                    }
-                }, 60L);
-            }
-        }
-
-        @EventHandler
-        public void onPlayerRespawn(PlayerRespawnEvent event) {
-            Player player = event.getPlayer();
-
-            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
-                final Player playerFinal = player;
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run() {
-                        if (Main.plugin.getConfig().getBoolean("keepXPOnDeath")) {
-                            try {
-                                Main.this.PlayerDataConfig = new YamlConfiguration();
-                                Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
-
-                                playerFinal.setExp((float) Main.this.PlayerDataConfig.getDouble("extra.xp"));
-                                playerFinal.setLevel(Main.this.PlayerDataConfig.getInt("extra.level"));
-                                Main.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(Main.this.PlayerDataConfig.getBoolean("extra.combatLogVisible")));
-                                Main.this.updateHealth(playerFinal);
-                                Main.this.updatePlayerSpeed(playerFinal);
-                                Main.this.setBonuses.updateSetBonus(playerFinal);
-                                playerFinal.setHealth(playerFinal.getMaxHealth());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when respawning! ***********");
-                            }
-                        } else {
-                            Main.this.updateHealth(playerFinal);
-                            Main.this.updatePlayerSpeed(playerFinal);
-                            Main.this.setBonuses.updateSetBonus(playerFinal);
-                        }
-
-                    }
-                }, 3L);
-            }
-        }
-
-        @EventHandler
-        public void onPlayerQuit(PlayerQuitEvent event) {
-            if ((event.getPlayer() instanceof Player)) {
-                Player player = event.getPlayer();
-
-                if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
-                    if (!player.isDead()) {
-                        player.setMaxHealth(20.0D);
-                        if (player.getHealth() > 20.0D) {
-                            player.setHealth(20.0D);
-                        }
-                    } else {
-                        player.setMaxHealth(20.0D);
-                    }
-                } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
-                    try {
-                        Main.this.PlayerDataConfig = new YamlConfiguration();
-                        Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
-
-                        Main.this.PlayerDataConfig.set("extra.logoutHealth", Long.valueOf(Math.round(player.getHealth())));
-                        Main.this.PlayerDataConfig.set("extra.maxHealth", Long.valueOf(Math.round(player.getMaxHealth())));
-                        Main.this.PlayerDataConfig.set("extra.hunger", Integer.valueOf(player.getFoodLevel()));
-                        Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(player.getExp()));
-                        Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(player.getLevel()));
-                        Main.this.PlayerDataConfig.set("extra.combatLogVisible", Main.this.combatLogVisible.get(player.getName()));
-                        Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
-
-                        if (!player.isDead()) {
-                            player.setMaxHealth(20.0D);
-                            if (player.getHealth() > 20.0D) {
-                                player.setHealth(20.0D);
-                            }
-                        } else {
-                            player.setMaxHealth(20.0D);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
-                    }
-                }
-            }
-        }
-
-        @EventHandler
-        public void onDropItemEvent(PlayerDropItemEvent event) {
-            Player player = event.getPlayer();
-            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
-                final Player playerFinal = player;
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run() {
-                        Main.this.updateHealth(playerFinal);
-                        Main.this.updatePlayerSpeed(playerFinal);
-                        Main.this.setBonuses.updateSetBonus(playerFinal);
-                    }
-
-                }, 2L);
-            }
-        }
-
-        @EventHandler
-        public void onPickupCustomItem(PlayerPickupItemEvent event) {
-            Player player = event.getPlayer();
-            ItemStack item = event.getItem().getItemStack();
-
-            if ((!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
-                    && (Main.this.getConfig().getBoolean("messages.itemLooted"))
-                    && (item != null)
-                    && (item.getItemMeta() != null)
-                    && (item.getItemMeta().hasDisplayName())
-                    && (item.getItemMeta().getDisplayName().startsWith("ILS_"))) {
-                ItemStack itemStack = item.clone();
-                ItemMeta itemMeta = item.getItemMeta();
-
-                itemMeta.setDisplayName(item.getItemMeta().getDisplayName().substring(4));
-                item.setItemMeta(itemMeta);
-
-                event.getItem().setItemStack(itemStack);
-                player.sendMessage(Main.this.util_GetResponse.getResponse("Item.Looted", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
-            }
-        }
-
-        @EventHandler
-        public void onGameModeChange(PlayerGameModeChangeEvent event) {
-            final Player player = event.getPlayer();
-            Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                public void run() {
-                    Main.this.updateHealth(player);
-                }
-            }, 2L);
-        }
-
-        @EventHandler
-        public void checkOnPickup(PlayerPickupItemEvent event) {
-            if ((event.isCancelled()) || (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
-                return;
-            }
-            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
-                Player player = event.getPlayer();
-                ItemStack item = event.getItem().getItemStack().clone();
-
-                if ((item != null)
-                        && (item.getAmount() == 1)
-                        && (Main.this.isTool(item.getType()))
-                        && (item.hasItemMeta())
-                        && (item.getItemMeta().getLore() != null)) {
-                    if (player.getInventory().firstEmpty() == player.getInventory().getHeldItemSlot()) {
-                        for (int slot = player.getInventory().getHeldItemSlot() + 1; slot < 35; slot++) {
-                            if (player.getInventory().getItem(slot) == null) {
-                                if ((Main.this.gearStats.getSoulboundName(player, item) != "")
-                                        && (!Main.this.gearStats.getSoulboundName(player, item).equals(player.getName()))) {
-                                    event.setCancelled(true);
-                                    event.getItem().remove();
-                                    event.getPlayer().getInventory().setItem(slot, item);
-
-                                    break;
-                                }
-
-                                if ((Main.this.gearStats.getXPLevelRequirement(player, item) != 0)
-                                        && (Main.this.gearStats.getXPLevelRequirement(player, item) > player.getLevel())) {
-                                    event.setCancelled(true);
-                                    event.getItem().remove();
-                                    event.getPlayer().getInventory().setItem(slot, item);
-
-                                    break;
-                                }
-
-                                if ((Main.this.gearStats.getClass(item) != null)
-                                        && (!player.hasPermission("ils.use." + Main.this.gearStats.getClass(item)))) {
-                                    event.setCancelled(true);
-                                    event.getItem().remove();
-                                    event.getPlayer().getInventory().setItem(slot, item);
-
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Main.this.updateHealth(player);
-                Main.this.updatePlayerSpeed(player);
-
-                Main.this.setBonuses.updateSetBonus(player);
-            }
-        }
-
-        @EventHandler
-        public void onPlayerHeldItemChange(final PlayerItemHeldEvent event) {
-            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
-                final Player playerFinal = event.getPlayer();
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run() {
-                        ItemStack checkItemHeld = playerFinal.getInventory().getItem(event.getNewSlot());
-
-                        if ((checkItemHeld != null)
-                                && (checkItemHeld.getType() != Material.AIR)
-                                && (checkItemHeld.getItemMeta() != null)
-                                && (checkItemHeld.getItemMeta().getLore() != null)
-                                && (Main.this.isTool(checkItemHeld.getType()))) {
-                            if ((Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld) != null)
-                                    && (!Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld).equals(playerFinal.getName()))) {
-                                Main.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
-                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
-
-                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld), Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld)));
-
-                                return;
-                            }
-
-                            if ((Main.this.gearStats.phic_ClassItemInHand(checkItemHeld) != null)
-                                    && (!playerFinal.hasPermission("ils.use." + Main.this.gearStats.phic_ClassItemInHand(checkItemHeld)))) {
-                                Main.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
-                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("ClassRequirementMessages.NotRequiredClassForItemInHand", playerFinal, playerFinal, String.valueOf(Main.this.gearStats.phic_ClassItemInHand(checkItemHeld)), String.valueOf(Main.this.gearStats.phic_ClassItemInHand(checkItemHeld))));
-
-                                return;
-                            }
-
-                            if ((Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) != 0)
-                                    && (Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) > playerFinal.getLevel())) {
-                                Main.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
-                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("LevelRequirementMessages.LevelTooLowForItemInHand", playerFinal, playerFinal, String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
-
-                                return;
-                            }
-                        }
-
-                        Main.this.updateHealth(playerFinal);
-                        Main.this.updatePlayerSpeed(playerFinal);
-
-                        Main.this.setBonuses.updateSetBonus(playerFinal);
-                    }
-                }, 2L);
-            }
-        }
-
-        @EventHandler
-        public void onInventoryDrag(InventoryDragEvent event) {
-            if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
-                return;
-            }
-            if ((event.getInventory().getType().equals(InventoryType.CRAFTING))
-                    || (event.getInventory().getType().equals(InventoryType.PLAYER))
-                    || (event.getInventory().getType().equals(InventoryType.FURNACE))
-                    || (event.getInventory().getType().equals(InventoryType.DROPPER))
-                    || (event.getInventory().getType().equals(InventoryType.HOPPER))
-                    || (event.getInventory().getType().equals(InventoryType.DISPENSER))
-                    || (event.getInventory().getType().equals(InventoryType.CHEST))
-                    || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
-                    || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) {
-                Player player = (Player) event.getWhoClicked();
-
-                if (event.getOldCursor() != null) {
-                    ItemStack item = event.getOldCursor().clone();
-
-                    if (!Main.this.getConfig().getBoolean("usingMcMMO")) {
-                        Main.this.durability.syncArmourDurability(player);
-                    }
-
-                    if (Main.this.getSlots.isOffHandSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))
-                            || ((Main.this.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (Main.this.isArmour(item.getType()))) || ((Main.this.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (player.getInventory().getHeldItemSlot() == Main.this.getSlots.getRawHeldItemSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (Main.this.isTool(item.getType())))) {
-                        if (!Main.this.xpLevel.checkXPLevel(player, item)) {
-                            event.setCancelled(true);
-                            player.updateInventory();
-
-                            return;
-                        }
-
-                        if (!Main.this.soulbound.checkSoulbound(player, item)) {
-                            event.setCancelled(true);
-                            player.updateInventory();
-
-                            return;
-                        }
-
-                        if (!Main.this.classes.checkClasses(player, item)) {
-                            event.setCancelled(true);
-                            player.updateInventory();
-
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        @EventHandler
-        public void onInventoryClick(InventoryClickEvent event) {
-            if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
-                return;
-            }
-            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getWhoClicked().getWorld().getName())) {
-
-                if ((event.getInventory().getType().equals(InventoryType.CRAFTING))
-                        || (event.getInventory().getType().equals(InventoryType.PLAYER))
-                        || (event.getInventory().getType().equals(InventoryType.FURNACE))
-                        || (event.getInventory().getType().equals(InventoryType.DROPPER))
-                        || (event.getInventory().getType().equals(InventoryType.HOPPER))
-                        || (event.getInventory().getType().equals(InventoryType.DISPENSER))
-                        || (event.getInventory().getType().equals(InventoryType.CHEST))
-                        || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
-                        || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) {
-                    Player player = (Player) event.getWhoClicked();
-
-                    if (event.getCurrentItem() != null) {
-                        ItemStack item = event.getCursor().clone();
-
-                        if (event.isShiftClick()) {
-                            item = event.getCurrentItem().clone();
-                        }
-                        if (!Main.this.getConfig().getBoolean("usingMcMMO")) {
-                            Main.this.durability.syncArmourDurability(player);
-                        }
-
-                        if ((event.getSlot() == 45) || (event.getRawSlot() == 45)
-                                || ((event.getSlotType().equals(InventoryType.SlotType.ARMOR)) && (Main.this.isArmour(item.getType())))
-                                || ((event.isShiftClick())) || ((event.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) && (event.getSlot() == player.getInventory().getHeldItemSlot()) && (Main.this.isTool(item.getType())))) {
-                            if (!Main.this.xpLevel.checkXPLevel(player, item)) {
-                                event.setCancelled(true);
-                                player.updateInventory();
-
-                                return;
-                            }
-
-                            if (!Main.this.soulbound.checkSoulbound(player, item)) {
-                                event.setCancelled(true);
-                                player.updateInventory();
-
-                                return;
-                            }
-
-                            if (!Main.this.classes.checkClasses(player, item)) {
-                                event.setCancelled(true);
-                                player.updateInventory();
-
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        @EventHandler
-        public void healthIncreaseOnDragEquip(InventoryDragEvent event) {
-            if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
-                return;
-            }
-            final Player player = (Player) event.getWhoClicked();
-
-            if (((event.getInventory().getType().equals(InventoryType.CRAFTING))
-                    || (event.getInventory().getType().equals(InventoryType.PLAYER))
-                    || (event.getInventory().getType().equals(InventoryType.FURNACE))
-                    || (event.getInventory().getType().equals(InventoryType.DROPPER))
-                    || (event.getInventory().getType().equals(InventoryType.HOPPER))
-                    || (event.getInventory().getType().equals(InventoryType.DISPENSER))
-                    || (event.getInventory().getType().equals(InventoryType.CHEST))
-                    || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
-                    || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) && ((Main.this.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) || (Main.this.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))))) {
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run() {
-                        player.updateInventory();
-                        Main.this.updateHealth(player);
-                        Main.this.updatePlayerSpeed(player);
-                    }
-
-                }, 1L);
-            }
-        }
-
-        @EventHandler
-        public void healthIncreaseOnEquip(InventoryClickEvent event) {
-            if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
-                return;
-            }
-            final Player player = (Player) event.getWhoClicked();
-
-            if (((event.getInventory().getType().equals(InventoryType.CRAFTING))
-                    || (event.getInventory().getType().equals(InventoryType.PLAYER))
-                    || (event.getInventory().getType().equals(InventoryType.FURNACE))
-                    || (event.getInventory().getType().equals(InventoryType.DROPPER))
-                    || (event.getInventory().getType().equals(InventoryType.HOPPER))
-                    || (event.getInventory().getType().equals(InventoryType.DISPENSER))
-                    || (event.getInventory().getType().equals(InventoryType.CHEST))
-                    || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
-                    || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) && ((event.getSlotType().equals(InventoryType.SlotType.ARMOR)) || (event.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) || (event.isShiftClick()))) {
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run() {
-                        player.updateInventory();
-                        Main.this.updateHealth(player);
-                        Main.this.updatePlayerSpeed(player);
-                    }
-
-                }, 1L);
-            }
-        }
-
-        @EventHandler
-        public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
-            if ((event.getPlayer() instanceof Player)) {
-                final Player playerFinal = event.getPlayer();
-
-                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        Main.this.updateHealth(playerFinal);
-                        Main.this.updatePlayerSpeed(playerFinal);
-                        Main.this.setBonuses.updateSetBonus(playerFinal);
-
-                    }
-                }, 2L);
-
-                if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(playerFinal.getWorld().getName())) {
-                }
-            }
-        }
-
-        @EventHandler
-        public void modifyMobHealth(CreatureSpawnEvent event) {
-            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName())) {
-                LivingEntity entity = event.getEntity();
-                Location entityLoc = entity.getLocation();
-
-                if ((Main.plugin.getConfig().getBoolean("ILSLootFromNaturalSpawnsOnly"))
-                        && (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL))) {
-                    entity.setMetadata("naturalSpawn", new FixedMetadataValue(Main.plugin, Boolean.valueOf(true)));
-                }
-
-                /*if ((ItemLoreStats.this.util_WorldGuard != null) /*&& (ItemLoreStats.this.util_WorldGuard.entityInLevelRegion(entity))) {
-                    String regionName = ItemLoreStats.this.util_WorldGuard.getRegionNameFromLocation(entityLoc);
-
-                    int minLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[0]);
-                    int maxLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[1]);
-                    int mobLevel = ItemLoreStats.this.util_Random.randomRange(minLevelRange, maxLevelRange);
-
-                    double additionalHealth = ItemLoreStats.this.gearStats.getHealthItemInHand(ItemLoreStats.this.itemInMainHand(entity)) + ItemLoreStats.this.gearStats.getHealthItemInHand(ItemLoreStats.this.itemInOffHand(entity)) + ItemLoreStats.this.gearStats.getHealthGear(entity);
-                    double newHealth = entity.getMaxHealth() + mobLevel * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + regionName + ".healthMultiplier") + additionalHealth;
-
-                    entity.setMetadata("level", new FixedMetadataValue(ItemLoreStats.plugin, Integer.valueOf(mobLevel)));
-                    entity.setMetadata("regionSpawned", new FixedMetadataValue(ItemLoreStats.plugin, ItemLoreStats.this.util_WorldGuard.getRegionInsideName(entity)));
-
-                    entity.setMaxHealth(Double.valueOf(newHealth).intValue());
-                    entity.setHealth(Double.valueOf(newHealth).intValue());/*if ((ItemLoreStats.this.util_WorldGuard != null) /*&& (ItemLoreStats.this.util_WorldGuard.entityInLevelRegion(entity))) {
-                    String regionName = ItemLoreStats.this.util_WorldGuard.getRegionNameFromLocation(entityLoc);
-
-                    int minLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[0]);
-                    int maxLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[1]);
-                    int mobLevel = ItemLoreStats.this.util_Random.randomRange(minLevelRange, maxLevelRange);
-
-                    double additionalHealth = ItemLoreStats.this.gearStats.getHealthItemInHand(ItemLoreStats.this.itemInMainHand(entity)) + ItemLoreStats.this.gearStats.getHealthItemInHand(ItemLoreStats.this.itemInOffHand(entity)) + ItemLoreStats.this.gearStats.getHealthGear(entity);
-                    double newHealth = entity.getMaxHealth() + mobLevel * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + regionName + ".healthMultiplier") + additionalHealth;
-
-                    entity.setMetadata("level", new FixedMetadataValue(ItemLoreStats.plugin, Integer.valueOf(mobLevel)));
-                    entity.setMetadata("regionSpawned", new FixedMetadataValue(ItemLoreStats.plugin, ItemLoreStats.this.util_WorldGuard.getRegionInsideName(entity)));
-
-                    entity.setMaxHealth(Double.valueOf(newHealth).intValue());
-                    entity.setHealth(Double.valueOf(newHealth).intValue());
-                } else*/ if (Main.this.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
-                    String worldName = entity.getWorld().getName();
-
-                    Location loc = new Location(entity.getWorld(), Main.this.getConfig().getInt("npcModifier." + worldName + ".location.x"), Main.this.getConfig().getInt("npcModifier." + worldName + ".location.y"), Main.this.getConfig().getInt("npcModifier." + worldName + ".location.z"));
-
-                    int mobLevel = (int) Math.ceil(entity.getEyeLocation().distance(loc) / Main.this.getConfig().getDouble("npcModifier." + worldName + ".blocksPerLevel"));
-                    double calcNewHealth = Math.ceil(mobLevel * Main.this.getConfig().getDouble("npcModifier." + worldName + ".healthMultiplier"));
-                    double additionalHealth = Main.this.gearStats.getHealthItemInHand(Main.this.itemInMainHand(entity)) + Main.this.gearStats.getHealthItemInHand(Main.this.itemInOffHand(entity)) + Main.this.gearStats.getHealthGear(entity);
-                    double newHealth = calcNewHealth + additionalHealth;
-
-                    entity.setMetadata("level", new FixedMetadataValue(Main.plugin, Integer.valueOf(mobLevel)));
-
-                    if (newHealth > 2000000.0D) {
-                        newHealth = 2000000.0D;
-                    }
-
-                    entity.setMaxHealth(Double.valueOf(newHealth).intValue());
-                    entity.setHealth(Double.valueOf(newHealth).intValue());
-                }
-            }
         }
     }
 
