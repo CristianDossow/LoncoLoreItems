@@ -2,7 +2,7 @@
  
  import net.nifheim.yitan.itemlorestats.Classes;
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Soulbound;
  import net.nifheim.yitan.itemlorestats.Spells.SpellsEvents;
  import net.nifheim.yitan.itemlorestats.XpLevel;
@@ -16,7 +16,7 @@
  
  public class InteractEvents implements org.bukkit.event.Listener
  {
-   public ItemLoreStats instance;
+   public Main instance;
    Classes classes = new Classes();
    GearStats gearStats = new GearStats();
    Soulbound soulbound = new Soulbound();
@@ -27,14 +27,14 @@
    public void mainInteractEvent(PlayerInteractEvent event) {
      Player player = event.getPlayer();
      
-     if (ItemLoreStats.plugin.getConfig().getBoolean("usingMcMMO")) return;
-     if (ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) return;
+     if (Main.plugin.getConfig().getBoolean("usingMcMMO")) return;
+     if (Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) return;
      if ((player.getGameMode().equals(GameMode.CREATIVE)) && (player.getInventory().getItemInMainHand().getType().equals(Material.SKULL_ITEM))) { return;
      }
      if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-       if (ItemLoreStats.plugin.isTool(player.getInventory().getItemInMainHand().getType())) {
+       if (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType())) {
          this.spellsEvents.spellSelection(player);
-       } else if (ItemLoreStats.plugin.isArmour(player.getInventory().getItemInMainHand().getType()))
+       } else if (Main.plugin.isArmour(player.getInventory().getItemInMainHand().getType()))
        {
          if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {
            event.setCancelled(true);
@@ -55,16 +55,16 @@
          }
          
          final Player playerFinal = player;
-         ItemLoreStats.plugin.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+         Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
            public void run() {
-             ItemLoreStats.plugin.updateHealth(playerFinal);
-             ItemLoreStats.plugin.updatePlayerSpeed(playerFinal);
-             ItemLoreStats.plugin.setBonuses.updateSetBonus(playerFinal);
+             Main.plugin.updateHealth(playerFinal);
+             Main.plugin.updatePlayerSpeed(playerFinal);
+             Main.plugin.setBonuses.updateSetBonus(playerFinal);
            }
            
          }, 3L);
        }
-       else if ((event.getItem() != null) && (ItemLoreStats.plugin.isPotion(event.getItem().getDurability()))) {
+       else if ((event.getItem() != null) && (Main.plugin.isPotion(event.getItem().getDurability()))) {
          if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {
            event.setCancelled(true);
            player.updateInventory();
@@ -86,7 +86,7 @@
      }
      
      if ((event.getAction() == Action.LEFT_CLICK_BLOCK) && 
-       (ItemLoreStats.plugin.isTool(player.getInventory().getItemInMainHand().getType()))) {
+       (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType()))) {
        if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {
          event.setCancelled(true);
          player.updateInventory();

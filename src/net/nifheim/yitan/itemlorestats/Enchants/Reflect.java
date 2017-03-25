@@ -2,7 +2,7 @@
  
  import net.nifheim.yitan.itemlorestats.Durability.Durability;
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.SetBonuses;
  import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -28,11 +28,11 @@
    Util_Random util_Random = new Util_Random();
    
    public double reflectChanceOnHit(LivingEntity getAttacker, boolean isTool) {
-     if (this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker)) <= 0.0D) { return 0.0D;
+     if (this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) { return 0.0D;
      }
-     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", ItemLoreStats.plugin.getConfig().getInt("secondaryStats.reflect.internalCooldown"))) {
+     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Main.plugin.getConfig().getInt("secondaryStats.reflect.internalCooldown"))) {
        if ((getAttacker instanceof org.bukkit.entity.Player)) {
-         ItemLoreStats.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Long.valueOf(System.currentTimeMillis()));
+         Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Long.valueOf(System.currentTimeMillis()));
        }
        
        double reflect = 0.0D;
@@ -45,7 +45,7 @@
  
  
        if (isTool) {
-         reflect = this.util_Format.format(this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)));
+         reflect = this.util_Format.format(this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(getAttacker)));
        } else {
          reflect = this.util_Format.format(this.gearStats.getReflectGear(getAttacker));
        }

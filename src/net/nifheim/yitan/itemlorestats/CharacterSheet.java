@@ -31,26 +31,26 @@ public class CharacterSheet {
     Vanilla_Sharpness vanilla_Sharpness = new Vanilla_Sharpness();
     net.nifheim.yitan.itemlorestats.Enchants.Vanilla_Power vanilla_Power = new net.nifheim.yitan.itemlorestats.Enchants.Vanilla_Power();
 
-    String armour = ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name");
-    String dodge = ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name");
-    String block = ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name");
-    String critChance = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name");
-    String critDamage = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name");
-    String damage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
-    String health = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
-    String healthRegen = ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name");
-    String lifeSteal = ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
-    String reflect = ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name");
-    String fire = ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name");
-    String ice = ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name");
-    String poison = ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name");
-    String wither = ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name");
-    String harming = ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name");
-    String blind = ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name");
-    String xpmultiplier = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
-    String movementspeed = ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
-    String level = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
-    String onlydamage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
+    String armour = Main.plugin.getConfig().getString("primaryStats.armour.colour") + Main.plugin.getConfig().getString("primaryStats.armour.name");
+    String dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.colour") + Main.plugin.getConfig().getString("secondaryStats.dodge.name");
+    String block = Main.plugin.getConfig().getString("secondaryStats.block.colour") + Main.plugin.getConfig().getString("secondaryStats.block.name");
+    String critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.colour") + Main.plugin.getConfig().getString("secondaryStats.critChance.name");
+    String critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.colour") + Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
+    String damage = Main.plugin.getConfig().getString("primaryStats.damage.colour") + Main.plugin.getConfig().getString("primaryStats.damage.name");
+    String health = Main.plugin.getConfig().getString("primaryStats.health.colour") + Main.plugin.getConfig().getString("primaryStats.health.name");
+    String healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.colour") + Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
+    String lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
+    String reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.colour") + Main.plugin.getConfig().getString("secondaryStats.reflect.name");
+    String fire = Main.plugin.getConfig().getString("secondaryStats.fire.colour") + Main.plugin.getConfig().getString("secondaryStats.fire.name");
+    String ice = Main.plugin.getConfig().getString("secondaryStats.ice.colour") + Main.plugin.getConfig().getString("secondaryStats.ice.name");
+    String poison = Main.plugin.getConfig().getString("secondaryStats.poison.colour") + Main.plugin.getConfig().getString("secondaryStats.poison.name");
+    String wither = Main.plugin.getConfig().getString("secondaryStats.wither.colour") + Main.plugin.getConfig().getString("secondaryStats.wither.name");
+    String harming = Main.plugin.getConfig().getString("secondaryStats.harming.colour") + Main.plugin.getConfig().getString("secondaryStats.harming.name");
+    String blind = Main.plugin.getConfig().getString("secondaryStats.blind.colour") + Main.plugin.getConfig().getString("secondaryStats.blind.name");
+    String xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
+    String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
+    String level = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
+    String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
 
     static String languageRegex = "[^A-Za-z������������_]";
 
@@ -92,21 +92,21 @@ public class CharacterSheet {
         minDamage = Double.parseDouble(this.gearStats.getDamageGear(player).split("-")[0]);
         maxDamage = Double.parseDouble(this.gearStats.getDamageGear(player).split("-")[1]);
 
-        if (ItemLoreStats.plugin.isTool(player.getInventory().getItemInMainHand().getType())) {
-            if (ItemLoreStats.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
+        if (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType())) {
+            if (Main.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
                 minDamage += this.util_Material.materialToDamage(player.getInventory().getItemInMainHand().getType());
                 maxDamage += this.util_Material.materialToDamage(player.getInventory().getItemInMainHand().getType());
             }
 
-            valueMinMain = Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(player)).split("-")[0]);
-            valueMaxMain = Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(player)).split("-")[1]);
+            valueMinMain = Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInMainHand(player)).split("-")[0]);
+            valueMaxMain = Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInMainHand(player)).split("-")[1]);
 
             minDamage += valueMinMain;
             maxDamage += valueMaxMain;
         }
 
-        if (ItemLoreStats.plugin.isTool(player.getInventory().getItemInOffHand().getType())) {
-            if (ItemLoreStats.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
+        if (Main.plugin.isTool(player.getInventory().getItemInOffHand().getType())) {
+            if (Main.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
                 minDamage += this.util_Material.materialToDamage(player.getInventory().getItemInOffHand().getType());
                 maxDamage += this.util_Material.materialToDamage(player.getInventory().getItemInOffHand().getType());
             }
@@ -141,14 +141,14 @@ public class CharacterSheet {
         }
 
         if (this.vanilla_Sharpness.hasSharpness(player)) {
-            int mainLevel = ItemLoreStats.plugin.itemInMainHand(player).getEnchantmentLevel(Enchantment.DAMAGE_ALL);
-            int offLevel = ItemLoreStats.plugin.itemInOffHand(player).getEnchantmentLevel(Enchantment.DAMAGE_ALL);
+            int mainLevel = Main.plugin.itemInMainHand(player).getEnchantmentLevel(Enchantment.DAMAGE_ALL);
+            int offLevel = Main.plugin.itemInOffHand(player).getEnchantmentLevel(Enchantment.DAMAGE_ALL);
 
             minDamage = this.vanilla_Sharpness.calculateNewDamage(minDamage, mainLevel, offLevel);
             maxDamage = this.vanilla_Sharpness.calculateNewDamage(maxDamage, mainLevel, offLevel);
         } else if (this.vanilla_Power.hasPower(player)) {
-            int mainLevel = ItemLoreStats.plugin.itemInMainHand(player).getEnchantmentLevel(Enchantment.ARROW_DAMAGE);
-            int offLevel = ItemLoreStats.plugin.itemInOffHand(player).getEnchantmentLevel(Enchantment.ARROW_DAMAGE);
+            int mainLevel = Main.plugin.itemInMainHand(player).getEnchantmentLevel(Enchantment.ARROW_DAMAGE);
+            int offLevel = Main.plugin.itemInOffHand(player).getEnchantmentLevel(Enchantment.ARROW_DAMAGE);
 
             minDamage = this.vanilla_Sharpness.calculateNewDamage(minDamage, mainLevel, offLevel);
             maxDamage = this.vanilla_Sharpness.calculateNewDamage(maxDamage, mainLevel, offLevel);
@@ -176,12 +176,12 @@ public class CharacterSheet {
     public String getArmourValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getArmourItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getArmourItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getArmourItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getArmourItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getArmourGear(player);
@@ -204,12 +204,12 @@ public class CharacterSheet {
     public String getDodgeValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getDodgeItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getDodgeItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getDodgeItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getDodgeItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getDodgeGear(player);
@@ -222,12 +222,12 @@ public class CharacterSheet {
     public String getBlockValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getBlockItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getBlockItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getBlockItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getBlockItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getBlockGear(player);
@@ -240,12 +240,12 @@ public class CharacterSheet {
     public double getBlockValuedouble(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getBlockItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getBlockItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getBlockItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getBlockItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getBlockGear(player);
@@ -257,12 +257,12 @@ public class CharacterSheet {
     public String getCritChanceValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getCritChanceItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getCritChanceItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getCritChanceItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getCritChanceItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getCritChanceGear(player);
@@ -275,12 +275,12 @@ public class CharacterSheet {
     public String getCritDamageValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getCritDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getCritDamageItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getCritDamageItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getCritDamageItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getCritDamageGear(player);
@@ -291,14 +291,14 @@ public class CharacterSheet {
     }
 
     public String getHealthRegenValue(Player player) {
-        double stat = Double.valueOf(player.getLevel()).doubleValue() * ItemLoreStats.plugin.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
+        double stat = Double.valueOf(player.getLevel()).doubleValue() * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getHealthRegenItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getHealthRegenItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getHealthRegenItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getHealthRegenItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getHealthRegenGear(player);
@@ -311,12 +311,12 @@ public class CharacterSheet {
     public String getLifeStealValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getLifeStealItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getLifeStealItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getLifeStealItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getLifeStealGear(player);
@@ -329,12 +329,12 @@ public class CharacterSheet {
     public String getReflectValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getReflectItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getReflectItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getReflectItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getReflectGear(player);
@@ -347,12 +347,12 @@ public class CharacterSheet {
     public String getFireValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getFireItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getFireItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getFireItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getFireItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getFireGear(player);
@@ -366,12 +366,12 @@ public class CharacterSheet {
         double stat = 0.0D;
         String message = "    " + this.util_Colours.replaceTooltipColour(this.ice) + ": " + ChatColor.LIGHT_PURPLE + this.util_Format.format(stat) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.ice)) + "%";
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getIceItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getIceItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getIceItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getIceItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getIceGear(player);
@@ -382,12 +382,12 @@ public class CharacterSheet {
     public String getPoisonValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getPoisonItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getPoisonItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getPoisonItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getPoisonGear(player);
@@ -400,12 +400,12 @@ public class CharacterSheet {
     public String getWitherValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getWitherItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getWitherItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getWitherItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getWitherItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getWitherGear(player);
@@ -418,12 +418,12 @@ public class CharacterSheet {
     public String getHarmingValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getHarmingItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getHarmingItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getHarmingItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getHarmingItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getHarmingGear(player);
@@ -436,12 +436,12 @@ public class CharacterSheet {
     public String getBlindValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getBlindItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getBlindItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getBlindItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getBlindItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getBlindGear(player);
@@ -454,12 +454,12 @@ public class CharacterSheet {
     public String getXPMultiplierValue(Player player) {
         double stat = 0.0D;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getXPMultiplierItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getXPMultiplierItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getXPMultiplierItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getXPMultiplierItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getXPMultiplierGear(player);
@@ -469,14 +469,14 @@ public class CharacterSheet {
     }
 
     public String getMovementSpeedValue(Player player) {
-        double stat = Double.valueOf(player.getLevel()).doubleValue() * ItemLoreStats.plugin.getConfig().getDouble("additionalStatsPerLevel.speed") * 100;
+        double stat = Double.valueOf(player.getLevel()).doubleValue() * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.speed") * 100;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += this.gearStats.getMovementSpeedItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += this.gearStats.getMovementSpeedItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += this.gearStats.getMovementSpeedItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += this.gearStats.getMovementSpeedItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += this.gearStats.getMovementSpeedGear(player);

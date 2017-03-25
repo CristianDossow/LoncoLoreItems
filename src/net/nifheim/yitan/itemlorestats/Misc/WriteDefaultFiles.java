@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Misc;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import java.io.File;
  import java.io.PrintStream;
  import java.text.DecimalFormat;
@@ -32,166 +32,166 @@
    
    public void checkExistence()
    {
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems").exists()) {
-       new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems").mkdirs();
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedItems").exists()) {
+       new File(Main.plugin.getDataFolder() + File.separator + "SavedItems").mkdirs();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs").exists()) {
-       new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs").mkdirs();
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs").exists()) {
+       new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs").mkdirs();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells").exists()) {
-       new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells").mkdirs();
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells").exists()) {
+       new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells").mkdirs();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData").exists()) {
-       new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData").mkdirs();
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData").exists()) {
+       new File(Main.plugin.getDataFolder() + File.separator + "PlayerData").mkdirs();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "language-en.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "language-en.yml").exists()) {
        writeLanguageEN();
      }
-     new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "language-de.yml").exists();
+     new File(Main.plugin.getDataFolder() + File.separator + "language-de.yml").exists();
      
  
-     new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "language-pl.yml").exists();
+     new File(Main.plugin.getDataFolder() + File.separator + "language-pl.yml").exists();
      
  
  
  
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "blaze.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "blaze.yml").exists()) {
        writeBlaze();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "cave_spider.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "cave_spider.yml").exists()) {
        writeCave_Spider();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "creeper.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "creeper.yml").exists()) {
        writeCreeper();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ender_dragon.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ender_dragon.yml").exists()) {
        writeEnder_Dragon();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "enderman.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "enderman.yml").exists()) {
        writeEnderman();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ghast.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ghast.yml").exists()) {
        writeGhast();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "magma_cube.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "magma_cube.yml").exists()) {
        writeMagma_Cube();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "silverfish.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "silverfish.yml").exists()) {
        writeSilverfish();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "skeleton.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "skeleton.yml").exists()) {
        writeSkeleton();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml").exists()) {
        writeWitherSkeleton();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "slime.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "slime.yml").exists()) {
        writeSlime();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "spider.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "spider.yml").exists()) {
        writeSpider();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "witch.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "witch.yml").exists()) {
        writeWitch();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither.yml").exists()) {
        writeWither();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "zombie.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "zombie.yml").exists()) {
        writeZombie();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml").exists()) {
        writeBabyZombie();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml").exists()) {
        writeVillagerZombie();
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "pig_zombie.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "pig_zombie.yml").exists()) {
        writePig_Zombie();
      }
      
  
  
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball.yml").exists()) {
        writeDefaultSpell("Fireball", "SmallFireball", 2, "Mobspawner_Flames", 15, 0, 0, 0, 5, 2, 2);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball I.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball I.yml").exists()) {
        writeDefaultSpell("Fireball I", "SmallFireball", 2, "Mobspawner_Flames", 15, 0, 0, 0, 8, 5, 2);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball II.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball II.yml").exists()) {
        writeDefaultSpell("Fireball II", "SmallFireball", 2, "Mobspawner_Flames", 15, 0, 0, 0, 11, 8, 3);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball III.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Fireball III.yml").exists()) {
        writeDefaultSpell("Fireball III", "SmallFireball", 2, "Mobspawner_Flames", 15, 0, 0, 0, 14, 10, 3);
      }
      
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt.yml").exists()) {
        writeDefaultSpell("Frostbolt", "Snowball", 2, "Potion_Break", 15, 0, 0, 0, 5, 2, 2);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt I.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt I.yml").exists()) {
        writeDefaultSpell("Frostbolt I", "Snowball", 2, "Potion_Break", 15, 0, 0, 0, 8, 5, 2);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt II.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt II.yml").exists()) {
        writeDefaultSpell("Frostbolt II", "Snowball", 2, "Potion_Break", 15, 0, 0, 0, 11, 8, 3);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt III.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Frostbolt III.yml").exists()) {
        writeDefaultSpell("Frostbolt III", "Snowball", 2, "Potion_Break", 15, 0, 0, 0, 14, 10, 3);
      }
      
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal.yml").exists()) {
        writeDefaultSpell("Minor Heal", "Snowball", 3, "Ender_Signal", 4, 4, 0, 0, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal I.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal I.yml").exists()) {
        writeDefaultSpell("Minor Heal I", "Snowball", 3, "Ender_Signal", 4, 5, 0, 0, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal II.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal II.yml").exists()) {
        writeDefaultSpell("Minor Heal II", "Snowball", 3, "Ender_Signal", 4, 6, 0, 0, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal III.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor Heal III.yml").exists()) {
        writeDefaultSpell("Minor Heal III", "Snowball", 3, "Ender_Signal", 4, 7, 0, 0, 0, 0, 0);
      }
      
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal.yml").exists()) {
        writeDefaultSpell("Major Heal", "Snowball", 3, "Ender_Signal", 8, 10, 0, 0, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal I.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal I.yml").exists()) {
        writeDefaultSpell("Major Heal I", "Snowball", 3, "Ender_Signal", 8, 11, 0, 0, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal II.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal II.yml").exists()) {
        writeDefaultSpell("Major Heal II", "Snowball", 3, "Ender_Signal", 8, 12, 0, 0, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal III.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major Heal III.yml").exists()) {
        writeDefaultSpell("Major Heal III", "Snowball", 3, "Ender_Signal", 8, 13, 0, 0, 0, 0, 0);
      }
      
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal.yml").exists()) {
        writeDefaultSpell("Minor AOE Heal", "Snowball", 8, "Ender_Signal", 8, 8, 8, 2, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal I.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal I.yml").exists()) {
        writeDefaultSpell("Minor AOE Heal I", "Snowball", 8, "Ender_Signal", 8, 9, 9, 2, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal II.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal II.yml").exists()) {
        writeDefaultSpell("Minor AOE Heal II", "Snowball", 8, "Ender_Signal", 8, 10, 10, 3, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal III.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Minor AOE Heal III.yml").exists()) {
        writeDefaultSpell("Minor AOE Heal III", "Snowball", 8, "Ender_Signal", 8, 11, 11, 3, 0, 0, 0);
      }
      
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal.yml").exists()) {
        writeDefaultSpell("Major AOE Heal", "Snowball", 8, "Ender_Signal", 16, 14, 14, 3, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal I.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal I.yml").exists()) {
        writeDefaultSpell("Major AOE Heal I", "Snowball", 8, "Ender_Signal", 16, 15, 15, 3, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal II.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal II.yml").exists()) {
        writeDefaultSpell("Major AOE Heal II", "Snowball", 8, "Ender_Signal", 16, 16, 16, 4, 0, 0, 0);
      }
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal III.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + "Major AOE Heal III.yml").exists()) {
        writeDefaultSpell("Major AOE Heal III", "Snowball", 8, "Ender_Signal", 16, 17, 17, 4, 0, 0, 0);
      }
      
  
-     if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + "SetBonuses.yml").exists()) {
+     if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + "SetBonuses.yml").exists()) {
        writeSetBonuses();
      }
    }
@@ -201,7 +201,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "blaze.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "blaze.yml");
        
  
        this.PlayerDataConfig.set("5", null);
@@ -367,7 +367,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "cave_spider.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "cave_spider.yml");
        
        this.PlayerDataConfig.set("25", null);
        this.PlayerDataConfig.set("25.1.itemId", Integer.valueOf(275));
@@ -432,7 +432,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "creeper.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "creeper.yml");
        
  
        this.PlayerDataConfig.set("8", null);
@@ -586,7 +586,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ender_dragon.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ender_dragon.yml");
        
        this.PlayerDataConfig.set("100", null);
        this.PlayerDataConfig.set("100.1.itemId", Integer.valueOf(276));
@@ -630,7 +630,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "enderman.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "enderman.yml");
        
  
        this.PlayerDataConfig.set("5", null);
@@ -792,7 +792,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ghast.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "ghast.yml");
        
        this.PlayerDataConfig.set("40", null);
        this.PlayerDataConfig.set("40.1.itemId", Integer.valueOf(261));
@@ -848,7 +848,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "magma_cube.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "magma_cube.yml");
        
        this.PlayerDataConfig.set("75", null);
        this.PlayerDataConfig.set("75.1.itemId", Integer.valueOf(283));
@@ -903,7 +903,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "silverfish.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "silverfish.yml");
        
        this.PlayerDataConfig.set("45", null);
        this.PlayerDataConfig.set("45.1.itemId", Integer.valueOf(299));
@@ -953,7 +953,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "skeleton.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "skeleton.yml");
        
  
        this.PlayerDataConfig.set("10", null);
@@ -1095,7 +1095,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml");
        
  
        this.PlayerDataConfig.set("10", null);
@@ -1237,7 +1237,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "slime.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "slime.yml");
        
        this.PlayerDataConfig.set("30", null);
        this.PlayerDataConfig.set("30.1.itemId", Integer.valueOf(275));
@@ -1292,7 +1292,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "spider.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "spider.yml");
        
  
        this.PlayerDataConfig.set("15", null);
@@ -1450,7 +1450,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "witch.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "witch.yml");
        
  
        this.PlayerDataConfig.set("10", null);
@@ -1608,7 +1608,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither.yml");
        
        this.PlayerDataConfig.set("100", null);
        this.PlayerDataConfig.set("100.1.itemId", Integer.valueOf(279));
@@ -1658,7 +1658,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "zombie.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "zombie.yml");
        
  
        this.PlayerDataConfig.set("15", null);
@@ -1808,7 +1808,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml");
        
  
        this.PlayerDataConfig.set("15", null);
@@ -1958,7 +1958,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml");
        
  
        this.PlayerDataConfig.set("15", null);
@@ -2108,7 +2108,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "pig_zombie.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "pig_zombie.yml");
        
  
        this.PlayerDataConfig.set("15", null);
@@ -2250,7 +2250,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + fileName + ".yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + fileName + ".yml");
        
        this.PlayerDataConfig.set("projectile-type", projType);
        this.PlayerDataConfig.set("projectile-velocity", Integer.valueOf(projVelocity));
@@ -2267,7 +2267,7 @@
      }
      catch (Exception e) {
        e.printStackTrace();
-       ItemLoreStats.plugin.getLogger().log(Level.WARNING, "Failed to save the default spell config for " + fileName + ".");
+       Main.plugin.getLogger().log(Level.WARNING, "Failed to save the default spell config for " + fileName + ".");
      }
    }
    
@@ -2276,7 +2276,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + "SetBonuses.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + "SetBonuses.yml");
        
        this.PlayerDataConfig.set("Sets", null);
        
@@ -2295,7 +2295,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "language-en.yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "language-en.yml");
        
        //this.PlayerDataConfig.set("FileVersion", Integer.valueOf(Integer.parseInt(String.valueOf(formatVersion(Double.parseDouble(ItemLoreStats.plugin.getDescription().getVersion())).replace(".", "")))));
        

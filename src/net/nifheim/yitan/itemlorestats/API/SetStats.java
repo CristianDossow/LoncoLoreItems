@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.API;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Format;
  import java.util.List;
  import org.bukkit.ChatColor;
@@ -42,10 +42,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("primaryStats.armour.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("primaryStats.armour.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("primaryStats.armour.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -72,10 +72,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.dodge.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.dodge.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.dodge.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -102,10 +102,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.block.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.block.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.block.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -132,10 +132,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.critChance.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.critChance.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.critChance.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -162,10 +162,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.critDamage.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.critDamage.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.critDamage.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -192,10 +192,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("primaryStats.damage.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("primaryStats.damage.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name") + ": ").length()).trim().split("-")[0].trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("primaryStats.damage.name") + ": ").length()).trim().split("-")[0].trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -222,10 +222,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("primaryStats.damage.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("primaryStats.damage.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name") + ": ").length()).trim().split("-")[1].trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("primaryStats.damage.name") + ": ").length()).trim().split("-")[1].trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -252,10 +252,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("primaryStats.health.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("primaryStats.health.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("primaryStats.health.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -282,10 +282,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("primaryStats.healthRegen.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("primaryStats.healthRegen.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("primaryStats.healthRegen.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -312,10 +312,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -342,10 +342,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.reflect.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.reflect.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.reflect.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -372,10 +372,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.ice.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.ice.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.ice.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -402,10 +402,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.fire.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.fire.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.fire.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -432,10 +432,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.poison.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.poison.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.poison.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -462,10 +462,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.wither.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.wither.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.wither.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -492,10 +492,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.harming.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.harming.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.harming.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -522,10 +522,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.blind.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.blind.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.blind.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -552,10 +552,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -582,10 +582,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       if (storeItemLore.contains(ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name"))) {
-         int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name"), modifyItem.getItemMeta().getLore().toString());
+       if (storeItemLore.contains(Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name"))) {
+         int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name"), modifyItem.getItemMeta().getLore().toString());
          String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
+         String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name") + ": ").length()).trim()).replaceAll("[^0-9.]", "");
          
          storeItemLore.set(loreLineNumb, loreLineStat.replaceAll(currentStatVal, String.valueOf(this.util_Format.format(storeVal))));
          
@@ -612,10 +612,10 @@
        List<String> storeItemLore = itemStack.getItemMeta().getLore();
        ItemMeta modifyItemMeta = itemStack.getItemMeta();
        
-       int loreLineNumb = getLineForStat(ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name"), modifyItem.getItemMeta().getLore().toString());
+       int loreLineNumb = getLineForStat(Main.plugin.getConfig().getString("bonusStats.durability.name"), modifyItem.getItemMeta().getLore().toString());
        String loreLineStat = (String)storeItemLore.get(loreLineNumb);
-       String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name") + ": ").length()).trim().split("/")[0]).replaceAll("[^0-9.]", "");
-       double maxDur = Integer.parseInt(String.valueOf(ChatColor.stripColor(loreLineStat).substring((ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name") + ": ").length()).trim().split("/")[1]).replaceAll("[^0-9.]", ""));
+       String currentStatVal = String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("bonusStats.durability.name") + ": ").length()).trim().split("/")[0]).replaceAll("[^0-9.]", "");
+       double maxDur = Integer.parseInt(String.valueOf(ChatColor.stripColor(loreLineStat).substring((Main.plugin.getConfig().getString("bonusStats.durability.name") + ": ").length()).trim().split("/")[1]).replaceAll("[^0-9.]", ""));
        
        storeVal = maxDur / 100.0D * percentage;
        

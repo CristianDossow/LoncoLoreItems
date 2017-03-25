@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 
 public class ItemCategory {
 	static private String languageRegex = "[^A-Za-z������������_]";
@@ -17,11 +17,11 @@ public class ItemCategory {
 	static public String anytype = "General";
 	
 	static public boolean IsArmor(ItemStack item){
-		return ItemLoreStats.plugin.isArmour(item.getType());
+		return Main.plugin.isArmour(item.getType());
 	}
 	
 	static public boolean isTool(ItemStack item){
-		return ItemLoreStats.plugin.isTool(item.getType());
+		return Main.plugin.isTool(item.getType());
 	}
 	
 	static public boolean isShield(ItemStack item){
@@ -30,18 +30,18 @@ public class ItemCategory {
 		return false;
 	}
 	static public boolean isAnyWeapon(ItemStack item){
-		if(ItemLoreStats.plugin.isSword(item))
+		if(Main.plugin.isSword(item))
 			return true;
-		if(ItemLoreStats.plugin.isAxe(item))
+		if(Main.plugin.isAxe(item))
 			return true;
 		if(item.getType() == Material.BOW)
 			return true;
 		return false;
 	}
 	static public boolean isSword(ItemStack item){
-		if(ItemLoreStats.plugin.isSword(item))
+		if(Main.plugin.isSword(item))
 			return true;
-		if(ItemLoreStats.plugin.isAxe(item))
+		if(Main.plugin.isAxe(item))
 			return true;
 		return false;
 	}

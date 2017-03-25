@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Util;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import java.io.File;
  import java.io.PrintStream;
  import org.bukkit.ChatColor;
@@ -28,9 +28,9 @@
    public String getResponse(String getKeyFromLanguageFile, Entity getAttacker, Entity getDefender, String value1, String value2) {
      try {
        this.PlayerDataConfig = new org.bukkit.configuration.file.YamlConfiguration();
-       this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + ItemLoreStats.plugin.getConfig().getString("languageFile") + ".yml"));
+       this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + Main.plugin.getConfig().getString("languageFile") + ".yml"));
        String dMobLevel;
-       if (this.PlayerDataConfig.getInt("FileVersion") >= ItemLoreStats.plugin.getConfig().getInt("fileVersion"))
+       if (this.PlayerDataConfig.getInt("FileVersion") >= Main.plugin.getConfig().getInt("fileVersion"))
        {
          if ((getAttacker != null) && (getDefender != null) && (value1 != "") && (value2 != "")) {
            String aMobLevel = getMobLevel(getAttacker);
@@ -110,7 +110,7 @@
        
        for (Player player : org.bukkit.Bukkit.getServer().getOnlinePlayers()) {
          if (player.isOp()) {
-           player.sendMessage(ChatColor.GREEN + "[ItemLoreStats]" + ChatColor.RED + " An error has occured when trying to generate a response message from Item Lore Stats. This is usually caused by the language file being out of date. Try deleting the language-en.yml file and restart the server. The language file version is " + this.PlayerDataConfig.getInt("FileVersion") + " and should be at least " + Integer.parseInt(ItemLoreStats.plugin.getDescription().getVersion().replace(".", "")) + ".");
+           player.sendMessage(ChatColor.GREEN + "[ItemLoreStats]" + ChatColor.RED + " An error has occured when trying to generate a response message from Item Lore Stats. This is usually caused by the language file being out of date. Try deleting the language-en.yml file and restart the server. The language file version is " + this.PlayerDataConfig.getInt("FileVersion") + " and should be at least " + Integer.parseInt(Main.plugin.getDescription().getVersion().replace(".", "")) + ".");
          }
        }
      }

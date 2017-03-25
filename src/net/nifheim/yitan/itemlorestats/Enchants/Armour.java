@@ -2,7 +2,7 @@
  
  import net.nifheim.yitan.itemlorestats.Durability.Durability;
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.SetBonuses;
  import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -36,12 +36,12 @@
  
  
  
-     if (ItemLoreStats.plugin.isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
-       stat += this.gearStats.getArmourItemInHand(ItemLoreStats.plugin.itemInMainHand(getDefender));
+     if (Main.plugin.isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
+       stat += this.gearStats.getArmourItemInHand(Main.plugin.itemInMainHand(getDefender));
      }
      
-     if (ItemLoreStats.plugin.isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
-       stat += this.gearStats.getArmourItemInHand(ItemLoreStats.plugin.itemInOffHand(getDefender));
+     if (Main.plugin.isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
+       stat += this.gearStats.getArmourItemInHand(Main.plugin.itemInOffHand(getDefender));
      }
      
      stat += this.gearStats.getArmourGear(getDefender);

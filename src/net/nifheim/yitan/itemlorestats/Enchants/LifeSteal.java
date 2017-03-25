@@ -2,7 +2,7 @@ package net.nifheim.yitan.itemlorestats.Enchants;
 
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
 import net.nifheim.yitan.itemlorestats.GearStats;
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.SetBonuses;
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
 import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -27,19 +27,19 @@ public class LifeSteal {
     Util_Random util_Random = new Util_Random();
 
     public void lifeStealChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, double weaponDamage, boolean isTool) {
-        if (this.gearStats.getLifeStealGear(getAttacker) + this.gearStats.getLifeStealItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getLifeStealItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getLifeStealGear(getAttacker) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".lif", ItemLoreStats.plugin.getConfig().getInt("secondaryStats.lifeSteal.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".lif", Main.plugin.getConfig().getInt("secondaryStats.lifeSteal.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                ItemLoreStats.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".lif", Long.valueOf(System.currentTimeMillis()));
+                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".lif", Long.valueOf(System.currentTimeMillis()));
             }
 
             double lifeStealHeal = 0.0D;
             double lifeStealPercent = 0.0D;
 
             if (isTool) {
-                lifeStealPercent = this.util_Format.format(this.gearStats.getLifeStealGear(getAttacker) + this.gearStats.getLifeStealItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getLifeStealItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)));
+                lifeStealPercent = this.util_Format.format(this.gearStats.getLifeStealGear(getAttacker) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)));
             } else {
                 lifeStealPercent = this.util_Format.format(this.gearStats.getLifeStealGear(getAttacker));
             }
@@ -49,15 +49,15 @@ public class LifeSteal {
             }
 
             if (this.util_Random.random(100) <= lifeStealPercent) {
-                lifeStealHeal = ItemLoreStats.plugin.getConfig().getDouble("secondaryStats.lifeSteal.healPercentage") * weaponDamage;
+                lifeStealHeal = Main.plugin.getConfig().getDouble("secondaryStats.lifeSteal.healPercentage") * weaponDamage;
 
                 if (((getAttacker instanceof Player))
-                        && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.lifeSteal"))) {
+                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.lifeSteal"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.LifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.enemyLifeSteal"))) {
+                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyLifeSteal"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                     } else if ((getAttacker instanceof LivingEntity)) {

@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Spells;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import java.io.File;
  import org.bukkit.Effect;
  import org.bukkit.Location;
@@ -30,7 +30,7 @@
    public String getValue(String spellFileName, String val) {
      try {
        this.PlayerDataConfig = new org.bukkit.configuration.file.YamlConfiguration();
-       this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + spellFileName + ".yml"));
+       this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + spellFileName + ".yml"));
        
        return this.PlayerDataConfig.getString(val);
      }
@@ -48,31 +48,31 @@
      
      if (projectileType.equals("snowball")) {
        Snowball projectile = (Snowball)player.getWorld().spawn(loc, Snowball.class);
-       projectile.setMetadata("ILS_Snowball", new FixedMetadataValue(ItemLoreStats.getPlugin(), player.getName()));
+       projectile.setMetadata("ILS_Snowball", new FixedMetadataValue(Main.getPlugin(), player.getName()));
        
        return projectile; }
      if (projectileType.equals("smallfireball")) {
        SmallFireball projectile = (SmallFireball)player.getWorld().spawn(loc, SmallFireball.class);
        projectile.setYield(0.0F);
        projectile.setIsIncendiary(false);
-       projectile.setMetadata("ILS_SmallFireball", new FixedMetadataValue(ItemLoreStats.getPlugin(), player.getName()));
+       projectile.setMetadata("ILS_SmallFireball", new FixedMetadataValue(Main.getPlugin(), player.getName()));
        
        return projectile; }
      if (projectileType.equals("fireball")) {
        Fireball projectile = (Fireball)player.getWorld().spawn(loc, Fireball.class);
        projectile.setYield(0.0F);
        projectile.setIsIncendiary(false);
-       projectile.setMetadata("ILS_Fireball", new FixedMetadataValue(ItemLoreStats.getPlugin(), player.getName()));
+       projectile.setMetadata("ILS_Fireball", new FixedMetadataValue(Main.getPlugin(), player.getName()));
        
        return projectile; }
      if (projectileType.equals("arrow")) {
        Arrow projectile = (Arrow)player.getWorld().spawn(loc, Arrow.class);
-       projectile.setMetadata("ILS_Arrow", new FixedMetadataValue(ItemLoreStats.getPlugin(), player.getName()));
+       projectile.setMetadata("ILS_Arrow", new FixedMetadataValue(Main.getPlugin(), player.getName()));
        
        return projectile; }
      if (projectileType.equals("egg")) {
        Egg projectile = (Egg)player.getWorld().spawn(loc, Egg.class);
-       projectile.setMetadata("ILS_Egg", new FixedMetadataValue(ItemLoreStats.getPlugin(), player.getName()));
+       projectile.setMetadata("ILS_Egg", new FixedMetadataValue(Main.getPlugin(), player.getName()));
        
        return projectile;
      }
@@ -160,19 +160,19 @@
      double DDA = getDirectDamageAmount(spellFileName);
      double ADA = getAOEDamageAmount(spellFileName);
      
-     projectile.setMetadata("DHA=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Double.valueOf(DHA)));
-     projectile.setMetadata("AHA=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Double.valueOf(AHA)));
-     projectile.setMetadata("AHR=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Double.valueOf(getAOEHealRange(spellFileName))));
-     projectile.setMetadata("DDA=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Double.valueOf(DDA)));
-     projectile.setMetadata("ADA=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Double.valueOf(ADA)));
-     projectile.setMetadata("ADR=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Double.valueOf(getAOEDamageRange(spellFileName))));
+     projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(DHA)));
+     projectile.setMetadata("AHA=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(AHA)));
+     projectile.setMetadata("AHR=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(getAOEHealRange(spellFileName))));
+     projectile.setMetadata("DDA=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(DDA)));
+     projectile.setMetadata("ADA=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(ADA)));
+     projectile.setMetadata("ADR=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(getAOEDamageRange(spellFileName))));
      
      if ((DHA > 0.0D) || (AHA > 0.0D)) {
-       projectile.setMetadata("Heal=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Boolean.valueOf(true)));
+       projectile.setMetadata("Heal=", new FixedMetadataValue(Main.getPlugin(), Boolean.valueOf(true)));
      }
      
      if ((DDA > 0.0D) || (ADA > 0.0D)) {
-       projectile.setMetadata("Damage=", new FixedMetadataValue(ItemLoreStats.getPlugin(), Boolean.valueOf(true)));
+       projectile.setMetadata("Damage=", new FixedMetadataValue(Main.getPlugin(), Boolean.valueOf(true)));
      }
    }
  }

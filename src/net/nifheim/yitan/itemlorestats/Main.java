@@ -87,9 +87,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
+public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
-    public static ItemLoreStats plugin;
+    public static Main plugin;
 
     private FileConfiguration config;
     private ConsoleCommandSender console;
@@ -207,8 +207,8 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         }));
     }
 
-    public static ItemLoreStats getPlugin() {
-        return (ItemLoreStats) Bukkit.getPluginManager().getPlugin("ItemLoreStats");
+    public static Main getPlugin() {
+        return (Main) Bukkit.getPluginManager().getPlugin("ItemLoreStats");
     }
 
     public void checkDependencies() {
@@ -818,10 +818,10 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     float speed = 0.2f;
                     float basespeed = 0.2f;
 
-                    speed = (float) (ItemLoreStats.plugin.getConfig().getDouble("baseMovementSpeed"));
-                    speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()).doubleValue() * ItemLoreStats.this.getConfig().getDouble("additionalStatsPerLevel.speed")));
+                    speed = (float) (Main.plugin.getConfig().getDouble("baseMovementSpeed"));
+                    speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()).doubleValue() * Main.this.getConfig().getDouble("additionalStatsPerLevel.speed")));
 
-                    speed = (float) (speed + (basespeed * ItemLoreStats.this.gearStats.getMovementSpeedGear(playerFinal) / 100));
+                    speed = (float) (speed + (basespeed * Main.this.gearStats.getMovementSpeedGear(playerFinal) / 100));
 
                     if (speed > maxSpeed) {
 
@@ -847,25 +847,25 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             if ((event.getEntity() instanceof Player)) {
                 if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.SATIATED)) {
                     Player player = (Player) event.getEntity();
-                    if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
-                        if (ItemLoreStats.plugin.getConfig().getDouble("baseHealthRegen") == 0.0D) {
+                    if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+                        if (Main.plugin.getConfig().getDouble("baseHealthRegen") == 0.0D) {
                             return;
                         }
                         double gearRegen = 0.0D;
                         double modifier = 0.0D;
 
-                        if (ItemLoreStats.this.isTool(ItemLoreStats.this.itemInMainHand(player).getType())) {
-                            gearRegen += ItemLoreStats.this.gearStats.getHealthRegenItemInHand(ItemLoreStats.this.itemInMainHand(player));
+                        if (Main.this.isTool(Main.this.itemInMainHand(player).getType())) {
+                            gearRegen += Main.this.gearStats.getHealthRegenItemInHand(Main.this.itemInMainHand(player));
                         }
 
-                        if (ItemLoreStats.this.isTool(ItemLoreStats.this.itemInOffHand(player).getType())) {
-                            gearRegen += ItemLoreStats.this.gearStats.getHealthRegenItemInHand(ItemLoreStats.this.itemInOffHand(player));
+                        if (Main.this.isTool(Main.this.itemInOffHand(player).getType())) {
+                            gearRegen += Main.this.gearStats.getHealthRegenItemInHand(Main.this.itemInOffHand(player));
                         }
 
-                        gearRegen += ItemLoreStats.this.gearStats.getHealthRegenGear(player);
+                        gearRegen += Main.this.gearStats.getHealthRegenGear(player);
 
-                        double baseRegen = ItemLoreStats.this.getConfig().getDouble("baseHealthRegen");
-                        double additionalLevelRegen = ItemLoreStats.this.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
+                        double baseRegen = Main.this.getConfig().getDouble("baseHealthRegen");
+                        double additionalLevelRegen = Main.this.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
                         double modifiedHealthRegen = player.getMaxHealth() / 100.0D * (gearRegen + baseRegen + Double.valueOf(player.getLevel()).doubleValue() * additionalLevelRegen + modifier);
 
                         event.setAmount(modifiedHealthRegen);
@@ -884,18 +884,18 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             double bonusExp = 0.0D;
             double xpMultiplier = 0.0D;
 
-            if ((ItemLoreStats.this.isTool(ItemLoreStats.this.itemInMainHand(player).getType()))
-                    && (ItemLoreStats.this.gearStats.getXPMultiplierItemInHand(ItemLoreStats.this.itemInMainHand(player)) > 0.0D)) {
-                xpMultiplier += ItemLoreStats.this.gearStats.getXPMultiplierItemInHand(ItemLoreStats.this.itemInMainHand(player));
+            if ((Main.this.isTool(Main.this.itemInMainHand(player).getType()))
+                    && (Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInMainHand(player)) > 0.0D)) {
+                xpMultiplier += Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInMainHand(player));
             }
 
-            if ((ItemLoreStats.this.isTool(ItemLoreStats.this.itemInOffHand(player).getType()))
-                    && (ItemLoreStats.this.gearStats.getXPMultiplierItemInHand(ItemLoreStats.this.itemInOffHand(player)) > 0.0D)) {
-                xpMultiplier += ItemLoreStats.this.gearStats.getXPMultiplierItemInHand(ItemLoreStats.this.itemInOffHand(player));
+            if ((Main.this.isTool(Main.this.itemInOffHand(player).getType()))
+                    && (Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInOffHand(player)) > 0.0D)) {
+                xpMultiplier += Main.this.gearStats.getXPMultiplierItemInHand(Main.this.itemInOffHand(player));
             }
 
-            if (ItemLoreStats.this.gearStats.getXPMultiplierGear(player) > 0.0D) {
-                xpMultiplier += ItemLoreStats.this.gearStats.getXPMultiplierGear(player);
+            if (Main.this.gearStats.getXPMultiplierGear(player) > 0.0D) {
+                xpMultiplier += Main.this.gearStats.getXPMultiplierGear(player);
             }
 
             bonusExp = event.getAmount() * xpMultiplier / 100.0D;
@@ -905,18 +905,18 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
 
         @EventHandler
         public void enchantTableUse(EnchantItemEvent event) {
-            if (ItemLoreStats.plugin.getConfig().getBoolean("keepXPOnDeath")) {
+            if (Main.plugin.getConfig().getBoolean("keepXPOnDeath")) {
                 final Player playerFinal = event.getEnchanter();
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
-                            ItemLoreStats.this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
+                            Main.this.PlayerDataConfig = new YamlConfiguration();
+                            Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
 
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.xp", Float.valueOf(playerFinal.getExp()));
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.level", Integer.valueOf(playerFinal.getLevel()));
-                            ItemLoreStats.this.PlayerDataConfig.save(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
+                            Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(playerFinal.getExp()));
+                            Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(playerFinal.getLevel()));
+                            Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -932,11 +932,11 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             if (event.getEntity().hasMetadata("NPC")) {
                 return;
             }
-            if (ItemLoreStats.plugin.getConfig().getBoolean("keepXPOnDeath")) {
+            if (Main.plugin.getConfig().getBoolean("keepXPOnDeath")) {
                 Player player = event.getEntity();
                 try {
-                    ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
-                    ItemLoreStats.this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                    Main.this.PlayerDataConfig = new YamlConfiguration();
+                    Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
 
                     event.setDroppedExp(0);
 
@@ -948,9 +948,9 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                         player.setLevel(lvl - 1);
                     }
 
-                    ItemLoreStats.this.PlayerDataConfig.set("extra.xp", Float.valueOf(player.getExp()));
-                    ItemLoreStats.this.PlayerDataConfig.set("extra.level", Integer.valueOf(player.getLevel()));
-                    ItemLoreStats.this.PlayerDataConfig.save(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
+                    Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(player.getExp()));
+                    Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(player.getLevel()));
+                    Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("*********** Failed to save player data for " + player.getName() + " when dying! ***********");
@@ -961,63 +961,63 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         @EventHandler
         public void onPlayerJoin(PlayerJoinEvent event) {
             final Player playerFinal = event.getPlayer();
-            ItemLoreStats.this.getServer().getScheduler().scheduleAsyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+            Main.this.getServer().getScheduler().scheduleAsyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
+                    if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                         try {
-                            ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
+                            Main.this.PlayerDataConfig = new YamlConfiguration();
 
-                            ItemLoreStats.this.updateHealth(playerFinal);
+                            Main.this.updateHealth(playerFinal);
 
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.logoutHealth", Double.valueOf(20.0D));
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.maxHealth", Double.valueOf(20.0D));
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.hunger", Integer.valueOf(20));
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.xp", Float.valueOf(0.0F));
-                            ItemLoreStats.this.PlayerDataConfig.set("extra.level", Integer.valueOf(0));
-                            ItemLoreStats.this.PlayerDataConfig.save(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
+                            Main.this.PlayerDataConfig.set("extra.logoutHealth", Double.valueOf(20.0D));
+                            Main.this.PlayerDataConfig.set("extra.maxHealth", Double.valueOf(20.0D));
+                            Main.this.PlayerDataConfig.set("extra.hunger", Integer.valueOf(20));
+                            Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(0.0F));
+                            Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(0));
+                            Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.out.println("*********** Failed to save player data for " + playerFinal.getName() + " when logging in! ***********");
                         }
-                    } else if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
+                    } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                         try {
-                            ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
-                            ItemLoreStats.this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
+                            Main.this.PlayerDataConfig = new YamlConfiguration();
+                            Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
 
-                            playerFinal.setMaxHealth(ItemLoreStats.this.PlayerDataConfig.getDouble("extra.maxHealth"));
-                            playerFinal.setHealth(ItemLoreStats.this.PlayerDataConfig.getDouble("extra.logoutHealth"));
-                            playerFinal.setFoodLevel(ItemLoreStats.this.PlayerDataConfig.getInt("extra.hunger"));
+                            playerFinal.setMaxHealth(Main.this.PlayerDataConfig.getDouble("extra.maxHealth"));
+                            playerFinal.setHealth(Main.this.PlayerDataConfig.getDouble("extra.logoutHealth"));
+                            playerFinal.setFoodLevel(Main.this.PlayerDataConfig.getInt("extra.hunger"));
 
-                            if (ItemLoreStats.this.PlayerDataConfig.get("extra.combatLogVisible") == null) {
-                                ItemLoreStats.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(true));
+                            if (Main.this.PlayerDataConfig.get("extra.combatLogVisible") == null) {
+                                Main.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(true));
                             } else {
-                                ItemLoreStats.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(ItemLoreStats.this.PlayerDataConfig.getBoolean("extra.combatLogVisible")));
+                                Main.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(Main.this.PlayerDataConfig.getBoolean("extra.combatLogVisible")));
                             }
 
-                            if ((ItemLoreStats.plugin.getConfig().getBoolean("keepXPOnDeath"))) {
+                            if ((Main.plugin.getConfig().getBoolean("keepXPOnDeath"))) {
                                 //playerFinal.setExp((float)ItemLoreStats.this.PlayerDataConfig.getDouble("extra.xp"));
                                 //playerFinal.setLevel(ItemLoreStats.this.PlayerDataConfig.getInt("extra.level"));
                             }
 
-                            ItemLoreStats.this.updateHealth(playerFinal);
+                            Main.this.updateHealth(playerFinal);
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when logging in! ***********");
                         }
                     }
 
-                    ItemLoreStats.this.updateHealth(playerFinal);
-                    ItemLoreStats.this.updatePlayerSpeed(playerFinal);
+                    Main.this.updateHealth(playerFinal);
+                    Main.this.updatePlayerSpeed(playerFinal);
 
                 }
             }, 5L);
 
             if (event.getPlayer().isOp()) {
-                ItemLoreStats.this.getServer().getScheduler().runTaskLaterAsynchronously(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, new Runnable() {
                     @Override
                     public void run() {
-                        if (ItemLoreStats.this.getMinecraftBuildNumber(Bukkit.getBukkitVersion()) >= 1100) {
+                        if (Main.this.getMinecraftBuildNumber(Bukkit.getBukkitVersion()) >= 1100) {
                         }
                     }
                 }, 60L);
@@ -1028,30 +1028,30 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         public void onPlayerRespawn(PlayerRespawnEvent event) {
             Player player = event.getPlayer();
 
-            if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
                 final Player playerFinal = player;
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run() {
-                        if (ItemLoreStats.plugin.getConfig().getBoolean("keepXPOnDeath")) {
+                        if (Main.plugin.getConfig().getBoolean("keepXPOnDeath")) {
                             try {
-                                ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
-                                ItemLoreStats.this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
+                                Main.this.PlayerDataConfig = new YamlConfiguration();
+                                Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
 
-                                playerFinal.setExp((float) ItemLoreStats.this.PlayerDataConfig.getDouble("extra.xp"));
-                                playerFinal.setLevel(ItemLoreStats.this.PlayerDataConfig.getInt("extra.level"));
-                                ItemLoreStats.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(ItemLoreStats.this.PlayerDataConfig.getBoolean("extra.combatLogVisible")));
-                                ItemLoreStats.this.updateHealth(playerFinal);
-                                ItemLoreStats.this.updatePlayerSpeed(playerFinal);
-                                ItemLoreStats.this.setBonuses.updateSetBonus(playerFinal);
+                                playerFinal.setExp((float) Main.this.PlayerDataConfig.getDouble("extra.xp"));
+                                playerFinal.setLevel(Main.this.PlayerDataConfig.getInt("extra.level"));
+                                Main.this.combatLogVisible.put(playerFinal.getName(), Boolean.valueOf(Main.this.PlayerDataConfig.getBoolean("extra.combatLogVisible")));
+                                Main.this.updateHealth(playerFinal);
+                                Main.this.updatePlayerSpeed(playerFinal);
+                                Main.this.setBonuses.updateSetBonus(playerFinal);
                                 playerFinal.setHealth(playerFinal.getMaxHealth());
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when respawning! ***********");
                             }
                         } else {
-                            ItemLoreStats.this.updateHealth(playerFinal);
-                            ItemLoreStats.this.updatePlayerSpeed(playerFinal);
-                            ItemLoreStats.this.setBonuses.updateSetBonus(playerFinal);
+                            Main.this.updateHealth(playerFinal);
+                            Main.this.updatePlayerSpeed(playerFinal);
+                            Main.this.setBonuses.updateSetBonus(playerFinal);
                         }
 
                     }
@@ -1064,7 +1064,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             if ((event.getPlayer() instanceof Player)) {
                 Player player = event.getPlayer();
 
-                if (!new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+                if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                     if (!player.isDead()) {
                         player.setMaxHealth(20.0D);
                         if (player.getHealth() > 20.0D) {
@@ -1073,18 +1073,18 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     } else {
                         player.setMaxHealth(20.0D);
                     }
-                } else if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+                } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                     try {
-                        ItemLoreStats.this.PlayerDataConfig = new YamlConfiguration();
-                        ItemLoreStats.this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                        Main.this.PlayerDataConfig = new YamlConfiguration();
+                        Main.this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
 
-                        ItemLoreStats.this.PlayerDataConfig.set("extra.logoutHealth", Long.valueOf(Math.round(player.getHealth())));
-                        ItemLoreStats.this.PlayerDataConfig.set("extra.maxHealth", Long.valueOf(Math.round(player.getMaxHealth())));
-                        ItemLoreStats.this.PlayerDataConfig.set("extra.hunger", Integer.valueOf(player.getFoodLevel()));
-                        ItemLoreStats.this.PlayerDataConfig.set("extra.xp", Float.valueOf(player.getExp()));
-                        ItemLoreStats.this.PlayerDataConfig.set("extra.level", Integer.valueOf(player.getLevel()));
-                        ItemLoreStats.this.PlayerDataConfig.set("extra.combatLogVisible", ItemLoreStats.this.combatLogVisible.get(player.getName()));
-                        ItemLoreStats.this.PlayerDataConfig.save(ItemLoreStats.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
+                        Main.this.PlayerDataConfig.set("extra.logoutHealth", Long.valueOf(Math.round(player.getHealth())));
+                        Main.this.PlayerDataConfig.set("extra.maxHealth", Long.valueOf(Math.round(player.getMaxHealth())));
+                        Main.this.PlayerDataConfig.set("extra.hunger", Integer.valueOf(player.getFoodLevel()));
+                        Main.this.PlayerDataConfig.set("extra.xp", Float.valueOf(player.getExp()));
+                        Main.this.PlayerDataConfig.set("extra.level", Integer.valueOf(player.getLevel()));
+                        Main.this.PlayerDataConfig.set("extra.combatLogVisible", Main.this.combatLogVisible.get(player.getName()));
+                        Main.this.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
 
                         if (!player.isDead()) {
                             player.setMaxHealth(20.0D);
@@ -1105,13 +1105,13 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
         @EventHandler
         public void onDropItemEvent(PlayerDropItemEvent event) {
             Player player = event.getPlayer();
-            if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
                 final Player playerFinal = player;
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run() {
-                        ItemLoreStats.this.updateHealth(playerFinal);
-                        ItemLoreStats.this.updatePlayerSpeed(playerFinal);
-                        ItemLoreStats.this.setBonuses.updateSetBonus(playerFinal);
+                        Main.this.updateHealth(playerFinal);
+                        Main.this.updatePlayerSpeed(playerFinal);
+                        Main.this.setBonuses.updateSetBonus(playerFinal);
                     }
 
                 }, 2L);
@@ -1123,8 +1123,8 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             Player player = event.getPlayer();
             ItemStack item = event.getItem().getItemStack();
 
-            if ((!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
-                    && (ItemLoreStats.this.getConfig().getBoolean("messages.itemLooted"))
+            if ((!Main.this.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
+                    && (Main.this.getConfig().getBoolean("messages.itemLooted"))
                     && (item != null)
                     && (item.getItemMeta() != null)
                     && (item.getItemMeta().hasDisplayName())
@@ -1136,16 +1136,16 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                 item.setItemMeta(itemMeta);
 
                 event.getItem().setItemStack(itemStack);
-                player.sendMessage(ItemLoreStats.this.util_GetResponse.getResponse("Item.Looted", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
+                player.sendMessage(Main.this.util_GetResponse.getResponse("Item.Looted", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
             }
         }
 
         @EventHandler
         public void onGameModeChange(PlayerGameModeChangeEvent event) {
             final Player player = event.getPlayer();
-            ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+            Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 public void run() {
-                    ItemLoreStats.this.updateHealth(player);
+                    Main.this.updateHealth(player);
                 }
             }, 2L);
         }
@@ -1155,20 +1155,20 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             if ((event.isCancelled()) || (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))) {
                 return;
             }
-            if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
                 Player player = event.getPlayer();
                 ItemStack item = event.getItem().getItemStack().clone();
 
                 if ((item != null)
                         && (item.getAmount() == 1)
-                        && (ItemLoreStats.this.isTool(item.getType()))
+                        && (Main.this.isTool(item.getType()))
                         && (item.hasItemMeta())
                         && (item.getItemMeta().getLore() != null)) {
                     if (player.getInventory().firstEmpty() == player.getInventory().getHeldItemSlot()) {
                         for (int slot = player.getInventory().getHeldItemSlot() + 1; slot < 35; slot++) {
                             if (player.getInventory().getItem(slot) == null) {
-                                if ((ItemLoreStats.this.gearStats.getSoulboundName(player, item) != "")
-                                        && (!ItemLoreStats.this.gearStats.getSoulboundName(player, item).equals(player.getName()))) {
+                                if ((Main.this.gearStats.getSoulboundName(player, item) != "")
+                                        && (!Main.this.gearStats.getSoulboundName(player, item).equals(player.getName()))) {
                                     event.setCancelled(true);
                                     event.getItem().remove();
                                     event.getPlayer().getInventory().setItem(slot, item);
@@ -1176,8 +1176,8 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                                     break;
                                 }
 
-                                if ((ItemLoreStats.this.gearStats.getXPLevelRequirement(player, item) != 0)
-                                        && (ItemLoreStats.this.gearStats.getXPLevelRequirement(player, item) > player.getLevel())) {
+                                if ((Main.this.gearStats.getXPLevelRequirement(player, item) != 0)
+                                        && (Main.this.gearStats.getXPLevelRequirement(player, item) > player.getLevel())) {
                                     event.setCancelled(true);
                                     event.getItem().remove();
                                     event.getPlayer().getInventory().setItem(slot, item);
@@ -1185,8 +1185,8 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                                     break;
                                 }
 
-                                if ((ItemLoreStats.this.gearStats.getClass(item) != null)
-                                        && (!player.hasPermission("ils.use." + ItemLoreStats.this.gearStats.getClass(item)))) {
+                                if ((Main.this.gearStats.getClass(item) != null)
+                                        && (!player.hasPermission("ils.use." + Main.this.gearStats.getClass(item)))) {
                                     event.setCancelled(true);
                                     event.getItem().remove();
                                     event.getPlayer().getInventory().setItem(slot, item);
@@ -1198,18 +1198,18 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     }
                 }
 
-                ItemLoreStats.this.updateHealth(player);
-                ItemLoreStats.this.updatePlayerSpeed(player);
+                Main.this.updateHealth(player);
+                Main.this.updatePlayerSpeed(player);
 
-                ItemLoreStats.this.setBonuses.updateSetBonus(player);
+                Main.this.setBonuses.updateSetBonus(player);
             }
         }
 
         @EventHandler
         public void onPlayerHeldItemChange(final PlayerItemHeldEvent event) {
-            if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
                 final Player playerFinal = event.getPlayer();
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run() {
                         ItemStack checkItemHeld = playerFinal.getInventory().getItem(event.getNewSlot());
 
@@ -1217,38 +1217,38 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                                 && (checkItemHeld.getType() != Material.AIR)
                                 && (checkItemHeld.getItemMeta() != null)
                                 && (checkItemHeld.getItemMeta().getLore() != null)
-                                && (ItemLoreStats.this.isTool(checkItemHeld.getType()))) {
-                            if ((ItemLoreStats.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld) != null)
-                                    && (!ItemLoreStats.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld).equals(playerFinal.getName()))) {
-                                ItemLoreStats.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
-                                playerFinal.sendMessage(ItemLoreStats.this.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, String.valueOf(ItemLoreStats.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(ItemLoreStats.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
+                                && (Main.this.isTool(checkItemHeld.getType()))) {
+                            if ((Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld) != null)
+                                    && (!Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld).equals(playerFinal.getName()))) {
+                                Main.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
+                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
 
-                                playerFinal.sendMessage(ItemLoreStats.this.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, ItemLoreStats.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld), ItemLoreStats.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld)));
-
-                                return;
-                            }
-
-                            if ((ItemLoreStats.this.gearStats.phic_ClassItemInHand(checkItemHeld) != null)
-                                    && (!playerFinal.hasPermission("ils.use." + ItemLoreStats.this.gearStats.phic_ClassItemInHand(checkItemHeld)))) {
-                                ItemLoreStats.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
-                                playerFinal.sendMessage(ItemLoreStats.this.util_GetResponse.getResponse("ClassRequirementMessages.NotRequiredClassForItemInHand", playerFinal, playerFinal, String.valueOf(ItemLoreStats.this.gearStats.phic_ClassItemInHand(checkItemHeld)), String.valueOf(ItemLoreStats.this.gearStats.phic_ClassItemInHand(checkItemHeld))));
+                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld), Main.this.gearStats.phic_SoulboundNameItemInHand(checkItemHeld)));
 
                                 return;
                             }
 
-                            if ((ItemLoreStats.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) != 0)
-                                    && (ItemLoreStats.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) > playerFinal.getLevel())) {
-                                ItemLoreStats.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
-                                playerFinal.sendMessage(ItemLoreStats.this.util_GetResponse.getResponse("LevelRequirementMessages.LevelTooLowForItemInHand", playerFinal, playerFinal, String.valueOf(ItemLoreStats.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(ItemLoreStats.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
+                            if ((Main.this.gearStats.phic_ClassItemInHand(checkItemHeld) != null)
+                                    && (!playerFinal.hasPermission("ils.use." + Main.this.gearStats.phic_ClassItemInHand(checkItemHeld)))) {
+                                Main.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
+                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("ClassRequirementMessages.NotRequiredClassForItemInHand", playerFinal, playerFinal, String.valueOf(Main.this.gearStats.phic_ClassItemInHand(checkItemHeld)), String.valueOf(Main.this.gearStats.phic_ClassItemInHand(checkItemHeld))));
+
+                                return;
+                            }
+
+                            if ((Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) != 0)
+                                    && (Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) > playerFinal.getLevel())) {
+                                Main.this.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
+                                playerFinal.sendMessage(Main.this.util_GetResponse.getResponse("LevelRequirementMessages.LevelTooLowForItemInHand", playerFinal, playerFinal, String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(Main.this.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
 
                                 return;
                             }
                         }
 
-                        ItemLoreStats.this.updateHealth(playerFinal);
-                        ItemLoreStats.this.updatePlayerSpeed(playerFinal);
+                        Main.this.updateHealth(playerFinal);
+                        Main.this.updatePlayerSpeed(playerFinal);
 
-                        ItemLoreStats.this.setBonuses.updateSetBonus(playerFinal);
+                        Main.this.setBonuses.updateSetBonus(playerFinal);
                     }
                 }, 2L);
             }
@@ -1273,27 +1273,27 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                 if (event.getOldCursor() != null) {
                     ItemStack item = event.getOldCursor().clone();
 
-                    if (!ItemLoreStats.this.getConfig().getBoolean("usingMcMMO")) {
-                        ItemLoreStats.this.durability.syncArmourDurability(player);
+                    if (!Main.this.getConfig().getBoolean("usingMcMMO")) {
+                        Main.this.durability.syncArmourDurability(player);
                     }
 
-                    if (ItemLoreStats.this.getSlots.isOffHandSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))
-                            || ((ItemLoreStats.this.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (ItemLoreStats.this.isArmour(item.getType()))) || ((ItemLoreStats.this.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (player.getInventory().getHeldItemSlot() == ItemLoreStats.this.getSlots.getRawHeldItemSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (ItemLoreStats.this.isTool(item.getType())))) {
-                        if (!ItemLoreStats.this.xpLevel.checkXPLevel(player, item)) {
+                    if (Main.this.getSlots.isOffHandSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))
+                            || ((Main.this.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (Main.this.isArmour(item.getType()))) || ((Main.this.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (player.getInventory().getHeldItemSlot() == Main.this.getSlots.getRawHeldItemSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (Main.this.isTool(item.getType())))) {
+                        if (!Main.this.xpLevel.checkXPLevel(player, item)) {
                             event.setCancelled(true);
                             player.updateInventory();
 
                             return;
                         }
 
-                        if (!ItemLoreStats.this.soulbound.checkSoulbound(player, item)) {
+                        if (!Main.this.soulbound.checkSoulbound(player, item)) {
                             event.setCancelled(true);
                             player.updateInventory();
 
                             return;
                         }
 
-                        if (!ItemLoreStats.this.classes.checkClasses(player, item)) {
+                        if (!Main.this.classes.checkClasses(player, item)) {
                             event.setCancelled(true);
                             player.updateInventory();
 
@@ -1309,7 +1309,7 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
                 return;
             }
-            if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(event.getWhoClicked().getWorld().getName())) {
+            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getWhoClicked().getWorld().getName())) {
 
                 if ((event.getInventory().getType().equals(InventoryType.CRAFTING))
                         || (event.getInventory().getType().equals(InventoryType.PLAYER))
@@ -1328,28 +1328,28 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                         if (event.isShiftClick()) {
                             item = event.getCurrentItem().clone();
                         }
-                        if (!ItemLoreStats.this.getConfig().getBoolean("usingMcMMO")) {
-                            ItemLoreStats.this.durability.syncArmourDurability(player);
+                        if (!Main.this.getConfig().getBoolean("usingMcMMO")) {
+                            Main.this.durability.syncArmourDurability(player);
                         }
 
                         if ((event.getSlot() == 45) || (event.getRawSlot() == 45)
-                                || ((event.getSlotType().equals(InventoryType.SlotType.ARMOR)) && (ItemLoreStats.this.isArmour(item.getType())))
-                                || ((event.isShiftClick())) || ((event.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) && (event.getSlot() == player.getInventory().getHeldItemSlot()) && (ItemLoreStats.this.isTool(item.getType())))) {
-                            if (!ItemLoreStats.this.xpLevel.checkXPLevel(player, item)) {
+                                || ((event.getSlotType().equals(InventoryType.SlotType.ARMOR)) && (Main.this.isArmour(item.getType())))
+                                || ((event.isShiftClick())) || ((event.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) && (event.getSlot() == player.getInventory().getHeldItemSlot()) && (Main.this.isTool(item.getType())))) {
+                            if (!Main.this.xpLevel.checkXPLevel(player, item)) {
                                 event.setCancelled(true);
                                 player.updateInventory();
 
                                 return;
                             }
 
-                            if (!ItemLoreStats.this.soulbound.checkSoulbound(player, item)) {
+                            if (!Main.this.soulbound.checkSoulbound(player, item)) {
                                 event.setCancelled(true);
                                 player.updateInventory();
 
                                 return;
                             }
 
-                            if (!ItemLoreStats.this.classes.checkClasses(player, item)) {
+                            if (!Main.this.classes.checkClasses(player, item)) {
                                 event.setCancelled(true);
                                 player.updateInventory();
 
@@ -1376,12 +1376,12 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     || (event.getInventory().getType().equals(InventoryType.DISPENSER))
                     || (event.getInventory().getType().equals(InventoryType.CHEST))
                     || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
-                    || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) && ((ItemLoreStats.this.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) || (ItemLoreStats.this.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))))) {
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                    || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) && ((Main.this.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) || (Main.this.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))))) {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run() {
                         player.updateInventory();
-                        ItemLoreStats.this.updateHealth(player);
-                        ItemLoreStats.this.updatePlayerSpeed(player);
+                        Main.this.updateHealth(player);
+                        Main.this.updatePlayerSpeed(player);
                     }
 
                 }, 1L);
@@ -1404,11 +1404,11 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     || (event.getInventory().getType().equals(InventoryType.CHEST))
                     || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
                     || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) && ((event.getSlotType().equals(InventoryType.SlotType.ARMOR)) || (event.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) || (event.isShiftClick()))) {
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run() {
                         player.updateInventory();
-                        ItemLoreStats.this.updateHealth(player);
-                        ItemLoreStats.this.updatePlayerSpeed(player);
+                        Main.this.updateHealth(player);
+                        Main.this.updatePlayerSpeed(player);
                     }
 
                 }, 1L);
@@ -1420,30 +1420,30 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
             if ((event.getPlayer() instanceof Player)) {
                 final Player playerFinal = event.getPlayer();
 
-                ItemLoreStats.this.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+                Main.this.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     @Override
                     public void run() {
-                        ItemLoreStats.this.updateHealth(playerFinal);
-                        ItemLoreStats.this.updatePlayerSpeed(playerFinal);
-                        ItemLoreStats.this.setBonuses.updateSetBonus(playerFinal);
+                        Main.this.updateHealth(playerFinal);
+                        Main.this.updatePlayerSpeed(playerFinal);
+                        Main.this.setBonuses.updateSetBonus(playerFinal);
 
                     }
                 }, 2L);
 
-                if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(playerFinal.getWorld().getName())) {
+                if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(playerFinal.getWorld().getName())) {
                 }
             }
         }
 
         @EventHandler
         public void modifyMobHealth(CreatureSpawnEvent event) {
-            if (!ItemLoreStats.this.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName())) {
+            if (!Main.this.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName())) {
                 LivingEntity entity = event.getEntity();
                 Location entityLoc = entity.getLocation();
 
-                if ((ItemLoreStats.plugin.getConfig().getBoolean("ILSLootFromNaturalSpawnsOnly"))
+                if ((Main.plugin.getConfig().getBoolean("ILSLootFromNaturalSpawnsOnly"))
                         && (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.NATURAL))) {
-                    entity.setMetadata("naturalSpawn", new FixedMetadataValue(ItemLoreStats.plugin, Boolean.valueOf(true)));
+                    entity.setMetadata("naturalSpawn", new FixedMetadataValue(Main.plugin, Boolean.valueOf(true)));
                 }
 
                 /*if ((ItemLoreStats.this.util_WorldGuard != null) /*&& (ItemLoreStats.this.util_WorldGuard.entityInLevelRegion(entity))) {
@@ -1460,18 +1460,32 @@ public class ItemLoreStats extends org.bukkit.plugin.java.JavaPlugin {
                     entity.setMetadata("regionSpawned", new FixedMetadataValue(ItemLoreStats.plugin, ItemLoreStats.this.util_WorldGuard.getRegionInsideName(entity)));
 
                     entity.setMaxHealth(Double.valueOf(newHealth).intValue());
-                    entity.setHealth(Double.valueOf(newHealth).intValue());
-                } else*/ if (ItemLoreStats.this.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
-                    String worldName = entity.getWorld().getName();
+                    entity.setHealth(Double.valueOf(newHealth).intValue());/*if ((ItemLoreStats.this.util_WorldGuard != null) /*&& (ItemLoreStats.this.util_WorldGuard.entityInLevelRegion(entity))) {
+                    String regionName = ItemLoreStats.this.util_WorldGuard.getRegionNameFromLocation(entityLoc);
 
-                    Location loc = new Location(entity.getWorld(), ItemLoreStats.this.getConfig().getInt("npcModifier." + worldName + ".location.x"), ItemLoreStats.this.getConfig().getInt("npcModifier." + worldName + ".location.y"), ItemLoreStats.this.getConfig().getInt("npcModifier." + worldName + ".location.z"));
+                    int minLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[0]);
+                    int maxLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[1]);
+                    int mobLevel = ItemLoreStats.this.util_Random.randomRange(minLevelRange, maxLevelRange);
 
-                    int mobLevel = (int) Math.ceil(entity.getEyeLocation().distance(loc) / ItemLoreStats.this.getConfig().getDouble("npcModifier." + worldName + ".blocksPerLevel"));
-                    double calcNewHealth = Math.ceil(mobLevel * ItemLoreStats.this.getConfig().getDouble("npcModifier." + worldName + ".healthMultiplier"));
                     double additionalHealth = ItemLoreStats.this.gearStats.getHealthItemInHand(ItemLoreStats.this.itemInMainHand(entity)) + ItemLoreStats.this.gearStats.getHealthItemInHand(ItemLoreStats.this.itemInOffHand(entity)) + ItemLoreStats.this.gearStats.getHealthGear(entity);
-                    double newHealth = calcNewHealth + additionalHealth;
+                    double newHealth = entity.getMaxHealth() + mobLevel * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + regionName + ".healthMultiplier") + additionalHealth;
 
                     entity.setMetadata("level", new FixedMetadataValue(ItemLoreStats.plugin, Integer.valueOf(mobLevel)));
+                    entity.setMetadata("regionSpawned", new FixedMetadataValue(ItemLoreStats.plugin, ItemLoreStats.this.util_WorldGuard.getRegionInsideName(entity)));
+
+                    entity.setMaxHealth(Double.valueOf(newHealth).intValue());
+                    entity.setHealth(Double.valueOf(newHealth).intValue());
+                } else*/ if (Main.this.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
+                    String worldName = entity.getWorld().getName();
+
+                    Location loc = new Location(entity.getWorld(), Main.this.getConfig().getInt("npcModifier." + worldName + ".location.x"), Main.this.getConfig().getInt("npcModifier." + worldName + ".location.y"), Main.this.getConfig().getInt("npcModifier." + worldName + ".location.z"));
+
+                    int mobLevel = (int) Math.ceil(entity.getEyeLocation().distance(loc) / Main.this.getConfig().getDouble("npcModifier." + worldName + ".blocksPerLevel"));
+                    double calcNewHealth = Math.ceil(mobLevel * Main.this.getConfig().getDouble("npcModifier." + worldName + ".healthMultiplier"));
+                    double additionalHealth = Main.this.gearStats.getHealthItemInHand(Main.this.itemInMainHand(entity)) + Main.this.gearStats.getHealthItemInHand(Main.this.itemInOffHand(entity)) + Main.this.gearStats.getHealthGear(entity);
+                    double newHealth = calcNewHealth + additionalHealth;
+
+                    entity.setMetadata("level", new FixedMetadataValue(Main.plugin, Integer.valueOf(mobLevel)));
 
                     if (newHealth > 2000000.0D) {
                         newHealth = 2000000.0D;

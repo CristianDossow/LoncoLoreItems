@@ -1,7 +1,7 @@
  package net.nifheim.yitan.itemlorestats.API;
  
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Format;
  import org.bukkit.Material;
  import org.bukkit.configuration.file.FileConfiguration;
@@ -32,7 +32,7 @@
      double noTool = 1.0D;
      Material itemMaterial = item.getType();
      
-     if (ItemLoreStats.plugin.isTool(itemMaterial)) {
+     if (Main.plugin.isTool(itemMaterial)) {
        if (itemMaterial == Material.WOOD_SWORD)
          return 4.0D;
        if (itemMaterial == Material.WOOD_AXE)
@@ -94,7 +94,7 @@
      double noTool = 0.0D;
      Material itemMaterial = item.getType();
      
-     if (ItemLoreStats.plugin.isTool(itemMaterial)) {
+     if (Main.plugin.isTool(itemMaterial)) {
        if (itemMaterial == Material.WOOD_SWORD)
          return 4.0D;
        if (itemMaterial == Material.WOOD_AXE)
@@ -152,23 +152,23 @@
    }
    
    public double getBaseHealth() {
-     return ItemLoreStats.plugin.getConfig().getDouble("baseHealth");
+     return Main.plugin.getConfig().getDouble("baseHealth");
    }
    
    public double getBaseHealthRegen() {
-     return ItemLoreStats.plugin.getConfig().getDouble("baseHealthRegen");
+     return Main.plugin.getConfig().getDouble("baseHealthRegen");
    }
    
    public double getHealthPerLevel() {
-     return ItemLoreStats.plugin.getConfig().getDouble("healthPerLevel");
+     return Main.plugin.getConfig().getDouble("healthPerLevel");
    }
    
    public double getBaseMovementSpeed() {
-     return ItemLoreStats.plugin.getConfig().getDouble("baseMovementSpeed");
+     return Main.plugin.getConfig().getDouble("baseMovementSpeed");
    }
    
    public double getBaseCritDamage() {
-     return ItemLoreStats.plugin.getConfig().getDouble("baseCritDamage");
+     return Main.plugin.getConfig().getDouble("baseCritDamage");
    }
    
    public String getDamageStatValue(Player player)
@@ -178,12 +178,12 @@
      
      String value = minValue + " - " + maxValue;
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        minValue += Double.parseDouble(this.gearStats.getDamageItemInHand(itemInMainHand(player)).split("-")[0]);
        maxValue += Double.parseDouble(this.gearStats.getDamageItemInHand(itemInMainHand(player)).split("-")[1]);
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        minValue += Double.parseDouble(this.gearStats.getDamageItemInHand(itemInOffHand(player)).split("-")[0]);
        maxValue += Double.parseDouble(this.gearStats.getDamageItemInHand(itemInOffHand(player)).split("-")[1]);
      }
@@ -195,11 +195,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getArmourGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getArmourItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getArmourItemInHand(itemInOffHand(player));
      }
      
@@ -210,11 +210,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getDodgeGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getDodgeItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getDodgeItemInHand(itemInOffHand(player));
      }
      
@@ -225,11 +225,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getBlockGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getBlockItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getBlockItemInHand(itemInOffHand(player));
      }
      
@@ -240,11 +240,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getCritChanceGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getCritChanceItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getCritChanceItemInHand(itemInOffHand(player));
      }
      
@@ -255,11 +255,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getCritDamageGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getCritDamageItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getCritDamageItemInHand(itemInOffHand(player));
      }
      
@@ -270,11 +270,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getHealthGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getHealthItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getHealthItemInHand(itemInOffHand(player));
      }
      
@@ -285,11 +285,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getHealthRegenGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getHealthRegenItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getHealthRegenItemInHand(itemInOffHand(player));
      }
      
@@ -300,11 +300,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getLifeStealGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getLifeStealItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getLifeStealItemInHand(itemInOffHand(player));
      }
      
@@ -315,11 +315,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getFireGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getFireItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getFireItemInHand(itemInOffHand(player));
      }
      
@@ -330,11 +330,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getIceGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getIceItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getIceItemInHand(itemInOffHand(player));
      }
      
@@ -345,11 +345,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getReflectGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getReflectItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getReflectItemInHand(itemInOffHand(player));
      }
      
@@ -360,11 +360,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getPoisonGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getPoisonItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getPoisonItemInHand(itemInOffHand(player));
      }
      
@@ -375,11 +375,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getWitherGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getWitherItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getWitherItemInHand(itemInOffHand(player));
      }
      
@@ -390,11 +390,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getHarmingGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getHarmingItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getHarmingItemInHand(itemInOffHand(player));
      }
      
@@ -405,11 +405,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getBlindGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getBlindItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getBlindItemInHand(itemInOffHand(player));
      }
      
@@ -420,11 +420,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getMovementSpeedGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getMovementSpeedItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getMovementSpeedItemInHand(itemInOffHand(player));
      }
      
@@ -435,11 +435,11 @@
    {
      double value = this.util_Format.format(this.gearStats.getXPMultiplierGear(player));
      
-     if (ItemLoreStats.plugin.isTool(itemInMainHand(player).getType())) {
+     if (Main.plugin.isTool(itemInMainHand(player).getType())) {
        value += this.gearStats.getXPMultiplierItemInHand(itemInMainHand(player));
      }
      
-     if (ItemLoreStats.plugin.isTool(itemInOffHand(player).getType())) {
+     if (Main.plugin.isTool(itemInOffHand(player).getType())) {
        value += this.gearStats.getXPMultiplierItemInHand(itemInOffHand(player));
      }
      

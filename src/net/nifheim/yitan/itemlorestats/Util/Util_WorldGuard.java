@@ -1,6 +1,6 @@
 package net.nifheim.yitan.itemlorestats.Util;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 
 public class Util_WorldGuard {
 
-    ItemLoreStats main;
+    Main main;
     Util_Random util_Random = new Util_Random();
 
-    public Util_WorldGuard(ItemLoreStats instance) {
+    public Util_WorldGuard(Main instance) {
         this.main = instance;
     }
 

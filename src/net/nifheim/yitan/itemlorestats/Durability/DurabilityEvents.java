@@ -15,7 +15,7 @@ import org.bukkit.event.EventPriority;
  import org.bukkit.inventory.ItemStack;
  import org.bukkit.inventory.meta.ItemMeta;
 
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  
  import net.nifheim.yitan.itemlorestats.Enchants.Vanilla_Unbreaking;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -28,12 +28,12 @@ import org.bukkit.event.EventPriority;
    
    @EventHandler(ignoreCancelled=true,priority = EventPriority.HIGH)
    public void disableItemBreakItemInHand(PlayerItemBreakEvent event) {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
        
        if (event.getPlayer().isDead()) { return;
        }
-       String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-       String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+       String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+       String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
        
        final ItemStack item = event.getBrokenItem().clone();
        try
@@ -41,7 +41,7 @@ import org.bukkit.event.EventPriority;
          if ((item != null) && 
            (item.getItemMeta().hasLore()))
          {
-           if (ItemLoreStats.plugin.isTool(item.getType())) {
+           if (Main.plugin.isTool(item.getType())) {
              List<String> getItemLore = item.getItemMeta().getLore();
              
              for (String getDurability : getItemLore) {
@@ -57,27 +57,27 @@ import org.bukkit.event.EventPriority;
                  }
                }
              }
-           } else if (ItemLoreStats.plugin.isArmour(item.getType())) {
-             if (ItemLoreStats.plugin.isHelmet(item.getType())) {
-               ItemLoreStats.plugin.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+           } else if (Main.plugin.isArmour(item.getType())) {
+             if (Main.plugin.isHelmet(item.getType())) {
+               Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                  public void run() {
                    //item.setDurability((short)-1);
                  }
                }, 1L);
-             } else if (ItemLoreStats.plugin.isChestplate(item.getType())) {
-               ItemLoreStats.plugin.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+             } else if (Main.plugin.isChestplate(item.getType())) {
+               Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                  public void run() {
                    //item.setDurability((short)-1);
                  }
                }, 1L);
-             } else if (ItemLoreStats.plugin.isLeggings(item.getType())) {
-               ItemLoreStats.plugin.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+             } else if (Main.plugin.isLeggings(item.getType())) {
+               Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                  public void run() {
                    //item.setDurability((short)-1);
                  }
                }, 1L);
-             } else if (ItemLoreStats.plugin.isBoots(item.getType())) {
-               ItemLoreStats.plugin.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable() {
+             } else if (Main.plugin.isBoots(item.getType())) {
+               Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                  public void run() {
                    //item.setDurability((short)-1);
                  }
@@ -95,20 +95,20 @@ import org.bukkit.event.EventPriority;
    @EventHandler(ignoreCancelled=true,priority = EventPriority.HIGH)
    public void blockBreakDurability(BlockBreakEvent event)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
        
        Player player = event.getPlayer();
        
-       if ((ItemLoreStats.plugin.isHoe(player.getInventory().getItemInMainHand())) || (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT_AND_STEEL)) || (player.getInventory().getItemInMainHand().getType().equals(Material.FISHING_ROD))) { return;
+       if ((Main.plugin.isHoe(player.getInventory().getItemInMainHand())) || (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT_AND_STEEL)) || (player.getInventory().getItemInMainHand().getType().equals(Material.FISHING_ROD))) { return;
        }
        ItemStack itemInMain = player.getInventory().getItemInMainHand();
        
-       if ((itemInMain != null) && (ItemLoreStats.plugin.isTool(itemInMain.getType())))
+       if ((itemInMain != null) && (Main.plugin.isTool(itemInMain.getType())))
        {
          if (itemInMain.getItemMeta().hasLore())
          {
-           String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-           String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+           String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+           String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
            
            List<String> getItemLore = itemInMain.getItemMeta().getLore();
            
@@ -166,17 +166,17 @@ import org.bukkit.event.EventPriority;
                int remainingDurabilityPercentage = currentValueMinusOne * 100 / Integer.parseInt(maximumValue);
                
                if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 2.6D) {
-                 if ((remainingDurabilityPercentage == 25) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 25) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.RED + "25%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.RED + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 5.1D) {
-                 if ((remainingDurabilityPercentage == 50) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 50) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.YELLOW + "50%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.YELLOW + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 7.6D) {
-                 if ((remainingDurabilityPercentage == 75) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 75) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.GREEN + "75%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.GREEN + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
@@ -204,18 +204,18 @@ import org.bukkit.event.EventPriority;
    @EventHandler(ignoreCancelled=true,priority = EventPriority.HIGH)
    public void fishingDurability(org.bukkit.event.player.PlayerFishEvent event)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
       
        Player player = event.getPlayer();
        
        ItemStack itemInMain = player.getInventory().getItemInMainHand();
        
-       if ((itemInMain != null) && (ItemLoreStats.plugin.isTool(itemInMain.getType())))
+       if ((itemInMain != null) && (Main.plugin.isTool(itemInMain.getType())))
        {
          if (itemInMain.getItemMeta().hasLore())
          {
-           String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-           String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+           String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+           String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
            
            List<String> getItemLore = itemInMain.getItemMeta().getLore();
            
@@ -273,17 +273,17 @@ import org.bukkit.event.EventPriority;
                int remainingDurabilityPercentage = currentValueMinusOne * 100 / Integer.parseInt(maximumValue);
                
                if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 2.6D) {
-                 if ((remainingDurabilityPercentage == 25) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 25) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.RED + "25%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.RED + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 5.1D) {
-                 if ((remainingDurabilityPercentage == 50) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 50) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.YELLOW + "50%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.YELLOW + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 7.6D) {
-                 if ((remainingDurabilityPercentage == 75) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 75) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.GREEN + "75%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.GREEN + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
@@ -309,19 +309,19 @@ import org.bukkit.event.EventPriority;
    
    @EventHandler(ignoreCancelled=true,priority = EventPriority.HIGH)
    public void carrotStickDurability(PlayerInteractEvent event) {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
       
        Player player = event.getPlayer();
        
        ItemStack itemInMain = player.getInventory().getItemInMainHand();
        
        if ((itemInMain.getType().equals(Material.CARROT_STICK)) && ((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && 
-         (itemInMain != null) && (ItemLoreStats.plugin.isTool(player.getInventory().getItemInMainHand().getType())))
+         (itemInMain != null) && (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType())))
        {
          if (itemInMain.getItemMeta().hasLore())
          {
-           String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-           String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+           String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+           String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
            
            List<String> getItemLore = itemInMain.getItemMeta().getLore();
            
@@ -379,17 +379,17 @@ import org.bukkit.event.EventPriority;
                int remainingDurabilityPercentage = currentValueMinusOne * 100 / Integer.parseInt(maximumValue);
                
                if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 2.6D) {
-                 if ((remainingDurabilityPercentage == 25) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 25) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.RED + "25%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.RED + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 5.1D) {
-                 if ((remainingDurabilityPercentage == 50) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 50) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.YELLOW + "50%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.YELLOW + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 7.6D) {
-                 if ((remainingDurabilityPercentage == 75) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 75) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.GREEN + "75%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.GREEN + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
@@ -416,19 +416,19 @@ import org.bukkit.event.EventPriority;
    @EventHandler(ignoreCancelled=true,priority = EventPriority.HIGH)
    public void flintAndSteelDurability(PlayerInteractEvent event)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
       
        Player player = event.getPlayer();
        
        ItemStack itemInMain = player.getInventory().getItemInMainHand();
        
        if ((player.getInventory().getItemInMainHand().getType().equals(Material.FLINT_AND_STEEL)) && ((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && 
-         (player.getInventory().getItemInMainHand() != null) && (ItemLoreStats.plugin.isTool(player.getInventory().getItemInMainHand().getType())))
+         (player.getInventory().getItemInMainHand() != null) && (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType())))
        {
          if (player.getInventory().getItemInMainHand().getItemMeta().hasLore())
          {
-           String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-           String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+           String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+           String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
            
            List<String> getItemLore = player.getInventory().getItemInMainHand().getItemMeta().getLore();
            
@@ -486,17 +486,17 @@ import org.bukkit.event.EventPriority;
                int remainingDurabilityPercentage = currentValueMinusOne * 100 / Integer.parseInt(maximumValue);
                
                if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 2.6D) {
-                 if ((remainingDurabilityPercentage == 25) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 25) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
                    player.sendMessage(player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.RED + "25%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.RED + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 5.1D) {
-                 if ((remainingDurabilityPercentage == 50) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 50) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
                    player.sendMessage(player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.YELLOW + "50%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.YELLOW + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 7.6D) {
-                 if ((remainingDurabilityPercentage == 75) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 75) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
                    player.sendMessage(player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.GREEN + "75%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.GREEN + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
@@ -523,7 +523,7 @@ import org.bukkit.event.EventPriority;
    @EventHandler(ignoreCancelled=true,priority = EventPriority.HIGH)
    public void hoeDurability(PlayerInteractEvent event)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
      
        Player player = event.getPlayer();
        
@@ -535,12 +535,12 @@ import org.bukkit.event.EventPriority;
          (itemInMain.getType().equals(Material.DIAMOND_HOE))) && 
          (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) && 
          ((event.getClickedBlock().getType().equals(Material.GRASS)) || (event.getClickedBlock().getType().equals(Material.DIRT))) && 
-         (itemInMain != null) && (ItemLoreStats.plugin.isTool(itemInMain.getType())))
+         (itemInMain != null) && (Main.plugin.isTool(itemInMain.getType())))
        {
          if (itemInMain.getItemMeta().hasLore())
          {
-           String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-           String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+           String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+           String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
            
            List<String> getItemLore = itemInMain.getItemMeta().getLore();
            
@@ -598,17 +598,17 @@ import org.bukkit.event.EventPriority;
                int remainingDurabilityPercentage = currentValueMinusOne * 100 / Integer.parseInt(maximumValue);
                
                if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 2.6D) {
-                 if ((remainingDurabilityPercentage == 25) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 25) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable25%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.RED + "25%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.RED + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 5.1D) {
-                 if ((remainingDurabilityPercentage == 50) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 50) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable50%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.YELLOW + "50%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.YELLOW + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;
                } else if (currentValueMinusOne < Integer.parseInt(maximumValue) / 10 * 7.6D) {
-                 if ((remainingDurabilityPercentage == 75) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
+                 if ((remainingDurabilityPercentage == 75) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enable75%DurabilityWarning"))) {
                    player.sendMessage(itemInMain.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + ChatColor.GREEN + "75%" + ChatColor.LIGHT_PURPLE + " durability.");
                  }
                  durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilityName + ": " + ChatColor.GREEN + currentValueMinusOne + this.util_Colours.replaceTooltipColour(prefixColourOnly) + durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maximumValue;

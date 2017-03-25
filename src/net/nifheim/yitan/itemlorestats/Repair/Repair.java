@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Repair;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
  import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
  import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
@@ -17,7 +17,7 @@
    Util_GetResponse util_GetResponse = new Util_GetResponse();
    
    public void repair(Player player, String type, String material) {
-     int repairCost = ItemLoreStats.plugin.getConfig().getInt("durabilityAddedOnEachRepair." + type + "." + material);
+     int repairCost = Main.plugin.getConfig().getInt("durabilityAddedOnEachRepair." + type + "." + material);
      
      if (player.getInventory().getItemInMainHand().getItemMeta().hasLore())
      {
@@ -28,7 +28,7 @@
          String durabilityAmountColour = "";
          String prefixColourOnly = "";
          String durabilityRebuilder = "";
-         String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
+         String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
          
          if (org.bukkit.ChatColor.stripColor(getItemStat).startsWith(durabilityName))
          {
@@ -97,7 +97,7 @@
        
        for (String getItemStat : splitItemLore)
        {
-         String durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
+         String durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
          
          if (org.bukkit.ChatColor.stripColor(getItemStat).startsWith(durabilityName))
          {
@@ -125,111 +125,111 @@
    public void payAndRepair(Player player, Material type)
    {
      if (!isFullDurability(player)) {
-       if (ItemLoreStats.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairCostType").equalsIgnoreCase("Currency")) {
+       if (Main.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairCostType").equalsIgnoreCase("Currency")) {
          if (type.equals(Material.WOOD_AXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
          } else if (type.equals(Material.STONE_AXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
          } else if (type.equals(Material.IRON_AXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
          } else if (type.equals(Material.GOLD_AXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
          } else if (type.equals(Material.DIAMOND_AXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
          } else if (type.equals(Material.WOOD_HOE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
          } else if (type.equals(Material.STONE_HOE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
          } else if (type.equals(Material.IRON_HOE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
          } else if (type.equals(Material.GOLD_HOE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
          } else if (type.equals(Material.DIAMOND_HOE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
          } else if (type.equals(Material.WOOD_SPADE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
          } else if (type.equals(Material.STONE_SPADE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
          } else if (type.equals(Material.IRON_SPADE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
          } else if (type.equals(Material.GOLD_SPADE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
          } else if (type.equals(Material.DIAMOND_SPADE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
          } else if (type.equals(Material.WOOD_PICKAXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
          } else if (type.equals(Material.STONE_PICKAXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
          } else if (type.equals(Material.IRON_PICKAXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
          } else if (type.equals(Material.GOLD_PICKAXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
          } else if (type.equals(Material.DIAMOND_PICKAXE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
          } else if (type.equals(Material.WOOD_SWORD)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "wood");
          } else if (type.equals(Material.STONE_SWORD)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stone");
          } else if (type.equals(Material.IRON_SWORD)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "iron");
          } else if (type.equals(Material.GOLD_SWORD)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "gold");
          } else if (type.equals(Material.DIAMOND_SWORD)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "diamond");
          } else if (type.equals(Material.SHEARS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "shears");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "shears");
          } else if (type.equals(Material.BOW)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "bow");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "bow");
          } else if (type.equals(Material.STICK)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stick");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "stick");
          } else if (type.equals(Material.FLINT_AND_STEEL)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "flintAndSteel");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "flintAndSteel");
          } else if (type.equals(Material.FISHING_ROD)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "fishingRod");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "fishingRod");
          } else if (type.equals(Material.CARROT_STICK)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "carrotStick");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "carrotStick");
          } else if (type.equals(Material.SHEARS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "tools", "shears");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "tools", "shears");
          } else if (type.equals(Material.LEATHER_HELMET)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
          } else if (type.equals(Material.CHAINMAIL_HELMET)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
          } else if (type.equals(Material.IRON_HELMET)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
          } else if (type.equals(Material.GOLD_HELMET)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
          } else if (type.equals(Material.DIAMOND_HELMET)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
          } else if (type.equals(Material.LEATHER_CHESTPLATE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
          } else if (type.equals(Material.CHAINMAIL_CHESTPLATE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
          } else if (type.equals(Material.IRON_CHESTPLATE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
          } else if (type.equals(Material.GOLD_CHESTPLATE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
          } else if (type.equals(Material.DIAMOND_CHESTPLATE)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
          } else if (type.equals(Material.LEATHER_LEGGINGS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
          } else if (type.equals(Material.CHAINMAIL_LEGGINGS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
          } else if (type.equals(Material.IRON_LEGGINGS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
          } else if (type.equals(Material.GOLD_LEGGINGS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
          } else if (type.equals(Material.DIAMOND_LEGGINGS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
          } else if (type.equals(Material.LEATHER_BOOTS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "leather");
          } else if (type.equals(Material.CHAINMAIL_BOOTS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "chainmail");
          } else if (type.equals(Material.IRON_BOOTS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "iron");
          } else if (type.equals(Material.GOLD_BOOTS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "gold");
          } else if (type.equals(Material.DIAMOND_BOOTS)) {
-           ItemLoreStats.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
+           Main.plugin.util_Vault.removeMoneyForRepair(player, "armour", "diamond");
          }
        }
        else if (type.equals(Material.WOOD_AXE)) {

@@ -13,7 +13,7 @@
    
    public boolean checkXPLevel(Player player, ItemStack item)
    {
-     if ((!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) && 
+     if ((!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) && 
        (this.gearStats.getXPLevelRequirement(player, item) <= player.getLevel())) {
        return true;
      }

@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Commands;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
  import java.util.List;
  import org.bukkit.Material;
@@ -18,7 +18,7 @@
      if ((sender instanceof Player)) {
        Player player = (Player)sender;
        
-       if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+       if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
          if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
            if (player.getInventory().getItemInMainHand() != null) {
              if (player.getInventory().getItemInMainHand().getType() != Material.AIR) {
@@ -30,7 +30,7 @@
                    if (args[1].equalsIgnoreCase("tool")) {
                      if (args[2].toString() != null) {
                        if (itemName != null) {
-                         List toolsList = ItemLoreStats.plugin.getConfig().getList("materials.tools");
+                         List toolsList = Main.plugin.getConfig().getList("materials.tools");
                          
                          for (int i = 0; i < args.length; i++) {
                            if (i >= 3) {
@@ -42,8 +42,8 @@
                          
                          toolsList.add(itemName + ":" + rebuiltName.toUpperCase().replaceAll(" ", "_"));
                          
-                         ItemLoreStats.plugin.getConfig().set("materials.tools", toolsList);
-                         ItemLoreStats.plugin.saveConfig();
+                         Main.plugin.getConfig().set("materials.tools", toolsList);
+                         Main.plugin.saveConfig();
                          
                          player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.AddedToConfig", player, player, rebuiltName, rebuiltName));
                        } else {
@@ -58,7 +58,7 @@
                          if (args[3].toString() != null) {
                            if (itemName != null) {
                              String armourType = args[2].toString().toLowerCase();
-                             List toolsList = ItemLoreStats.plugin.getConfig().getList("materials.armour." + armourType);
+                             List toolsList = Main.plugin.getConfig().getList("materials.armour." + armourType);
                              
                              for (int i = 0; i < args.length; i++) {
                                if (i >= 4) {
@@ -70,8 +70,8 @@
                              
                              toolsList.add(itemName + ":" + rebuiltName.toUpperCase().replaceAll(" ", "_"));
                              
-                             ItemLoreStats.plugin.getConfig().set("materials.armour." + armourType, toolsList);
-                             ItemLoreStats.plugin.saveConfig();
+                             Main.plugin.getConfig().set("materials.armour." + armourType, toolsList);
+                             Main.plugin.saveConfig();
                              
                              player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.AddedToConfig", player, player, rebuiltName, rebuiltName));
                            } else {

@@ -1,7 +1,7 @@
  package net.nifheim.yitan.itemlorestats.Commands;
  
  import net.nifheim.yitan.itemlorestats.GenerateFromFile;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
  import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
  import java.io.File;
@@ -37,7 +37,7 @@
                    }
                  }
                  
-                 if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
+                 if (new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
                    player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.ItemAlreadyExistsError", null, null, "", ""));
                  } else {
                    this.generateFromFile.exportWeapon(player, newItemName);

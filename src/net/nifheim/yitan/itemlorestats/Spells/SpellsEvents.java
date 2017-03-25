@@ -1,7 +1,7 @@
 package net.nifheim.yitan.itemlorestats.Spells;
 
 import net.nifheim.yitan.itemlorestats.GearStats;
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import java.io.File;
 import java.util.HashMap;
@@ -23,12 +23,12 @@ public class SpellsEvents implements org.bukkit.event.Listener {
         if (getSeconds == 0) {
             return false;
         }
-        if (ItemLoreStats.plugin.spellCooldowns.get(playerName) != null) {
-            if (((Long) ItemLoreStats.plugin.spellCooldowns.get(playerName)).longValue() < System.currentTimeMillis() - getSeconds * 1000) {
+        if (Main.plugin.spellCooldowns.get(playerName) != null) {
+            if (((Long) Main.plugin.spellCooldowns.get(playerName)).longValue() < System.currentTimeMillis() - getSeconds * 1000) {
                 return false;
             }
             long currentTime = System.currentTimeMillis();
-            long oldTime = ((Long) ItemLoreStats.plugin.spellCooldowns.get(playerName)).longValue();
+            long oldTime = ((Long) Main.plugin.spellCooldowns.get(playerName)).longValue();
 
             String remainingCooldown = String.valueOf(Math.abs(currentTime - (oldTime + getSeconds * 1000)));
             String modifiedPlayerName = playerName.split("\\.")[0];
@@ -54,7 +54,7 @@ public class SpellsEvents implements org.bukkit.event.Listener {
     }
 
     public void spellSelection(Player player) {
-        if (ItemLoreStats.plugin.util_WorldGuard != null) {
+        if (Main.plugin.util_WorldGuard != null) {
 //            if (!ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion(player)) {
                 try {
                     if (this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) == null) {
@@ -72,10 +72,10 @@ public class SpellsEvents implements org.bukkit.event.Listener {
                     }
                     this.spellCreator.spellBuilder(spellName, player);
                     executeCommandList(player, spellName);
-                    ItemLoreStats.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
+                    Main.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
 
                 } catch (Exception e) {
-                    ItemLoreStats.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
+                    Main.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
                 }
             }
 //        } else {
@@ -89,20 +89,21 @@ public class SpellsEvents implements org.bukkit.event.Listener {
                         if (!hasCooldown(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), spellCooldown)) {
                             this.spellCreator.spellBuilder(spellName, player);
                             executeCommandList(player, spellName);
-                            ItemLoreStats.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
+                            Main.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
                         }
                     }
                 }
             } catch (Exception e) {
-                ItemLoreStats.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
+                Main.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
             }
+//        }
 //        }
     }
 
     public void executeCommandList(Player player, String spellFileName) {
         try {
             this.PlayerDataConfig = new org.bukkit.configuration.file.YamlConfiguration();
-            this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + spellFileName + ".yml"));
+            this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedSpells" + File.separator + spellFileName + ".yml"));
 
             if ((this.PlayerDataConfig.getKeys(false).toString().contains("commands"))
                     && (this.PlayerDataConfig.getList("commands") != null)) {
@@ -112,7 +113,7 @@ public class SpellsEvents implements org.bukkit.event.Listener {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            ItemLoreStats.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to execute the command list from the " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " spell.");
+            Main.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to execute the command list from the " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " spell.");
         }
     }
 }

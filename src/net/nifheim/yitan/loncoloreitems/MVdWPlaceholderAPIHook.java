@@ -4,14 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 
 import be.maximvdw.placeholderapi.PlaceholderAPI;
 import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
 import be.maximvdw.placeholderapi.PlaceholderReplacer;
 
 public class MVdWPlaceholderAPIHook {
-    public static void hook(ItemLoreStats plugin) {
+    public static void hook(Main plugin) {
         if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceHolderAPI")) {
         	
             PlaceholderAPI.registerPlaceholder(plugin, "ilsdefense",

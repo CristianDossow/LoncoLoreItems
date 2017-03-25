@@ -2,7 +2,7 @@
  
  import net.nifheim.yitan.itemlorestats.Durability.Durability;
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.SetBonuses;
  import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -28,11 +28,11 @@
    Util_Random util_Random = new Util_Random();
    
    public boolean dodgeChanceOnHit(LivingEntity getDefender, boolean isTool) {
-     if (this.gearStats.getDodgeGear(getDefender) + this.gearStats.getDodgeItemInHand(ItemLoreStats.plugin.itemInMainHand(getDefender)) + this.gearStats.getDodgeItemInHand(ItemLoreStats.plugin.itemInOffHand(getDefender)) <= 0.0D) { return false;
+     if (this.gearStats.getDodgeGear(getDefender) + this.gearStats.getDodgeItemInHand(Main.plugin.itemInMainHand(getDefender)) + this.gearStats.getDodgeItemInHand(Main.plugin.itemInOffHand(getDefender)) <= 0.0D) { return false;
      }
-     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getDefender) + ".dod", ItemLoreStats.plugin.getConfig().getInt("secondaryStats.dodge.internalCooldown"))) {
+     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getDefender) + ".dod", Main.plugin.getConfig().getInt("secondaryStats.dodge.internalCooldown"))) {
        if ((getDefender instanceof org.bukkit.entity.Player)) {
-         ItemLoreStats.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getDefender) + ".dod", Long.valueOf(System.currentTimeMillis()));
+         Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getDefender) + ".dod", Long.valueOf(System.currentTimeMillis()));
        }
        
        double dodgePercent = 0.0D;
@@ -44,12 +44,12 @@
  
  
  
-       if (ItemLoreStats.plugin.isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
-         dodgePercent += this.gearStats.getDodgeItemInHand(ItemLoreStats.plugin.itemInMainHand(getDefender));
+       if (Main.plugin.isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
+         dodgePercent += this.gearStats.getDodgeItemInHand(Main.plugin.itemInMainHand(getDefender));
        }
        
-       if (ItemLoreStats.plugin.isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
-         dodgePercent += this.gearStats.getDodgeItemInHand(ItemLoreStats.plugin.itemInOffHand(getDefender));
+       if (Main.plugin.isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
+         dodgePercent += this.gearStats.getDodgeItemInHand(Main.plugin.itemInOffHand(getDefender));
        }
        
        dodgePercent += this.gearStats.getDodgeGear(getDefender);

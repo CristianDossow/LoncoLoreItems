@@ -21,7 +21,7 @@ import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
 
 import net.nifheim.yitan.itemlorestats.Classes;
 import net.nifheim.yitan.itemlorestats.GearStats;
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.SetBonuses;
 import net.nifheim.yitan.itemlorestats.Soulbound;
 import net.nifheim.yitan.itemlorestats.XpLevel;
@@ -53,7 +53,7 @@ import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
 
 public class DamageSystem implements org.bukkit.event.Listener {
 
-    public ItemLoreStats instance;
+    public Main instance;
     Classes classes = new Classes();
     Durability durability = new Durability();
     GearStats gearStats = new GearStats();
@@ -70,8 +70,8 @@ public class DamageSystem implements org.bukkit.event.Listener {
     Util_GetResponse util_GetResponse = new Util_GetResponse();
     Util_Material util_Material = new Util_Material();
     Util_Random util_Random = new Util_Random();
-    Util_Citizens util_Citizens = new Util_Citizens(ItemLoreStats.plugin);
-    Util_WorldGuard util_WorldGuard = new Util_WorldGuard(ItemLoreStats.plugin);
+    Util_Citizens util_Citizens = new Util_Citizens(Main.plugin);
+    Util_WorldGuard util_WorldGuard = new Util_WorldGuard(Main.plugin);
 
     Armour armour = new Armour();
     Blind blind = new Blind();
@@ -93,7 +93,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
     //String onlydamage;
     //static String languageRegex = "[^A-Za-z������������_]";
-    public DamageSystem(ItemLoreStats i) {
+    public DamageSystem(Main i) {
         this.instance = i;
         //onlydamage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
     }
@@ -104,11 +104,11 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getDamager().getWorld().getName())) {
+        if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getDamager().getWorld().getName())) {
             if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
-            if ((ItemLoreStats.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) /*&& (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))*/) {
+            if ((Main.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) /*&& (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))*/) {
                 event.setCancelled(true);
                 return;
             }
@@ -143,7 +143,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                             event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), projectileHitEffect, 3);
 
                             if (((event.getEntity() instanceof Player))
-                                    && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
+                                    && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
                                 ((Player) event.getEntity()).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, event.getEntity(), String.valueOf((int) DirectDamageAmount), String.valueOf((int) DirectDamageAmount)));
                             }
 
@@ -159,7 +159,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                         event.getEntity().getLocation().getWorld().playEffect(entity.getLocation(), projectileHitEffect, 3);
 
                                         if (((entity instanceof Player))
-                                                && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
+                                                && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
                                             ((Player) entity).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, entity, String.valueOf((int) AOEDamageAmount), String.valueOf((int) AOEDamageAmount)));
                                         }
 
@@ -223,7 +223,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         getAttacker = (Player) shooter;
                     }
                 } else if ((event.getDamager() instanceof Player)) {
-                    if (((event.getEntity() instanceof Player)) && (ItemLoreStats.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) event.getEntity())) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity())))*/) {
+                    if (((event.getEntity() instanceof Player)) && (Main.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) event.getEntity())) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity())))*/) {
                         return;
                     }
 
@@ -267,7 +267,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
             if (((getAttacker instanceof Player))
                     && ((getDefender instanceof Player))) {
-                if ((ItemLoreStats.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) getDefender)) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) getDefender)))*/) {
+                if ((Main.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) getDefender)) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) getDefender)))*/) {
                     return;
                 }
 
@@ -300,7 +300,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                 }
             }
 
-            if (ItemLoreStats.plugin.isTool(this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType())) {
+            if (Main.plugin.isTool(this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType())) {
                 isTool = true;
             }
 
@@ -312,12 +312,12 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
             if (this.dodge.dodgeChanceOnHit(getDefender, isTool)) {
                 if (((getAttacker instanceof Player))
-                        && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyDodgedAttack"))) {
+                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyDodgedAttack"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyDodgeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.dodgeAttack"))) {
+                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.dodgeAttack"))) {
                     ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DodgeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
@@ -329,12 +329,12 @@ public class DamageSystem implements org.bukkit.event.Listener {
             //if (this.block.blockChanceOnHit(getDefender, isTool)) {
             if (this.block.blockChanceOnHit(getDefender, false)) {
                 if (((getAttacker instanceof Player))
-                        && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyBlockedAttack"))) {
+                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyBlockedAttack"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyBlockSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.blockAttack"))) {
+                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.blockAttack"))) {
                     ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.BlockSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     ((Player) getDefender).addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SLOW, 30, 1));
                 }
@@ -351,17 +351,17 @@ public class DamageSystem implements org.bukkit.event.Listener {
                     if ((getAttacker.hasMetadata("level")) && (getAttacker.hasMetadata("regionSpawned"))) {
                         int mobLevel = ((MetadataValue) getAttacker.getMetadata("level").get(0)).asInt();
                         String mobRegion = ((MetadataValue) getAttacker.getMetadata("regionSpawned").get(0)).asString();
-                        double newDamage = Math.round(attackerDamage((LivingEntity) getAttacker, getDefender, getDefender.getType(), event.getDamage(), this.util_Material.materialToDamage(this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType()), 0.0D, false, isTool) + mobLevel * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + mobRegion + ".damageMultiplier"));
+                        double newDamage = Math.round(attackerDamage((LivingEntity) getAttacker, getDefender, getDefender.getType(), event.getDamage(), this.util_Material.materialToDamage(this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType()), 0.0D, false, isTool) + mobLevel * Main.plugin.getConfig().getDouble("npcModifier." + mobRegion + ".damageMultiplier"));
 
                         eventDamage = newDamage;
-                    } else if (ItemLoreStats.plugin.getConfig().getString("npcModifier." + getDefender.getWorld().getName()) != null) {
+                    } else if (Main.plugin.getConfig().getString("npcModifier." + getDefender.getWorld().getName()) != null) {
                         int mobLevel = 1;
 
                         if (getAttacker.hasMetadata("level")) {
                             mobLevel = ((MetadataValue) getAttacker.getMetadata("level").get(0)).asInt();
                         }
 
-                        double newDamage = Math.round(attackerDamage((LivingEntity) getAttacker, getDefender, getDefender.getType(), event.getDamage(), this.util_Material.materialToDamage(this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType()), 0.0D, false, isTool) + mobLevel * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + event.getDamager().getWorld().getName() + ".damageMultiplier"));
+                        double newDamage = Math.round(attackerDamage((LivingEntity) getAttacker, getDefender, getDefender.getType(), event.getDamage(), this.util_Material.materialToDamage(this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType()), 0.0D, false, isTool) + mobLevel * Main.plugin.getConfig().getDouble("npcModifier." + event.getDamager().getWorld().getName() + ".damageMultiplier"));
 
                         eventDamage = newDamage;
                     }
@@ -408,7 +408,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                     double damage = getAttackerDamage - reducedDamage;
 
                     ((Player) getAttacker).damage(damage);
-                    if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyReflectedAttack")) {
+                    if (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyReflectedAttack")) {
                         if ((getDefender instanceof Player)) {
                             ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyReflectSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                         } else {
@@ -416,7 +416,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         }
                     }
                     if (((getDefender instanceof Player))
-                            && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.reflectAttack"))) {
+                            && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.reflectAttack"))) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.ReflectSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     }
 
@@ -430,7 +430,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
                     ((LivingEntity) getAttacker).damage(damage);
                     if (((getDefender instanceof Player))
-                            && (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.reflectAttack"))) {
+                            && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.reflectAttack"))) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.ReflectSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     }
 
@@ -477,7 +477,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if ((!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName()))
+        if ((!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName()))
                 && ((event.getEntity().getKiller() instanceof Player))
                 && (!(event.getEntity() instanceof Player))) {
             LivingEntity entity = event.getEntity();
@@ -485,13 +485,13 @@ public class DamageSystem implements org.bukkit.event.Listener {
             if (entity.hasMetadata("regionSpawned")) {
                 String regionName = ((MetadataValue) entity.getMetadata("regionSpawned").get(0)).asString();
                 int level = ((MetadataValue) entity.getMetadata("level").get(0)).asInt();
-                double newExp = Math.round(event.getDroppedExp() + level * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + regionName + ".expMultiplier"));
+                double newExp = Math.round(event.getDroppedExp() + level * Main.plugin.getConfig().getDouble("npcModifier." + regionName + ".expMultiplier"));
 
                 event.setDroppedExp((int) newExp);
-            } else if ((ItemLoreStats.plugin.getConfig().getString("npcModifier." + entity.getWorld().getName()) != null)
+            } else if ((Main.plugin.getConfig().getString("npcModifier." + entity.getWorld().getName()) != null)
                     && (entity.hasMetadata("naturalSpawn"))) {
-                double distance = this.util_EntityManager.returnEntityMaxHealth(entity) / ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + entity.getWorld().getName() + ".healthMultiplier");
-                double newExp = Math.round(event.getDroppedExp() + distance * ItemLoreStats.plugin.getConfig().getDouble("npcModifier." + entity.getWorld().getName() + ".expMultiplier"));
+                double distance = this.util_EntityManager.returnEntityMaxHealth(entity) / Main.plugin.getConfig().getDouble("npcModifier." + entity.getWorld().getName() + ".healthMultiplier");
+                double newExp = Math.round(event.getDroppedExp() + distance * Main.plugin.getConfig().getDouble("npcModifier." + entity.getWorld().getName() + ".expMultiplier"));
 
                 event.setDroppedExp((int) newExp);
             }
@@ -500,24 +500,24 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
     public void damageDealtMessage(Entity getAttacker, Entity getDefender, double damageDealt) {
         if ((getAttacker instanceof Player)) {
-            if ((ItemLoreStats.plugin.combatLogVisible.get(((Player) getAttacker).getName()) == null) || (((Boolean) ItemLoreStats.plugin.combatLogVisible.get(((Player) getAttacker).getName())).booleanValue())) {
+            if ((Main.plugin.combatLogVisible.get(((Player) getAttacker).getName()) == null) || (((Boolean) Main.plugin.combatLogVisible.get(((Player) getAttacker).getName())).booleanValue())) {
                 if ((getDefender instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken")) {
+                    if (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken")) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageTaken", getAttacker, getDefender, ((Player) getAttacker).getName(), String.valueOf(Math.round(damageDealt))));
                     }
-                    if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
+                    if (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
                         ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageDone", getAttacker, getDefender, ((Player) getDefender).getName(), String.valueOf(Math.round(damageDealt))));
                     }
                 } else if ((getDefender instanceof LivingEntity)) {
                     if (((LivingEntity) getDefender).getCustomName() != null) {
-                        if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
+                        if (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
                             ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageDone", getAttacker, getDefender, ((LivingEntity) getDefender).getCustomName(), String.valueOf(Math.round(damageDealt))));
                         }
                     } else if ((getDefender.getType().toString().substring(0, 1).equalsIgnoreCase("a")) || (getDefender.getType().toString().substring(0, 1).equalsIgnoreCase("e")) || (getDefender.getType().toString().substring(0, 1).equalsIgnoreCase("i")) || (getDefender.getType().toString().substring(0, 1).equalsIgnoreCase("o")) || (getDefender.getType().toString().substring(0, 1).equalsIgnoreCase("u"))) {
-                        if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
+                        if (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
                             ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageDoneWithoutVowel", getAttacker, getDefender, getDefender.getType().toString().substring(0, 1) + getDefender.getType().toString().substring(1, getDefender.getType().toString().length()).toLowerCase().replace("_", " "), String.valueOf(Math.round(damageDealt))));
                         }
-                    } else if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
+                    } else if (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.damageDone")) {
                         ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageDoneWithoutVowel", getAttacker, getDefender, getDefender.getType().toString().substring(0, 1) + getDefender.getType().toString().substring(1, getDefender.getType().toString().length()).toLowerCase().replace("_", " "), String.valueOf(Math.round(damageDealt))));
                     }
 
@@ -526,13 +526,13 @@ public class DamageSystem implements org.bukkit.event.Listener {
             }
 
         } else if (((getDefender instanceof Player))
-                && ((ItemLoreStats.plugin.combatLogVisible.get(((Player) getDefender).getName()) == null) || (((Boolean) ItemLoreStats.plugin.combatLogVisible.get(((Player) getDefender).getName())).booleanValue()))
+                && ((Main.plugin.combatLogVisible.get(((Player) getDefender).getName()) == null) || (((Boolean) Main.plugin.combatLogVisible.get(((Player) getDefender).getName())).booleanValue()))
                 && ((getAttacker instanceof LivingEntity))) {
             if (((LivingEntity) getAttacker).getCustomName() != null) {
-                if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken")) {
+                if (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken")) {
                     ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageTaken", getAttacker, getDefender, ((LivingEntity) getAttacker).getCustomName(), String.valueOf(Math.round(damageDealt))));
                 }
-            } else if (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken")) {
+            } else if (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken")) {
                 ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DamageTaken", getAttacker, getDefender, getAttacker.getType().toString().substring(0, 1) + getAttacker.getType().toString().substring(1, getAttacker.getType().toString().length()).toLowerCase().replace("_", " "), String.valueOf(Math.round(damageDealt))));
             }
         }
@@ -555,28 +555,28 @@ public class DamageSystem implements org.bukkit.event.Listener {
             ItemStack itemInMainHandAttacker = this.getSlots.returnItemInMainHand(getAttacker);
             ItemStack itemInOffHandAttacker = this.getSlots.returnItemInMainHand(getAttacker);
 
-            if (ItemLoreStats.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
+            if (Main.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
                 if ((itemInMainHandAttacker.hasItemMeta())
                         && (itemInMainHandAttacker.getItemMeta().hasLore())) {
-                    valueMinMain = eventDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)).split("-")[0]);
-                    valueMaxMain = eventDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)).split("-")[1]);
+                    valueMinMain = eventDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInMainHand(getAttacker)).split("-")[0]);
+                    valueMaxMain = eventDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInMainHand(getAttacker)).split("-")[1]);
                 }
 
-                if ((ItemLoreStats.plugin.getConfig().getBoolean("includeOffHandDamage"))
+                if ((Main.plugin.getConfig().getBoolean("includeOffHandDamage"))
                         && (itemInOffHandAttacker.hasItemMeta())
                         && (itemInOffHandAttacker.getItemMeta().hasLore())) {
-                    valueMinOff = Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker)).split("-")[0]);
-                    valueMaxOff = Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker)).split("-")[1]);
+                    valueMinOff = Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInOffHand(getAttacker)).split("-")[0]);
+                    valueMaxOff = Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInOffHand(getAttacker)).split("-")[1]);
                 }
 
             } else {
                 if ((itemInMainHandAttacker.hasItemMeta())
                         && (itemInMainHandAttacker.getItemMeta().hasLore())) {
-                    valueMinMain = eventDamage - vanillaDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)).split("-")[0]);
-                    valueMaxMain = eventDamage - vanillaDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)).split("-")[1]);
+                    valueMinMain = eventDamage - vanillaDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInMainHand(getAttacker)).split("-")[0]);
+                    valueMaxMain = eventDamage - vanillaDamage + Double.parseDouble(this.gearStats.getDamageItemInHand(Main.plugin.itemInMainHand(getAttacker)).split("-")[1]);
                 }
 
-                if ((ItemLoreStats.plugin.getConfig().getBoolean("includeOffHandDamage"))
+                if ((Main.plugin.getConfig().getBoolean("includeOffHandDamage"))
                         && (itemInOffHandAttacker.hasItemMeta())
                         && (itemInOffHandAttacker.getItemMeta().hasLore())) {
 
@@ -595,27 +595,27 @@ public class DamageSystem implements org.bukkit.event.Listener {
                 damage = Double.parseDouble(this.util_Random.formattedRandomRange(valueMin, valueMax));
 
                 if (this.vanilla_Sharpness.hasSharpness(getAttacker)) {
-                    damage = this.vanilla_Sharpness.calculateNewDamage(damage, ItemLoreStats.plugin.itemInMainHand(getAttacker).getEnchantmentLevel(Enchantment.DAMAGE_ALL), ItemLoreStats.plugin.itemInOffHand(getAttacker).getEnchantmentLevel(Enchantment.DAMAGE_ALL));
+                    damage = this.vanilla_Sharpness.calculateNewDamage(damage, Main.plugin.itemInMainHand(getAttacker).getEnchantmentLevel(Enchantment.DAMAGE_ALL), Main.plugin.itemInOffHand(getAttacker).getEnchantmentLevel(Enchantment.DAMAGE_ALL));
                 } else if (this.vanilla_Power.hasPower(getAttacker)) {
-                    damage = this.vanilla_Power.calculateNewDamage(damage, ItemLoreStats.plugin.itemInMainHand(getAttacker).getEnchantmentLevel(Enchantment.ARROW_DAMAGE), ItemLoreStats.plugin.itemInOffHand(getAttacker).getEnchantmentLevel(Enchantment.ARROW_DAMAGE));
+                    damage = this.vanilla_Power.calculateNewDamage(damage, Main.plugin.itemInMainHand(getAttacker).getEnchantmentLevel(Enchantment.ARROW_DAMAGE), Main.plugin.itemInOffHand(getAttacker).getEnchantmentLevel(Enchantment.ARROW_DAMAGE));
                 }
 
                 if (this.criticalStrike.criticalStrikeChanceOnHit(getAttacker, getDefender) > 1) {
-                    double critDamageHands = this.gearStats.getCritDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getCritDamageItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker));
+                    double critDamageHands = this.gearStats.getCritDamageItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getCritDamageItemInHand(Main.plugin.itemInOffHand(getAttacker));
 
-                    valueRand = damage + damage * (ItemLoreStats.plugin.getConfig().getDouble("baseCritDamage") + (this.gearStats.getCritDamageGear(getAttacker) + critDamageHands)) / 100.0D;
+                    valueRand = damage + damage * (Main.plugin.getConfig().getDouble("baseCritDamage") + (this.gearStats.getCritDamageGear(getAttacker) + critDamageHands)) / 100.0D;
                 } else {
                     valueRand = damage;
                 }
-            } else if (ItemLoreStats.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
+            } else if (Main.plugin.getConfig().getBoolean("vanilla.includeDamage")) {
                 valueRand = eventDamage + modifier;
             } else {
                 valueRand = eventDamage - vanillaDamage + modifier;
             }
 
             double pvPDmgModifier = 0.0D;
-            double mainHandPvPDmgModifier = this.gearStats.getPvPDamageModifierItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker));
-            double offHandPvPDmgModifier = this.gearStats.getPvPDamageModifierItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker));
+            double mainHandPvPDmgModifier = this.gearStats.getPvPDamageModifierItemInHand(Main.plugin.itemInMainHand(getAttacker));
+            double offHandPvPDmgModifier = this.gearStats.getPvPDamageModifierItemInHand(Main.plugin.itemInOffHand(getAttacker));
 
             if (mainHandPvPDmgModifier != 0.0D) {
                 pvPDmgModifier += mainHandPvPDmgModifier;
@@ -630,7 +630,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
             //int valueRandInt = (int)Math.round(valueRand);
             double dam = valueRand;
 
-            if (ItemLoreStats.plugin.getConfig().getBoolean("vanilla.includeArmour")) {
+            if (Main.plugin.getConfig().getBoolean("vanilla.includeArmour")) {
                 double modifiedDamage = 0.0D;
                 modifiedDamage = valueRand / Math.abs(this.vanilla_Base_Armour.getDamageReductionFromArmour(getDefender) - 1.0D);
 

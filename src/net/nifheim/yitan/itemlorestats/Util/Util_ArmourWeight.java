@@ -1,16 +1,16 @@
 package net.nifheim.yitan.itemlorestats.Util;
 
 import net.nifheim.yitan.itemlorestats.GearStats;
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import com.zettelnet.armorweight.WeightManager;
 import org.bukkit.entity.Player;
 
 public class Util_ArmourWeight {
 
     GearStats gearStats = new GearStats();
-    ItemLoreStats main;
+    Main main;
 
-    public Util_ArmourWeight(ItemLoreStats instance) {
+    public Util_ArmourWeight(Main instance) {
         this.main = instance;
     }
 
@@ -18,7 +18,7 @@ public class Util_ArmourWeight {
         float speed = 0.0F;
         double weight = 0.0D;
 
-        WeightManager weightManager = ItemLoreStats.plugin.getArmourWeight().getWeightManager();
+        WeightManager weightManager = Main.plugin.getArmourWeight().getWeightManager();
         weight = weightManager.calculateWeight(player);
 
         speed = weightManager.getPlayerSpeed(weight, 0.2D);

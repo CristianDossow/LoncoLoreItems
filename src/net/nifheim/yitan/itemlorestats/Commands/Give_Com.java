@@ -1,7 +1,7 @@
  package net.nifheim.yitan.itemlorestats.Commands;
  
  import net.nifheim.yitan.itemlorestats.GenerateFromFile;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
  import java.io.File;
  import java.io.PrintStream;
@@ -44,7 +44,7 @@
                    newItemName = newItemName.split(",")[0].trim();
                  }
                  
-                 if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
+                 if (new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
                    Player givePlayer = player.getServer().getPlayer(args[1]);
                    
                    if (givePlayer.getInventory().firstEmpty() == -1) {
@@ -97,7 +97,7 @@
                replaceNewItemName = newItemName.split(",")[1].trim();
              }
              
-             if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
+             if (new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
                Player givePlayer = Bukkit.getServer().getPlayer(args[1]);
                
                if (givePlayer.getInventory().firstEmpty() == -1) {

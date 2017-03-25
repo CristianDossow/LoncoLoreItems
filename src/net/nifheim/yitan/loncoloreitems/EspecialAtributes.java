@@ -9,7 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
 
 public class EspecialAtributes {
@@ -20,7 +20,7 @@ public class EspecialAtributes {
 	static public String unknownItem = "Art�culo no identificado";
 	static public String enchantgiver = "Poder almacenado:";
 	static public String repairer = "Reparaci�n: ";
-	static String durability =  ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
+	static String durability =  Main.plugin.getConfig().getString("bonusStats.durability.name");
 
 
 	

@@ -2,7 +2,7 @@
  
  import net.nifheim.yitan.itemlorestats.Durability.Durability;
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.SetBonuses;
  import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
@@ -28,11 +28,11 @@
    Util_Random util_Random = new Util_Random();
    
    public int criticalStrikeChanceOnHit(LivingEntity getAttacker, LivingEntity getDefender) {
-     if (this.gearStats.getCritChanceGear(getAttacker) + this.gearStats.getCritChanceItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getCritChanceItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker)) <= 0.0D) { return 0;
+     if (this.gearStats.getCritChanceGear(getAttacker) + this.gearStats.getCritChanceItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getCritChanceItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) { return 0;
      }
-     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".cri", ItemLoreStats.plugin.getConfig().getInt("secondaryStats.critChance.internalCooldown"))) {
+     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".cri", Main.plugin.getConfig().getInt("secondaryStats.critChance.internalCooldown"))) {
        if ((getAttacker instanceof Player)) {
-         ItemLoreStats.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".cri", Long.valueOf(System.currentTimeMillis()));
+         Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".cri", Long.valueOf(System.currentTimeMillis()));
        }
        
        double critPercent = 0.0D;
@@ -44,26 +44,26 @@
  
  
  
-       if (ItemLoreStats.plugin.isTool(this.getSlots.returnItemInMainHand(getAttacker).getType())) {
-         critPercent += this.gearStats.getCritChanceItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker));
+       if (Main.plugin.isTool(this.getSlots.returnItemInMainHand(getAttacker).getType())) {
+         critPercent += this.gearStats.getCritChanceItemInHand(Main.plugin.itemInMainHand(getAttacker));
        }
        
-       if (ItemLoreStats.plugin.isTool(this.getSlots.returnItemInOffHand(getAttacker).getType())) {
-         critPercent += this.gearStats.getCritChanceItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker));
+       if (Main.plugin.isTool(this.getSlots.returnItemInOffHand(getAttacker).getType())) {
+         critPercent += this.gearStats.getCritChanceItemInHand(Main.plugin.itemInOffHand(getAttacker));
        }
        
        critPercent += this.gearStats.getCritChanceGear(getAttacker);
        
        if (critPercent >= this.util_Random.random(100)) {
          if (((getAttacker instanceof Player)) && 
-           (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.critStrike")) && 
+           (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.critStrike")) && 
            ((getAttacker instanceof Player))) {
            ((Player)getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.CriticalStrikeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
          }
          
  
          if (((getDefender instanceof Player)) && 
-           (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.enemyCritStrike"))) {
+           (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyCritStrike"))) {
            if ((getAttacker instanceof Player)) {
              ((Player)getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyCriticalStrikeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
            } else if ((getAttacker instanceof LivingEntity)) {

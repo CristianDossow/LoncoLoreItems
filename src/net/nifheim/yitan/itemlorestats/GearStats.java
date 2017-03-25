@@ -77,14 +77,14 @@ public class GearStats implements org.bukkit.event.Listener {
     static DecimalFormat df = new DecimalFormat("#.#");
 
     public String getTotalMovementSpeed(Player player) {
-        double stat = Double.valueOf(player.getLevel()).doubleValue() * ItemLoreStats.plugin.getConfig().getDouble("additionalStatsPerLevel.speed") * 100;
+        double stat = Double.valueOf(player.getLevel()).doubleValue() * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.speed") * 100;
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(player).getType())) {
-            stat += getMovementSpeedItemInHand(ItemLoreStats.plugin.itemInMainHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
+            stat += getMovementSpeedItemInHand(Main.plugin.itemInMainHand(player));
         }
 
-        if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(player).getType())) {
-            stat += getMovementSpeedItemInHand(ItemLoreStats.plugin.itemInOffHand(player));
+        if (Main.plugin.isTool(Main.plugin.itemInOffHand(player).getType())) {
+            stat += getMovementSpeedItemInHand(Main.plugin.itemInOffHand(player));
         }
 
         stat += getMovementSpeedGear(player);
@@ -118,7 +118,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getArmourGear(LivingEntity entity) {
-        this.armour = ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name").replaceAll(" ", "");
+        this.armour = Main.plugin.getConfig().getString("primaryStats.armour.name").replaceAll(" ", "");
 
         double armourValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -154,7 +154,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getStrengthGear(LivingEntity entity) {
-        this.armour = ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name").replaceAll(" ", "");
+        this.armour = Main.plugin.getConfig().getString("primaryStats.armour.name").replaceAll(" ", "");
 
         double armourValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -180,7 +180,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getDodgeGear(LivingEntity entity) {
-        this.dodge = ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name").replaceAll(" ", "");
+        this.dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.name").replaceAll(" ", "");
 
         double dodgeValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -206,7 +206,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getBlockGear(LivingEntity entity) {
-        this.block = ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name").replaceAll(" ", "");
+        this.block = Main.plugin.getConfig().getString("secondaryStats.block.name").replaceAll(" ", "");
 
         double blockValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -238,8 +238,8 @@ public class GearStats implements org.bukkit.event.Listener {
         mindamage = mindamage + getDamageFromOffHand(player)[0];
         maxdamage = maxdamage + getDamageFromOffHand(player)[1];
 
-        mindamage = mindamage + Double.parseDouble(getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(player)).split("-")[0]);
-        maxdamage = maxdamage + Double.parseDouble(getDamageItemInHand(ItemLoreStats.plugin.itemInMainHand(player)).split("-")[1]);
+        mindamage = mindamage + Double.parseDouble(getDamageItemInHand(Main.plugin.itemInMainHand(player)).split("-")[0]);
+        maxdamage = maxdamage + Double.parseDouble(getDamageItemInHand(Main.plugin.itemInMainHand(player)).split("-")[1]);
 
         mindamage = mindamage + Double.parseDouble(getDamageGear(player).split("-")[0]);
         maxdamage = maxdamage + Double.parseDouble(getDamageGear(player).split("-")[1]);
@@ -250,7 +250,7 @@ public class GearStats implements org.bukkit.event.Listener {
     public String getDamageGear(LivingEntity entity) {
         double damageMinValue = 0.0D;
         double damageMaxValue = 0.0D;
-        this.damage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name").replaceAll(" ", "");
+        this.damage = Main.plugin.getConfig().getString("primaryStats.damage.name").replaceAll(" ", "");
         if (entity != null) {
             if (entity.getEquipment() != null) {
 
@@ -344,7 +344,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double[] getDamageFromItem(ItemStack gear, double multiplier) {
-        this.damage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name").replaceAll(" ", "");
+        this.damage = Main.plugin.getConfig().getString("primaryStats.damage.name").replaceAll(" ", "");
         double damageMinValue = 0;
         double damageMaxValue = 0;
         if (gear != null) {
@@ -375,7 +375,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getCritChanceGear(LivingEntity entity) {
-        this.critChance = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name").replaceAll(" ", "");
+        this.critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.name").replaceAll(" ", "");
 
         double critChanceValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -401,7 +401,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getCritDamageGear(LivingEntity entity) {
-        this.critDamage = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name").replaceAll(" ", "");
+        this.critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.name").replaceAll(" ", "");
 
         double critDamageValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -427,7 +427,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getHealthGear(LivingEntity entity) {
-        this.health = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name").replaceAll(" ", "");
+        this.health = Main.plugin.getConfig().getString("primaryStats.health.name").replaceAll(" ", "");
 
         double healthValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -453,7 +453,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getHealthRegenGear(LivingEntity entity) {
-        this.healthRegen = ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name").replaceAll(" ", "");
+        this.healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.name").replaceAll(" ", "");
 
         double healthRegenValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -479,7 +479,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getLifeStealGear(LivingEntity entity) {
-        this.lifeSteal = ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name").replaceAll(" ", "");
+        this.lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name").replaceAll(" ", "");
 
         double lifeStealValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -512,7 +512,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getLifeStealHealGear(LivingEntity entity) {
-        this.lifeStealHeal = ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeStealHeal.name").replaceAll(" ", "");
+        this.lifeStealHeal = Main.plugin.getConfig().getString("secondaryStats.lifeStealHeal.name").replaceAll(" ", "");
 
         double lifeStealHealValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -544,7 +544,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getReflectGear(LivingEntity entity) {
-        this.reflect = ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name").replaceAll(" ", "");
+        this.reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.name").replaceAll(" ", "");
 
         double reflectValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -576,7 +576,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getFireGear(LivingEntity entity) {
-        this.fire = ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name").replaceAll(" ", "");
+        this.fire = Main.plugin.getConfig().getString("secondaryStats.fire.name").replaceAll(" ", "");
 
         double fireValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -608,7 +608,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getIceGear(LivingEntity entity) {
-        this.ice = ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name").replaceAll(" ", "");
+        this.ice = Main.plugin.getConfig().getString("secondaryStats.ice.name").replaceAll(" ", "");
 
         double iceValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -640,7 +640,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getPoisonGear(LivingEntity entity) {
-        this.poison = ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name").replaceAll(" ", "");
+        this.poison = Main.plugin.getConfig().getString("secondaryStats.poison.name").replaceAll(" ", "");
 
         double poisonValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -672,7 +672,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getWitherGear(LivingEntity entity) {
-        this.wither = ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name").replaceAll(" ", "");
+        this.wither = Main.plugin.getConfig().getString("secondaryStats.wither.name").replaceAll(" ", "");
 
         double witherValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -704,7 +704,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getHarmingGear(LivingEntity entity) {
-        this.harming = ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name").replaceAll(" ", "");
+        this.harming = Main.plugin.getConfig().getString("secondaryStats.harming.name").replaceAll(" ", "");
 
         double harmingValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -736,7 +736,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getBlindGear(LivingEntity entity) {
-        this.blind = ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name").replaceAll(" ", "");
+        this.blind = Main.plugin.getConfig().getString("secondaryStats.blind.name").replaceAll(" ", "");
 
         double blindValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -769,7 +769,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getMovementSpeedGear(Player player) {
-        this.movementspeed = ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name").replaceAll(" ", "");
+        this.movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name").replaceAll(" ", "");
 
         double movementspeedValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -798,7 +798,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getXPMultiplierGear(Player player) {
-        this.xpmultiplier = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name").replaceAll(" ", "");
+        this.xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name").replaceAll(" ", "");
 
         double xpmultiplierValue = 0.0D;
         ItemStack[] arrayOfItemStack;
@@ -851,7 +851,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getArmourItemInHand(ItemStack item) {
-        this.armour = ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name").replaceAll(" ", "");
+        this.armour = Main.plugin.getConfig().getString("primaryStats.armour.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -873,7 +873,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getDodgeItemInHand(ItemStack item) {
-        this.dodge = ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name").replaceAll(" ", "");
+        this.dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -895,7 +895,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getBlockItemInHand(ItemStack item) {
-        this.block = ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name").replaceAll(" ", "");
+        this.block = Main.plugin.getConfig().getString("secondaryStats.block.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -917,7 +917,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public String getDamageItemInHand(ItemStack item) {
-        this.damage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name").replaceAll(" ", "");
+        this.damage = Main.plugin.getConfig().getString("primaryStats.damage.name").replaceAll(" ", "");
 
         double damageMinValue = 0.0D;
         double damageMaxValue = 0.0D;
@@ -946,7 +946,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getCritChanceItemInHand(ItemStack item) {
-        this.critChance = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name").replaceAll(" ", "");
+        this.critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -968,7 +968,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getCritDamageItemInHand(ItemStack item) {
-        this.critDamage = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name").replaceAll(" ", "");
+        this.critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -990,7 +990,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getHealthItemInHand(ItemStack item) {
-        this.health = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name").replaceAll(" ", "");
+        this.health = Main.plugin.getConfig().getString("primaryStats.health.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1012,7 +1012,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getHealthRegenItemInHand(ItemStack item) {
-        this.healthRegen = ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name").replaceAll(" ", "");
+        this.healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1034,7 +1034,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getLifeStealItemInHand(ItemStack item) {
-        this.lifeSteal = ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name").replaceAll(" ", "");
+        this.lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1056,7 +1056,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getLifeStealHealItemInHand(ItemStack item) {
-        this.lifeStealHeal = ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeStealHeal.name").replaceAll(" ", "");
+        this.lifeStealHeal = Main.plugin.getConfig().getString("secondaryStats.lifeStealHeal.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1078,7 +1078,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getReflectItemInHand(ItemStack item) {
-        this.reflect = ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name").replaceAll(" ", "");
+        this.reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1100,7 +1100,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getIceItemInHand(ItemStack item) {
-        this.ice = ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name").replaceAll(" ", "");
+        this.ice = Main.plugin.getConfig().getString("secondaryStats.ice.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1122,7 +1122,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getFireItemInHand(ItemStack item) {
-        this.fire = ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name").replaceAll(" ", "");
+        this.fire = Main.plugin.getConfig().getString("secondaryStats.fire.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1144,7 +1144,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getPoisonItemInHand(ItemStack item) {
-        this.poison = ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name").replaceAll(" ", "");
+        this.poison = Main.plugin.getConfig().getString("secondaryStats.poison.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1166,7 +1166,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getWitherItemInHand(ItemStack item) {
-        this.wither = ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name").replaceAll(" ", "");
+        this.wither = Main.plugin.getConfig().getString("secondaryStats.wither.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1188,7 +1188,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getHarmingItemInHand(ItemStack item) {
-        this.harming = ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name").replaceAll(" ", "");
+        this.harming = Main.plugin.getConfig().getString("secondaryStats.harming.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1210,7 +1210,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getBlindItemInHand(ItemStack item) {
-        this.blind = ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name").replaceAll(" ", "");
+        this.blind = Main.plugin.getConfig().getString("secondaryStats.blind.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1232,7 +1232,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getMovementSpeedItemInHand(ItemStack item) {
-        this.movementspeed = ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name").replaceAll(" ", "");
+        this.movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1254,7 +1254,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getXPMultiplierItemInHand(ItemStack item) {
-        this.xpmultiplier = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name").replaceAll(" ", "");
+        this.xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1276,7 +1276,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getPvPDamageModifierItemInHand(ItemStack item) {
-        this.pvpdamage = ItemLoreStats.plugin.getConfig().getString("bonusStats.pvpDamage.name").replaceAll(" ", "");
+        this.pvpdamage = Main.plugin.getConfig().getString("bonusStats.pvpDamage.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1298,7 +1298,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public double getPvEDamageModifierItemInHand(ItemStack item) {
-        this.pvedamage = ItemLoreStats.plugin.getConfig().getString("bonusStats.pveDamage.name").replaceAll(" ", "");
+        this.pvedamage = Main.plugin.getConfig().getString("bonusStats.pveDamage.name").replaceAll(" ", "");
 
         double itemInHandValue = 0.0D;
 
@@ -1320,8 +1320,8 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public int getSellValueItemInHand(ItemStack item) {
-        this.sellValueName = ItemLoreStats.plugin.getConfig().getString("bonusStats.sellValue.name").replaceAll(" ", "");
-        this.currencyName = ItemLoreStats.plugin.getConfig().getString("bonusStats.sellValue.currency.name").replaceAll(" ", "");
+        this.sellValueName = Main.plugin.getConfig().getString("bonusStats.sellValue.name").replaceAll(" ", "");
+        this.currencyName = Main.plugin.getConfig().getString("bonusStats.sellValue.currency.name").replaceAll(" ", "");
 
         int itemInHandValue = 0;
 
@@ -1365,7 +1365,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public int getXPLevelRequirement(Player player, ItemStack item) {
-        this.xplevel = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name").replaceAll(" ", "");
+        this.xplevel = Main.plugin.getConfig().getString("bonusStats.xpLevel.name").replaceAll(" ", "");
 
         int itemXPLevel = 0;
 
@@ -1389,7 +1389,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public int getXPLevelRequirementItemOnPickup(ItemStack itemOnPickup) {
-        this.xplevel = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name").replaceAll(" ", "");
+        this.xplevel = Main.plugin.getConfig().getString("bonusStats.xpLevel.name").replaceAll(" ", "");
 
         int itemInHandValue = 0;
 
@@ -1415,7 +1415,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public String getSoulboundName(Player player, ItemStack item) {
-        this.soulbound = ItemLoreStats.plugin.getConfig().getString("bonusStats.soulbound.name");
+        this.soulbound = Main.plugin.getConfig().getString("bonusStats.soulbound.name");
 
         String storeLoreValues = "";
 
@@ -1437,7 +1437,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public String getSoulboundNameItemOnPickup(ItemStack itemOnPickup) {
-        this.soulbound = ItemLoreStats.plugin.getConfig().getString("bonusStats.soulbound.name");
+        this.soulbound = Main.plugin.getConfig().getString("bonusStats.soulbound.name");
 
         String storeLoreValues = "";
 
@@ -1460,7 +1460,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public ArrayList<String> getClass(ItemStack item) {
-        this.className = ItemLoreStats.plugin.getConfig().getString("bonusStats.class.name").replaceAll(" ", "");
+        this.className = Main.plugin.getConfig().getString("bonusStats.class.name").replaceAll(" ", "");
 
         if ((item != null)
                 && (item.hasItemMeta())
@@ -1470,7 +1470,7 @@ public class GearStats implements org.bukkit.event.Listener {
             for (String line : itemLore) {
                 if (ChatColor.stripColor(line).startsWith(this.className + ": ")) {
                     String value = ChatColor.stripColor(line).substring((this.className + ": ").length()).trim();
-                    ArrayList<String> storeLoreValues = new ArrayList(java.util.Arrays.asList(value.split(ItemLoreStats.plugin.getConfig().getString("bonusStats.class.separator"))));
+                    ArrayList<String> storeLoreValues = new ArrayList(java.util.Arrays.asList(value.split(Main.plugin.getConfig().getString("bonusStats.class.separator"))));
                     return storeLoreValues;
                 }
             }
@@ -1480,14 +1480,14 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public String phic_SetBonusItemInHand(ItemStack itemstack) {
-        this.setbonus = ItemLoreStats.plugin.getConfig().getString("bonusStats.setBonus.name").replaceAll(" ", "");
+        this.setbonus = Main.plugin.getConfig().getString("bonusStats.setBonus.name").replaceAll(" ", "");
         String weaponKey = "";
 
         ItemStack itemInHand = itemstack;
 
         if ((itemInHand != null)
                 && (itemInHand.hasItemMeta())
-                && (ItemLoreStats.plugin.isTool(itemInHand.getType()))
+                && (Main.plugin.isTool(itemInHand.getType()))
                 && (itemInHand.getItemMeta().hasLore())) {
             List<String> itemInHandLore = itemInHand.getItemMeta().getLore();
             for (String line : itemInHandLore) {
@@ -1503,7 +1503,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public String phic_SoulboundNameItemInHand(ItemStack itemstack) {
-        this.soulbound = ItemLoreStats.plugin.getConfig().getString("bonusStats.soulbound.name");
+        this.soulbound = Main.plugin.getConfig().getString("bonusStats.soulbound.name");
 
         String storeLoreValues = "";
 
@@ -1527,7 +1527,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public String phic_ClassItemInHand(ItemStack itemstack) {
-        this.className = ItemLoreStats.plugin.getConfig().getString("bonusStats.class.name").replaceAll(" ", "");
+        this.className = Main.plugin.getConfig().getString("bonusStats.class.name").replaceAll(" ", "");
 
         String storeLoreValues = "";
 
@@ -1551,7 +1551,7 @@ public class GearStats implements org.bukkit.event.Listener {
     }
 
     public int phic_XPLevelRequirementItemInHand(ItemStack itemstack) {
-        this.xplevel = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name").replaceAll(" ", "");
+        this.xplevel = Main.plugin.getConfig().getString("bonusStats.xpLevel.name").replaceAll(" ", "");
 
         int storeLoreValues = 0;
 

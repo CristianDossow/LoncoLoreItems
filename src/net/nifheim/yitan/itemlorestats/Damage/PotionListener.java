@@ -1,6 +1,6 @@
 package net.nifheim.yitan.itemlorestats.Damage;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -23,9 +23,9 @@ public class PotionListener implements org.bukkit.event.Listener {
                 double potion = 0.0D;
 
                 if (event.getItem().getItemMeta().toString().contains("strong")) {
-                    potion = Math.round(player.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.heal.instantHealthII"));
+                    potion = Math.round(player.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.heal.instantHealthII"));
                 } else {
-                    potion = Math.round(player.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.heal.instantHealthI"));
+                    potion = Math.round(player.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.heal.instantHealthI"));
                 }
 
                 if (player.getHealth() + potion > player.getMaxHealth()) {
@@ -37,9 +37,9 @@ public class PotionListener implements org.bukkit.event.Listener {
                 double potion = 0.0D;
 
                 if (event.getItem().getItemMeta().toString().contains("strong")) {
-                    potion = Math.round(player.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.damage.instantHarmingII"));
+                    potion = Math.round(player.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.damage.instantHarmingII"));
                 } else {
-                    potion = Math.round(player.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.damage.instantHarmingI"));
+                    potion = Math.round(player.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.damage.instantHarmingI"));
                 }
 
                 if (player.getHealth() - potion > player.getHealth()) {
@@ -63,9 +63,9 @@ public class PotionListener implements org.bukkit.event.Listener {
                             double potion = 0.0D;
 
                             if (thrownPotion.toString().contains("strong")) {
-                                potion = Math.round(entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.heal.splashHealthII"));
+                                potion = Math.round(entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.heal.splashHealthII"));
                             } else {
-                                potion = Math.round(entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.heal.splashHealthI"));
+                                potion = Math.round(entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.heal.splashHealthI"));
                             }
 
                             if (entity.getHealth() + potion > entity.getMaxHealth()) {
@@ -89,15 +89,15 @@ public class PotionListener implements org.bukkit.event.Listener {
                 double potion = 0.0D;
 
                 if (areaCloud.getBasePotionData().isUpgraded()) {
-                    potion = Math.round(entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.damage.lingerHarmingII"));
+                    potion = Math.round(entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.damage.lingerHarmingII"));
                 } else {
-                    potion = Math.round(entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.damage.lingerHarmingI"));
+                    potion = Math.round(entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.damage.lingerHarmingI"));
                 }
 
                 entity.damage(potion, areaCloud);
 
                 if ((entity instanceof Player)) {
-                    ItemLoreStats.plugin.updateHealth((Player) entity);
+                    Main.plugin.updateHealth((Player) entity);
                 }
             }
         } else if (areaCloud.getBasePotionData().getType().equals(PotionType.INSTANT_HEAL)) {
@@ -106,9 +106,9 @@ public class PotionListener implements org.bukkit.event.Listener {
                     double potion = 0.0D;
 
                     if (areaCloud.getBasePotionData().isUpgraded()) {
-                        potion = Math.round(entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.heal.lingerHealthII"));
+                        potion = Math.round(entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.heal.lingerHealthII"));
                     } else {
-                        potion = Math.round(entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("potions.heal.lingerHealthI"));
+                        potion = Math.round(entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("potions.heal.lingerHealthI"));
                     }
 
                     if (entity.getHealth() + potion > entity.getMaxHealth()) {
@@ -117,7 +117,7 @@ public class PotionListener implements org.bukkit.event.Listener {
                         entity.setHealth(entity.getHealth() + potion);
                     }
 
-                    ItemLoreStats.plugin.updateHealth((Player) entity);
+                    Main.plugin.updateHealth((Player) entity);
                 }
             }
         }

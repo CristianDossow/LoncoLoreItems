@@ -12,16 +12,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitTask;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 
 public class DamageFix {
 	String weaponspeed ;
 	public HashMap<UUID, Long> attackCooldowns ;
 	public HashMap<UUID, Long> attackCooldownsEnd ;
 	private String languageRegex;
-	public ItemLoreStats instance;
+	public Main instance;
 	
-	public DamageFix(ItemLoreStats instance) {
+	public DamageFix(Main instance) {
 		super();
 		this.weaponspeed = "vataque";
 		this.attackCooldowns = new HashMap<UUID, Long>();

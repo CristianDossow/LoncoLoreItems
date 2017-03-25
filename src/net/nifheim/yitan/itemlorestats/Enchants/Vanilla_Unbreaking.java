@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Enchants;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
  import net.nifheim.yitan.itemlorestats.Util.Util_Random;
  import java.util.Map;
@@ -15,11 +15,11 @@
    Util_Random util_Random = new Util_Random();
    
    public boolean hasUnbreaking(LivingEntity entity) {
-     if (ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInMainHand(entity).getType())) {
+     if (Main.plugin.isTool(Main.plugin.itemInMainHand(entity).getType())) {
        if (entity.getEquipment().getItemInMainHand().getEnchantments().containsKey(Enchantment.DURABILITY)) {
          return true;
        }
-     } else if ((ItemLoreStats.plugin.isTool(ItemLoreStats.plugin.itemInOffHand(entity).getType())) && 
+     } else if ((Main.plugin.isTool(Main.plugin.itemInOffHand(entity).getType())) && 
        (entity.getEquipment().getItemInOffHand().getEnchantments().containsKey(Enchantment.DURABILITY))) {
        return true;
      }
@@ -36,7 +36,7 @@
    }
    
    public boolean hasUnbreakingMain(ItemStack item) {
-     if ((ItemLoreStats.plugin.isTool(item.getType())) && 
+     if ((Main.plugin.isTool(item.getType())) && 
        (item.getEnchantments().containsKey(Enchantment.DURABILITY))) {
        return true;
      }
@@ -47,8 +47,8 @@
    public int calculateNewDurabilityLoss(int enchantLevel, String durabilityLost) {
      int r = this.util_Random.random(1000);
      
-     if (r <= ItemLoreStats.plugin.getConfig().getInt("enchants.unbreaking.levelMultiplier") * enchantLevel * 10) {
-       return ItemLoreStats.plugin.getConfig().getInt("environmentalDamage." + durabilityLost + ".durabilityLost");
+     if (r <= Main.plugin.getConfig().getInt("enchants.unbreaking.levelMultiplier") * enchantLevel * 10) {
+       return Main.plugin.getConfig().getInt("environmentalDamage." + durabilityLost + ".durabilityLost");
      }
      
      return 0;

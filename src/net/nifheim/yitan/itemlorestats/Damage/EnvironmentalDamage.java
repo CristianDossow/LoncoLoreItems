@@ -1,7 +1,7 @@
 package net.nifheim.yitan.itemlorestats.Damage;
 
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,11 +22,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.block_explosion.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.block_explosion.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.block_explosion.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.block_explosion.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -35,8 +35,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.block_explosion.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.block_explosion.durabilityLost"), "block_explosion");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.block_explosion.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.block_explosion.durabilityLost"), "block_explosion");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -51,11 +51,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.cactus.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.cactus.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.cactus.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.cactus.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -64,8 +64,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.cactus.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.cactus.durabilityLost"), "cactus");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.cactus.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.cactus.durabilityLost"), "cactus");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -80,11 +80,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.drowning.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.drowning.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.drowning.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.drowning.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -93,8 +93,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.drowning.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.drowning.durabilityLost"), "drowning");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.drowning.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.drowning.durabilityLost"), "drowning");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -109,11 +109,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.entity_explosion.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.entity_explosion.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.entity_explosion.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.entity_explosion.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -122,8 +122,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.entity_explosion.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.entity_explosion.durabilityLost"), "entity_explosion");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.entity_explosion.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.entity_explosion.durabilityLost"), "entity_explosion");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -139,8 +139,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fall.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.fall.damage") == 0) {
                     return;
                 }
                 double fallHeight = entity.getFallDistance();
@@ -152,7 +152,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                     return;
                 }
 
-                double percentageOfHealth = ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fall.damage") * entity.getMaxHealth() / 100.0D;
+                double percentageOfHealth = Main.plugin.getConfig().getInt("environmentalDamage.fall.damage") * entity.getMaxHealth() / 100.0D;
                 double multiplyDamage = percentageOfHealth * fallHeight;
 
                 if (this.vanilla_FeatherFalling.hasFeatherFalling(this.util_EntityManager.returnItemStackBoots(entity))) {
@@ -164,8 +164,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 event.setDamage(multiplyDamage);
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fall.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fall.durabilityLost"), "fall");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.fall.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.fall.durabilityLost"), "fall");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -180,11 +180,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.fire.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.fire.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -193,8 +193,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire.durabilityLost"), "fire");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.fire.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.fire.durabilityLost"), "fire");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -209,11 +209,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire_tick.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.fire_tick.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire_tick.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.fire_tick.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -222,8 +222,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire_tick.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.fire_tick.durabilityLost"), "fire_tick");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.fire_tick.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.fire_tick.durabilityLost"), "fire_tick");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -238,11 +238,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lava.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.lava.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lava.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.lava.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -251,8 +251,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lava.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lava.durabilityLost"), "lava");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.lava.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.lava.durabilityLost"), "lava");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -267,11 +267,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lightning.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.lightning.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lightning.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.lightning.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -280,8 +280,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lightning.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.lightning.durabilityLost"), "lightning");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.lightning.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.lightning.durabilityLost"), "lightning");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -296,11 +296,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.magic.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.magic.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.magic.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.magic.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -309,8 +309,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.magic.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.magic.durabilityLost"), "magic");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.magic.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.magic.durabilityLost"), "magic");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -325,11 +325,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.poison.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.poison.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.poison.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.poison.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getMaxHealth());
@@ -338,8 +338,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.poison.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.poison.durabilityLost"), "poison");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.poison.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.poison.durabilityLost"), "poison");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -354,11 +354,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.starvation.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.starvation.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.starvation.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.starvation.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getHealth());
@@ -367,8 +367,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.starvation.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.starvation.durabilityLost"), "starvation");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.starvation.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.starvation.durabilityLost"), "starvation");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -383,11 +383,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.suffocation.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.suffocation.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.suffocation.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.suffocation.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getHealth());
@@ -396,8 +396,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.suffocation.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.suffocation.durabilityLost"), "suffocation");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.suffocation.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.suffocation.durabilityLost"), "suffocation");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -412,7 +412,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
                 double newDamage = entity.getMaxHealth();
 
                 if (newDamage > entity.getHealth()) {
@@ -430,11 +430,11 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.thorns.damage") == 0) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+                if (Main.plugin.getConfig().getInt("environmentalDamage.thorns.damage") == 0) {
                     return;
                 }
-                double newDamage = entity.getMaxHealth() / 100.0D * ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.thorns.damage");
+                double newDamage = entity.getMaxHealth() / 100.0D * Main.plugin.getConfig().getInt("environmentalDamage.thorns.damage");
 
                 if (newDamage > entity.getHealth()) {
                     event.setDamage(entity.getHealth());
@@ -443,8 +443,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 }
 
                 if ((entity instanceof Player)) {
-                    if (ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.thorns.durabilityLost") > 0) {
-                        this.durability.durabilityCalcForArmour(entity, ItemLoreStats.plugin.getConfig().getInt("environmentalDamage.thorns.durabilityLost"), "thorns");
+                    if (Main.plugin.getConfig().getInt("environmentalDamage.thorns.durabilityLost") > 0) {
+                        this.durability.durabilityCalcForArmour(entity, Main.plugin.getConfig().getInt("environmentalDamage.thorns.durabilityLost"), "thorns");
                     }
 
                     this.durability.syncArmourDurability((Player) entity);
@@ -459,7 +459,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
                 && ((event.getEntity() instanceof LivingEntity))) {
             LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
+            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
                 double newDamage = entity.getMaxHealth();
 
                 if (newDamage > entity.getHealth()) {

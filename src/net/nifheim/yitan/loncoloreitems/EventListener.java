@@ -36,7 +36,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 
 public class EventListener implements Listener {
 
@@ -48,10 +48,10 @@ public class EventListener implements Listener {
     public LoreCraftingStats getlorestrings;
     public String unknownItem = "Artículo no identificado";
     public String languageRegex = "[^A-Za-z������������_]";
-    ItemLoreStats instance;
+    Main instance;
     Durability durabilityclass = new Durability();
 
-    public EventListener(ItemLoreStats instance) {
+    public EventListener(Main instance) {
         super();
         this.bowCooldowns = new HashMap<UUID, Long>();
         this.bowActionControl = new HashMap<UUID, Boolean>();
@@ -138,7 +138,7 @@ public class EventListener implements Listener {
     @EventHandler
     public void addStatsToCraftedItem(PrepareItemCraftEvent event) {
         ItemStack item = event.getInventory().getResult();
-        if (ItemLoreStats.plugin.isTool(item.getType())) {
+        if (Main.plugin.isTool(item.getType())) {
             if (!(item.getType().equals(Material.DIAMOND_HOE) && item.getDurability() != 0)) {
                 List<String> temlore = new ArrayList<String>();
                 ItemMeta meta = item.getItemMeta();
@@ -157,10 +157,10 @@ public class EventListener implements Listener {
     public void PickupItem(PlayerPickupItemEvent e) {
         boolean NeedLore = true;
         ItemStack item = e.getItem().getItemStack();
-        if (ItemLoreStats.plugin.isTool(item.getType()) || ItemLoreStats.plugin.isArmour(item.getType())) {
-            String lvl = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+        if (Main.plugin.isTool(item.getType()) || Main.plugin.isArmour(item.getType())) {
+            String lvl = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
             lvl = ChatColor.stripColor(lvl);
-            String durability = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
+            String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
             lvl = ChatColor.stripColor(durability);
             if (item.getItemMeta().hasLore()) {
                 List<String> lore = item.getItemMeta().getLore();

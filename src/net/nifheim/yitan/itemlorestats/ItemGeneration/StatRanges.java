@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.ItemGeneration;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
  import net.nifheim.yitan.itemlorestats.Util.Util_Format;
  import net.nifheim.yitan.itemlorestats.Util.Util_Random;
@@ -101,8 +101,8 @@
        
        double selectedMinValue = Double.parseDouble(this.util_Random.formattedRandomRange(minStat, maxStat));
        double selectedMaxValue = Double.parseDouble(this.util_Random.formattedRandomRange(selectedMinValue, maxStat));
-       double multipliedMinStat = selectedMinValue + selectedMinValue * ItemLoreStats.plugin.getConfig().getDouble("npcDroppedStatMultiplier." + statType);
-       double multipliedMaxStat = selectedMaxValue + selectedMaxValue * ItemLoreStats.plugin.getConfig().getDouble("npcDroppedStatMultiplier." + statType);
+       double multipliedMinStat = selectedMinValue + selectedMinValue * Main.plugin.getConfig().getDouble("npcDroppedStatMultiplier." + statType);
+       double multipliedMaxStat = selectedMaxValue + selectedMaxValue * Main.plugin.getConfig().getDouble("npcDroppedStatMultiplier." + statType);
        
        if (statType.equals("damage")) {
          return this.util_Format.formatString(multipliedMinStat) + "-" + this.util_Format.formatString(multipliedMaxStat);
@@ -112,7 +112,7 @@
      catch (Exception e)
      {
        e.printStackTrace();
-       ItemLoreStats.plugin.getLogger().log(Level.SEVERE, "Unable to generate " + statType + " stat on item generation");
+       Main.plugin.getLogger().log(Level.SEVERE, "Unable to generate " + statType + " stat on item generation");
      }
      
      return "ERROR";

@@ -1,6 +1,6 @@
-main: com.github.supavitax.itemlorestats.ItemLoreStats
+main: net.nifheim.yitan.itemlorestats.Main
 name: ItemLoreStats
-version: 1
+version: ${project.version}
 author: LoncoCraft
 website: noweb
 description: 

@@ -14,7 +14,7 @@
    GearStats gearStats = new GearStats();
    
    public boolean checkClasses(Player player, ItemStack item) {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
        if (this.gearStats.getClass(item) != null)
        {
          ArrayList<String> classes = this.gearStats.getClass(item);

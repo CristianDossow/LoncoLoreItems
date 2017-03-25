@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Enchants;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
  import net.nifheim.yitan.itemlorestats.Util.Util_Random;
  import java.util.Map;
@@ -23,7 +23,7 @@
    
    public double calculateNewFallDamage(int enchantLevel, double fallDamage) {
      double value = fallDamage;
-     int percentage = enchantLevel * ItemLoreStats.plugin.getConfig().getInt("enchants.featherFalling.levelMultiplier");
+     int percentage = enchantLevel * Main.plugin.getConfig().getInt("enchants.featherFalling.levelMultiplier");
      
      value = fallDamage - fallDamage * percentage / 100.0D;
      

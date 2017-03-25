@@ -1,6 +1,6 @@
 package net.nifheim.yitan.itemlorestats.Util;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
@@ -8,9 +8,9 @@ import org.bukkit.entity.Entity;
 
 public class Util_Citizens {
 
-    ItemLoreStats main;
+    Main main;
 
-    public Util_Citizens(ItemLoreStats instance) {
+    public Util_Citizens(Main instance) {
         this.main = instance;
     }
 

@@ -73,15 +73,15 @@
    }
    
    public String randomClass() {
-     List<String> getListClasses = ItemLoreStats.plugin.getConfig().getStringList("bonusStats.class.list");
+     List<String> getListClasses = Main.plugin.getConfig().getStringList("bonusStats.class.list");
      String selectClass = (String)getListClasses.get(random(getListClasses.size()) - 1);
      return selectClass;
    }
    
    public double statMultiplier(String statType, String stat)
    {
-     if (ItemLoreStats.plugin.getConfig().getDouble(statType + "." + stat + ".statMultiplierOnDrop") > 0.0D) {
-       double multiplier = ItemLoreStats.plugin.getConfig().getDouble(statType + "." + stat + ".statMultiplierOnDrop");
+     if (Main.plugin.getConfig().getDouble(statType + "." + stat + ".statMultiplierOnDrop") > 0.0D) {
+       double multiplier = Main.plugin.getConfig().getDouble(statType + "." + stat + ".statMultiplierOnDrop");
        
        return multiplier;
      }
@@ -125,65 +125,65 @@
  
    public List<String> setLore(Player player, int level, int mobLevel, String entity, String dropChance, Material material)
    {
-     String armour = ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.armour.name");
+     String armour = Main.plugin.getConfig().getString("primaryStats.armour.colour") + Main.plugin.getConfig().getString("primaryStats.armour.name");
      String armourNoColour = armour.replaceAll("&([0-9a-f])", "");
-     String dodge = ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.dodge.name");
+     String dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.colour") + Main.plugin.getConfig().getString("secondaryStats.dodge.name");
      String dodgeNoColour = dodge.replaceAll("&([0-9a-f])", "");
-     String block = ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.block.name");
+     String block = Main.plugin.getConfig().getString("secondaryStats.block.colour") + Main.plugin.getConfig().getString("secondaryStats.block.name");
      String blockNoColour = block.replaceAll("&([0-9a-f])", "");
-     String critChance = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.critChance.name");
+     String critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.colour") + Main.plugin.getConfig().getString("secondaryStats.critChance.name");
      String critChanceNoColour = critChance.replaceAll("&([0-9a-f])", "");
-     String critDamage = ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.critDamage.name");
+     String critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.colour") + Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
      String critDamageNoColour = critDamage.replaceAll("&([0-9a-f])", "");
-     String damage = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
+     String damage = Main.plugin.getConfig().getString("primaryStats.damage.colour") + Main.plugin.getConfig().getString("primaryStats.damage.name");
      String damageNoColour = damage.replaceAll("&([0-9a-f])", "");
-     String health = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
+     String health = Main.plugin.getConfig().getString("primaryStats.health.colour") + Main.plugin.getConfig().getString("primaryStats.health.name");
      String healthNoColour = health.replaceAll("&([0-9a-f])", "");
-     String healthRegen = ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.colour") + ItemLoreStats.plugin.getConfig().getString("primaryStats.healthRegen.name");
+     String healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.colour") + Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
      String healthRegenNoColour = healthRegen.replaceAll("&([0-9a-f])", "");
-     String lifeSteal = ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
+     String lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
      String lifeStealNoColour = lifeSteal.replaceAll("&([0-9a-f])", "");
-     String reflect = ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.reflect.name");
+     String reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.colour") + Main.plugin.getConfig().getString("secondaryStats.reflect.name");
      String reflectNoColour = reflect.replaceAll("&([0-9a-f])", "");
-     String fire = ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.fire.name");
+     String fire = Main.plugin.getConfig().getString("secondaryStats.fire.colour") + Main.plugin.getConfig().getString("secondaryStats.fire.name");
      String fireNoColour = fire.replaceAll("&([0-9a-f])", "");
-     String ice = ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.ice.name");
+     String ice = Main.plugin.getConfig().getString("secondaryStats.ice.colour") + Main.plugin.getConfig().getString("secondaryStats.ice.name");
      String iceNoColour = ice.replaceAll("&([0-9a-f])", "");
-     String poison = ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.poison.name");
+     String poison = Main.plugin.getConfig().getString("secondaryStats.poison.colour") + Main.plugin.getConfig().getString("secondaryStats.poison.name");
      String poisonNoColour = poison.replaceAll("&([0-9a-f])", "");
-     String wither = ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.wither.name");
+     String wither = Main.plugin.getConfig().getString("secondaryStats.wither.colour") + Main.plugin.getConfig().getString("secondaryStats.wither.name");
      String witherNoColour = wither.replaceAll("&([0-9a-f])", "");
-     String harming = ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.harming.name");
+     String harming = Main.plugin.getConfig().getString("secondaryStats.harming.colour") + Main.plugin.getConfig().getString("secondaryStats.harming.name");
      String harmingNoColour = harming.replaceAll("&([0-9a-f])", "");
-     String blind = ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.blind.name");
+     String blind = Main.plugin.getConfig().getString("secondaryStats.blind.colour") + Main.plugin.getConfig().getString("secondaryStats.blind.name");
      String blindNoColour = blind.replaceAll("&([0-9a-f])", "");
-     String movementSpeed = ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + ItemLoreStats.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
+     String movementSpeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
      String movementSpeedNoColour = movementSpeed.replaceAll("&([0-9a-f])", "");
-     String xpMultiplier = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
+     String xpMultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
      String xpMultiplierNoColour = xpMultiplier.replaceAll("&([0-9a-f])", "");
-     String weaponSpeed = ItemLoreStats.plugin.getConfig().getString("bonusStats.weaponSpeed.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.weaponSpeed.name");
+     String weaponSpeed = Main.plugin.getConfig().getString("bonusStats.weaponSpeed.colour") + Main.plugin.getConfig().getString("bonusStats.weaponSpeed.name");
      String weaponSpeedNoColour = weaponSpeed.replaceAll("&([0-9a-f])", "");
-     String xpLevel = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+     String xpLevel = Main.plugin.getConfig().getString("bonusStats.xpLevel.colour") + Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
      String xpLevelNoColour = xpLevel.replaceAll("&([0-9a-f])", "");
-     String className = ItemLoreStats.plugin.getConfig().getString("bonusStats.class.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.class.name");
+     String className = Main.plugin.getConfig().getString("bonusStats.class.colour") + Main.plugin.getConfig().getString("bonusStats.class.name");
      String classNameNoColour = className.replaceAll("&([0-9a-f])", "");
-     String soulbound = ItemLoreStats.plugin.getConfig().getString("bonusStats.soulbound.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.soulbound.name");
-     String durability = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.colour") + ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
+     String soulbound = Main.plugin.getConfig().getString("bonusStats.soulbound.colour") + Main.plugin.getConfig().getString("bonusStats.soulbound.name");
+     String durability = Main.plugin.getConfig().getString("bonusStats.durability.colour") + Main.plugin.getConfig().getString("bonusStats.durability.name");
      String durabilityNoColour = durability.replaceAll("&([0-9a-f])", "");
-     String tnt = ItemLoreStats.plugin.getConfig().getString("spells.tnt.colour") + ItemLoreStats.plugin.getConfig().getString("spells.tnt.name");
+     String tnt = Main.plugin.getConfig().getString("spells.tnt.colour") + Main.plugin.getConfig().getString("spells.tnt.name");
      String tntNoColour = tnt.replaceAll("&([0-9a-f])", "");
-     String fireball = ItemLoreStats.plugin.getConfig().getString("spells.fireball.colour") + ItemLoreStats.plugin.getConfig().getString("spells.fireball.name");
+     String fireball = Main.plugin.getConfig().getString("spells.fireball.colour") + Main.plugin.getConfig().getString("spells.fireball.name");
      String fireballNoColour = fireball.replaceAll("&([0-9a-f])", "");
-     String lightning = ItemLoreStats.plugin.getConfig().getString("spells.lightning.colour") + ItemLoreStats.plugin.getConfig().getString("spells.lightning.name");
+     String lightning = Main.plugin.getConfig().getString("spells.lightning.colour") + Main.plugin.getConfig().getString("spells.lightning.name");
      String lightningNoColour = lightning.replaceAll("&([0-9a-f])", "");
-     String frostbolt = ItemLoreStats.plugin.getConfig().getString("spells.frostbolt.colour") + ItemLoreStats.plugin.getConfig().getString("spells.frostbolt.name");
+     String frostbolt = Main.plugin.getConfig().getString("spells.frostbolt.colour") + Main.plugin.getConfig().getString("spells.frostbolt.name");
      String frostboltNoColour = frostbolt.replaceAll("&([0-9a-f])", "");
-     String minorHeal = ItemLoreStats.plugin.getConfig().getString("spells.minorHeal.colour") + ItemLoreStats.plugin.getConfig().getString("spells.minorHeal.name");
+     String minorHeal = Main.plugin.getConfig().getString("spells.minorHeal.colour") + Main.plugin.getConfig().getString("spells.minorHeal.name");
      String minorHealNoColour = minorHeal.replaceAll("&([0-9a-f])", "");
-     String majorHeal = ItemLoreStats.plugin.getConfig().getString("spells.majorHeal.colour") + ItemLoreStats.plugin.getConfig().getString("spells.majorHeal.name");
+     String majorHeal = Main.plugin.getConfig().getString("spells.majorHeal.colour") + Main.plugin.getConfig().getString("spells.majorHeal.name");
      String majorHealNoColour = majorHeal.replaceAll("&([0-9a-f])", "");
      
-     int randomApplyChance = ItemLoreStats.plugin.getConfig().getInt("randomApplyChance");
+     int randomApplyChance = Main.plugin.getConfig().getInt("randomApplyChance");
      
      double armourValue = 0.0D;
      double dodgeValue = 0.0D;
@@ -219,7 +219,7 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entity.toString().toLowerCase() + ".yml"));
+       this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entity.toString().toLowerCase() + ".yml"));
        
        if ((this.PlayerDataConfig.contains(dropChance + ".properties.weaponspeed")) && 
          (!this.PlayerDataConfig.getString(dropChance + ".properties.weaponspeed").equals("0"))) {
@@ -229,89 +229,89 @@
                int r = random(100);
                if (r <= 20) {
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.DARK_RED + "Very Slow");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
                } else if ((r > 20) && (r < 40)) {
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.RED + "Slow");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
                } else if ((r > 40) && (r < 60)) {
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.YELLOW + "Normal");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
                } else if ((r > 60) && (r < 80)) {
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.GREEN + "Fast");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
                } else if (r >= 80) {
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.DARK_GREEN + "Very Fast");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
                }
              }
            } else {
              int r = random(100);
              if (r <= 20) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.DARK_RED + "Very Slow");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
              } else if ((r > 20) && (r < 40)) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.RED + "Slow");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
              } else if ((r > 40) && (r < 60)) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.YELLOW + "Normal");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
              } else if ((r > 60) && (r < 80)) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.GREEN + "Fast");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
              } else if (r >= 80) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + ChatColor.DARK_GREEN + "Very Fast");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
              }
            }
          } else if (this.PlayerDataConfig.getString(dropChance + ".properties.weaponspeed").equalsIgnoreCase("verySlow")) {
            if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.weaponspeedRandomApply")) {
              if (random(100) <= randomApplyChance) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
              }
            } else {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.verySlow");
            }
          } else if (this.PlayerDataConfig.getString(dropChance + ".properties.weaponspeed").equalsIgnoreCase("slow")) {
            if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.weaponspeedRandomApply")) {
              if (random(100) <= randomApplyChance) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
              }
            } else {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.slow");
            }
          } else if (this.PlayerDataConfig.getString(dropChance + ".properties.weaponspeed").contains("fast")) {
            if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.weaponspeedRandomApply")) {
              if (random(100) <= randomApplyChance) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
              }
            } else {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.fast");
            }
          } else if (this.PlayerDataConfig.getString(dropChance + ".properties.weaponspeed").contains("veryFast")) {
            if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.weaponspeedRandomApply")) {
              if (random(100) <= randomApplyChance) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
              }
            } else {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.veryFast");
            }
          }
          else if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.weaponspeedRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(weaponSpeed)) + weaponSpeedNoColour + ": " + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.weaponspeed").toString())));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
+           sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.weaponSpeed.sellValuePerStat.normal");
          }
        }
        
@@ -321,11 +321,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.armourRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(armour)) + armourNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.armour").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "armour", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(armour)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.armour.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.armour.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(armour)) + armourNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.armour").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "armour", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(armour)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.armour.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.armour.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -333,11 +333,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.dodgeRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(dodge)) + dodgeNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.dodge").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "dodge", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(dodge)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.dodge.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.dodge.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(dodge)) + dodgeNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.dodge").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "dodge", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(dodge)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.dodge.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.dodge.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -345,11 +345,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.blockRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(block)) + blockNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.block").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "block", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(block)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.block.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.block.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(block)) + blockNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.block").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "block", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(block)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.block.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.block.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -357,11 +357,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.damageRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(damage)) + damageNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.damage").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "damage", dropChance).replace(",", "") + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(damage)));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.damage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.damage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(damage)) + damageNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.damage").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "damage", dropChance).replace(",", "") + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(damage)));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.damage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.damage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -369,11 +369,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.critChanceRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critChance)) + critChanceNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.critChance").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "critChance", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critChance)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.critChance.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.critChance.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critChance)) + critChanceNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.critChance").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "critChance", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critChance)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.critChance.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.critChance.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -381,11 +381,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.critDamageRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critDamage)) + critDamageNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.critDamage").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "critDamage", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critDamage)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.critDamage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.critDamage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critDamage)) + critDamageNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.critDamage").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "critDamage", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(critDamage)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.critDamage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.critDamage.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -394,11 +394,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.healthRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(health)) + healthNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.health").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "health", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(health)));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.health.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.health.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(health)) + healthNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.health").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "health", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(health)));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.health.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.health.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -406,11 +406,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.healthRegenRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(healthRegen)) + healthRegenNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.healthRegen").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "healthRegen", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(healthRegen)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.healthRegen.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.healthRegen.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(healthRegen)) + healthRegenNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.healthRegen").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "healthRegen", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(healthRegen)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.healthRegen.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.healthRegen.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -418,11 +418,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.lifeStealRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(lifeSteal)) + lifeStealNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.lifeSteal").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "lifeSteal", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(lifeSteal)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.lifeSteal.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.lifeSteal.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(lifeSteal)) + lifeStealNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.lifeSteal").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "lifeSteal", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(lifeSteal)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.lifeSteal.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.lifeSteal.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -430,11 +430,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.reflectRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(reflect)) + reflectNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.reflect").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "reflect", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(reflect)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.reflect.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.reflect.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(reflect)) + reflectNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.reflect").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "reflect", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(reflect)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.reflect.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.reflect.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -442,11 +442,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.fireRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(fire)) + fireNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.fire").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "fire", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(fire)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.fire.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.fire.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(fire)) + fireNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.fire").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "fire", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(fire)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.fire.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.fire.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -454,11 +454,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.iceRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(ice)) + iceNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.ice").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "ice", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(ice)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.ice.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.ice.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(ice)) + iceNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.ice").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "ice", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(ice)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.ice.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.ice.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -466,11 +466,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.poisonRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(poison)) + poisonNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.poison").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "poison", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(poison)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.poison.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.poison.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(poison)) + poisonNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.poison").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "poison", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(poison)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.poison.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.poison.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -478,11 +478,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.witherRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(wither)) + witherNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.wither").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "wither", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(wither)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.wither.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.wither.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(wither)) + witherNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.wither").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "wither", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(wither)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.wither.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.wither.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -490,11 +490,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.harmingRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(harming)) + harmingNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.harming").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "harming", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(harming)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.harming.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.harming.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(harming)) + harmingNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.harming").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "harming", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(harming)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.harming.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.harming.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -502,11 +502,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.blindRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(blind)) + blindNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.blind").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "blind", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(blind)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.blind.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.blind.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(blind)) + blindNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.blind").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "blind", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(blind)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.blind.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.blind.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -514,11 +514,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.xpMultiplierRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpMultiplier)) + xpMultiplierNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.xpMultiplier").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "xpMultiplier", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpMultiplier)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.xpMultiplier.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.xpMultiplier.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpMultiplier)) + xpMultiplierNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.xpMultiplier").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "xpMultiplier", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpMultiplier)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.xpMultiplier.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.xpMultiplier.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -526,21 +526,21 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.movementSpeedRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(movementSpeed)) + movementSpeedNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.movementSpeed").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "movementSpeed", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(movementSpeed)) + "%");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.movementSpeed.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+             sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.movementSpeed.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(movementSpeed)) + movementSpeedNoColour + ": +" + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.movementSpeed").toString()))) + this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, mobLevel, "movementSpeed", dropChance) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(movementSpeed)) + "%");
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.movementSpeed.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.movementSpeed.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
-       if (!ItemLoreStats.plugin.getConfig().getBoolean("usingMcMMO")) {
+       if (!Main.plugin.getConfig().getBoolean("usingMcMMO")) {
          if (setLoreList.get(setLoreList.size() - 1) != "") {
            setLoreList.add("");
          }
          
          String selectedDurability = "";
-         String durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+         String durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
          
          if ((this.PlayerDataConfig.contains(dropChance + ".properties.durability")) && 
            (!this.PlayerDataConfig.getString(dropChance + ".properties.durability").equals("0"))) {
@@ -549,12 +549,12 @@
                if (random(100) <= randomApplyChance) {
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilityNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + Double.valueOf(playerLevel).doubleValue() + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilitySplitter + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + playerLevel);
                  setLoreList.add("");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
                }
              } else {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilityNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + Double.valueOf(playerLevel).doubleValue() + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilitySplitter + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + playerLevel);
                setLoreList.add("");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
              }
            } else if (this.PlayerDataConfig.getString(dropChance + ".properties.durability").contains("-player+")) {
              if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.durabilityRandomApply")) {
@@ -562,13 +562,13 @@
                  selectedDurability = String.valueOf(randomRangeInt(Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[1].replaceAll("&([0-9a-f])", "").trim()), Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[0].replaceAll("&([0-9a-f])", "").trim())));
                  setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilityNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilitySplitter + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability);
                  setLoreList.add("");
-                 sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
+                 sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
                }
              } else {
                selectedDurability = String.valueOf(randomRangeInt(Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[1].replaceAll("&([0-9a-f])", "").trim()), Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[0].replaceAll("&([0-9a-f])", "").trim())));
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilityNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilitySplitter + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability);
                setLoreList.add("");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
              }
            }
            else if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.durabilityRandomApply")) {
@@ -576,20 +576,20 @@
                selectedDurability = String.valueOf(randomRangeInt(Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[1].replaceAll("&([0-9a-f])", "").trim()), Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[0].replaceAll("&([0-9a-f])", "").trim())));
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilityNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilitySplitter + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability);
                setLoreList.add("");
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
              }
            } else {
              selectedDurability = String.valueOf(randomRangeInt(Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[1].replaceAll("&([0-9a-f])", "").trim()), Integer.parseInt(this.PlayerDataConfig.getString(dropChance + ".properties.durability").split("-")[0].replaceAll("&([0-9a-f])", "").trim())));
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilityNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(durability)) + durabilitySplitter + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.durability").toString()))) + selectedDurability);
              setLoreList.add("");
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.durability.sellValuePerStat") * 1.0D;
            }
          }
        }
        
  
  
-       if (ItemLoreStats.plugin.getConfig().getBoolean("addRandomLore")) {
+       if (Main.plugin.getConfig().getBoolean("addRandomLore")) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.addRandomLoreRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add("");
@@ -608,19 +608,19 @@
            if (random(100) <= randomApplyChance) {
              if (mobLevel > 0) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)) + xpLevelNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.xpLevel").toString()))) + Math.round(Double.parseDouble(this.statRanges.getRandomRange(this.PlayerDataConfig, mobLevel, mobLevel, "xpLevel", dropChance))) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(mobLevel).doubleValue();
+               sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(mobLevel).doubleValue();
              } else {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)) + xpLevelNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.xpLevel").toString()))) + Math.round(Double.parseDouble(this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, playerLevel, "xpLevel", dropChance))) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+               sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
              }
            }
          }
          else if (mobLevel > 0) {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)) + xpLevelNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.xpLevel").toString()))) + Math.round(Double.parseDouble(this.statRanges.getRandomRange(this.PlayerDataConfig, mobLevel, mobLevel, "xpLevel", dropChance))) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(mobLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(mobLevel).doubleValue();
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)) + xpLevelNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.xpLevel").toString()))) + Math.round(Double.parseDouble(this.statRanges.getRandomRange(this.PlayerDataConfig, playerLevel, playerLevel, "xpLevel", dropChance))) + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(xpLevel)));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
+           sellValue += Main.getPlugin().getConfig().getDouble("secondaryStats.xpLevel.sellValuePerStat") * Double.valueOf(playerLevel).doubleValue();
          }
        }
        
@@ -631,27 +631,27 @@
            if (random(100) <= randomApplyChance) {
              if (this.PlayerDataConfig.getString(dropChance + ".properties.class").equalsIgnoreCase("random")) {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(className)) + classNameNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString()))) + this.util_Colours.replaceTooltipColour(this.util_Colours.replaceTooltipColour(randomClass())));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
              } else {
                setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(className)) + classNameNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString()))) + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString())));
-               sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
+               sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
              }
            }
            else if (this.PlayerDataConfig.getString(dropChance + ".properties.class").equalsIgnoreCase("random")) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(className)) + classNameNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString()))) + this.util_Colours.replaceTooltipColour(this.util_Colours.replaceTooltipColour(randomClass())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
            } else {
              setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(className)) + classNameNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString()))) + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString())));
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
            }
            
          }
          else if (this.PlayerDataConfig.getString(dropChance + ".properties.class").equalsIgnoreCase("random")) {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(className)) + classNameNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString()))) + this.util_Colours.replaceTooltipColour(this.util_Colours.replaceTooltipColour(randomClass())));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
+           sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(className)) + classNameNoColour + ": " + this.util_Colours.replaceTooltipColour(this.util_Colours.extractTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString()))) + this.util_Colours.replaceTooltipColour(this.PlayerDataConfig.getString(new StringBuilder(String.valueOf(dropChance)).append(".properties.class").toString())));
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
+           sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.class.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -662,11 +662,11 @@
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.soulboundRandomApply")) {
            if (random(100) <= randomApplyChance) {
              setLoreList.add(this.util_Colours.replaceTooltipColour(soulbound) + " " + player.getName());
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.soulbound.sellValuePerStat") * 1.0D;
+             sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.soulbound.sellValuePerStat") * 1.0D;
            }
          } else {
            setLoreList.add(this.util_Colours.replaceTooltipColour(soulbound) + " " + player.getName());
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("bonusStats.soulbound.sellValuePerStat") * 1.0D;
+           sellValue += Main.getPlugin().getConfig().getDouble("bonusStats.soulbound.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -675,12 +675,12 @@
          (this.PlayerDataConfig.getBoolean(dropChance + ".spells.tnt"))) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.tntRandomApply")) {
            if (random(100) <= randomApplyChance) {
-             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.tnt.colour")) + tntNoColour);
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.tnt.sellValuePerStat") * 1.0D;
+             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.tnt.colour")) + tntNoColour);
+             sellValue += Main.getPlugin().getConfig().getDouble("spells.tnt.sellValuePerStat") * 1.0D;
            }
          } else {
-           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.tnt.colour")) + tntNoColour);
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.tnt.sellValuePerStat") * 1.0D;
+           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.tnt.colour")) + tntNoColour);
+           sellValue += Main.getPlugin().getConfig().getDouble("spells.tnt.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -689,12 +689,12 @@
          (this.PlayerDataConfig.getBoolean(dropChance + ".spells.fireball"))) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.fireballRandomApply")) {
            if (random(100) <= randomApplyChance) {
-             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.fireball.colour")) + fireballNoColour);
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.fireball.sellValuePerStat") * 1.0D;
+             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.fireball.colour")) + fireballNoColour);
+             sellValue += Main.getPlugin().getConfig().getDouble("spells.fireball.sellValuePerStat") * 1.0D;
            }
          } else {
-           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.fireball.colour")) + fireballNoColour);
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.fireball.sellValuePerStat") * 1.0D;
+           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.fireball.colour")) + fireballNoColour);
+           sellValue += Main.getPlugin().getConfig().getDouble("spells.fireball.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -703,12 +703,12 @@
          (this.PlayerDataConfig.getBoolean(dropChance + ".spells.lightning"))) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.lightningRandomApply")) {
            if (random(100) <= randomApplyChance) {
-             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.lightning.colour")) + lightningNoColour);
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.lightning.sellValuePerStat") * 1.0D;
+             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.lightning.colour")) + lightningNoColour);
+             sellValue += Main.getPlugin().getConfig().getDouble("spells.lightning.sellValuePerStat") * 1.0D;
            }
          } else {
-           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.lightning.colour")) + lightningNoColour);
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.lightning.sellValuePerStat") * 1.0D;
+           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.lightning.colour")) + lightningNoColour);
+           sellValue += Main.getPlugin().getConfig().getDouble("spells.lightning.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -717,12 +717,12 @@
          (this.PlayerDataConfig.getBoolean(dropChance + ".spells.frostbolt"))) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.frostboltRandomApply")) {
            if (random(100) <= randomApplyChance) {
-             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.frostbolt.colour")) + frostboltNoColour);
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.frostbolt.sellValuePerStat") * 1.0D;
+             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.frostbolt.colour")) + frostboltNoColour);
+             sellValue += Main.getPlugin().getConfig().getDouble("spells.frostbolt.sellValuePerStat") * 1.0D;
            }
          } else {
-           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.frostbolt.colour")) + frostboltNoColour);
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.frostbolt.sellValuePerStat") * 1.0D;
+           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.frostbolt.colour")) + frostboltNoColour);
+           sellValue += Main.getPlugin().getConfig().getDouble("spells.frostbolt.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -731,12 +731,12 @@
          (this.PlayerDataConfig.getBoolean(dropChance + ".spells.minorHeal"))) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.minorHealRandomApply")) {
            if (random(100) <= randomApplyChance) {
-             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.minorHeal.colour")) + minorHealNoColour);
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.minorHeal.sellValuePerStat") * 1.0D;
+             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.minorHeal.colour")) + minorHealNoColour);
+             sellValue += Main.getPlugin().getConfig().getDouble("spells.minorHeal.sellValuePerStat") * 1.0D;
            }
          } else {
-           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.minorHeal.colour")) + minorHealNoColour);
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.minorHeal.sellValuePerStat") * 1.0D;
+           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.minorHeal.colour")) + minorHealNoColour);
+           sellValue += Main.getPlugin().getConfig().getDouble("spells.minorHeal.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -745,12 +745,12 @@
          (this.PlayerDataConfig.getBoolean(dropChance + ".spells.majorHeal"))) {
          if (this.PlayerDataConfig.getBoolean(dropChance + ".properties.majorHealRandomApply")) {
            if (random(100) <= randomApplyChance) {
-             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.majorHeal.colour")) + majorHealNoColour);
-             sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.majorHeal.sellValuePerStat") * 1.0D;
+             setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.majorHeal.colour")) + majorHealNoColour);
+             sellValue += Main.getPlugin().getConfig().getDouble("spells.majorHeal.sellValuePerStat") * 1.0D;
            }
          } else {
-           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("spells.majorHeal.colour")) + majorHealNoColour);
-           sellValue += ItemLoreStats.getPlugin().getConfig().getDouble("spells.majorHeal.sellValuePerStat") * 1.0D;
+           setLoreList.add(this.util_GetResponse.getResponse("SpellMessages.CastSpell.ItemInHand", null, null, "", "") + " " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("spells.majorHeal.colour")) + majorHealNoColour);
+           sellValue += Main.getPlugin().getConfig().getDouble("spells.majorHeal.sellValuePerStat") * 1.0D;
          }
        }
        
@@ -759,13 +759,13 @@
  
  
  
-       if (ItemLoreStats.getPlugin().getConfig().getBoolean("addSellValueToDrops")) {
+       if (Main.getPlugin().getConfig().getBoolean("addSellValueToDrops")) {
          if (setLoreList.get(setLoreList.size() - 1) != "") {
            setLoreList.add("");
          }
          
          sellValue += this.sellValueCalc.get(material);
-         setLoreList.add(this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("bonusStats.sellValue.colour")) + ItemLoreStats.getPlugin().getConfig().getString("bonusStats.sellValue.name") + ": " + this.util_Colours.replaceTooltipColour(ItemLoreStats.getPlugin().getConfig().getString("bonusStats.sellValue.currency.colour")) + Double.valueOf(sellValue).intValue() + " " + ItemLoreStats.getPlugin().getConfig().getString("bonusStats.sellValue.currency.name"));
+         setLoreList.add(this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("bonusStats.sellValue.colour")) + Main.getPlugin().getConfig().getString("bonusStats.sellValue.name") + ": " + this.util_Colours.replaceTooltipColour(Main.getPlugin().getConfig().getString("bonusStats.sellValue.currency.colour")) + Double.valueOf(sellValue).intValue() + " " + Main.getPlugin().getConfig().getString("bonusStats.sellValue.currency.name"));
        }
        
        highestValue.add(Double.valueOf(armourValue));
@@ -861,8 +861,8 @@
      try
      {
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entityType + ".yml"));
-       String filePath = ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entityType + ".yml";
+       this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entityType + ".yml"));
+       String filePath = Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entityType + ".yml";
        
        if (this.PlayerDataConfig.getString(dropChance + ".savedItem") == null)
        {
@@ -878,8 +878,8 @@
          
          if (this.PlayerDataConfig.getString(dropChance + ".prefix").equalsIgnoreCase("Stat")) {
            if (!((String)generateLore.get(generateLore.size() - 1)).toString().equals(".")) {
-             int selectStatPrefixFromStat = randomKeySelection(ItemLoreStats.plugin.getConfig().getStringList(((String)generateLore.get(generateLore.size() - 1)).toString() + ".prefix.list").size());
-             setPrefix = this.util_Colours.replaceTooltipColour(ItemLoreStats.plugin.getConfig().getString(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".prefix.colour").toString())) + ItemLoreStats.plugin.getConfig().getStringList(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".prefix.list").toString()).toString().split(",")[selectStatPrefixFromStat].replaceAll("\\[", "").replaceAll("\\]", "").trim();
+             int selectStatPrefixFromStat = randomKeySelection(Main.plugin.getConfig().getStringList(((String)generateLore.get(generateLore.size() - 1)).toString() + ".prefix.list").size());
+             setPrefix = this.util_Colours.replaceTooltipColour(Main.plugin.getConfig().getString(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".prefix.colour").toString())) + Main.plugin.getConfig().getStringList(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".prefix.list").toString()).toString().split(",")[selectStatPrefixFromStat].replaceAll("\\[", "").replaceAll("\\]", "").trim();
            } else {
              setPrefix = ".";
            }
@@ -887,8 +887,8 @@
          
          if (this.PlayerDataConfig.getString(dropChance + ".suffix").equalsIgnoreCase("Stat")) {
            if (!((String)generateLore.get(generateLore.size() - 1)).toString().equals(".")) {
-             int selectStatSuffixFromStat = randomKeySelection(ItemLoreStats.plugin.getConfig().getStringList(((String)generateLore.get(generateLore.size() - 1)).toString() + ".suffix.list").size());
-             setSuffix = this.util_Colours.replaceTooltipColour(ItemLoreStats.plugin.getConfig().getString(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".suffix.colour").toString())) + ItemLoreStats.plugin.getConfig().getStringList(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".suffix.list").toString()).toString().split(",")[selectStatSuffixFromStat].replaceAll("\\[", "").replaceAll("\\]", "").trim();
+             int selectStatSuffixFromStat = randomKeySelection(Main.plugin.getConfig().getStringList(((String)generateLore.get(generateLore.size() - 1)).toString() + ".suffix.list").size());
+             setSuffix = this.util_Colours.replaceTooltipColour(Main.plugin.getConfig().getString(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".suffix.colour").toString())) + Main.plugin.getConfig().getStringList(new StringBuilder(String.valueOf(((String)generateLore.get(generateLore.size() - 1)).toString())).append(".suffix.list").toString()).toString().split(",")[selectStatSuffixFromStat].replaceAll("\\[", "").replaceAll("\\]", "").trim();
            } else {
              setSuffix = ".";
            }
@@ -923,7 +923,7 @@
        fileToLoad = this.PlayerDataConfig.getString(dropChance + ".savedItem");
        
        this.PlayerDataConfig = new YamlConfiguration();
-       this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + fileToLoad + ".yml"));
+       this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + fileToLoad + ".yml"));
        
        return this.PlayerDataConfig.getItemStack("Item");
  
@@ -942,26 +942,26 @@
      LivingEntity entity = mob;
      
      if (((entity instanceof LivingEntity)) && (!(entity instanceof Player))) {
-       entity.getEquipment().setHelmetDropChance((float)(ItemLoreStats.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.helmet") / 100.0D));
-       entity.getEquipment().setChestplateDropChance((float)(ItemLoreStats.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.chestplate") / 100.0D));
-       entity.getEquipment().setLeggingsDropChance((float)(ItemLoreStats.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.leggings") / 100.0D));
-       entity.getEquipment().setBootsDropChance((float)(ItemLoreStats.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.boots") / 100.0D));
-       entity.getEquipment().setItemInMainHandDropChance((float)(ItemLoreStats.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.itemInMainHand") / 100.0D));
-       entity.getEquipment().setItemInOffHandDropChance((float)(ItemLoreStats.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.itemInOffHand") / 100.0D));
+       entity.getEquipment().setHelmetDropChance((float)(Main.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.helmet") / 100.0D));
+       entity.getEquipment().setChestplateDropChance((float)(Main.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.chestplate") / 100.0D));
+       entity.getEquipment().setLeggingsDropChance((float)(Main.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.leggings") / 100.0D));
+       entity.getEquipment().setBootsDropChance((float)(Main.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.boots") / 100.0D));
+       entity.getEquipment().setItemInMainHandDropChance((float)(Main.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.itemInMainHand") / 100.0D));
+       entity.getEquipment().setItemInOffHandDropChance((float)(Main.plugin.getConfig().getDouble("npcDropEquippedGear.dropChance.itemInOffHand") / 100.0D));
      }
    }
    
    @org.bukkit.event.EventHandler
    public void dropGear(EntityDeathEvent mob)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(mob.getEntity().getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(mob.getEntity().getWorld().getName())) {
        dropEquippedArmour(mob.getEntity());
        
-       if (!ItemLoreStats.plugin.getConfig().getBoolean("dropCustomILSLoot")) { return;
+       if (!Main.plugin.getConfig().getBoolean("dropCustomILSLoot")) { return;
        }
        if ((mob.getEntity().getKiller() instanceof Player)) {
          if (mob.getEntity().hasMetadata("naturalSpawn")) {
-           if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml").exists()) {
+           if (new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml").exists()) {
              try
              {
                this.PlayerDataConfig = new YamlConfiguration();
@@ -970,22 +970,22 @@
                  Zombie zombie = (Zombie)mob.getEntity();
                  
                  if (zombie.isBaby()) {
-                   this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml"));
+                   this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml"));
                  } else if (zombie.isVillager()) {
-                   this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml"));
+                   this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml"));
                  } else {
-                   this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
+                   this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
                  }
                } else if (mob.getEntityType().equals(EntityType.SKELETON)) {
                  Skeleton skeleton = (Skeleton)mob.getEntity();
                  
                  if (skeleton.getSkeletonType().equals(Skeleton.SkeletonType.WITHER)) {
-                   this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml"));
+                   this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml"));
                  } else {
-                   this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
+                   this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
                  }
                } else {
-                 this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
+                 this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
                }
                
                int dropChance = random(100);
@@ -1030,11 +1030,11 @@
  
  
                    if (mob.getEntity().hasMetadata("level")) {
-                     mob.getEntity().removeMetadata("level", ItemLoreStats.plugin);
+                     mob.getEntity().removeMetadata("level", Main.plugin);
                    }
                    
                    if (!mob.getEntity().hasMetadata("regionSpawned")) break;
-                   mob.getEntity().removeMetadata("regionSpawned", ItemLoreStats.plugin);
+                   mob.getEntity().removeMetadata("regionSpawned", Main.plugin);
                    
  
                    break;
@@ -1052,7 +1052,7 @@
            }
          }
          else if (mob.getEntity().getCustomName() != null) {
-           if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + this.util_Colours.extractAndReplaceTooltipColour(mob.getEntity().getCustomName()) + ".yml").exists()) {
+           if (new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + this.util_Colours.extractAndReplaceTooltipColour(mob.getEntity().getCustomName()) + ".yml").exists()) {
              int playerLevel = mob.getEntity().getKiller().getLevel();
              String entityName = this.util_Colours.extractAndReplaceTooltipColour(mob.getEntity().getCustomName());
              int mobLevel = 0;
@@ -1063,7 +1063,7 @@
              try
              {
                this.PlayerDataConfig = new YamlConfiguration();
-               this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entityName + ".yml"));
+               this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + entityName + ".yml"));
                
                int dropChance = random(100);
                
@@ -1078,11 +1078,11 @@
                    
  
                    if (mob.getEntity().hasMetadata("level")) {
-                     mob.getEntity().removeMetadata("level", ItemLoreStats.plugin);
+                     mob.getEntity().removeMetadata("level", Main.plugin);
                    }
                    
                    if (!mob.getEntity().hasMetadata("regionSpawned")) break;
-                   mob.getEntity().removeMetadata("regionSpawned", ItemLoreStats.plugin);
+                   mob.getEntity().removeMetadata("regionSpawned", Main.plugin);
                    
  
                    break;
@@ -1097,7 +1097,7 @@
                System.out.println("*********** Failed to drop gear from " + entityName + "! ***********");
              }
            }
-         } else if (new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml").exists()) {
+         } else if (new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml").exists()) {
            int playerLevel = mob.getEntity().getKiller().getLevel();
            try
            {
@@ -1107,22 +1107,22 @@
                Zombie zombie = (Zombie)mob.getEntity();
                
                if (zombie.isBaby()) {
-                 this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml"));
+                 this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "baby_zombie.yml"));
                } else if (zombie.isVillager()) {
-                 this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml"));
+                 this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "villager_zombie.yml"));
                } else {
-                 this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
+                 this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
                }
              } else if (mob.getEntityType().equals(EntityType.SKELETON)) {
                Skeleton skeleton = (Skeleton)mob.getEntity();
                
                if (skeleton.getSkeletonType().equals(Skeleton.SkeletonType.WITHER)) {
-                 this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml"));
+                 this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + "wither_skeleton.yml"));
                } else {
-                 this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
+                 this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
                }
              } else {
-               this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
+               this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedMobs" + File.separator + mob.getEntityType().toString().toLowerCase() + ".yml"));
              }
              
              int dropChance = random(100);
@@ -1164,11 +1164,11 @@
                  
  
                  if (mob.getEntity().hasMetadata("level")) {
-                   mob.getEntity().removeMetadata("level", ItemLoreStats.plugin);
+                   mob.getEntity().removeMetadata("level", Main.plugin);
                  }
                  
                  if (!mob.getEntity().hasMetadata("regionSpawned")) break;
-                 mob.getEntity().removeMetadata("regionSpawned", ItemLoreStats.plugin);
+                 mob.getEntity().removeMetadata("regionSpawned", Main.plugin);
                  
  
                  break;

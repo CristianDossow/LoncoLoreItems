@@ -7,17 +7,17 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+import net.nifheim.yitan.itemlorestats.Main;
 
 public class BowActionBar extends BukkitRunnable {
 
     private io.puharesource.mc.titlemanager.APIProvider tm;
-    private final ItemLoreStats instance;
+    private final Main instance;
     private final Player player;
     static DecimalFormat df = new DecimalFormat("#.#");
     Long startime;
 
-    public BowActionBar(ItemLoreStats plugin, Player player) {
+    public BowActionBar(Main plugin, Player player) {
         this.instance = plugin;
         this.player = player;
         this.startime = instance.eventlistener.bowCooldowns.get(player.getUniqueId());

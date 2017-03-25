@@ -1,7 +1,7 @@
  package net.nifheim.yitan.itemlorestats.Durability;
  
  import net.nifheim.yitan.itemlorestats.Enchants.Vanilla_Unbreaking;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
  import java.util.List;
 
@@ -35,12 +35,12 @@ import org.bukkit.Bukkit;
    private void setDurabilityStrings()
    {
      if (this.durabilityName == null) {
-       this.above75 = this.util_Colours.replaceTooltipColour(ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above75%"));
-       this.above50 = this.util_Colours.replaceTooltipColour(ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above50%"));
-       this.above25 = this.util_Colours.replaceTooltipColour(ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above25%"));
-       this.above0 = this.util_Colours.replaceTooltipColour(ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above0%"));
-       this.durabilityName = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.name");
-       this.durabilitySplitter = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.splitter");
+       this.above75 = this.util_Colours.replaceTooltipColour(Main.plugin.getConfig().getString("bonusStats.durability.warningColours.above75%"));
+       this.above50 = this.util_Colours.replaceTooltipColour(Main.plugin.getConfig().getString("bonusStats.durability.warningColours.above50%"));
+       this.above25 = this.util_Colours.replaceTooltipColour(Main.plugin.getConfig().getString("bonusStats.durability.warningColours.above25%"));
+       this.above0 = this.util_Colours.replaceTooltipColour(Main.plugin.getConfig().getString("bonusStats.durability.warningColours.above0%"));
+       this.durabilityName = Main.plugin.getConfig().getString("bonusStats.durability.name");
+       this.durabilitySplitter = Main.plugin.getConfig().getString("bonusStats.durability.splitter");
      }
    }
    
@@ -52,21 +52,21 @@ import org.bukkit.Bukkit;
      
  
      if (newValue < maximumValue / 4) {
-       if ((newValue == maximumValue / 4) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enableAbove0%DurabilityWarning"))) {
+       if ((newValue == maximumValue / 4) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enableAbove0%DurabilityWarning"))) {
          player.sendMessage(item.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + this.above0 + "25%" + ChatColor.LIGHT_PURPLE + " durability.");
        }
        
        durabilityRebuilder = this.util_Colours.replaceTooltipColour(durabilityPrefixColour) + this.durabilityName + ": " + this.above0 + newValue + durabilityPrefixColour + this.durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maxValue;
      }
      else if (newValue < maximumValue / 2) {
-       if ((newValue == maximumValue / 2) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enableAbove25%DurabilityWarning"))) {
+       if ((newValue == maximumValue / 2) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enableAbove25%DurabilityWarning"))) {
          player.sendMessage(item.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + this.above25 + "50%" + ChatColor.LIGHT_PURPLE + " durability.");
        }
        
        durabilityRebuilder = this.util_Colours.replaceTooltipColour(durabilityPrefixColour) + this.durabilityName + ": " + this.above25 + newValue + durabilityPrefixColour + this.durabilitySplitter + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maxValue;
      }
      else if (newValue < maximumValue / 4 * 3) {
-       if ((newValue == maximumValue / 4 * 3) && (ItemLoreStats.plugin.getConfig().getBoolean("displayDurabilityWarnings.enableAbove50%DurabilityWarning"))) {
+       if ((newValue == maximumValue / 4 * 3) && (Main.plugin.getConfig().getBoolean("displayDurabilityWarnings.enableAbove50%DurabilityWarning"))) {
          player.sendMessage(item.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + " is at " + this.above50 + "75%" + ChatColor.LIGHT_PURPLE + " durability.");
        }
        
@@ -83,7 +83,7 @@ import org.bukkit.Bukkit;
             {
 
      if ( 
-       (itemInHand != null) && (ItemLoreStats.plugin.isTool(itemInHand.getType())) && 
+       (itemInHand != null) && (Main.plugin.isTool(itemInHand.getType())) && 
        (itemInHand.getItemMeta().hasLore())) {
        setDurabilityStrings();
 
@@ -181,7 +181,7 @@ import org.bukkit.Bukkit;
      if ((getDefender instanceof Player)) {
        setDurabilityStrings();
        
-       if ((((Player)getDefender).getInventory().getHelmet() != null) && (ItemLoreStats.plugin.isHelmet(((Player)getDefender).getInventory().getHelmet().getType())) && 
+       if ((((Player)getDefender).getInventory().getHelmet() != null) && (Main.plugin.isHelmet(((Player)getDefender).getInventory().getHelmet().getType())) && 
          (((Player)getDefender).getInventory().getHelmet().getItemMeta().hasLore()))
        {
          List<String> getItemLore = ((Player)getDefender).getInventory().getHelmet().getItemMeta().getLore();
@@ -255,7 +255,7 @@ import org.bukkit.Bukkit;
        }
        
  
-       if ((((Player)getDefender).getInventory().getChestplate() != null) && (ItemLoreStats.plugin.isChestplate(((Player)getDefender).getInventory().getChestplate().getType())) && 
+       if ((((Player)getDefender).getInventory().getChestplate() != null) && (Main.plugin.isChestplate(((Player)getDefender).getInventory().getChestplate().getType())) && 
          (((Player)getDefender).getInventory().getChestplate().getItemMeta().hasLore()))
        {
          List<String> getItemLore = ((Player)getDefender).getInventory().getChestplate().getItemMeta().getLore();
@@ -329,7 +329,7 @@ import org.bukkit.Bukkit;
        }
        
  
-       if ((((Player)getDefender).getInventory().getLeggings() != null) && (ItemLoreStats.plugin.isLeggings(((Player)getDefender).getInventory().getLeggings().getType())) && 
+       if ((((Player)getDefender).getInventory().getLeggings() != null) && (Main.plugin.isLeggings(((Player)getDefender).getInventory().getLeggings().getType())) && 
          (((Player)getDefender).getInventory().getLeggings().getItemMeta().hasLore()))
        {
          List<String> getItemLore = ((Player)getDefender).getInventory().getLeggings().getItemMeta().getLore();
@@ -403,7 +403,7 @@ import org.bukkit.Bukkit;
        }
        
  
-       if ((((Player)getDefender).getInventory().getBoots() != null) && (ItemLoreStats.plugin.isBoots(((Player)getDefender).getInventory().getBoots().getType())) && 
+       if ((((Player)getDefender).getInventory().getBoots() != null) && (Main.plugin.isBoots(((Player)getDefender).getInventory().getBoots().getType())) && 
          (((Player)getDefender).getInventory().getBoots().getItemMeta().hasLore()))
        {
          List<String> getItemLore = ((Player)getDefender).getInventory().getBoots().getItemMeta().getLore();
@@ -478,7 +478,7 @@ import org.bukkit.Bukkit;
      }
      else if ((getDefender instanceof LivingEntity))
      {
-       if ((((LivingEntity)getDefender).getEquipment().getHelmet() != null) && (ItemLoreStats.plugin.isHelmet(((LivingEntity)getDefender).getEquipment().getHelmet().getType()))) {
+       if ((((LivingEntity)getDefender).getEquipment().getHelmet() != null) && (Main.plugin.isHelmet(((LivingEntity)getDefender).getEquipment().getHelmet().getType()))) {
          ((LivingEntity)getDefender).getEquipment().getHelmet().setDurability((short)0);
          if (((LivingEntity)getDefender).getEquipment().getHelmet().getItemMeta().hasLore())
          {
@@ -510,7 +510,7 @@ import org.bukkit.Bukkit;
          }
        }
        
-       if ((((LivingEntity)getDefender).getEquipment().getChestplate() != null) && (ItemLoreStats.plugin.isChestplate(((LivingEntity)getDefender).getEquipment().getChestplate().getType()))) {
+       if ((((LivingEntity)getDefender).getEquipment().getChestplate() != null) && (Main.plugin.isChestplate(((LivingEntity)getDefender).getEquipment().getChestplate().getType()))) {
          ((LivingEntity)getDefender).getEquipment().getChestplate().setDurability((short)0);
          if (((LivingEntity)getDefender).getEquipment().getChestplate().getItemMeta().hasLore())
          {
@@ -542,7 +542,7 @@ import org.bukkit.Bukkit;
          }
        }
        
-       if ((((LivingEntity)getDefender).getEquipment().getLeggings() != null) && (ItemLoreStats.plugin.isLeggings(((LivingEntity)getDefender).getEquipment().getLeggings().getType()))) {
+       if ((((LivingEntity)getDefender).getEquipment().getLeggings() != null) && (Main.plugin.isLeggings(((LivingEntity)getDefender).getEquipment().getLeggings().getType()))) {
          ((LivingEntity)getDefender).getEquipment().getLeggings().setDurability((short)0);
          if (((LivingEntity)getDefender).getEquipment().getLeggings().getItemMeta().hasLore())
          {
@@ -574,7 +574,7 @@ import org.bukkit.Bukkit;
          }
        }
        
-       if ((((LivingEntity)getDefender).getEquipment().getBoots() != null) && (ItemLoreStats.plugin.isBoots(((LivingEntity)getDefender).getEquipment().getBoots().getType()))) {
+       if ((((LivingEntity)getDefender).getEquipment().getBoots() != null) && (Main.plugin.isBoots(((LivingEntity)getDefender).getEquipment().getBoots().getType()))) {
          ((LivingEntity)getDefender).getEquipment().getBoots().setDurability((short)0);
          if (((LivingEntity)getDefender).getEquipment().getBoots().getItemMeta().hasLore())
          {
@@ -712,7 +712,7 @@ import org.bukkit.Bukkit;
  
  
      final Player playerFinal = player;
-     ItemLoreStats.plugin.getServer().getScheduler().scheduleSyncDelayedTask(ItemLoreStats.plugin, new Runnable()
+     Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable()
      {
        public void run() {
          playerFinal.updateInventory();

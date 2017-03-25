@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Repair;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
 
 import org.bukkit.Bukkit;
  import org.bukkit.Material;
@@ -17,8 +17,8 @@ import org.bukkit.Bukkit;
    Repair repair = new Repair();
    
    public Material getRepairBlock() {
-     if (ItemLoreStats.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairBlock") != null) {
-       Material repairBlock = Material.getMaterial(ItemLoreStats.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairBlock"));
+     if (Main.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairBlock") != null) {
+       Material repairBlock = Material.getMaterial(Main.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairBlock"));
        return repairBlock;
      }
      return Material.WORKBENCH;

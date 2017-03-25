@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.ItemUpgrading;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Format;
  import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
  import java.util.List;
@@ -22,12 +22,12 @@
    static String languageRegex = "[^A-Za-z������������_]";
    
    public void increaseItemStatOnItemInHand(Player player, ItemStack itemInHand, String handType) {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
      {
-       String damageName = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
-       String healthName = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
-       String heroesManaName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
-       String levelName = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+       String damageName = Main.plugin.getConfig().getString("primaryStats.damage.name");
+       String healthName = Main.plugin.getConfig().getString("primaryStats.health.name");
+       String heroesManaName = Main.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
+       String levelName = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
        
        if ((itemInHand != null) && 
          (itemInHand.hasItemMeta()) && 
@@ -46,10 +46,10 @@
              upgrades = 1;
            }
            
-           if (ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
+           if (Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
            }
-           if (upgrades > ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
-             if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
+           if (upgrades > Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
+             if (Main.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
                player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeCapReached", player, player, itemInHand.getItemMeta().getDisplayName(), itemInHand.getItemMeta().getDisplayName()));
              }
              return;
@@ -59,19 +59,19 @@
              if (globalIndex < itemLore.size()) {
                globalIndex++;
                
-               for (int i = 0; i < ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
+               for (int i = 0; i < Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
                {
-                 String key = ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                 String key = Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "");
                  String statName = "";
                  
-                 if (ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
+                 if (Main.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("primaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("secondaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("bonusStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
                  }
                  
                  statName = statName.replaceAll(" ", "");
@@ -82,7 +82,7 @@
                  {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -100,7 +100,7 @@
                  } else if ((lore.replaceAll(this.languageRegex, "").matches(healthName)) || (lore.replaceAll(this.languageRegex, "").matches(heroesManaName))) {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -111,8 +111,8 @@
                      double getMinNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[0].replaceAll("[^0-9.]", "").trim());
                      double getMaxNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[1].replaceAll("[^0-9.]", "").trim());
                      
-                     double upgradeMinNumbers = getMinNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats.damage");
-                     double upgradeMaxNumbers = getMaxNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats.damage");
+                     double upgradeMinNumbers = getMinNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats.damage");
+                     double upgradeMaxNumbers = getMaxNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats.damage");
                      
                      getLine = getLine.replaceAll(String.valueOf(getMinNumbers), String.valueOf(this.util_Format.format(upgradeMinNumbers)));
                      getLine = getLine.replaceAll(String.valueOf(getMaxNumbers), String.valueOf(this.util_Format.format(upgradeMaxNumbers)));
@@ -121,7 +121,7 @@
                    } else {
                      String getLine = line;
                      double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                     double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats.damage");
+                     double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats.damage");
                      
                      getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                      
@@ -146,7 +146,7 @@
            player.getInventory().setItemInOffHand(new ItemStack(setItemInHand));
          }
          
-         if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
+         if (Main.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
            player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeSuccessful", player, player, itemInHand.getItemMeta().getDisplayName(), itemInHand.getItemMeta().getDisplayName()));
          }
        }
@@ -156,12 +156,12 @@
  
    public void increaseItemStatOnHelmet(Player player)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
      {
-       String damageName = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
-       String healthName = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
-       String heroesManaName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
-       String levelName = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+       String damageName = Main.plugin.getConfig().getString("primaryStats.damage.name");
+       String healthName = Main.plugin.getConfig().getString("primaryStats.health.name");
+       String heroesManaName = Main.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
+       String levelName = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
        
        ItemStack item = player.getInventory().getHelmet();
        
@@ -182,10 +182,10 @@
              upgrades = 1;
            }
            
-           if (ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
+           if (Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
            }
-           if (upgrades > ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
-             if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
+           if (upgrades > Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
+             if (Main.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
                player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeCapReached", player, player, player.getInventory().getHelmet().getItemMeta().getDisplayName(), player.getInventory().getHelmet().getItemMeta().getDisplayName()));
              }
              return;
@@ -195,19 +195,19 @@
              if (globalIndex < itemLore.size()) {
                globalIndex++;
                
-               for (int i = 0; i < ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
+               for (int i = 0; i < Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
                {
-                 String key = ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                 String key = Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "");
                  String statName = "";
                  
-                 if (ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
+                 if (Main.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("primaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("secondaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("bonusStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
                  }
                  
                  statName = statName.replaceAll(" ", "");
@@ -218,7 +218,7 @@
                  {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -236,7 +236,7 @@
                  } else if ((lore.replaceAll(this.languageRegex, "").matches(healthName)) || (lore.replaceAll(this.languageRegex, "").matches(heroesManaName))) {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -247,8 +247,8 @@
                      double getMinNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[0].replaceAll("[^0-9.]", "").trim());
                      double getMaxNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[1].replaceAll("[^0-9.]", "").trim());
                      
-                     double upgradeMinNumbers = getMinNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
-                     double upgradeMaxNumbers = getMaxNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMinNumbers = getMinNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMaxNumbers = getMaxNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getMinNumbers), String.valueOf(this.util_Format.format(upgradeMinNumbers)));
                      getLine = getLine.replaceAll(String.valueOf(getMaxNumbers), String.valueOf(this.util_Format.format(upgradeMaxNumbers)));
@@ -257,7 +257,7 @@
                    } else {
                      String getLine = line;
                      double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                     double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                      
@@ -276,7 +276,7 @@
          
          player.getInventory().setHelmet(new ItemStack(item));
          
-         if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
+         if (Main.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
            player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeSuccessful", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
          }
        }
@@ -286,12 +286,12 @@
  
    public void increaseItemStatOnChestplate(Player player)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
      {
-       String damageName = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
-       String healthName = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
-       String heroesManaName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
-       String levelName = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+       String damageName = Main.plugin.getConfig().getString("primaryStats.damage.name");
+       String healthName = Main.plugin.getConfig().getString("primaryStats.health.name");
+       String heroesManaName = Main.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
+       String levelName = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
        
        ItemStack item = player.getInventory().getChestplate();
        
@@ -312,10 +312,10 @@
              upgrades = 1;
            }
            
-           if (ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
+           if (Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
            }
-           if (upgrades > ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
-             if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
+           if (upgrades > Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
+             if (Main.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
                player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeCapReached", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
              }
              return;
@@ -325,19 +325,19 @@
              if (globalIndex < itemLore.size()) {
                globalIndex++;
                
-               for (int i = 0; i < ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
+               for (int i = 0; i < Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
                {
-                 String key = ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
+                 String key = Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
                  String statName = "";
                  
-                 if (ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
+                 if (Main.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("primaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("secondaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("bonusStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
                  }
                  
                  statName = statName.replaceAll(" ", "");
@@ -348,7 +348,7 @@
                  {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -366,7 +366,7 @@
                  } else if ((lore.replaceAll(this.languageRegex, "").matches(healthName)) || (lore.replaceAll(this.languageRegex, "").matches(heroesManaName))) {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -377,8 +377,8 @@
                      double getMinNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[0].replaceAll("[^0-9.]", "").trim());
                      double getMaxNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[1].replaceAll("[^0-9.]", "").trim());
                      
-                     double upgradeMinNumbers = getMinNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
-                     double upgradeMaxNumbers = getMaxNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMinNumbers = getMinNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMaxNumbers = getMaxNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getMinNumbers), String.valueOf(this.util_Format.format(upgradeMinNumbers)));
                      getLine = getLine.replaceAll(String.valueOf(getMaxNumbers), String.valueOf(this.util_Format.format(upgradeMaxNumbers)));
@@ -387,7 +387,7 @@
                    } else {
                      String getLine = line;
                      double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                     double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                      
@@ -406,7 +406,7 @@
          
          player.getInventory().setChestplate(new ItemStack(item));
          
-         if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
+         if (Main.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
            player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeSuccessful", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
          }
        }
@@ -416,12 +416,12 @@
  
    public void increaseItemStatOnLeggings(Player player)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
      {
-       String damageName = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
-       String healthName = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
-       String heroesManaName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
-       String levelName = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+       String damageName = Main.plugin.getConfig().getString("primaryStats.damage.name");
+       String healthName = Main.plugin.getConfig().getString("primaryStats.health.name");
+       String heroesManaName = Main.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
+       String levelName = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
        
        ItemStack item = player.getInventory().getLeggings();
        if ((item != null) && 
@@ -441,10 +441,10 @@
              upgrades = 1;
            }
            
-           if (ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
+           if (Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
            }
-           if (upgrades > ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
-             if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
+           if (upgrades > Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
+             if (Main.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
                player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeCapReached", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
              }
              return;
@@ -454,19 +454,19 @@
              if (globalIndex < itemLore.size()) {
                globalIndex++;
                
-               for (int i = 0; i < ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
+               for (int i = 0; i < Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
                {
-                 String key = ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
+                 String key = Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
                  String statName = "";
                  
-                 if (ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
+                 if (Main.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("primaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("secondaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("bonusStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
                  }
                  
                  statName = statName.replaceAll(" ", "");
@@ -477,7 +477,7 @@
                  {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -495,7 +495,7 @@
                  } else if ((lore.replaceAll(this.languageRegex, "").matches(healthName)) || (lore.replaceAll(this.languageRegex, "").matches(heroesManaName))) {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -506,8 +506,8 @@
                      double getMinNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[0].replaceAll("[^0-9.]", "").trim());
                      double getMaxNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[1].replaceAll("[^0-9.]", "").trim());
                      
-                     double upgradeMinNumbers = getMinNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
-                     double upgradeMaxNumbers = getMaxNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMinNumbers = getMinNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMaxNumbers = getMaxNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getMinNumbers), String.valueOf(this.util_Format.format(upgradeMinNumbers)));
                      getLine = getLine.replaceAll(String.valueOf(getMaxNumbers), String.valueOf(this.util_Format.format(upgradeMaxNumbers)));
@@ -516,7 +516,7 @@
                    } else {
                      String getLine = line;
                      double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                     double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                      
@@ -535,7 +535,7 @@
          
          player.getInventory().setLeggings(new ItemStack(item));
          
-         if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
+         if (Main.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
            player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeSuccessful", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
          }
        }
@@ -545,12 +545,12 @@
  
    public void increaseItemStatOnBoots(Player player)
    {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
      {
-       String damageName = ItemLoreStats.plugin.getConfig().getString("primaryStats.damage.name");
-       String healthName = ItemLoreStats.plugin.getConfig().getString("primaryStats.health.name");
-       String heroesManaName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
-       String levelName = ItemLoreStats.plugin.getConfig().getString("bonusStats.xpLevel.name");
+       String damageName = Main.plugin.getConfig().getString("primaryStats.damage.name");
+       String healthName = Main.plugin.getConfig().getString("primaryStats.health.name");
+       String heroesManaName = Main.plugin.getConfig().getString("heroesOnlyStats.heroesMaxMana.name");
+       String levelName = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
        
        ItemStack item = player.getInventory().getBoots();
        
@@ -571,10 +571,10 @@
              upgrades = 1;
            }
            
-           if (ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
+           if (Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap") == 0) { return;
            }
-           if (upgrades > ItemLoreStats.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
-             if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
+           if (upgrades > Main.plugin.getConfig().getInt("upgradeStatsOnLevelChange.upgradeCap")) {
+             if (Main.plugin.getConfig().getBoolean("messages.upgradeCapReached")) {
                player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeCapReached", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
              }
              return;
@@ -584,19 +584,19 @@
              if (globalIndex < itemLore.size()) {
                globalIndex++;
                
-               for (int i = 0; i < ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
+               for (int i = 0; i < Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).size(); i++)
                {
-                 String key = ItemLoreStats.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
+                 String key = Main.plugin.getConfig().getConfigurationSection("upgradeStatsOnLevelChange.stats").getKeys(false).toString().split(",")[i].trim().replaceAll("&([0-9a-f])", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
                  String statName = "";
                  
-                 if (ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("primaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("secondaryStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("bonusStats." + key + ".name");
-                 } else if (ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
-                   statName = ItemLoreStats.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
+                 if (Main.plugin.getConfig().getString("primaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("primaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("secondaryStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("secondaryStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("bonusStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("bonusStats." + key + ".name");
+                 } else if (Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name") != null) {
+                   statName = Main.plugin.getConfig().getString("heroesOnlyStats." + key + ".name");
                  }
                  
                  statName = statName.replaceAll(" ", "");
@@ -607,7 +607,7 @@
                  {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", ""));
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -625,7 +625,7 @@
                  } else if ((lore.replaceAll(this.languageRegex, "").matches(healthName)) || (lore.replaceAll(this.languageRegex, "").matches(heroesManaName))) {
                    String getLine = line;
                    double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                   double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                   double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                    
                    getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                    
@@ -636,8 +636,8 @@
                      double getMinNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[0].replaceAll("[^0-9.]", "").trim());
                      double getMaxNumbers = Double.parseDouble(ChatColor.stripColor(line).split("\\-")[1].replaceAll("[^0-9.]", "").trim());
                      
-                     double upgradeMinNumbers = getMinNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
-                     double upgradeMaxNumbers = getMaxNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMinNumbers = getMinNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeMaxNumbers = getMaxNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getMinNumbers), String.valueOf(this.util_Format.format(upgradeMinNumbers)));
                      getLine = getLine.replaceAll(String.valueOf(getMaxNumbers), String.valueOf(this.util_Format.format(upgradeMaxNumbers)));
@@ -646,7 +646,7 @@
                    } else {
                      String getLine = line;
                      double getNumbers = Double.parseDouble(ChatColor.stripColor(line).replaceAll("[^0-9.]", "").trim());
-                     double upgradeNumbers = getNumbers + ItemLoreStats.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
+                     double upgradeNumbers = getNumbers + Main.plugin.getConfig().getDouble("upgradeStatsOnLevelChange.stats." + key);
                      
                      getLine = getLine.replaceAll(String.valueOf(getNumbers), String.valueOf(this.util_Format.format(upgradeNumbers)));
                      
@@ -665,7 +665,7 @@
          
          player.getInventory().setBoots(new ItemStack(item));
          
-         if (ItemLoreStats.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
+         if (Main.plugin.getConfig().getBoolean("messages.upgradeSuccessful")) {
            player.sendMessage(this.util_GetResponse.getResponse("UpgradeMessages.UpgradeSuccessful", player, player, item.getItemMeta().getDisplayName(), item.getItemMeta().getDisplayName()));
          }
        }

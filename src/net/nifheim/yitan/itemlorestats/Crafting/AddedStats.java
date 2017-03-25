@@ -1,6 +1,6 @@
  package net.nifheim.yitan.itemlorestats.Crafting;
  
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
  import net.nifheim.yitan.itemlorestats.Util.Util_Format;
  import java.util.ArrayList;

@@ -1,7 +1,7 @@
  package net.nifheim.yitan.itemlorestats.Commands;
  
  import net.nifheim.yitan.itemlorestats.GenerateFromFile;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
  import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
  import org.bukkit.ChatColor;
@@ -20,9 +20,9 @@
      if (args[0].equalsIgnoreCase("version")) {
        if ((sender instanceof Player)) {
          Player player = (Player)sender;
-         player.sendMessage(ChatColor.GOLD + "[ItemLoreStats] " + ChatColor.GREEN + " Currently running version " + ItemLoreStats.plugin.getDescription().getVersion() + ", Created by Supavitax.");
+         player.sendMessage(ChatColor.GOLD + "[ItemLoreStats] " + ChatColor.GREEN + " Currently running version " + Main.plugin.getDescription().getVersion() + ", Created by Supavitax.");
        } else {
-         System.out.println("[ItemLoreStats] Currently running version " + ItemLoreStats.plugin.getDescription().getVersion());
+         System.out.println("[ItemLoreStats] Currently running version " + Main.plugin.getDescription().getVersion());
        }
      }
    }

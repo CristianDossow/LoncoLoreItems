@@ -2,7 +2,7 @@
  
  import net.nifheim.yitan.itemlorestats.Durability.Durability;
  import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.ItemLoreStats;
+ import net.nifheim.yitan.itemlorestats.Main;
  import net.nifheim.yitan.itemlorestats.SetBonuses;
  import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
@@ -31,11 +31,11 @@ import org.bukkit.entity.EntityType;
    Util_Random util_Random = new Util_Random();
    
    public void poisonChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-     if (this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(ItemLoreStats.plugin.itemInOffHand(getAttacker)) <= 0.0D) { return;
+     if (this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) { return;
      }
-     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", ItemLoreStats.plugin.getConfig().getInt("secondaryStats.poison.internalCooldown"))) {
+     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Main.plugin.getConfig().getInt("secondaryStats.poison.internalCooldown"))) {
        if ((getAttacker instanceof Player)) {
-         ItemLoreStats.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Long.valueOf(System.currentTimeMillis()));
+         Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Long.valueOf(System.currentTimeMillis()));
        }
        
        double poisonPercent = 0.0D;
@@ -48,7 +48,7 @@ import org.bukkit.entity.EntityType;
  
  
        if (isTool) {
-         poisonPercent = this.util_Format.format(this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(ItemLoreStats.plugin.itemInMainHand(getAttacker)));
+         poisonPercent = this.util_Format.format(this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(getAttacker)));
        } else {
          poisonPercent = this.util_Format.format(this.gearStats.getPoisonGear(getAttacker));
        }
@@ -59,12 +59,12 @@ import org.bukkit.entity.EntityType;
        
        if (this.util_Random.random(100) <= poisonPercent) {
          if (((getAttacker instanceof Player)) && 
-           (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.outgoing.poison"))) {
+           (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.poison"))) {
            ((Player)getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.PoisonSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
          }
          
          if (((getDefender instanceof Player)) && 
-           (ItemLoreStats.plugin.getConfig().getBoolean("combatMessages.incoming.enemyPoison"))) {
+           (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyPoison"))) {
            if ((getAttacker instanceof Player)) {
              ((Player)getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyPoisonSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
            } else if ((getAttacker instanceof LivingEntity)) {

@@ -23,7 +23,7 @@
      try
      {
        this.PlayerDataConfig = new org.bukkit.configuration.file.YamlConfiguration();
-       this.PlayerDataFile = new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + WeaponName + ".yml");
+       this.PlayerDataFile = new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + WeaponName + ".yml");
        
        ItemStack itemInHand = player.getInventory().getItemInMainHand();
        
@@ -50,7 +50,7 @@
      try
      {
        this.PlayerDataConfig = new org.bukkit.configuration.file.YamlConfiguration();
-       this.PlayerDataConfig.load(new File(ItemLoreStats.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + weaponName + ".yml"));
+       this.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + weaponName + ".yml"));
        
        ItemStack newItemInHand = this.PlayerDataConfig.getItemStack("Item");
        
@@ -60,7 +60,7 @@
          newItemInHand.setItemMeta(newItemInHandMeta);
        }
        
-       if (ItemLoreStats.plugin.getConfig().getBoolean("messages.itemReceived")) {
+       if (Main.plugin.getConfig().getBoolean("messages.itemReceived")) {
          Bukkit.getServer().getOfflinePlayer(playerName).getPlayer().sendMessage(Bukkit.getServer().getOfflinePlayer(playerName).getPlayer().getName() + ChatColor.LIGHT_PURPLE + " successfully received " + ChatColor.RESET + newItemInHand.getItemMeta().getDisplayName() + ChatColor.LIGHT_PURPLE + ".");
        }
        

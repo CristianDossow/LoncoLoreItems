@@ -12,7 +12,7 @@
    GearStats gearStats = new GearStats();
    
    public boolean checkSoulbound(Player player, ItemStack item) {
-     if (!ItemLoreStats.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+     if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
        String soulboundName = this.gearStats.getSoulboundName(player, item);
        
        if (soulboundName != null) {
