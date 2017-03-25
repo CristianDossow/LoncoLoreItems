@@ -354,7 +354,7 @@ public class EventListener implements Listener {
             }
         }
 
-        if (!itemcliked.getType().equals(Material.AIR) && itemcliked != null && EspecialAtributes.IsRepairerItem(item)) {
+        if (itemcliked != null && !itemcliked.getType().equals(Material.AIR) && EspecialAtributes.IsRepairerItem(item)) {
             if (!EspecialAtributes.Hasdurability(itemcliked)) {
                 player.sendMessage("Este objeto no es reparable");
             } else if (item.getAmount() > 1) {
