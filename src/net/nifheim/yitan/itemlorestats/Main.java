@@ -88,7 +88,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public static Main plugin;
 
     private FileConfiguration config;
-    private ConsoleCommandSender console;
+    private ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     public FileConfiguration PlayerDataConfig;
 
