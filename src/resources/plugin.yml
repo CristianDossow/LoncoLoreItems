@@ -1,8 +1,7 @@
 main: net.nifheim.yitan.itemlorestats.Main
-name: ItemLoreStats
+name: LoncoLoreItems
 version: ${project.version}
-author: LoncoCraft
-website: noweb
+author: YitanTribal, Beelzebu
 description: 
 softdepend: [WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI, TitleManager]
 commands:
