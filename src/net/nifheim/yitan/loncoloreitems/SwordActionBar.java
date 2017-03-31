@@ -13,7 +13,7 @@ public class SwordActionBar extends BukkitRunnable {
     //private io.puharesource.mc.titlemanager.APIProvider tm;
     private io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI tm;
     private final Main instance;
-    private final Player player;
+    private Player player;
     static DecimalFormat df = new DecimalFormat("#.#");
     Long startime;
 
@@ -26,6 +26,7 @@ public class SwordActionBar extends BukkitRunnable {
     @Override
     public void run() {
         if (!player.getInventory().getItemInMainHand().getType().equals(Material.BOW)) {
+            player = player.getPlayer();
             if (Objects.equals(startime, instance.damagefix.attackCooldowns.get(player.getUniqueId()))) {
                 double weaponspeed = LoreUtils.getWeaponSpeed(player.getInventory().getItemInMainHand());
                 if (weaponspeed >= 1) {
