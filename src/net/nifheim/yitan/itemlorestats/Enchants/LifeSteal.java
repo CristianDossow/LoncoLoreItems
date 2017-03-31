@@ -27,54 +27,54 @@ public class LifeSteal {
     Util_Random util_Random = new Util_Random();
 
     public void lifeStealChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, double weaponDamage, boolean isTool) {
-        if (this.gearStats.getLifeStealGear(getAttacker) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (gearStats.getLifeStealGear(getAttacker) + gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + gearStats.getLifeStealItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".lif", Main.plugin.getConfig().getInt("secondaryStats.lifeSteal.internalCooldown"))) {
+        if (!internalCooldown.hasCooldown(util_EntityManager.returnEntityName(getAttacker) + ".lif", Main.plugin.getConfig().getInt("secondaryStats.lifeSteal.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".lif", Long.valueOf(System.currentTimeMillis()));
+                Main.plugin.internalCooldowns.put(util_EntityManager.returnEntityName(getAttacker) + ".lif", System.currentTimeMillis());
             }
 
             double lifeStealHeal = 0.0D;
             double lifeStealPercent = 0.0D;
 
             if (isTool) {
-                lifeStealPercent = this.util_Format.format(this.gearStats.getLifeStealGear(getAttacker) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                lifeStealPercent = util_Format.format(gearStats.getLifeStealGear(getAttacker) + gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)));
             } else {
-                lifeStealPercent = this.util_Format.format(this.gearStats.getLifeStealGear(getAttacker));
+                lifeStealPercent = util_Format.format(gearStats.getLifeStealGear(getAttacker));
             }
 
             if (lifeStealPercent > 100.0D) {
                 lifeStealPercent = 100.0D;
             }
 
-            if (this.util_Random.random(100) <= lifeStealPercent) {
+            if (util_Random.random(100) <= lifeStealPercent) {
                 lifeStealHeal = Main.plugin.getConfig().getDouble("secondaryStats.lifeSteal.healPercentage") * weaponDamage;
 
                 if (((getAttacker instanceof Player))
                         && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.lifeSteal"))) {
-                    ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.LifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
+                    ((Player) getAttacker).sendMessage(util_GetResponse.getResponse("DamageMessages.LifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                 }
 
                 if (((getDefender instanceof Player))
                         && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyLifeSteal"))) {
                     if ((getAttacker instanceof Player)) {
-                        ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
+                        ((Player) getDefender).sendMessage(util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                     } else if ((getAttacker instanceof LivingEntity)) {
                         if (getAttacker.getCustomName() != null) {
-                            ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
+                            ((Player) getDefender).sendMessage(util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                         } else {
-                            ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
+                            ((Player) getDefender).sendMessage(util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                         }
                     }
                 }
 
-                if (this.util_EntityManager.returnEntityCurrentHealth(getAttacker) < this.util_EntityManager.returnEntityMaxHealth(getAttacker)) {
-                    if (lifeStealHeal > Math.abs(this.util_EntityManager.returnEntityCurrentHealth(getAttacker) - this.util_EntityManager.returnEntityMaxHealth(getAttacker))) {
-                        double getRemainingHealth = Math.abs(this.util_EntityManager.returnEntityCurrentHealth(getAttacker) - this.util_EntityManager.returnEntityMaxHealth(getAttacker));
-                        this.util_EntityManager.setEntityCurrentHealth(getAttacker, this.util_EntityManager.returnEntityCurrentHealth(getAttacker) + getRemainingHealth);
+                if (util_EntityManager.returnEntityCurrentHealth(getAttacker) < util_EntityManager.returnEntityMaxHealth(getAttacker)) {
+                    if (lifeStealHeal > Math.abs(util_EntityManager.returnEntityCurrentHealth(getAttacker) - util_EntityManager.returnEntityMaxHealth(getAttacker))) {
+                        double getRemainingHealth = Math.abs(util_EntityManager.returnEntityCurrentHealth(getAttacker) - util_EntityManager.returnEntityMaxHealth(getAttacker));
+                        util_EntityManager.setEntityCurrentHealth(getAttacker, util_EntityManager.returnEntityCurrentHealth(getAttacker) + getRemainingHealth);
                     } else {
-                        this.util_EntityManager.setEntityCurrentHealth(getAttacker, this.util_EntityManager.returnEntityCurrentHealth(getAttacker) + lifeStealHeal);
+                        util_EntityManager.setEntityCurrentHealth(getAttacker, util_EntityManager.returnEntityCurrentHealth(getAttacker) + lifeStealHeal);
                     }
                 }
             }

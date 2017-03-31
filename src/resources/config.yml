@@ -6,12 +6,6 @@ serverVersion: 0
 checkForUpdates: true
 # languageFile - This is the default language file loaded for in-game messages. This can be "language-en", "language-de, "language-pl".
 languageFile: language-en
-# usingMcMMO - If you are using McMMO then this will disable the durability stat as it conflicts with McMMO. (Boolean)
-usingMcMMO: false
-# usingBarAPI - If you are using BarAPI then this will set BarAPI to display the players health. (Boolean)
-usingBarAPI: true
-# usingBossBarAPI - If you are using BossBarAPI then this will set BossBarAPI to display the players health. (Boolean)
-usingBossBarAPI: true
 # includeOffHandDamage - If you set this to true, the damage stat on the off hand item will be included in the damage event. 
 includeOffHandDamage: false
 # dropCustomILSLoot - This will generate loot from the mob configs in /SavedMobs/ and add them to the loot list when a mob is killed. (Boolean)
