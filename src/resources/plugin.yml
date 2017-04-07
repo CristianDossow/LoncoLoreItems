@@ -2,8 +2,8 @@ main: net.nifheim.yitan.itemlorestats.Main
 name: LoncoLoreItems
 version: ${project.version}
 author: YitanTribal, Beelzebu
-description: 
-softdepend: [WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI, TitleManager]
+description: The RPG Core of Nifheim Minecraft
+softdepend: [ActionBarAPI, WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI]
 commands:
   ils:
     description: The core ILS command.

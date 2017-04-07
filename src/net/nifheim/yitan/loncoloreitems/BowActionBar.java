@@ -1,5 +1,6 @@
 package net.nifheim.yitan.loncoloreitems;
 
+import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import java.text.DecimalFormat;
 
 import org.bukkit.ChatColor;
@@ -11,7 +12,6 @@ import net.nifheim.yitan.itemlorestats.Main;
 
 public class BowActionBar extends BukkitRunnable {
 
-    private io.puharesource.mc.titlemanager.APIProvider tm;
     private final Main instance;
     private final Player player;
     static DecimalFormat df = new DecimalFormat("#.#");
@@ -31,10 +31,10 @@ public class BowActionBar extends BukkitRunnable {
                 double weaponspeed = EspecialAtributes.getWeaponSpeed(player.getInventory().getItemInMainHand());
                 Long fulltime = (long) (weaponspeed * 1000);
                 if ((double) time / (double) fulltime < 1) {
-                    tm.sendActionbar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.GREEN + "" + ChatColor.BOLD + df.format((double) time / (double) fulltime * 100) + "%");
+                    ActionBarAPI.sendActionBar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.GREEN + "" + ChatColor.BOLD + df.format((double) time / (double) fulltime * 100) + "%", 10);
                 } else {
 
-                    tm.sendActionbar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.RED + "" + ChatColor.BOLD + "Listo!");
+                    ActionBarAPI.sendActionBar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.RED + "" + ChatColor.BOLD + "Listo!", 40);
                     if (startime + fulltime + 2000 < System.currentTimeMillis()) {
                         this.cancel();
                     }

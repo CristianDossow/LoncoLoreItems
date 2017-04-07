@@ -1,9 +1,7 @@
-# Default config for ItemLoreStats.
+# Default config for LoncoLoreItems
 
 fileVersion: 736
 serverVersion: 0
-# checkForUpdates - As I update Item Lore Stats often I've noticed that there are quite a lot running out-of-date versions of Item Lore Stats. This will help server owners keep Item Lore Stats up to date. If there is an update available it will notify any Ops or any players with the ils.admin permission. I recommend you set this to true just to notify any ops or players/groups with ils.admin that there is a new version of Item Lore Stats available.
-checkForUpdates: true
 # languageFile - This is the default language file loaded for in-game messages. This can be "language-en", "language-de, "language-pl".
 languageFile: language-en
 # includeOffHandDamage - If you set this to true, the damage stat on the off hand item will be included in the damage event. 

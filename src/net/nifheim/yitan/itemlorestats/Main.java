@@ -1,5 +1,6 @@
 package net.nifheim.yitan.itemlorestats;
 
+import be.maximvdw.placeholderapi.PlaceholderAPI;
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
@@ -11,7 +12,6 @@ import net.nifheim.yitan.itemlorestats.Commands.Give_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Lore_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Name_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Repair_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Version_Com;
 
 import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
 import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
@@ -90,7 +90,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public static Main plugin;
 
     private FileConfiguration config;
-    private final ConsoleCommandSender console = Bukkit.getConsoleSender();
+    public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public String rep;
 
     public FileConfiguration PlayerDataConfig;
@@ -133,28 +133,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Lore_Com lore_Com = new Lore_Com();
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
-    Version_Com version_Com = new Version_Com();
-
-    private int setMinecraftBuildNumber(String buildNum) {
-        String version = buildNum;
-
-        version = version.split("-")[0].replace(".", "");
-        getConfig().set("serverVersion", Integer.parseInt(version));
-
-        return Integer.parseInt(version);
-    }
-
-    public int getMinecraftBuildNumber(String buildNum) {
-        String version = buildNum;
-
-        version = version.split("-")[0].replace(".", "");
-
-        return Integer.parseInt(version);
-    }
-
-    public int BukkitVersion() {
-        return getConfig().getInt("serverVersion");
-    }
 
     @Override
     public void onEnable() {
@@ -199,17 +177,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         writeDefaultFiles.checkExistence();
 
         getConfig().options().copyDefaults(true);
-        setMinecraftBuildNumber(Bukkit.getBukkitVersion());
         getConfig().set("fileVersion", Integer.parseInt(getDescription().getVersion().replace(".", "")));
         saveConfig();
 
         eventlistener = new EventListener(this);
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
-        if (getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
-            MVdWPlaceholderAPIHook.hook(this);
-            console.sendMessage(rep("&8[&cItemLoreStats&8] &7MVdWPlaceholderAPI found, hooking in this."));
-        }
 
         this.spigotStatCapWarning.updateSpigotValues();
 
@@ -223,24 +196,37 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public static Main getPlugin() {
-        return (Main) Bukkit.getPluginManager().getPlugin("ItemLoreStats");
+        return plugin;
     }
 
     public void checkDependencies() {
-        if (getWorldGuard() != null) {
-            console.sendMessage("[ItemLoreStats] Successfully found and hooked into WorldGuard.");
+        if (Bukkit.getServer().getPluginManager().getPlugin("ActionBarAPI") != null) {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into ActionBarAPI."));
         } else {
-            console.sendMessage("[ItemLoreStats] Unable to find WorldGuard!");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find ActionBarAPI, you need this API to run this plugin ..."));
+            console.sendMessage(rep("                 &7You can download this in &chttps://www.spigotmc.org/resources/1315/"));
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+        }
+        if (getWorldGuard() != null) {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into WorldGuard."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find WorldGuard!"));
         }
         if (getVault() != null) {
-            console.sendMessage("[ItemLoreStats] Successfully found and hooked into Vault.");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into Vault."));
         } else {
-            console.sendMessage("[ItemLoreStats] Unable to find Vault!");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find Vault!"));
         }
         if (getCitizens() != null) {
-            console.sendMessage("[ItemLoreStats] Successfully found and hooked into Citizens.");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into Citizens."));
         } else {
-            console.sendMessage("[ItemLoreStats] Unable to find Citizens!");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find Citizens!"));
+        }
+        if (getMVdWPlaceholderAPI() != null) {
+            MVdWPlaceholderAPIHook.hook(this);
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into MVdWPlaceholderAPI."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find MVdWPlaceholderAPI."));
         }
     }
 
@@ -295,6 +281,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         this.util_Citizens = new Util_Citizens(plugin);
         return (Citizens) Citizens;
+    }
+
+    public PlaceholderAPI getMVdWPlaceholderAPI() {
+        Plugin PlaceholderAPI = Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI");
+
+        if ((PlaceholderAPI == null) || (!(PlaceholderAPI instanceof Citizens))) {
+            return null;
+        }
+
+        return (PlaceholderAPI) PlaceholderAPI;
     }
 
     public ItemStack itemInMainHand(LivingEntity entity) {
@@ -476,10 +472,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
             if (args.length > 0) {
 
-                if (args[0].equalsIgnoreCase("version")) {
-                    this.version_Com.onVersionCommand(sender, args);
-                }
-
                 if (args[0].equalsIgnoreCase("name")) {
                     this.name_Com.onNameCommand(sender, args);
                 }
@@ -519,12 +511,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                             player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
                         } else {
                             reloadConfig();
-                            player.sendMessage(ChatColor.GOLD + "[ItemLoreStats] " + ChatColor.GREEN + " Configuration Reloaded!");
+                            player.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + ChatColor.GREEN + " Configuration Reloaded!"));
                         }
                         return true;
                     }
                     reloadConfig();
-                    console.sendMessage("[ItemLoreStats] Configuration Reloaded!");
+                    console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Configuration Reloaded!"));
                 }
 
                 if (args[0].equalsIgnoreCase("createlore")) {
@@ -716,8 +708,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 } else if (args[0].equalsIgnoreCase("test")) {
                     Player player = (Player) sender;
 
-                    console.sendMessage(""+player.getInventory().getItemInMainHand().getData());
-                    console.sendMessage(""+player.getInventory().getItemInMainHand().getDurability());
+                    console.sendMessage("" + player.getInventory().getItemInMainHand().getData());
+                    console.sendMessage("" + player.getInventory().getItemInMainHand().getDurability());
                 }
             }
         }
@@ -814,14 +806,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 float maxSpeed = 0.4F;
                 float speed = 0.2f;
                 float basespeed = 0.2f;
-                
+
                 speed = (float) (Main.plugin.getConfig().getDouble("baseMovementSpeed"));
                 speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()) * Main.this.getConfig().getDouble("additionalStatsPerLevel.speed")));
-                
+
                 speed = (float) (speed + (basespeed * Main.this.gearStats.getMovementSpeedGear(playerFinal) / 100));
-                
+
                 if (speed > maxSpeed) {
-                    
+
                     playerFinal.setWalkSpeed(maxSpeed);
                 } else {
                     playerFinal.setWalkSpeed(speed);
