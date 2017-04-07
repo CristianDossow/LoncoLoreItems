@@ -3,7 +3,6 @@ package net.nifheim.yitan.itemlorestats.listeners;
 import java.io.File;
 import java.io.IOException;
 import net.nifheim.yitan.itemlorestats.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -61,15 +60,5 @@ public class PlayerJoinListener implements Listener {
             Main.plugin.updateHealth(playerFinal);
             Main.plugin.updatePlayerSpeed(playerFinal);
         }, 5L);
-
-        if (event.getPlayer().isOp()) {
-            Main.plugin.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, new Runnable() {
-                @Override
-                public void run() {
-                    if (Main.plugin.getMinecraftBuildNumber(Bukkit.getBukkitVersion()) >= 1100) {
-                    }
-                }
-            }, 60L);
-        }
     }
 }

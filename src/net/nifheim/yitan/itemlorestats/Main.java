@@ -1,5 +1,6 @@
 package net.nifheim.yitan.itemlorestats;
 
+import be.maximvdw.placeholderapi.PlaceholderAPI;
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
@@ -11,7 +12,6 @@ import net.nifheim.yitan.itemlorestats.Commands.Give_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Lore_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Name_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Repair_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Version_Com;
 
 import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
 import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
@@ -44,6 +44,7 @@ import com.zettelnet.armorweight.ArmorWeightPlugin;
 import net.milkbowl.vault.Vault;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +72,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
@@ -88,7 +90,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public static Main plugin;
 
     private FileConfiguration config;
-    private ConsoleCommandSender console = Bukkit.getConsoleSender();
+    public final ConsoleCommandSender console = Bukkit.getConsoleSender();
+    public String rep;
 
     public FileConfiguration PlayerDataConfig;
 
@@ -130,29 +133,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Lore_Com lore_Com = new Lore_Com();
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
-    Version_Com version_Com = new Version_Com();
-    String rep;
-
-    private int setMinecraftBuildNumber(String buildNum) {
-        String version = buildNum;
-
-        version = version.split("-")[0].replace(".", "");
-        getConfig().set("serverVersion", Integer.parseInt(version));
-
-        return Integer.parseInt(version);
-    }
-
-    public int getMinecraftBuildNumber(String buildNum) {
-        String version = buildNum;
-
-        version = version.split("-")[0].replace(".", "");
-
-        return Integer.parseInt(version);
-    }
-
-    public int BukkitVersion() {
-        return getConfig().getInt("serverVersion");
-    }
 
     @Override
     public void onEnable() {
@@ -197,17 +177,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         writeDefaultFiles.checkExistence();
 
         getConfig().options().copyDefaults(true);
-        setMinecraftBuildNumber(Bukkit.getBukkitVersion());
         getConfig().set("fileVersion", Integer.parseInt(getDescription().getVersion().replace(".", "")));
         saveConfig();
 
         eventlistener = new EventListener(this);
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
-        if (getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
-            MVdWPlaceholderAPIHook.hook(this);
-            console.sendMessage(rep("&8[&cItemLoreStats&8] &7MVdWPlaceholderAPI found, hooking in this."));
-        }
 
         this.spigotStatCapWarning.updateSpigotValues();
 
@@ -221,24 +196,37 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public static Main getPlugin() {
-        return (Main) Bukkit.getPluginManager().getPlugin("ItemLoreStats");
+        return plugin;
     }
 
     public void checkDependencies() {
-        if (getWorldGuard() != null) {
-            console.sendMessage("[ItemLoreStats] Successfully found and hooked into WorldGuard.");
+        if (Bukkit.getServer().getPluginManager().getPlugin("ActionBarAPI") != null) {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into ActionBarAPI."));
         } else {
-            console.sendMessage("[ItemLoreStats] Unable to find WorldGuard!");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find ActionBarAPI, you need this API to run this plugin ..."));
+            console.sendMessage(rep("                 &7You can download this in &chttps://www.spigotmc.org/resources/1315/"));
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+        }
+        if (getWorldGuard() != null) {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into WorldGuard."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find WorldGuard!"));
         }
         if (getVault() != null) {
-            console.sendMessage("[ItemLoreStats] Successfully found and hooked into Vault.");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into Vault."));
         } else {
-            console.sendMessage("[ItemLoreStats] Unable to find Vault!");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find Vault!"));
         }
         if (getCitizens() != null) {
-            console.sendMessage("[ItemLoreStats] Successfully found and hooked into Citizens.");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into Citizens."));
         } else {
-            console.sendMessage("[ItemLoreStats] Unable to find Citizens!");
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find Citizens!"));
+        }
+        if (getMVdWPlaceholderAPI() != null) {
+            MVdWPlaceholderAPIHook.hook(this);
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into MVdWPlaceholderAPI."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find MVdWPlaceholderAPI."));
         }
     }
 
@@ -293,6 +281,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         this.util_Citizens = new Util_Citizens(plugin);
         return (Citizens) Citizens;
+    }
+
+    public PlaceholderAPI getMVdWPlaceholderAPI() {
+        Plugin PlaceholderAPI = Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI");
+
+        if ((PlaceholderAPI == null) || (!(PlaceholderAPI instanceof Citizens))) {
+            return null;
+        }
+
+        return (PlaceholderAPI) PlaceholderAPI;
     }
 
     public ItemStack itemInMainHand(LivingEntity entity) {
@@ -352,7 +350,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         armourList.addAll(bootsList);
 
         for (int i = 0; i < armourList.size(); i++) {
-            if (((String) armourList.get(i)).toString().split(":")[0].equals(material.toString())) {
+            if (((String) armourList.get(i)).split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -404,35 +402,19 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isHoe(ItemStack item) {
-        if ((item.equals(Material.WOOD_HOE)) || (item.equals(Material.STONE_HOE)) || (item.equals(Material.IRON_HOE)) || (item.equals(Material.GOLD_HOE)) || (item.equals(Material.DIAMOND_HOE))) {
-            return true;
-        }
-
-        return false;
+        return (item.equals(Material.WOOD_HOE)) || (item.equals(Material.STONE_HOE)) || (item.equals(Material.IRON_HOE)) || (item.equals(Material.GOLD_HOE)) || (item.equals(Material.DIAMOND_HOE));
     }
 
     public boolean isAxe(ItemStack item) {
-        if ((item.equals(Material.WOOD_AXE)) || (item.equals(Material.STONE_AXE)) || (item.equals(Material.IRON_AXE)) || (item.equals(Material.GOLD_AXE)) || (item.equals(Material.DIAMOND_AXE))) {
-            return true;
-        }
-
-        return false;
+        return (item.equals(Material.WOOD_AXE)) || (item.equals(Material.STONE_AXE)) || (item.equals(Material.IRON_AXE)) || (item.equals(Material.GOLD_AXE)) || (item.equals(Material.DIAMOND_AXE));
     }
 
     public boolean isPickAxe(ItemStack item) {
-        if ((item.equals(Material.WOOD_PICKAXE)) || (item.equals(Material.STONE_PICKAXE)) || (item.equals(Material.IRON_PICKAXE)) || (item.equals(Material.GOLD_PICKAXE)) || (item.equals(Material.DIAMOND_PICKAXE))) {
-            return true;
-        }
-
-        return false;
+        return (item.equals(Material.WOOD_PICKAXE)) || (item.equals(Material.STONE_PICKAXE)) || (item.equals(Material.IRON_PICKAXE)) || (item.equals(Material.GOLD_PICKAXE)) || (item.equals(Material.DIAMOND_PICKAXE));
     }
 
     public boolean isSpade(ItemStack item) {
-        if ((item.equals(Material.WOOD_SPADE)) || (item.equals(Material.STONE_SPADE)) || (item.equals(Material.IRON_SPADE)) || (item.equals(Material.GOLD_SPADE)) || (item.equals(Material.DIAMOND_SPADE))) {
-            return true;
-        }
-
-        return false;
+        return (item.equals(Material.WOOD_SPADE)) || (item.equals(Material.STONE_SPADE)) || (item.equals(Material.IRON_SPADE)) || (item.equals(Material.GOLD_SPADE)) || (item.equals(Material.DIAMOND_SPADE));
     }
 
     @Override
@@ -465,34 +447,30 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                         sender.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
                     }
                 } else {
-                    System.out.println("Item Lore Stats commands:");
-                    System.out.println("   /ils");
-                    System.out.println("   /ils reload");
-                    System.out.println("   /ils stats");
-                    System.out.println("   /ils version");
-                    System.out.println("   /ils name <text>");
-                    System.out.println("   /ils lore <player_name> <line#> <text>");
-                    System.out.println("   /ils give <player_name> <item_name>");
-                    System.out.println("   /ils give <player_name> <item_name>, <new_item_name>");
-                    System.out.println("   /ils custom tool <Item Type Name>");
-                    System.out.println("   /ils custom armour helmet/chest/legs/boots <Item Type Name>");
-                    System.out.println("   /ils repair");
-                    System.out.println("   /ils upgrade hand");
-                    System.out.println("   /ils upgrade armour");
-                    System.out.println("   /ils upgrade all");
-                    System.out.println("   /ils combatLog");
-                    System.out.println("   /ils sell");
-                    System.out.println("   /ils export <item_name>");
-                    System.out.println("   /ils setMultiplier");
-                    System.out.println("   /ils remake <lvl>");
+                    console.sendMessage("Item Lore Stats commands:");
+                    console.sendMessage("   /ils");
+                    console.sendMessage("   /ils reload");
+                    console.sendMessage("   /ils stats");
+                    console.sendMessage("   /ils version");
+                    console.sendMessage("   /ils name <text>");
+                    console.sendMessage("   /ils lore <player_name> <line#> <text>");
+                    console.sendMessage("   /ils give <player_name> <item_name>");
+                    console.sendMessage("   /ils give <player_name> <item_name>, <new_item_name>");
+                    console.sendMessage("   /ils custom tool <Item Type Name>");
+                    console.sendMessage("   /ils custom armour helmet/chest/legs/boots <Item Type Name>");
+                    console.sendMessage("   /ils repair");
+                    console.sendMessage("   /ils upgrade hand");
+                    console.sendMessage("   /ils upgrade armour");
+                    console.sendMessage("   /ils upgrade all");
+                    console.sendMessage("   /ils combatLog");
+                    console.sendMessage("   /ils sell");
+                    console.sendMessage("   /ils export <item_name>");
+                    console.sendMessage("   /ils setMultiplier");
+                    console.sendMessage("   /ils remake <lvl>");
                 }
             }
 
             if (args.length > 0) {
-
-                if (args[0].equalsIgnoreCase("version")) {
-                    this.version_Com.onVersionCommand(sender, args);
-                }
 
                 if (args[0].equalsIgnoreCase("name")) {
                     this.name_Com.onNameCommand(sender, args);
@@ -533,12 +511,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                             player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
                         } else {
                             reloadConfig();
-                            player.sendMessage(ChatColor.GOLD + "[ItemLoreStats] " + ChatColor.GREEN + " Configuration Reloaded!");
+                            player.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + ChatColor.GREEN + " Configuration Reloaded!"));
                         }
                         return true;
                     }
                     reloadConfig();
-                    System.out.println("[ItemLoreStats] Configuration Reloaded!");
+                    console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Configuration Reloaded!"));
                 }
 
                 if (args[0].equalsIgnoreCase("createlore")) {
@@ -547,19 +525,19 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                     if ((sender instanceof Player)) {
                         Player player = (Player) sender;
                         if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".healthMultiplier", Double.valueOf(0.045D));
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".damageMultiplier", Double.valueOf(0.004D));
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".expMultiplier", Double.valueOf(0.004D));
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.x", Integer.valueOf(player.getLocation().getBlockX()));
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.y", Integer.valueOf(player.getLocation().getBlockY()));
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.z", Integer.valueOf(player.getLocation().getBlockZ()));
+                            getConfig().set("npcModifier." + player.getWorld().getName() + ".healthMultiplier", 0.045D);
+                            getConfig().set("npcModifier." + player.getWorld().getName() + ".damageMultiplier", 0.004D);
+                            getConfig().set("npcModifier." + player.getWorld().getName() + ".expMultiplier", 0.004D);
+                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.x", player.getLocation().getBlockX());
+                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.y", player.getLocation().getBlockY());
+                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.z", player.getLocation().getBlockZ());
                             saveConfig();
                             player.sendMessage(ChatColor.LIGHT_PURPLE + "Successfully set the NPC multiplier to multiply health and damage from " + ChatColor.GOLD + player.getLocation().getBlockX() + ChatColor.LIGHT_PURPLE + ", " + ChatColor.GOLD + player.getLocation().getBlockY() + ChatColor.LIGHT_PURPLE + ", " + ChatColor.GOLD + player.getLocation().getBlockZ() + ChatColor.LIGHT_PURPLE + ".");
                         } else {
                             player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
                         }
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("stats")) {
                     if ((sender instanceof Player)) {
@@ -568,7 +546,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
                         characterSheet.returnStats(player, getHealthValue(player));
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("combatlog")) {
                     if ((sender instanceof Player)) {
@@ -580,48 +558,47 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                                 this.PlayerDataConfig.load(new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
 
                                 if (this.PlayerDataConfig.getBoolean("extra.combatLogVisible")) {
-                                    this.PlayerDataConfig.set("extra.combatLogVisible", Boolean.valueOf(false));
-                                    this.combatLogVisible.put(player.getName(), Boolean.valueOf(false));
+                                    this.PlayerDataConfig.set("extra.combatLogVisible", false);
+                                    this.combatLogVisible.put(player.getName(), false);
                                     player.sendMessage(ChatColor.LIGHT_PURPLE + "Combat Log " + ChatColor.RED + "disabled" + ChatColor.LIGHT_PURPLE + ".");
                                 } else if (!this.PlayerDataConfig.getBoolean("extra.combatLogVisible")) {
-                                    this.PlayerDataConfig.set("extra.combatLogVisible", Boolean.valueOf(true));
-                                    this.combatLogVisible.put(player.getName(), Boolean.valueOf(true));
+                                    this.PlayerDataConfig.set("extra.combatLogVisible", true);
+                                    this.combatLogVisible.put(player.getName(), true);
                                     player.sendMessage(ChatColor.LIGHT_PURPLE + "Combat Log " + ChatColor.GREEN + "enabled" + ChatColor.LIGHT_PURPLE + ".");
                                 } else if (this.PlayerDataConfig.get("extra.combatLogVisible") == null) {
-                                    this.PlayerDataConfig.set("extra.combatLogVisible", Boolean.valueOf(false));
-                                    this.combatLogVisible.put(player.getName(), Boolean.valueOf(false));
+                                    this.PlayerDataConfig.set("extra.combatLogVisible", false);
+                                    this.combatLogVisible.put(player.getName(), false);
                                     player.sendMessage(ChatColor.LIGHT_PURPLE + "Combat Log " + ChatColor.RED + "disabled" + ChatColor.LIGHT_PURPLE + ".");
                                 }
 
                                 this.PlayerDataConfig.save(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                System.out.println("*********** Failed to load player data for " + player.getName() + " when toggling combat log! ***********");
+                            } catch (IOException | InvalidConfigurationException e) {
+                                console.sendMessage("*********** Failed to load player data for " + player.getName() + " when toggling combat log! ***********");
                             }
                         }
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("sell")) {
                     if ((sender instanceof Player)) {
                         Player player = (Player) sender;
                         this.util_Vault.removeMoneyForSale(player, itemInMainHand(player).getAmount());
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("health")) {
                     if ((sender instanceof Player)) {
                         Player player = (Player) sender;
                         player.sendMessage(ChatColor.RED + "[DEBUGGER] " + ChatColor.WHITE + player.getHealth() + " out of " + player.getMaxHealth());
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("speed")) {
                     if ((sender instanceof Player)) {
                         Player player = (Player) sender;
                         player.sendMessage(ChatColor.GOLD + "Your movement speed is " + ChatColor.WHITE + player.getWalkSpeed());
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("upgrade")) {
                     if ((sender instanceof Player)) {
@@ -664,7 +641,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                             player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
                         }
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("zombie")) {
                     if ((sender instanceof Player)) {
@@ -695,7 +672,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                             mob.setCustomNameVisible(true);
                         }
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("skeleton")) {
                     if ((sender instanceof Player)) {
@@ -726,13 +703,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                             mob.setCustomNameVisible(true);
                         }
                     } else {
-                        System.out.println("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
+                        console.sendMessage("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
                     }
                 } else if (args[0].equalsIgnoreCase("test")) {
                     Player player = (Player) sender;
 
-                    System.out.println(player.getInventory().getItemInMainHand().getData());
-                    System.out.println(player.getInventory().getItemInMainHand().getDurability());
+                    console.sendMessage("" + player.getInventory().getItemInMainHand().getData());
+                    console.sendMessage("" + player.getInventory().getItemInMainHand().getDurability());
                 }
             }
         }
@@ -790,7 +767,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 return;
             }
             double healthBoost = 0.0D;
-            double newHP = 0.0D;
+            double newHP;
 
             if (player.hasPotionEffect(PotionEffectType.HEALTH_BOOST)) {
                 for (PotionEffect potionEffect : player.getActivePotionEffects()) {
@@ -825,24 +802,21 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         if (!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
             final Player playerFinal = player;
 
-            getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                public void run() {
-                    float maxSpeed = 0.4F;
-                    float speed = 0.2f;
-                    float basespeed = 0.2f;
+            getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                float maxSpeed = 0.4F;
+                float speed = 0.2f;
+                float basespeed = 0.2f;
 
-                    speed = (float) (Main.plugin.getConfig().getDouble("baseMovementSpeed"));
-                    speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()).doubleValue() * Main.this.getConfig().getDouble("additionalStatsPerLevel.speed")));
+                speed = (float) (Main.plugin.getConfig().getDouble("baseMovementSpeed"));
+                speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()) * Main.this.getConfig().getDouble("additionalStatsPerLevel.speed")));
 
-                    speed = (float) (speed + (basespeed * Main.this.gearStats.getMovementSpeedGear(playerFinal) / 100));
+                speed = (float) (speed + (basespeed * Main.this.gearStats.getMovementSpeedGear(playerFinal) / 100));
 
-                    if (speed > maxSpeed) {
+                if (speed > maxSpeed) {
 
-                        playerFinal.setWalkSpeed(maxSpeed);
-                    } else {
-                        playerFinal.setWalkSpeed(speed);
-                    }
-
+                    playerFinal.setWalkSpeed(maxSpeed);
+                } else {
+                    playerFinal.setWalkSpeed(speed);
                 }
             }, 2L);
         } else {

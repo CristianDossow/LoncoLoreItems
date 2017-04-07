@@ -76,7 +76,7 @@ public class EventListener implements Listener {
                 instance.damagefix.attackCooldowns.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
                 double weaponspeed = LoreUtils.getWeaponSpeed(event.getPlayer().getInventory().getItemInMainHand());
                 instance.damagefix.attackCooldownsEnd.put(event.getPlayer().getUniqueId(), System.currentTimeMillis() + (long) (weaponspeed * 1000));
-                BukkitTask task = new SwordActionBar(this.instance, event.getPlayer()).runTaskTimerAsynchronously(this.instance, 0, 2);
+                //BukkitTask task = new SwordActionBar(this.instance, event.getPlayer()).runTaskTimer(this.instance, 0, 2);
             }
             if (EspecialAtributes.IsUnknownItem(item)) {
                 item = LoreItemMaker.ClearAndAddItemLore(item, event.getPlayer());
