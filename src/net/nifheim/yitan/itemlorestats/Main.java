@@ -50,7 +50,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import net.nifheim.yitan.itemlorestats.listeners.BlockExpEventListener;
 import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
 import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
 import net.nifheim.yitan.itemlorestats.listeners.EntityRegainHealthListener;
@@ -145,7 +144,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         /*
         New events clases
          */
-        plma.registerEvents(new BlockExpEventListener(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
         plma.registerEvents(new EnchantItemListener(), this);
         plma.registerEvents(new EntityRegainHealthListener(), this);
@@ -173,9 +171,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new InteractEvents(), this);
         plma.registerEvents(new PlayerLevelEvents(), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Repair.RepairEvents(), this);
-
+        
         plugin = this;
-
+        
         writeDefaultFiles.checkExistence();
 
         getConfig().options().copyDefaults(true);

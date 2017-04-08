@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -58,6 +59,11 @@ public class EventListener implements Listener {
         this.shootpower = new HashMap<UUID, Long>();
         getlorestrings = new LoreCraftingStats();
         this.instance = instance;
+    }
+    
+    @EventHandler
+    public void onBlockExpEvent(BlockExpEvent event) {
+    	event.setExpToDrop(0);
     }
 
     @EventHandler
