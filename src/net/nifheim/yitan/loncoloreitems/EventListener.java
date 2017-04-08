@@ -76,7 +76,7 @@ public class EventListener implements Listener {
                 instance.damagefix.attackCooldowns.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
                 double weaponspeed = LoreUtils.getWeaponSpeed(event.getPlayer().getInventory().getItemInMainHand());
                 instance.damagefix.attackCooldownsEnd.put(event.getPlayer().getUniqueId(), System.currentTimeMillis() + (long) (weaponspeed * 1000));
-                //BukkitTask task = new SwordActionBar(this.instance, event.getPlayer()).runTaskTimer(this.instance, 0, 2);
+                BukkitTask task = new SwordActionBar(this.instance, event.getPlayer()).runTaskTimer(this.instance, 0, 2);
             }
             if (EspecialAtributes.IsUnknownItem(item)) {
                 item = LoreItemMaker.ClearAndAddItemLore(item, event.getPlayer());
@@ -442,7 +442,7 @@ public class EventListener implements Listener {
         if (player != null && !player.hasPermission("ils.admin") && player.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
             PotionEffect pe = player.getPotionEffect(PotionEffectType.SLOW_DIGGING);
             if (pe.getAmplifier() > 2) {
-                player.sendMessage("Est�s demasiado debilitado para construir");
+                player.sendMessage("Estás demasiado debilitado para construir");
                 event.setCancelled(true);
             }
 
