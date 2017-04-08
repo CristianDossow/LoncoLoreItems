@@ -1,6 +1,6 @@
 main: net.nifheim.yitan.itemlorestats.Main
 name: LoncoLoreItems
-version: 1.0
+version: ${project.version}
 author: YitanTribal, Beelzebu
 description: The RPG Core of Nifheim Minecraft
 softdepend: [ActionBarAPI, WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI]
