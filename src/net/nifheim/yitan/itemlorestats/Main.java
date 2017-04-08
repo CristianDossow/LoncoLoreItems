@@ -222,7 +222,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find Citizens!"));
         }
-        if (getMVdWPlaceholderAPI() != null) {
+        if (Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI") != null) {
             MVdWPlaceholderAPIHook.hook(this);
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into MVdWPlaceholderAPI."));
         } else {
@@ -281,16 +281,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         this.util_Citizens = new Util_Citizens(plugin);
         return (Citizens) Citizens;
-    }
-
-    public PlaceholderAPI getMVdWPlaceholderAPI() {
-        Plugin PlaceholderAPI = Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI");
-
-        if ((PlaceholderAPI == null) || (!(PlaceholderAPI instanceof Citizens))) {
-            return null;
-        }
-
-        return (PlaceholderAPI) PlaceholderAPI;
     }
 
     public ItemStack itemInMainHand(LivingEntity entity) {
