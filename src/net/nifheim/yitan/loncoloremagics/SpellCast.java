@@ -8,6 +8,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.DragonFireball;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.SmallFireball;
@@ -17,7 +18,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import net.nifheim.yitan.itemlorestats.Main;
 
 public class SpellCast {
-	   public void spellBuilder(Spell spell, Player player)
+	   public static void spellBuilder(Spell spell, Player player)
 	   {
 	     Projectile projectile = getProjectile(spell, player);
 	     projectile.setShooter(player);
@@ -25,21 +26,24 @@ public class SpellCast {
 	     setProjectileProperties(projectile, spell);
 	   }
 	   
-	   public Projectile getProjectile(Spell spell,Player player) {
+	   public static Projectile getProjectile(Spell spell,Player player) {
 	     Location loc = player.getEyeLocation().toVector().add(player.getLocation().getDirection().multiply(2)).toLocation(player.getWorld(), player.getLocation().getYaw(), player.getLocation().getPitch());
 	     
-	     DragonFireball projectile = (DragonFireball)player.getWorld().spawn(loc, DragonFireball.class);
-	     projectile.setMetadata("ILS_DragonFireball", new FixedMetadataValue(Main.getPlugin(), player.getName()));
+	     LlamaSpit projectile = (LlamaSpit)player.getWorld().spawn(loc, LlamaSpit.class);
+	     projectile.setGravity(false);
+	     projectile.setGlowing(true);
+	     //projectile.setMetadata("ILS_DragonFireball", new FixedMetadataValue(Main.getPlugin(), player.getName()));
 	     return projectile;
 	     
 	   }
 	   
-	   public void setProjectileProperties(Projectile projectile, Spell spell) {
+	   public static void setProjectileProperties(Projectile projectile, Spell spell) {
 	     double DHA = spell.directHeal;
 	     double AHA = spell.aoeHealAmount;
 	     double DDA = spell.directDamageAmount;
 	     double ADA = spell.aoeDamageAmount;
 	     
+	     projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getPlugin(), spell.name));
 	     projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(DHA)));
 	     projectile.setMetadata("AHA=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(AHA)));
 	     projectile.setMetadata("AHR=", new FixedMetadataValue(Main.getPlugin(), Double.valueOf(spell.aoeHealRange)));

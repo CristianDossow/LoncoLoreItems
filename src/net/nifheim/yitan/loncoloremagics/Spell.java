@@ -1,20 +1,24 @@
 package net.nifheim.yitan.loncoloremagics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Effect;
 
 public class Spell {
-	String name;
-	int lvl;
-	int castype; // 1 Proyectile - 2 Self
-	double speed;
-	Effect hitEffect;
-	double cooldown;
-	double directHeal;
-	double aoeHealAmount;
-	double aoeHealRange;
-	double directDamageAmount;
-	double aoeDamageAmount;
-	double aoeDamageRange;
+	public String name;
+	public int lvl;
+	public int castype; // 1 Proyectile - 2 Self
+	public double speed;
+	public Effect hitEffect;
+	public double cooldown;
+	public double directHeal;
+	public double aoeHealAmount;
+	public double aoeHealRange;
+	public double directDamageAmount;
+	public double aoeDamageAmount;
+	public double aoeDamageRange;
+	public List<String> lore;
 	
 	public Spell(String name, int lvl, int castype, double speed, Effect hitEffect) {
 		super();
@@ -29,6 +33,7 @@ public class Spell {
 		this.directDamageAmount=0;
 		this.aoeDamageAmount=0;
 		this.aoeDamageRange=0;
+		lore=new ArrayList<>();
 	}
 	
 }
