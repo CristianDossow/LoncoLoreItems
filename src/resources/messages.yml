@@ -1,0 +1,5 @@
+Prefix: "&8[&cLoncoLoreItems&8]&7"
+Lores:
+    Enchants:
+        Header: "&aEncantamientos:"
+        Empty: "&d - ???"

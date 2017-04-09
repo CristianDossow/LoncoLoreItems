@@ -44,11 +44,16 @@ import com.zettelnet.armorweight.ArmorWeightPlugin;
 import net.milkbowl.vault.Vault;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
 import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
@@ -92,6 +97,11 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     private FileConfiguration config;
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public String rep;
+    /*
+    Messages
+     */
+    private final File messagesFile = new File(getDataFolder(), "messages.yml");
+    private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
 
     public FileConfiguration PlayerDataConfig;
 
@@ -136,7 +146,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     @Override
     public void onEnable() {
-        checkDependencies();
+        this.loadManagers();
 
         Locale.setDefault(Locale.ROOT);
 
@@ -172,9 +182,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new InteractEvents(), this);
         plma.registerEvents(new PlayerLevelEvents(), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Repair.RepairEvents(), this);
-        
+
         plugin = this;
-        
+
         writeDefaultFiles.checkExistence();
 
         getConfig().options().copyDefaults(true);
@@ -198,6 +208,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public static Main getPlugin() {
         return plugin;
+    }
+
+    public void loadManagers() {
+        checkDependencies();
+        if (!messagesFile.exists()) {
+            copy(getResource("messages.yml"), messagesFile);
+        }
     }
 
     public void checkDependencies() {
@@ -816,6 +833,29 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public String rep(String str) {
-        return str.replaceAll("&", "§");
+        return str
+                .replaceAll("%prefix%", getMessages().getString("Prefix")).replaceAll("&", "§");
+    }
+
+    public FileConfiguration getMessages() {
+        return messages;
+    }
+
+    /*
+    Copy helper
+     */
+    public void copy(InputStream in, File file) {
+        try {
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't copy the file " + file.getName() + " to the plugin data folder.", e.getCause());
+        }
     }
 }
