@@ -18,7 +18,9 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
-
+import net.nifheim.yitan.loncoloremagics.Spell;
+import net.nifheim.yitan.loncoloremagics.SpellCast;
+import net.nifheim.yitan.loncoloremagics.SpellsList;
 import net.nifheim.yitan.itemlorestats.Classes;
 import net.nifheim.yitan.itemlorestats.GearStats;
 import net.nifheim.yitan.itemlorestats.Main;
@@ -41,7 +43,7 @@ import net.nifheim.yitan.itemlorestats.Enchants.Reflect;
 import net.nifheim.yitan.itemlorestats.Enchants.Vanilla_Power;
 import net.nifheim.yitan.itemlorestats.Enchants.Vanilla_Sharpness;
 import net.nifheim.yitan.itemlorestats.Enchants.Wither;
-import net.nifheim.yitan.itemlorestats.Spells.SpellCreator;
+
 import net.nifheim.yitan.itemlorestats.Util.Util_Citizens;
 import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
 import net.nifheim.yitan.itemlorestats.Util.Util_Format;
@@ -62,7 +64,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
     SetBonuses setBonuses = new SetBonuses();
     XpLevel xpLevel = new XpLevel();
     Soulbound soulbound = new Soulbound();
-    SpellCreator spellCreator = new SpellCreator();
+    SpellCast spellCreator = new SpellCast();
 
     net.nifheim.yitan.itemlorestats.Util.Util_Colours util_Colours = new net.nifheim.yitan.itemlorestats.Util.Util_Colours();
     Util_EntityManager util_EntityManager = new Util_EntityManager();
@@ -127,18 +129,15 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
                     shooter = (Entity) projectile.getShooter();
 
-                    if ((projectile.hasMetadata("ILS_Snowball"))
-                            || (projectile.hasMetadata("ILS_SmallFireball"))
-                            || (projectile.hasMetadata("ILS_Fireball"))
-                            || (projectile.hasMetadata("ILS_Arrow"))
-                            || (projectile.hasMetadata("ILS_Egg"))
-                            || (projectile.hasMetadata("ILS_TnT"))) {
-
+                    if (projectile.hasMetadata("SPELLNAME=")){
+                    	String SpellName = ((MetadataValue) projectile.getMetadata("SPELLNAME=").get(0)).asString();
+                    	Spell spell = SpellsList.getSpell(SpellName);
+                    	if(spell!=null){
                         if (projectile.hasMetadata("Damage=")) {
                             double DirectDamageAmount = ((MetadataValue) projectile.getMetadata("DDA=").get(0)).asDouble();
                             double AOEDamageAmount = ((MetadataValue) projectile.getMetadata("ADA=").get(0)).asDouble();
                             double AOEDamageRange = ((MetadataValue) projectile.getMetadata("ADR=").get(0)).asDouble();
-                            Effect projectileHitEffect = this.spellCreator.getProjectileHitEffect(this.gearStats.getSpellName(this.util_EntityManager.returnItemStackInMainHand(shooter)));
+                            Effect projectileHitEffect = spell.hitEffect;
 
                             event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), projectileHitEffect, 3);
 
@@ -177,8 +176,8 @@ public class DamageSystem implements org.bukkit.event.Listener {
                             double DirectHealAmount = ((MetadataValue) projectile.getMetadata("DHA=").get(0)).asDouble();
                             double AOEHealAmount = ((MetadataValue) projectile.getMetadata("AHA=").get(0)).asDouble();
                             double AOEHealRange = ((MetadataValue) projectile.getMetadata("AHR=").get(0)).asDouble();
-
-                            Effect projectileHitEffect = this.spellCreator.getProjectileHitEffect(this.gearStats.getSpellName(this.util_EntityManager.returnItemStackInMainHand(shooter)));
+                            
+                            Effect projectileHitEffect = spell.hitEffect;
 
                             event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), projectileHitEffect, 3);
 
@@ -213,6 +212,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
 
                         return;
                     }
+                }
 
                     if (!(shooter instanceof Player)) {
                         if (((event.getEntity() instanceof Player)) && ((event.getEntity() instanceof LivingEntity))) {

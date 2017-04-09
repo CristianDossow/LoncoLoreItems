@@ -14,7 +14,7 @@ import net.nifheim.yitan.loncoloreitems.LoreCraftingStats;;
 public class LoreItemMaker {
 	
 	public String unknownItem = EspecialAtributes.unknownItem;
-	public String languageRegex = "[^A-Za-z������������_]";
+	static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 	
 	static public ItemStack AddItemLore(ItemStack item ,Player player){
 		double lvl = player.getLevel();

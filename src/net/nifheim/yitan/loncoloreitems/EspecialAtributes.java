@@ -13,7 +13,7 @@ import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
 
 public class EspecialAtributes {
-	static private String languageRegex = "[^A-Za-z������������_]";
+	static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 	static public String destroyname = "Destrucci�n";
 	static public String weaponspeed = "vataque";
 	static public String voidbound = "Retorno del End";

@@ -4,7 +4,7 @@ import be.maximvdw.placeholderapi.PlaceholderAPI;
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
-
+import net.nifheim.yitan.loncoloremagics.SpellListeners;
 import net.nifheim.yitan.itemlorestats.Commands.CreateLore_Com;
 import net.nifheim.yitan.itemlorestats.Commands.CustomMaterial_Com;
 import net.nifheim.yitan.itemlorestats.Commands.Export_Com;
@@ -144,6 +144,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         /*
         New events clases
          */
+        plma.registerEvents(new SpellListeners(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
         plma.registerEvents(new EnchantItemListener(), this);
         plma.registerEvents(new EntityRegainHealthListener(), this);

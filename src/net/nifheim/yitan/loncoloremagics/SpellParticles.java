@@ -23,7 +23,11 @@ public class SpellParticles extends BukkitRunnable {
 	@Override
 	public void run() {
 		
-		
+		if(startime+maxTime>System.currentTimeMillis()){
+			ParticleEffect.
+		}
+		else
+			this.cancel();
 		
 	}
 

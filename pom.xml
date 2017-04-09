@@ -28,6 +28,14 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+    <id>bukkit-repo</id>
+    <url>http://repo.bukkit.org/content/groups/public/ </url>
+	</repository>
+	<repository>
+   	 <id>elmakers-repo</id>
+    	<url>http://maven.elmakers.com/repository/ </url>
+		</repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -73,6 +81,30 @@
             <version>1.6.6</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+    		<groupId>org.bukkit</groupId>
+    		<artifactId>bukkit</artifactId>
+   			 <version>1.6.4-R2.0</version>
+    		<scope>provided</scope>
+		</dependency>
+		<dependency>
+    		<groupId>de.slikey</groupId>
+  		    <artifactId>EffectLib</artifactId>
+  			<version>1.4</version>
+ 		    <scope>provided</scope>
+		</dependency>
+				<dependency>
+    		<groupId>org.bukkit</groupId>
+    		<artifactId>bukkit</artifactId>
+   			 <version>1.6.4-R2.0</version>
+    		<scope>provided</scope>
+		</dependency>
+		<dependency>
+    		<groupId>de.slikey</groupId>
+  		    <artifactId>EffectLib</artifactId>
+  			<version>1.4</version>
+ 		    <scope>provided</scope>
+		</dependency>
     </dependencies>
     <build>
         <finalName>${project.name}</finalName>
@@ -87,5 +119,11 @@
                 </includes>
             </resource>
         </resources>
+        
+
+
+
+
+        
     </build>
 </project>

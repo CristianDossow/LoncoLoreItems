@@ -37,6 +37,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
+import net.nifheim.yitan.loncoloremagics.Spell;
+import net.nifheim.yitan.loncoloremagics.SpellsList;
 import net.nifheim.yitan.itemlorestats.Main;
 
 public class EventListener implements Listener {
@@ -48,7 +50,7 @@ public class EventListener implements Listener {
     public HashMap<UUID, Long> shootpower;
     public LoreCraftingStats getlorestrings;
     public String unknownItem = "Artículo no identificado";
-    public String languageRegex = "[^A-Za-z������������_]";
+    static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
     Main instance;
     Durability durabilityclass = new Durability();
 
@@ -521,6 +523,27 @@ public class EventListener implements Listener {
                                 Player player = (Player) sender;
                                 ItemStack item = ItemMaker.RepairerStone(power);
                                 player.getInventory().addItem(item);
+                                return true;
+                            }
+                            return false;
+                        }
+
+                        return false;
+                    }
+                    return false;
+                }
+                if (args[0].equalsIgnoreCase("spellbook")) {
+                    if (sender instanceof Player && sender.hasPermission("ils.admin")) {
+                        if (args.length > 1) {
+                        	Spell spell = SpellsList.getSpell(args[1]);
+                        	
+                            if (spell==null) {
+                            	sender.sendMessage("El Echiso no existe");
+                            }
+                            else{
+                            	Player player = (Player) sender;
+                            	ItemStack item = ItemMaker.SpellBook(spell);
+                            	player.getInventory().addItem(item);
                                 return true;
                             }
                             return false;

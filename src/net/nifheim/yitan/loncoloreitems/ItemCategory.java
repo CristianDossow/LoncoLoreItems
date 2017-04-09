@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import net.nifheim.yitan.itemlorestats.Main;
 
 public class ItemCategory {
-	static private String languageRegex = "[^A-Za-z������������_]";
+	static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 	static public String armortype = "Armadura";
 	static public String tooltype = "Herramienta";
 	static public String shieldtype = "Escudo";
