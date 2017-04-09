@@ -110,7 +110,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
             if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
-            if ((Main.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) /*&& (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))*/) {
+            if ((Main.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) && (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))) {
                 event.setCancelled(true);
                 return;
             }
@@ -223,7 +223,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         getAttacker = (Player) shooter;
                     }
                 } else if ((event.getDamager() instanceof Player)) {
-                    if (((event.getEntity() instanceof Player)) && (Main.plugin.getWorldGuard() != null) /*&& ((ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion((Player) event.getEntity())) || (ItemLoreStats.plugin.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity())))*/) {
+                    if (((event.getEntity() instanceof Player)) && (Main.plugin.getWorldGuard() != null) && ((Main.plugin.util_WorldGuard.playerInPVPRegion((Player) event.getEntity())) || (Main.plugin.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity())))) {
                         return;
                     }
 
