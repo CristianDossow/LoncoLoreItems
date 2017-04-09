@@ -160,19 +160,19 @@ public class LoreItemMaker {
         //temlore.add(languageRegex)
         temlore.add(""); // 3
         temlore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 4
-        temlore.add(Main.getPlugin().getMessages().getString("Lores.Enchants.Empty")); // 6 Enchant
-        temlore.add(Main.getPlugin().getMessages().getString("Lores.Enchants.Empty")); // 7 Enchant
-        temlore.add(Main.getPlugin().getMessages().getString("Lores.Enchants.Empty")); // 8 Enchant
-        temlore.add(LoreCraftingStats.getSpeed(speed)); // 9
-        temlore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 10
+        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 6 Enchant
+        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 7 Enchant
+        temlore.add(LoreCraftingStats.getSpeed(speed)); // 8
+        temlore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 9
         if (Math.random() < 0.25) {
-            temlore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 11
+            temlore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 10
         }
         if (Math.random() < 0.20) {
-            temlore.add(LoreCraftingStats.getPoison(lvl)); // 12
+            temlore.add(LoreCraftingStats.getPoison(lvl)); // 11
         }
-        temlore.add(""); // 13
-        temlore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); // 14
+        temlore.add(""); // 12
+        temlore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); // 13
         item.getItemMeta().setLore(temlore);
         meta.setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
