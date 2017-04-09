@@ -5,8 +5,10 @@ import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitTask;
 
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.loncoloreitems.SwordActionBar;
 
 public class SpellCast {
 
@@ -15,6 +17,7 @@ public class SpellCast {
         projectile.setShooter(player);
         projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
         setProjectileProperties(projectile, spell);
+        BukkitTask task = new SpellParticles(Main.getPlugin(),spell,projectile).runTaskTimer(Main.getPlugin(), 0, 2);
     }
 
     public static Projectile getProjectile(Spell spell, Player player) {
