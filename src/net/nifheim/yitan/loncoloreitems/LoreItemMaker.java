@@ -26,7 +26,7 @@ public class LoreItemMaker {
     }
 
     static public ItemStack ClearAndAddItemLore(ItemStack item, Player player) {
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         meta.setLore(temlore);
         item.setItemMeta(meta);
@@ -34,7 +34,7 @@ public class LoreItemMaker {
     }
 
     static public ItemStack ClearAndAddItemLore(ItemStack item, Player player, int lvl) {
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         meta.setLore(temlore);
         item.setItemMeta(meta);
@@ -43,12 +43,16 @@ public class LoreItemMaker {
 
     static public ItemStack AddItemLore(ItemStack item, Player player, int lvl) {
         if (item.getType().equals(Material.BOW)) {
-            if (item.getDurability() == 2) {
-                generatebow(item, player, lvl, 6, 4, 275); //balletas
-            } else if (item.getDurability() == 1) {
-                generatebow(item, player, lvl, 4, 3, 385, 1.1, 1.1, 1.1); //arco astral
-            } else {
-                generatebow(item, player, lvl, 4, 2, 385);
+            switch (item.getDurability()) {
+                case 2:
+                    generatebow(item, player, lvl, 6, 4, 275); //balletas
+                    break;
+                case 1:
+                    generatebow(item, player, lvl, 4, 3, 385, 1.1, 1.1, 1.1); //arco astral
+                    break;
+                default:
+                    generatebow(item, player, lvl, 4, 2, 385);
+                    break;
             }
         } else if (item.getType().equals(Material.WOOD_SWORD)) {
             generatesword(item, player, lvl, 1, 2, 60);
@@ -59,16 +63,26 @@ public class LoreItemMaker {
         } else if (item.getType().equals(Material.IRON_SWORD)) {
             generatesword(item, player, lvl, 1, 2, 250);
         } else if (item.getType().equals(Material.DIAMOND_SWORD)) {
-            if (item.getDurability() == 27) { //espada caballero
-                generatesword(item, player, lvl, 1, 2.5, 600, 1.1, 1, 1);
-            } else if (item.getDurability() == 43) { //maza de guerra
-                generatesword(item, player, lvl, 3, 5, 400);
-            } else if (item.getDurability() == 38) { //guada�a
-                generatesword(item, player, lvl, 3, 4, 1300, 1, 1.2, 1);
-            } else if (item.getDurability() == 25) { //cimitarra
-                generatesword(item, player, lvl, 1.5, 2.2, 1600, 1, 1, 1.2);
-            } else {
-                generatesword(item, player, lvl, 1, 2, 1600);
+            switch (item.getDurability()) {
+                case 27:
+                    //espada caballero
+                    generatesword(item, player, lvl, 1, 2.5, 600, 1.1, 1, 1);
+                    break;
+                case 43:
+                    //maza de guerra
+                    generatesword(item, player, lvl, 3, 5, 400);
+                    break;
+                case 38:
+                    //guadaña
+                    generatesword(item, player, lvl, 3, 4, 1300, 1, 1.2, 1);
+                    break;
+                case 25:
+                    //cimitarra
+                    generatesword(item, player, lvl, 1.5, 2.2, 1600, 1, 1, 1.2);
+                    break;
+                default:
+                    generatesword(item, player, lvl, 1, 2, 1600);
+                    break;
             }
 
         } else if (item.getType().equals(Material.WOOD_AXE)) {
@@ -119,7 +133,7 @@ public class LoreItemMaker {
     public static void generatebow(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
 
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
         }
@@ -149,20 +163,23 @@ public class LoreItemMaker {
     }
 
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus) {
+        generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1, true);
+    }
+
+    public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, boolean enchantable) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
         }
         temlore.add(LoreCraftingStats.getLvL(lvl)); // 1
         temlore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus)); // 2
-        //temlore.add(languageRegex)
-        temlore.add(""); // 3
-        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 4
-        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
-        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 6 Enchant
-        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 7 Enchant
+//        temlore.add(""); // 3
+//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 4
+//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 6 Enchant
+//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 7 Enchant
         temlore.add(LoreCraftingStats.getSpeed(speed)); // 8
         temlore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 9
         if (Math.random() < 0.25) {
@@ -183,7 +200,7 @@ public class LoreItemMaker {
 
     public static void generataxe(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
@@ -213,7 +230,7 @@ public class LoreItemMaker {
 
     public static void generatarmor(ItemStack item, Player player, int lvl) {
         //double speed = Math.random()*(speedmax-speedmin)+speedmin;
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
@@ -234,7 +251,7 @@ public class LoreItemMaker {
 
     public static void generatescudo(ItemStack item, Player player, int lvl, int materiallvl) {
         //double speed = Math.random()*(speedmax-speedmin)+speedmin;
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
@@ -254,7 +271,7 @@ public class LoreItemMaker {
 
     public static void generatetool(ItemStack item, Player player, int lvl) {
         //double speed = Math.random()*(speedmax-speedmin)+speedmin;
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
@@ -272,7 +289,7 @@ public class LoreItemMaker {
 
     public static void generateothertools(ItemStack item, Player player, int lvl, int materiallvl) {
         //double speed = Math.random()*(speedmax-speedmin)+speedmin;
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
@@ -289,7 +306,7 @@ public class LoreItemMaker {
     }
 
     public static void AddVoidbound(ItemStack item) {
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
@@ -301,7 +318,7 @@ public class LoreItemMaker {
     }
 
     public static void AddCustomEnchant(ItemStack item, String enchant) {
-        List<String> temlore = new ArrayList<String>();
+        List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
