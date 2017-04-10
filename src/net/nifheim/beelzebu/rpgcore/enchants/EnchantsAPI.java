@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.api;
+package net.nifheim.beelzebu.rpgcore.enchants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author Beelzebu
  */
-public class API {
+public class EnchantsAPI {
 
     private static final FileConfiguration config = Main.getInstance().getConfig();
     private static final FileConfiguration messages = Main.getMessages();
