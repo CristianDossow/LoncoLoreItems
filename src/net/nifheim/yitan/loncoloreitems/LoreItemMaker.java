@@ -126,6 +126,7 @@ public class LoreItemMaker {
         return item;
     }
 
+    @Deprecated
     public static void generatebow(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl) {
         generatebow(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1);
     }
@@ -154,47 +155,62 @@ public class LoreItemMaker {
         meta.setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         item.setItemMeta(meta);
     }
 
+    @Deprecated
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl) {
         generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1);
     }
 
+    @Deprecated
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus) {
         generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1, true);
     }
 
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, boolean enchantable) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
-        List<String> temlore = new ArrayList<>();
+        List<String> lore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
-            temlore = item.getItemMeta().getLore();
+            lore = item.getItemMeta().getLore();
         }
-        temlore.add(LoreCraftingStats.getLvL(lvl)); // 1
-        temlore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus)); // 2
-//        temlore.add(""); // 3
-//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 4
-//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
-//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 6 Enchant
-//        temlore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 7 Enchant
-        temlore.add(LoreCraftingStats.getSpeed(speed)); // 8
-        temlore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 9
+        lore.add(LoreCraftingStats.getLvL(lvl)); // 1
+        lore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus)); // 2
+        lore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 4
         if (Math.random() < 0.25) {
-            temlore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 10
+            lore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 5
         }
         if (Math.random() < 0.20) {
-            temlore.add(LoreCraftingStats.getPoison(lvl)); // 11
+            lore.add(LoreCraftingStats.getPoison(lvl)); // 11
         }
-        temlore.add(""); // 12
-        temlore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); // 13
-        item.getItemMeta().setLore(temlore);
-        meta.setLore(temlore);
+        if (enchantable) {
+            lore.add(""); // 3
+            lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 4
+            switch (lvl) {
+                case 30:
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    break;
+                case 60:
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    break;
+                case 90:
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    break;
+            }
+        }
+        lore.add(""); // 12
+        lore.add(LoreCraftingStats.getSpeed(speed)); // 3
+        lore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); // 13
+        item.getItemMeta().setLore(lore);
+        meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         item.setItemMeta(meta);
     }
 
@@ -223,7 +239,7 @@ public class LoreItemMaker {
         item.getItemMeta().setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
@@ -244,7 +260,7 @@ public class LoreItemMaker {
         item.getItemMeta().setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
@@ -264,7 +280,7 @@ public class LoreItemMaker {
         item.getItemMeta().setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
@@ -282,7 +298,7 @@ public class LoreItemMaker {
         item.getItemMeta().setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
@@ -300,7 +316,7 @@ public class LoreItemMaker {
         item.getItemMeta().setLore(temlore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
