@@ -225,6 +225,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             console.sendMessage(rep("                 &7You can download this in &chttps://www.spigotmc.org/resources/1315/"));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
+        if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into EffectLib."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find EffectLib, you need this API to run this plugin ..."));
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+        }
         if (getWorldGuard() != null) {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into WorldGuard."));
         } else {
