@@ -17,7 +17,7 @@ public class SpellCast {
         projectile.setShooter(player);
         projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
         setProjectileProperties(projectile, spell);
-        BukkitTask task = new SpellParticles(Main.getPlugin(),spell,projectile).runTaskTimer(Main.getPlugin(), 0, 2);
+        BukkitTask task = new SpellParticles(Main.getInstance(),spell,projectile).runTaskTimer(Main.getInstance(), 0, 2);
     }
 
     public static Projectile getProjectile(Spell spell, Player player) {
@@ -26,7 +26,7 @@ public class SpellCast {
         LlamaSpit projectile = (LlamaSpit) player.getWorld().spawn(loc, LlamaSpit.class);
         projectile.setGravity(false);
         //projectile.setGlowing(true);
-        //projectile.setMetadata("ILS_DragonFireball", new FixedMetadataValue(Main.getPlugin(), player.getName()));
+        //projectile.setMetadata("ILS_DragonFireball", new FixedMetadataValue(Main.getInstance(), player.getName()));
         return projectile;
 
     }
@@ -37,20 +37,20 @@ public class SpellCast {
         double DDA = spell.directDamageAmount;
         double ADA = spell.aoeDamageAmount;
 
-        projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getPlugin(), spell.name));
-        projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getPlugin(), DHA));
-        projectile.setMetadata("AHA=", new FixedMetadataValue(Main.getPlugin(), AHA));
-        projectile.setMetadata("AHR=", new FixedMetadataValue(Main.getPlugin(), spell.aoeHealRange));
-        projectile.setMetadata("DDA=", new FixedMetadataValue(Main.getPlugin(), DDA));
-        projectile.setMetadata("ADA=", new FixedMetadataValue(Main.getPlugin(), ADA));
-        projectile.setMetadata("ADR=", new FixedMetadataValue(Main.getPlugin(), spell.aoeDamageRange));
+        projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getInstance(), spell.name));
+        projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getInstance(), DHA));
+        projectile.setMetadata("AHA=", new FixedMetadataValue(Main.getInstance(), AHA));
+        projectile.setMetadata("AHR=", new FixedMetadataValue(Main.getInstance(), spell.aoeHealRange));
+        projectile.setMetadata("DDA=", new FixedMetadataValue(Main.getInstance(), DDA));
+        projectile.setMetadata("ADA=", new FixedMetadataValue(Main.getInstance(), ADA));
+        projectile.setMetadata("ADR=", new FixedMetadataValue(Main.getInstance(), spell.aoeDamageRange));
 
         if ((DHA > 0.0D) || (AHA > 0.0D)) {
-            projectile.setMetadata("Heal=", new FixedMetadataValue(Main.getPlugin(), true));
+            projectile.setMetadata("Heal=", new FixedMetadataValue(Main.getInstance(), true));
         }
 
         if ((DDA > 0.0D) || (ADA > 0.0D)) {
-            projectile.setMetadata("Damage=", new FixedMetadataValue(Main.getPlugin(), true));
+            projectile.setMetadata("Damage=", new FixedMetadataValue(Main.getInstance(), true));
         }
     }
 }

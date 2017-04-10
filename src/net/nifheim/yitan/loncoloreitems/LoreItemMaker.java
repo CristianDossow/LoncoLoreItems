@@ -14,10 +14,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class LoreItemMaker {
 
-    private static Main plugin;
+    private static final Main plugin = Main.getInstance();
+    private static final FileConfiguration messages = Main.getMessages();
     public String unknownItem = EspecialAtributes.unknownItem;
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
-    private static final FileConfiguration messages = Main.getPlugin().getMessages();
 
     static public ItemStack AddItemLore(ItemStack item, Player player) {
         double lvl = player.getLevel();
@@ -183,29 +183,29 @@ public class LoreItemMaker {
             lore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 5
         }
         if (Math.random() < 0.20) {
-            lore.add(LoreCraftingStats.getPoison(lvl)); // 11
+            lore.add(LoreCraftingStats.getPoison(lvl)); // 6
         }
         if (enchantable) {
-            lore.add(""); // 3
-            lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 4
+            lore.add(""); // 7
+            lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 8
             switch (lvl) {
                 case 30:
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
                     break;
                 case 60:
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 10 Enchant
                     break;
                 case 90:
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 5 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 10 Enchant
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 11 Enchant
                     break;
             }
         }
         lore.add(""); // 12
-        lore.add(LoreCraftingStats.getSpeed(speed)); // 3
-        lore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); // 13
+        lore.add(LoreCraftingStats.getSpeed(speed)); // 13
+        lore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); // 14
         item.getItemMeta().setLore(lore);
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

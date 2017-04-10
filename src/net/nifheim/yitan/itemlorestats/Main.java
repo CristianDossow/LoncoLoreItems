@@ -100,8 +100,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     /*
     Messages
      */
-    private final File messagesFile = new File(getDataFolder(), "messages.yml");
-    private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
+    protected static final File messagesFile = new File(plugin.getDataFolder(), "messages.yml");
+    private static final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
 
     public FileConfiguration PlayerDataConfig;
 
@@ -206,7 +206,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         }));
     }
 
-    public static Main getPlugin() {
+    public static Main getInstance() {
         return plugin;
     }
 
@@ -837,7 +837,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 .replaceAll("%prefix%", getMessages().getString("Prefix")).replaceAll("&", "§");
     }
 
-    public FileConfiguration getMessages() {
+    public static FileConfiguration getMessages() {
         return messages;
     }
 

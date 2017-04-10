@@ -1,6 +1,8 @@
 package net.nifheim.yitan.loncoloreitems;
 
 import java.util.ArrayList;
+import java.util.List;
+import net.nifheim.yitan.itemlorestats.Main;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,15 +11,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import net.nifheim.yitan.loncoloremagics.Spell;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class ItemMaker {
+
+    private static final Main plugin = Main.getInstance();
+    private static final FileConfiguration messages = Main.getMessages();
 
     public static ItemStack EnchantScroll(String enchant, String Type) {
 
         ItemStack scroll = new ItemStack(Material.PAPER, 1);
         ItemMeta im = scroll.getItemMeta();
-        im.setDisplayName(ChatColor.GOLD + "Pergamino Antiguo Encantado");
-        ArrayList<String> lore = new ArrayList<String>();
+        im.setDisplayName(plugin.rep(messages.getString("Items.Enchant Scroll.Name")));
+        ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + Type);
         lore.add(ChatColor.GOLD + EspecialAtributes.enchantgiver);
         lore.add(ChatColor.GRAY + enchant);
@@ -31,12 +37,13 @@ public class ItemMaker {
         ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName(ChatColor.GOLD + "Piedra de Reparación");
-        ArrayList<String> lore = new ArrayList<String>();
+        im.setDisplayName(plugin.rep(messages.getString("Items.Repairer Stone.Name")));
+        ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.GOLD + EspecialAtributes.repairer + " " + poder);
-        lore.add(ChatColor.GRAY + "Piedra mágica que puede reparar los");
-        lore.add(ChatColor.GRAY + "daños causados por el desgaste de");
-        lore.add(ChatColor.GRAY + "cualquier objeto");
+        List<String> mlore = messages.getStringList("Items.Repairer Stone.Lore");
+        mlore.stream().forEach((str) -> {
+            lore.add(plugin.rep(str));
+        });
         im.setLore(lore);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -50,12 +57,12 @@ public class ItemMaker {
         ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName(ChatColor.GOLD + "Libro de Echizo: " + spell.name);
-        ArrayList<String> lore = new ArrayList<String>();
+        im.setDisplayName(plugin.rep(messages.getString("Items.Spell Book.Name") + spell.name));
+        ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + spell.name);
-        for (String loreline : spell.lore) {
+        spell.lore.stream().forEach((loreline) -> {
             lore.add(ChatColor.AQUA + loreline);
-        }
+        });
         im.setLore(lore);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
