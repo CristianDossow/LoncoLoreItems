@@ -16,7 +16,7 @@ public class SpellListeners implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack offhand = event.getPlayer().getInventory().getItemInOffHand();
-            if (offhand != null && offhand.getType().equals(Material.ENCHANTED_BOOK)) {
+            if (offhand != null && offhand.getType().equals(Material.DIAMOND_HOE) && offhand.getDurability()==98) {
                 if (offhand.hasItemMeta()) {
                     if (offhand.getItemMeta().hasLore()) {
                         String spellname = offhand.getItemMeta().getLore().get(0);

@@ -6,12 +6,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.SphereEffect;
+import de.slikey.effectlib.util.ParticleEffect;
 import net.nifheim.yitan.itemlorestats.Main;
 
 
 public class SpellParticles extends BukkitRunnable {
 
-    private final Long maxTime = (long) 10000;
+    private final Long maxTime;
     private final Main instance;
     private final Projectile projectile;
     private final Spell spell;
@@ -23,11 +24,23 @@ public class SpellParticles extends BukkitRunnable {
         this.projectile = projectile;
         this.spell = spell;
         this.startime = System.currentTimeMillis();
-        
+        this.maxTime = spell.lifeTime;
         em= new EffectManager(plugin);
-		Effect effect = new SphereEffect(em); 
-		effect.setEntity(projectile);
-		effect.start();
+        
+        if(spell.particleEffectSphere!=null){
+            ParticleEffect peffect=null;
+            peffect = spell.particleEffectSphere;
+            SphereEffect effect = new SphereEffect(em); 
+            effect.particle=peffect;
+            //effect.particleCount = 2;
+            effect.particles=3;
+            effect.radius=spell.particleEffectSphereradio;
+    		effect.setEntity(projectile);
+    		effect.delay=1;
+    		effect.speed=0.025F;
+    		effect.start();
+    		projectile.setGlowing(true);
+        }
     }
 	
 	@Override
@@ -36,6 +49,7 @@ public class SpellParticles extends BukkitRunnable {
 		if(startime+maxTime<System.currentTimeMillis()){
 			em.dispose();
 			this.cancel();
+			projectile.remove();
 		}
 	}
 

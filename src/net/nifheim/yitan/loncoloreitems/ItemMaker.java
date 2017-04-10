@@ -47,7 +47,7 @@ public class ItemMaker {
 
     public static ItemStack SpellBook(Spell spell) {
 
-        ItemStack item = new ItemStack(Material.ENCHANTED_BOOK, 1);
+        ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
         im.setDisplayName(ChatColor.GOLD + "Libro de Echizo: " + spell.name);
@@ -60,6 +60,7 @@ public class ItemMaker {
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(im);
+        item.setDurability((short) 98);
         return item;
     }
 
