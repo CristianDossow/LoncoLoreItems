@@ -52,6 +52,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,7 +101,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     /*
     Messages
      */
-    protected static final File messagesFile = new File(plugin.getDataFolder(), "messages.yml");
+    static final File messagesFile = new File(plugin.getDataFolder(), "messages.yml");
     private static final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
 
     public FileConfiguration PlayerDataConfig;
@@ -112,6 +113,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public HashMap<String, Long> internalCooldowns = new HashMap();
     public HashMap<String, Boolean> combatLogVisible = new HashMap();
     public HashMap<String, Double> setBonusesModifiers = new HashMap();
+    public HashMap<UUID, PlayerStats> playersStats = new HashMap();
 
     public DamageFix damagefix;
     public EventListener eventlistener;

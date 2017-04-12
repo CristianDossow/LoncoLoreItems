@@ -558,6 +558,13 @@ public class EventListener implements Listener {
         if (cmd.getName().equalsIgnoreCase("clearhand")) {
 
         }
+        if (cmd.getName().equalsIgnoreCase("stats2")) {
+        	   if (sender instanceof Player){
+        		   Player p = (Player) sender;
+        		   Main.plugin.playersStats.get(p.getUniqueId()).ShowStats(p);
+        	   }
+        	
+        }
 
         return false;
     }

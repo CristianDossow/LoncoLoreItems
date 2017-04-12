@@ -3,6 +3,8 @@ package net.nifheim.yitan.itemlorestats.listeners;
 import java.io.File;
 import java.io.IOException;
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
+
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,8 +16,12 @@ public class PlayerQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+    	
+    	
         if ((event.getPlayer() instanceof Player)) {
             Player player = event.getPlayer();
+            
+            Main.plugin.playersStats.remove(player.getUniqueId());
 
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 if (!player.isDead()) {

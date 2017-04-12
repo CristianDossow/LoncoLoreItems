@@ -3,6 +3,8 @@ package net.nifheim.yitan.itemlorestats.listeners;
 import java.io.File;
 import java.io.IOException;
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
+
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -15,6 +17,11 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player playerFinal = event.getPlayer();
+        
+        PlayerStats ps = new PlayerStats(playerFinal);
+        ps.UpdateAll();
+        Main.plugin.playersStats.put(playerFinal.getUniqueId(), ps);
+        
         Main.plugin.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, () -> {
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {

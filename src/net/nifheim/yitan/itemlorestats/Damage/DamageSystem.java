@@ -345,7 +345,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
             }
 
             double eventDamage = event.getDamage();
-
+            /*  // quitando control de daños en mobs
             if (!(getAttacker instanceof Player)) {
                 if (getAttacker != null) {
                     if ((getAttacker.hasMetadata("level")) && (getAttacker.hasMetadata("regionSpawned"))) {
@@ -366,7 +366,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         eventDamage = newDamage;
                     }
                 }
-            }
+            }*/
 
             double getDefenderArmour = this.armour.armourChanceOnHit(getDefender);
             double getAttackerDamage = 0.0D;
