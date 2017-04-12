@@ -1,13 +1,10 @@
 package net.nifheim.yitan.loncoloreitems;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import net.nifheim.yitan.itemlorestats.Main;

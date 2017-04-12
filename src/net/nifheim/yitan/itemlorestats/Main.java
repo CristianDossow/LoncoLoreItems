@@ -67,10 +67,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     private FileConfiguration config;
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
-    public String rep;
+    public static String rep;
     //Messages
-    private final File messagesFile = new File(getDataFolder(), "messages.yml");
-    public FileConfiguration messages;
+    final File messagesFile = new File(getDataFolder(), "messages.yml");
+    private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
 
     public FileConfiguration PlayerDataConfig;
 
@@ -178,12 +178,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public void loadManagers() {
-        checkDependencies();
         if (!messagesFile.exists()) {
-
-            messages = YamlConfiguration.loadConfiguration(messagesFile);
             copy(getResource("messages.yml"), messagesFile);
         }
+        checkDependencies();
     }
 
     public void checkDependencies() {
@@ -377,11 +375,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isSword(ItemStack item) {
-        if ((item.equals(Material.WOOD_SWORD)) || (item.equals(Material.STONE_SWORD)) || (item.equals(Material.IRON_SWORD)) || (item.equals(Material.GOLD_SWORD)) || (item.equals(Material.DIAMOND_SWORD))) {
-            return true;
-        }
-
-        return false;
+        return (item.equals(Material.WOOD_SWORD)) || (item.equals(Material.STONE_SWORD)) || (item.equals(Material.IRON_SWORD)) || (item.equals(Material.GOLD_SWORD)) || (item.equals(Material.DIAMOND_SWORD));
     }
 
     public boolean isHoe(ItemStack item) {
@@ -807,14 +801,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         }
     }
 
-    public String rep(String str) {
-        return str
-                .replaceAll("%prefix%", messages.getString("Prefix")).replaceAll("&", "§");
-    }
-
-    /*
-    Copy helper
-     */
     public void copy(InputStream in, File file) {
         try {
             OutputStream out = new FileOutputStream(file);
@@ -828,5 +814,15 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't copy the file " + file.getName() + " to the plugin data folder.", e.getCause());
         }
+    }
+
+    public String rep(String str) {
+        return str
+                .replaceAll("&", "§")
+                .replaceAll("%prefix%", (getMessages().getString("Prefix.Message")));
+    }
+
+    public FileConfiguration getMessages() {
+        return messages;
     }
 }

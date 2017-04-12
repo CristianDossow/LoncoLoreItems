@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class LoreItemMaker {
 
     private static final Main plugin = Main.getInstance();
-    private static final FileConfiguration messages = plugin.messages;
+    private static final FileConfiguration messages = Main.getInstance().getMessages();
     public String unknownItem = EspecialAtributes.unknownItem;
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 

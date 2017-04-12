@@ -7,20 +7,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.nifheim.yitan.itemlorestats.Main;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class EspecialAtributes {
-    private static final Main plugin = Main.getInstance();
-    private static final FileConfiguration messages = plugin.messages;
+    public static Main plugin;
 
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
-    public static String destroyname = plugin.rep(messages.getString("Especial Atributes.Desroy"));
-    public static String weaponspeed = plugin.rep(messages.getString("Especial Atributes.Weapon Speed"));
-    public static String voidbound = plugin.rep(messages.getString("Especial Atributes.Void Bound"));
-    public static String unknownItem = plugin.rep(messages.getString("Especial Atributes.Unknow Item"));
+    static String destroyname = Main.getInstance().getMessages().getString("Especial Atributes.Desroy").replaceAll("&", "§");
+    public static String weaponspeed = ((Main.getInstance().getMessages().getString("Especial Atributes.Weapon Speed"))).replaceAll("&", "§");
+    public static String voidbound = (Main.getInstance().getMessages().getString("Especial Atributes.Void Bound")).replaceAll("&", "§");
+    public static String unknownItem = (Main.getInstance().getMessages().getString("Especial Atributes.Unknow Item")).replaceAll("&", "§");
     public static String enchantgiver = "Poder almacenado:";
-    public static String repairer = plugin.rep(messages.getString("Especial Atributes.Repairer"));
-    public static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
+    public static String repairer = (Main.getInstance().getMessages().getString("Especial Atributes.Repairer")).replaceAll("&", "§");
+    public static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name").replaceAll("&", "§");
 
     static public boolean HasDestroy(Player player) {
 

@@ -23,7 +23,7 @@ public class EnchantsAPI {
     private static Map<String, Enchant> enchants;
 
     private static final FileConfiguration config = Main.getInstance().getConfig();
-    private static final FileConfiguration messages = plugin.messages;
+    private static final FileConfiguration messages = plugin.getMessages();
 
     public EnchantsAPI(Main plugin) {
         EnchantsAPI.plugin = plugin;
