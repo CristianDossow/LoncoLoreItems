@@ -68,6 +68,6 @@ public class PlayerJoinListener implements Listener {
             plugin.updateHealth(playerFinal);
             plugin.updatePlayerSpeed(playerFinal);
         }, 5L);
-        plugin.activateEnchant.onJoin(playerFinal);
+        //plugin.activateEnchant.onJoin(playerFinal);
     }
 }

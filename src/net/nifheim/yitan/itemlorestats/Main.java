@@ -70,7 +70,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     //Messages
     final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
-    public ActivateEnchant activateEnchant;
+    //public ActivateEnchant activateEnchant;
 
     public FileConfiguration PlayerDataConfig;
 

@@ -32,14 +32,14 @@ public class EntityDamageByEntityListener implements Listener {
                 if (isBow != null) {
                     Player pShooter = (Player) getItemCraftMetaData(arrow, "shooter").value();
 
-                    plugin.activateEnchant.onArrowHitEntity(pShooter, isBow, e);
+                    //plugin.activateEnchant.onArrowHitEntity(pShooter, isBow, e);
                 }
             }
         } else if (e.getDamager() instanceof Player) {
             Player attacker = (Player) e.getDamager();
 
             if (attacker.getItemInHand() != null && attacker.getItemInHand().getType() != Material.AIR) {
-                    plugin.activateEnchant.onDamagedOtherEntity(attacker, e);
+                    //plugin.activateEnchant.onDamagedOtherEntity(attacker, e);
             }
         }
     }

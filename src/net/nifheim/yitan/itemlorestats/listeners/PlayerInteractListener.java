@@ -19,6 +19,6 @@ public class PlayerInteractListener implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         ItemStack itemInHand = e.getPlayer().getInventory().getItemInMainHand();
         Player player = e.getPlayer();
-        plugin.activateEnchant.onInteract(player, itemInHand, e);
+        //plugin.activateEnchant.onInteract(player, itemInHand, e);
     }
 }

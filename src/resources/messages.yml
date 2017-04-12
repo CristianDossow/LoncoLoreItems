@@ -1,8 +1,8 @@
 Prefix: "&8[&cLoncoLoreItems&8]&7"
 Lores:
     Enchants:
-        Header: "&aEncantamientos:"
-        Empty: "&d - ???"
+        Header: "&7Encantamientos:"
+        Empty: "&d ➣ ???"
 Items:
     Enchant Scroll:
         Name: "&6Pergamino Antiguo Encantado"

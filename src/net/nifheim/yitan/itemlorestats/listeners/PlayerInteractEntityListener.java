@@ -15,7 +15,7 @@ public class PlayerInteractEntityListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEntityEvent e) {
-        plugin.activateEnchant.onInteractEntity(e);
+        //plugin.activateEnchant.onInteractEntity(e);
     }
 
 }

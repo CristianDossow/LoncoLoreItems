@@ -186,21 +186,16 @@ public class LoreItemMaker {
             lore.add(LoreCraftingStats.getPoison(lvl)); // 6
         }
         if (enchantable) {
-            lore.add(""); // 7
-            lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 8
-            switch (lvl) {
-                case 30:
+            if (lvl >= 30) {
+                    lore.add(""); // 7
+                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 8
                     lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
-                    break;
-                case 60:
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
+            }
+            if (lvl >= 60) {
                     lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 10 Enchant
-                    break;
-                case 90:
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 10 Enchant
+            }
+            if (lvl >= 90) {
                     lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 11 Enchant
-                    break;
             }
         }
         lore.add(""); // 12
