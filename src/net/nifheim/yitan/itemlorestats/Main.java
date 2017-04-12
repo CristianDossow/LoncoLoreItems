@@ -1,21 +1,13 @@
 package net.nifheim.yitan.itemlorestats;
 
-import be.maximvdw.placeholderapi.PlaceholderAPI;
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
-import net.nifheim.yitan.itemlorestats.Commands.CreateLore_Com;
-import net.nifheim.yitan.itemlorestats.Commands.CustomMaterial_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Export_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Give_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Lore_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Name_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Repair_Com;
 
-import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
-import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
-import net.nifheim.yitan.itemlorestats.Damage.PotionListener;
+import net.nifheim.yitan.itemlorestats.Commands.*;
+
+import net.nifheim.yitan.itemlorestats.Damage.*;
 
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
 
@@ -27,16 +19,8 @@ import net.nifheim.yitan.itemlorestats.ItemUpgrading.PlayerLevelEvents;
 import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
 import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
 
+import net.nifheim.yitan.itemlorestats.Util.*;
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
-import net.nifheim.yitan.itemlorestats.Util.Util_ArmourWeight;
-import net.nifheim.yitan.itemlorestats.Util.Util_Citizens;
-import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
-import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
-import net.nifheim.yitan.itemlorestats.Util.Util_Format;
-import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
-import net.nifheim.yitan.itemlorestats.Util.Util_Random;
-import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
-import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
 
 import net.citizensnpcs.Citizens;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -56,21 +40,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
-import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
-import net.nifheim.yitan.itemlorestats.listeners.EntityRegainHealthListener;
-import net.nifheim.yitan.itemlorestats.listeners.GamemodeChangeListener;
-import net.nifheim.yitan.itemlorestats.listeners.InventoryClickListener;
-import net.nifheim.yitan.itemlorestats.listeners.InventoryDragListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerChangeWorldListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerDeathListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerDropItemListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerExpChangeListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerItemHeldListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerJoinListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerPickupItemListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerQuitListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerRespawnListener;
+import net.nifheim.yitan.itemlorestats.listeners.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -153,9 +123,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         Locale.setDefault(Locale.ROOT);
 
         PluginManager plma = getServer().getPluginManager();
-        /*
-        New events clases
-         */
+        
+        //New events clases
         plma.registerEvents(new SpellListeners(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
         plma.registerEvents(new EnchantItemListener(), this);
@@ -172,14 +141,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new PlayerPickupItemListener(), this);
         plma.registerEvents(new PlayerQuitListener(), this);
         plma.registerEvents(new PlayerRespawnListener(), this);
-        /*
-        End new event clases
-         */
+        //End new event clases
+        
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Crafting.AddedStats(), this);
         plma.registerEvents(new DamageSystem(this), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Durability.DurabilityEvents(), this);
         plma.registerEvents(new EnvironmentalDamage(), this);
-        plma.registerEvents(new EntityDrops(), this);
         plma.registerEvents(new PotionListener(), this);
         plma.registerEvents(new InteractEvents(), this);
         plma.registerEvents(new PlayerLevelEvents(), this);

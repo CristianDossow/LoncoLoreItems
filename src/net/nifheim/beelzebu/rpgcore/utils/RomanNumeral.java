@@ -19,10 +19,10 @@ public class RomanNumeral {
         throw new IllegalArgumentException("Invalid Roman Symbol.");
     }
 
-    private static int[] numbers = {1000, 900, 500, 400, 100, 90,
+    private static final int[] numbers = {1000, 900, 500, 400, 100, 90,
         50, 40, 10, 9, 5, 4, 1};
 
-    private static String[] letters = {"M", "CM", "D", "CD", "C", "XC",
+    private static final String[] letters = {"M", "CM", "D", "CD", "C", "XC",
         "L", "XL", "X", "IX", "V", "IV", "I"};
 
     public static String convertToRoman(int N) {
