@@ -818,8 +818,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public String rep(String str) {
         return str
-                .replaceAll("&", "§")
-                .replaceAll("%prefix%", (getMessages().getString("Prefix.Message")));
+                .replaceAll("%prefix%", getMessages().getString("Prefix"))
+                .replaceAll("&", "§");
     }
 
     public FileConfiguration getMessages() {
