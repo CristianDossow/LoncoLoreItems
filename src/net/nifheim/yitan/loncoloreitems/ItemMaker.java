@@ -16,7 +16,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class ItemMaker {
 
     private static final Main plugin = Main.getInstance();
-    private static final FileConfiguration messages = Main.getMessages();
+    private static final FileConfiguration messages = plugin.messages;
 
     public static ItemStack EnchantScroll(String enchant, String Type) {
 

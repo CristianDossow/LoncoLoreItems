@@ -68,11 +68,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     private FileConfiguration config;
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public String rep;
-    /*
-    Messages
-     */
-    static final File messagesFile = new File(plugin.getDataFolder(), "messages.yml");
-    private static final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
+    //Messages
+    private final File messagesFile = new File(getDataFolder(), "messages.yml");
+    public FileConfiguration messages;
 
     public FileConfiguration PlayerDataConfig;
 
@@ -123,7 +121,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         Locale.setDefault(Locale.ROOT);
 
         PluginManager plma = getServer().getPluginManager();
-        
+
         //New events clases
         plma.registerEvents(new SpellListeners(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
@@ -142,7 +140,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new PlayerQuitListener(), this);
         plma.registerEvents(new PlayerRespawnListener(), this);
         //End new event clases
-        
+
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Crafting.AddedStats(), this);
         plma.registerEvents(new DamageSystem(this), this);
         plma.registerEvents(new net.nifheim.yitan.itemlorestats.Durability.DurabilityEvents(), this);
@@ -182,6 +180,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public void loadManagers() {
         checkDependencies();
         if (!messagesFile.exists()) {
+
+            messages = YamlConfiguration.loadConfiguration(messagesFile);
             copy(getResource("messages.yml"), messagesFile);
         }
     }
@@ -809,11 +809,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public String rep(String str) {
         return str
-                .replaceAll("%prefix%", getMessages().getString("Prefix")).replaceAll("&", "§");
-    }
-
-    public static FileConfiguration getMessages() {
-        return messages;
+                .replaceAll("%prefix%", messages.getString("Prefix")).replaceAll("&", "§");
     }
 
     /*

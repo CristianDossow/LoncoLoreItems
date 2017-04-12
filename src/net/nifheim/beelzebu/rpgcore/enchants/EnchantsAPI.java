@@ -19,14 +19,14 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class EnchantsAPI {
 
-    private final Main plugin;
+    private static Main plugin;
     private static Map<String, Enchant> enchants;
 
     private static final FileConfiguration config = Main.getInstance().getConfig();
-    private static final FileConfiguration messages = Main.getMessages();
+    private static final FileConfiguration messages = plugin.messages;
 
     public EnchantsAPI(Main plugin) {
-        this.plugin = plugin;
+        EnchantsAPI.plugin = plugin;
 
         enchants = new HashMap<>();
 

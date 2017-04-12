@@ -11,7 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class EspecialAtributes {
     private static final Main plugin = Main.getInstance();
-    private static final FileConfiguration messages = Main.getMessages();
+    private static final FileConfiguration messages = plugin.messages;
 
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
     public static String destroyname = plugin.rep(messages.getString("Especial Atributes.Desroy"));
