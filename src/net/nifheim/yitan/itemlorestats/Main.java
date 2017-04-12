@@ -39,6 +39,7 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
 
 import net.nifheim.yitan.itemlorestats.listeners.*;
 
@@ -64,13 +65,12 @@ import org.bukkit.potion.PotionEffectType;
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public static Main plugin;
-
-    private FileConfiguration config;
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
     //Messages
     final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
+    public ActivateEnchant activateEnchant;
 
     public FileConfiguration PlayerDataConfig;
 
@@ -126,7 +126,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new SpellListeners(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
         plma.registerEvents(new EnchantItemListener(), this);
+        plma.registerEvents(new EntityDamageByEntityListener(), this);
         plma.registerEvents(new EntityRegainHealthListener(), this);
+        plma.registerEvents(new EntityShotBowListener(), this);
         plma.registerEvents(new GamemodeChangeListener(), this);
         plma.registerEvents(new InventoryClickListener(), this);
         plma.registerEvents(new InventoryDragListener(), this);
@@ -134,6 +136,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new PlayerDeathListener(), this);
         plma.registerEvents(new PlayerDropItemListener(), this);
         plma.registerEvents(new PlayerExpChangeListener(), this);
+        plma.registerEvents(new PlayerInteractEntityListener(), this);
+        plma.registerEvents(new PlayerInteractListener(), this);
         plma.registerEvents(new PlayerItemHeldListener(), this);
         plma.registerEvents(new PlayerJoinListener(), this);
         plma.registerEvents(new PlayerPickupItemListener(), this);

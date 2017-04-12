@@ -1,7 +1,7 @@
 package net.nifheim.beelzebu.rpgcore.enchants.sword;
 
 import net.nifheim.beelzebu.rpgcore.enchants.Enchant;
-import net.nifheim.beelzebu.rpgcore.enchants.EnchantType;
+import net.nifheim.beelzebu.rpgcore.enchants.EnchantTypes;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class Backstab extends Enchant {
 
     public Backstab() {
-        super(EnchantType.SWORD, "Puñalada", "Causa un bonus de daño cuando atacas a tu enemigo por la espalda. El calculo del daño es: ((daño / 3) * nivel de skill)", 8);
+        super(EnchantTypes.SWORD, "Puñalada", "Causa un bonus de daño cuando atacas a tu enemigo por la espalda. El calculo del daño es: ((daño / 3) * nivel de skill)", 8);
     }
 
     @Override

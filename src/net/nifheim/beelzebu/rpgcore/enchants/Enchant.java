@@ -15,9 +15,9 @@ public class Enchant {
     private final String name;
     private final String description;
     private final int maxLevel;
-    private final EnchantType type;
+    private final EnchantTypes type;
 
-    public Enchant(EnchantType type, String name, String description, int maxLevel) {
+    public Enchant(EnchantTypes type, String name, String description, int maxLevel) {
         this.type = type;
         this.name = name;
         this.description = description;
@@ -50,7 +50,7 @@ public class Enchant {
     public void onUnequip(Player p, int level) {
     }
 
-    public EnchantType getType() {
+    public EnchantTypes getType() {
         return this.type;
     }
 
