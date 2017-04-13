@@ -70,7 +70,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     //Messages
     final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
-    //public ActivateEnchant activateEnchant;
+    public ActivateEnchant activateEnchant;
 
     public FileConfiguration PlayerDataConfig;
 
@@ -828,17 +828,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public FileConfiguration getMessages() {
         return messages;
     }
-    
-    public PlayerStats getPlayerStats(Player player){
-    	
-    	if(playersStats.containsKey(player.getUniqueId())){
-    		return playersStats.get(player.getUniqueId());
-    	}
-    	else{
+
+    public PlayerStats getPlayerStats(Player player) {
+
+        if (playersStats.containsKey(player.getUniqueId())) {
+            return playersStats.get(player.getUniqueId());
+        } else {
             PlayerStats ps = new PlayerStats(player);
             ps.UpdateAll();
             playersStats.put(player.getUniqueId(), ps);
             return ps;
-    	}
+        }
     }
 }
