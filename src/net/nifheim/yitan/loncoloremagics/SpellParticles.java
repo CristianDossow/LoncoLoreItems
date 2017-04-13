@@ -33,10 +33,10 @@ public class SpellParticles extends BukkitRunnable {
             SphereEffect effect = new SphereEffect(em); 
             effect.particle=peffect;
             //effect.particleCount = 2;
-            effect.particles=3;
+            effect.particles=2;
             effect.radius=spell.particleEffectSphereradio;
     		effect.setEntity(projectile);
-    		effect.delay=1;
+    		effect.delay=0;
     		effect.speed=0.025F;
     		effect.start();
     		projectile.setGlowing(true);

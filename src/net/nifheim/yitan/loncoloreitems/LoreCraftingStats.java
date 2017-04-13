@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStatsFormules;
 
 public class LoreCraftingStats {
 
@@ -29,11 +30,16 @@ public class LoreCraftingStats {
     static String blind = Main.plugin.getConfig().getString("secondaryStats.blind.name");
     static String xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
     static String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
-    static String weaponspeed = "V Ataque";
     static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
     static String lvlname = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
     static String destroy = EspecialAtributes.destroyname;
     static String voidbound = EspecialAtributes.voidbound;
+    
+	public static String weaponspeed = PlayerStatsFormules.weaponspeed;
+	public static String magicPower =PlayerStatsFormules.magicPower;
+	public static String manaMax = PlayerStatsFormules.manaMax;
+	public static String manaRegen = PlayerStatsFormules.manaRegen;
+	public static String cdReduction = PlayerStatsFormules.cdReduction;
     //static String durabilitycolor = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above75%");
 
     static DecimalFormat df = new DecimalFormat("#.#");
