@@ -126,7 +126,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new SpellListeners(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
         plma.registerEvents(new EnchantItemListener(), this);
-        plma.registerEvents(new EntityDamageByEntityListener(), this);
         plma.registerEvents(new EntityRegainHealthListener(), this);
         plma.registerEvents(new EntityShotBowListener(), this);
         plma.registerEvents(new GamemodeChangeListener(), this);
