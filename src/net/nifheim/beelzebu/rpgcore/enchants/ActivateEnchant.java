@@ -45,10 +45,10 @@ public class ActivateEnchant {
 
                 if (null != action) {
                     switch (action) {
-                        case INTERACT: {
+                        case INTERACT:
                             enchant.onInteract((PlayerInteractEvent) event, level);
-                        }
-                        break;
+
+                            break;
                         case ARROW_HIT_ENTITY:
                             enchant.onArrowHitEntity((EntityDamageByEntityEvent) event, player, level);
 
@@ -76,7 +76,7 @@ public class ActivateEnchant {
     }
 
     public void onDamagedOtherEntity(Player attacker, EntityDamageByEntityEvent e) {
-        activate(attacker, attacker.getItemInHand(), e, EnchantActions.DAMAGE_OTHER_ENTITY);
+        activate(attacker, attacker.getInventory().getItemInMainHand(), e, EnchantActions.DAMAGE_OTHER_ENTITY);
     }
 
     public void onInteract(Player player, ItemStack itemInHand, PlayerInteractEvent e) {
@@ -84,11 +84,11 @@ public class ActivateEnchant {
     }
 
     public void onBlockBreak(BlockBreakEvent e) {
-        activate(e.getPlayer(), e.getPlayer().getItemInHand(), e, EnchantActions.BLOCK_BREAK);
+        activate(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand(), e, EnchantActions.BLOCK_BREAK);
     }
 
     public void onInteractEntity(PlayerInteractEntityEvent e) {
-        activate(e.getPlayer(), e.getPlayer().getItemInHand(), e, EnchantActions.INTERACT_ENTITY);
+        activate(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand(), e, EnchantActions.INTERACT_ENTITY);
     }
 
     public void onJoin(Player p) {
