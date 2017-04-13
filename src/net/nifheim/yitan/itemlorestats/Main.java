@@ -829,4 +829,17 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public FileConfiguration getMessages() {
         return messages;
     }
+    
+    public PlayerStats getPlayerStats(Player player){
+    	
+    	if(playersStats.containsKey(player.getUniqueId())){
+    		return playersStats.get(player.getUniqueId());
+    	}
+    	else{
+            PlayerStats ps = new PlayerStats(player);
+            ps.UpdateAll();
+            playersStats.put(player.getUniqueId(), ps);
+            return ps;
+    	}
+    }
 }

@@ -12,12 +12,17 @@ public class EspecialAtributes {
     public static Main plugin;
 
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
-    public static String destroyname = Main.getInstance().getMessages().getString("Especial Atributes.Desroy");
-    public static String weaponspeed = Main.getInstance().getMessages().getString("Especial Atributes.Weapon Speed");
-    public static String voidbound = Main.getInstance().getMessages().getString("Especial Atributes.Void Bound");
-    public static String unknownItem = Main.getInstance().getMessages().getString("Especial Atributes.Unknow Item");
+    //public static String destroyname = Main.getInstance().getMessages().getString("Especial Atributes.Desroy");
+    public static String destroyname = "Destrucción";
+    //public static String weaponspeed = Main.getInstance().getMessages().getString("Especial Atributes.Weapon Speed");
+    public static String weaponspeed ="vataque";
+    //public static String voidbound = Main.getInstance().getMessages().getString("Especial Atributes.Void Bound");
+    public static String voidbound ="Retorno del End";
+    //public static String unknownItem = Main.getInstance().getMessages().getString("Especial Atributes.Unknow Item");
+    public static String unknownItem ="Artículo no identificado";
     public static String enchantgiver = "Poder almacenado:";
-    public static String repairer = Main.getInstance().getMessages().getString("Especial Atributes.Repairer");
+    //public static String repairer = Main.getInstance().getMessages().getString("Especial Atributes.Repairer");
+    public static String repairer ="Reparación";
     public static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
 
     static public boolean HasDestroy(Player player) {

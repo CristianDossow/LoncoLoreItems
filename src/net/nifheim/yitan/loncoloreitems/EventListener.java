@@ -40,6 +40,7 @@ import net.nifheim.yitan.itemlorestats.Durability.Durability;
 import net.nifheim.yitan.loncoloremagics.Spell;
 import net.nifheim.yitan.loncoloremagics.SpellsList;
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
 
 public class EventListener implements Listener {
 
@@ -478,6 +479,15 @@ public class EventListener implements Listener {
                         return true;
                     }
                 }
+                if (args[0].equalsIgnoreCase("stats2")) {
+                    if (sender instanceof Player && sender.hasPermission("ils.admin")) {
+                		Player p = (Player) sender;
+                		PlayerStats ps = Main.plugin.getPlayerStats(p);
+                		ps.UpdateAll();
+                		ps.ShowStats();
+                        return true;
+                    }
+                }
                 if (args[0].equalsIgnoreCase("add")) {
                     if (sender instanceof Player && sender.hasPermission("ils.admin")) {
                         if (args.length > 1) {
@@ -555,16 +565,7 @@ public class EventListener implements Listener {
                 }
             }
         }
-        if (cmd.getName().equalsIgnoreCase("clearhand")) {
 
-        }
-        if (cmd.getName().equalsIgnoreCase("stats2")) {
-        	   if (sender instanceof Player){
-        		   Player p = (Player) sender;
-        		   Main.plugin.playersStats.get(p.getUniqueId()).ShowStats(p);
-        	   }
-        	
-        }
 
         return false;
     }

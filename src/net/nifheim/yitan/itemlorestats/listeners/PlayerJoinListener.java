@@ -13,60 +13,58 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
-    private Main plugin;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player playerFinal = event.getPlayer();
-        
-        PlayerStats ps = new PlayerStats(playerFinal);
-        ps.UpdateAll();
-        plugin.playersStats.put(playerFinal.getUniqueId(), ps);
-        
-        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, () -> {
-            if (!new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
+
+        Main.plugin.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, () -> {
+            PlayerStats ps = new PlayerStats(playerFinal);
+            ps.UpdateAll();
+            Main.plugin.playersStats.put(playerFinal.getUniqueId(), ps);
+            if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
-                    plugin.PlayerDataConfig = new YamlConfiguration();
+                	Main.plugin.PlayerDataConfig = new YamlConfiguration();
 
-                    plugin.updateHealth(playerFinal);
+                	Main.plugin.updateHealth(playerFinal);
 
-                    plugin.PlayerDataConfig.set("extra.logoutHealth", 20.0D);
-                    plugin.PlayerDataConfig.set("extra.maxHealth", 20.0D);
-                    plugin.PlayerDataConfig.set("extra.hunger", 20);
-                    plugin.PlayerDataConfig.set("extra.xp", 0.0F);
-                    plugin.PlayerDataConfig.set("extra.level", 0);
-                    plugin.PlayerDataConfig.save(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
+                	Main.plugin.PlayerDataConfig.set("extra.logoutHealth", 20.0D);
+                	Main.plugin.PlayerDataConfig.set("extra.maxHealth", 20.0D);
+                	Main.plugin.PlayerDataConfig.set("extra.hunger", 20);
+                	Main.plugin.PlayerDataConfig.set("extra.xp", 0.0F);
+                	Main.plugin.PlayerDataConfig.set("extra.level", 0);
+                	Main.plugin.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
                 } catch (Exception e) {
                     System.out.println("*********** Failed to save player data for " + playerFinal.getName() + " when logging in! ***********");
                 }
-            } else if (new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
+            } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
-                    plugin.PlayerDataConfig = new YamlConfiguration();
-                    plugin.PlayerDataConfig.load(new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
+                	Main.plugin.PlayerDataConfig = new YamlConfiguration();
+                	Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
 
-                    playerFinal.setMaxHealth(plugin.PlayerDataConfig.getDouble("extra.maxHealth"));
-                    playerFinal.setHealth(plugin.PlayerDataConfig.getDouble("extra.logoutHealth"));
-                    playerFinal.setFoodLevel(plugin.PlayerDataConfig.getInt("extra.hunger"));
+                    playerFinal.setMaxHealth(Main.plugin.PlayerDataConfig.getDouble("extra.maxHealth"));
+                    playerFinal.setHealth(Main.plugin.PlayerDataConfig.getDouble("extra.logoutHealth"));
+                    playerFinal.setFoodLevel(Main.plugin.PlayerDataConfig.getInt("extra.hunger"));
 
-                    if (plugin.PlayerDataConfig.get("extra.combatLogVisible") == null) {
-                        plugin.combatLogVisible.put(playerFinal.getName(), true);
+                    if (Main.plugin.PlayerDataConfig.get("extra.combatLogVisible") == null) {
+                    	Main.plugin.combatLogVisible.put(playerFinal.getName(), true);
                     } else {
-                        plugin.combatLogVisible.put(playerFinal.getName(), plugin.PlayerDataConfig.getBoolean("extra.combatLogVisible"));
+                    	Main.plugin.combatLogVisible.put(playerFinal.getName(), Main.plugin.PlayerDataConfig.getBoolean("extra.combatLogVisible"));
                     }
 
-                    if ((plugin.getConfig().getBoolean("keepXPOnDeath"))) {
+                    if ((Main.plugin.getConfig().getBoolean("keepXPOnDeath"))) {
                         //playerFinal.setExp((float)ItemLoreStats.plugin.PlayerDataConfig.getDouble("extra.xp"));
                         //playerFinal.setLevel(ItemLoreStats.plugin.PlayerDataConfig.getInt("extra.level"));
                     }
 
-                    plugin.updateHealth(playerFinal);
+                    Main.plugin.updateHealth(playerFinal);
                 } catch (IOException | InvalidConfigurationException e) {
                     System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when logging in! ***********");
                 }
             }
 
-            plugin.updateHealth(playerFinal);
-            plugin.updatePlayerSpeed(playerFinal);
+            Main.plugin.updateHealth(playerFinal);
+            Main.plugin.updatePlayerSpeed(playerFinal);
         }, 5L);
         //plugin.activateEnchant.onJoin(playerFinal);
     }
