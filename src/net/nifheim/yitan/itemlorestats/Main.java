@@ -4,7 +4,7 @@ import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
-
+import net.nifheim.yitan.loncoloremagics.SpellParticles;
 import net.nifheim.yitan.itemlorestats.Commands.*;
 
 import net.nifheim.yitan.itemlorestats.Damage.*;
@@ -36,6 +36,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,7 @@ import net.nifheim.yitan.itemlorestats.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -61,6 +63,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
@@ -82,6 +85,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public HashMap<String, Boolean> combatLogVisible = new HashMap();
     public HashMap<String, Double> setBonusesModifiers = new HashMap();
     public HashMap<UUID, PlayerStats> playersStats = new HashMap();
+    public HashMap<Player, BossBar> manaBar = new HashMap();
 
     public DamageFix damagefix;
     public EventListener eventlistener;
@@ -113,6 +117,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Lore_Com lore_Com = new Lore_Com();
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
+    
+    BukkitTask fastTasks;
 
     @Override
     public void onEnable() {
@@ -166,11 +172,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(eventlistener, this);
 
         this.spigotStatCapWarning.updateSpigotValues();
+        
+        fastTasks= new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 20,20);
 
     }
 
     @Override
     public void onDisable() {
+        for(Map.Entry<Player, BossBar> m : manaBar.entrySet()){
+        	m.getValue().removeAll();
+        }
         console.sendMessage(String.format("[%s] Disabled Version %s", new Object[]{
             getDescription().getName(), getDescription().getVersion()
         }));

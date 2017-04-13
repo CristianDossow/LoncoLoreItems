@@ -480,7 +480,7 @@ public class EventListener implements Listener {
                     }
                 }
                 if (args[0].equalsIgnoreCase("stats2")) {
-                    if (sender instanceof Player && sender.hasPermission("ils.admin")) {
+                    if (sender instanceof Player) {
                 		Player p = (Player) sender;
                 		PlayerStats ps = Main.plugin.getPlayerStats(p);
                 		ps.UpdateAll();

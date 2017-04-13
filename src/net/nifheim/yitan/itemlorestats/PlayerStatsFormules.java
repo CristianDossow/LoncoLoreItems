@@ -14,27 +14,31 @@ import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
 
 public class PlayerStatsFormules {
 	
-	static String armour = Main.plugin.getConfig().getString("primaryStats.armour.colour") + Main.plugin.getConfig().getString("primaryStats.armour.name");
-	static String dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.colour") + Main.plugin.getConfig().getString("secondaryStats.dodge.name");
-	static String block = Main.plugin.getConfig().getString("secondaryStats.block.colour") + Main.plugin.getConfig().getString("secondaryStats.block.name");
-	static String critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.colour") + Main.plugin.getConfig().getString("secondaryStats.critChance.name");
-	static String critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.colour") + Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
-	static String damage = Main.plugin.getConfig().getString("primaryStats.damage.colour") + Main.plugin.getConfig().getString("primaryStats.damage.name");
-	static String health = Main.plugin.getConfig().getString("primaryStats.health.colour") + Main.plugin.getConfig().getString("primaryStats.health.name");
-	static String healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.colour") + Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
-	static String lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
-	static String reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.colour") + Main.plugin.getConfig().getString("secondaryStats.reflect.name");
-	static String fire = Main.plugin.getConfig().getString("secondaryStats.fire.colour") + Main.plugin.getConfig().getString("secondaryStats.fire.name");
-	static String ice = Main.plugin.getConfig().getString("secondaryStats.ice.colour") + Main.plugin.getConfig().getString("secondaryStats.ice.name");
-	static String poison = Main.plugin.getConfig().getString("secondaryStats.poison.colour") + Main.plugin.getConfig().getString("secondaryStats.poison.name");
-	static String wither = Main.plugin.getConfig().getString("secondaryStats.wither.colour") + Main.plugin.getConfig().getString("secondaryStats.wither.name");
-	static String harming = Main.plugin.getConfig().getString("secondaryStats.harming.colour") + Main.plugin.getConfig().getString("secondaryStats.harming.name");
-	static String blind = Main.plugin.getConfig().getString("secondaryStats.blind.colour") + Main.plugin.getConfig().getString("secondaryStats.blind.name");
-	static String xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
-	static String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
-	static String level = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
-	static String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
-	public static String weaponspeed ="vataque";
+	public static String armour = Main.plugin.getConfig().getString("primaryStats.armour.colour") + Main.plugin.getConfig().getString("primaryStats.armour.name");
+	public static String dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.colour") + Main.plugin.getConfig().getString("secondaryStats.dodge.name");
+	public static String block = Main.plugin.getConfig().getString("secondaryStats.block.colour") + Main.plugin.getConfig().getString("secondaryStats.block.name");
+	public static String critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.colour") + Main.plugin.getConfig().getString("secondaryStats.critChance.name");
+	public static String critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.colour") + Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
+	public static String damage = Main.plugin.getConfig().getString("primaryStats.damage.colour") + Main.plugin.getConfig().getString("primaryStats.damage.name");
+	public static String health = Main.plugin.getConfig().getString("primaryStats.health.colour") + Main.plugin.getConfig().getString("primaryStats.health.name");
+	public static String healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.colour") + Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
+	public static String lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
+	public static String reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.colour") + Main.plugin.getConfig().getString("secondaryStats.reflect.name");
+	public static String fire = Main.plugin.getConfig().getString("secondaryStats.fire.colour") + Main.plugin.getConfig().getString("secondaryStats.fire.name");
+	public static String ice = Main.plugin.getConfig().getString("secondaryStats.ice.colour") + Main.plugin.getConfig().getString("secondaryStats.ice.name");
+	public static String poison = Main.plugin.getConfig().getString("secondaryStats.poison.colour") + Main.plugin.getConfig().getString("secondaryStats.poison.name");
+	public static String wither = Main.plugin.getConfig().getString("secondaryStats.wither.colour") + Main.plugin.getConfig().getString("secondaryStats.wither.name");
+	public static String harming = Main.plugin.getConfig().getString("secondaryStats.harming.colour") + Main.plugin.getConfig().getString("secondaryStats.harming.name");
+	public static String blind = Main.plugin.getConfig().getString("secondaryStats.blind.colour") + Main.plugin.getConfig().getString("secondaryStats.blind.name");
+	public static String xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
+	public static String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
+	public static String level = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
+	public static String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
+	public static String weaponspeed ="V Ataque";
+	public static String magicPower ="Poder Mágico";
+	public static String manaMax ="Maná";
+	public static String manaRegen ="Regeneración de maná";
+	public static String cdReduction ="Reducción de enfriamiento";
 	
 	static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 	final static double ArmorGrowthrate = -0.26;
@@ -69,8 +73,47 @@ public class PlayerStatsFormules {
         if (defence > 0.9) {
             defence = 0.9;
         }
-        defence = defence * 100;
+        //defence = defence * 100;
         return defence;
+	}
+	static public double getDodgeStat(Player player) {
+		double stat = getGearStat(player,dodge)/100;
+		if(stat>0.8)
+			return 0.8;
+		else
+			return stat;
+	}
+	static public double getBlockStat(Player player) {
+		double stat = getGearStat(player,block)/100;
+		if(stat>0.5)
+			return 0.5;
+		else
+			return stat;
+	}
+	static public double getCritChanceStat(Player player) {
+		double stat = getGearStat(player,critChance)/100;
+		if(stat>1)
+			return 1;
+		else
+			return stat;
+	}
+	static public double getCritDamageStat(Player player) {
+		return (getGearStat(player,critDamage)/100)+0.5;
+	}
+	static public double getPosionStat(Player player) {
+		return getGearStat(player,poison)/100;
+	}
+	static public double getManaMaxStat(Player player) {
+		return getGearStat(player,manaMax)+100;
+	}
+	static public double getManaRegenStat(Player player) {
+		return getGearStat(player,manaRegen)+1;
+	}
+	static public double getMagicPowerStat(Player player) {
+		return getGearStat(player,magicPower);
+	}
+	static public double getCdReductionStat(Player player) {
+		return getGearStat(player,cdReduction);
 	}
 	
 	static public double[] getDoubleGearStat(Player player, String stat) {
