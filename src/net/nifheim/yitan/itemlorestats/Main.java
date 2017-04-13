@@ -4,7 +4,6 @@ import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
-import net.nifheim.yitan.loncoloremagics.SpellParticles;
 import net.nifheim.yitan.itemlorestats.Commands.*;
 
 import net.nifheim.yitan.itemlorestats.Damage.*;
@@ -41,6 +40,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
+import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 
 import net.nifheim.yitan.itemlorestats.listeners.*;
 
@@ -70,9 +70,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public static Main plugin;
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
+    private static MySQL mysql;
     //Messages
     final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
+    final File mysqlFile = new File(getDataFolder(), "MySQL.yml");
+    private final FileConfiguration mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
+    
     public ActivateEnchant activateEnchant;
 
     public FileConfiguration PlayerDataConfig;
@@ -117,7 +121,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Lore_Com lore_Com = new Lore_Com();
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
-    
+
     BukkitTask fastTasks;
 
     @Override
@@ -172,15 +176,15 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(eventlistener, this);
 
         this.spigotStatCapWarning.updateSpigotValues();
-        
-        fastTasks= new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 20,20);
+
+        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 20, 20);
 
     }
 
     @Override
     public void onDisable() {
-        for(Map.Entry<Player, BossBar> m : manaBar.entrySet()){
-        	m.getValue().removeAll();
+        for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
+            m.getValue().removeAll();
         }
         console.sendMessage(String.format("[%s] Disabled Version %s", new Object[]{
             getDescription().getName(), getDescription().getVersion()
@@ -838,6 +842,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public FileConfiguration getMessages() {
         return messages;
+    }
+
+    public FileConfiguration getMySQLFile() {
+        return mysqlf;
     }
 
     public PlayerStats getPlayerStats(Player player) {

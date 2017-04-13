@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import net.nifheim.yitan.itemlorestats.Util.Util_Format;
-
 public class PlayerStats {
 	Player player;
 	UUID uuid;
