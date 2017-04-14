@@ -26,10 +26,11 @@ public class MainFastRunnable extends BukkitRunnable {
 			ps.ManaRegen();
 			if(instance.manaBar.containsKey(player)){
 				instance.manaBar.get(player).setProgress((float) (ps.manaCurrent/ps.manaMax));
-				instance.manaBar.get(player).setTitle("Maná: "+ps.manaCurrent+" / "+ps.manaMax);
+				instance.manaBar.get(player).setTitle("Maná: "+(int)ps.manaCurrent+" / "+(int)ps.manaMax);
+				
 			}
 			else{
-				BossBar bs = Bukkit.createBossBar("Maná: "+ps.manaCurrent+" / "+ps.manaMax, BarColor.BLUE, BarStyle.SEGMENTED_20);
+				BossBar bs = Bukkit.createBossBar("Maná: "+(int)ps.manaCurrent+" / "+(int)ps.manaMax, BarColor.BLUE, BarStyle.SEGMENTED_20);
 				bs.setProgress((float) (ps.manaCurrent/ps.manaMax));
 				bs.addPlayer(player);
 				instance.manaBar.put(player, bs);

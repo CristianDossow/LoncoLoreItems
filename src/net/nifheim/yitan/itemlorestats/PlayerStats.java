@@ -12,44 +12,47 @@ public class PlayerStats {
 	UUID uuid;
 	String name;
 	//int lvl;  - se ocupará directo de la clase player
-	double baseDamage; //base 1, podria ser modificable mediante nivel o clase
-	double minDamage;
-	double maxDamage;
-	double weaponSpeed;
-	double armor;
-	double percentArmor;
-	double dodge; //maximo 80%, activable 1 vez cada 2 seg, no daña durabilidad armadura
-	double block; //maximo 50%, activable 1 vez cada 2 seg + lentiud del receptor, daña solo durabilidad del escudo
-	double critChance; //base según arma
-	double critDamage; //el base es 50% + bonos del set
-	double healthCurrent;
-	double healthMax;
-	double healthRegen; //no estudiado
-	double lifeSteal;  //sin ocupar
-	double reflect; //no estudiado y sin ocupar
-	double fire; //sin ocupar
-	double ice; //no estudiado y sin ocupar
-	double poison; //cuando es un mob inmune a veneno, se reemplaza por wither
-	double wither; //sin ocupar
-	double harming; //no estudiado y sin ocupar
-	double blind; //no estudiado y sin ocupar
-	double XPMultiplier; //??
-	double movementSpeed;
+	public double baseDamage; //base 1, podria ser modificable mediante nivel o clase
+	public double minDamage;
+	public double maxDamage;
+	public double weaponSpeed;
+	public double armor;
+	public double percentArmor;
+	public double dodge; //maximo 80%, activable 1 vez cada 2 seg, no daña durabilidad armadura
+	public double block; //maximo 50%, activable 1 vez cada 2 seg + lentiud del receptor, daña solo durabilidad del escudo
+	public double critChance; //base según arma
+	public double critDamage; //el base es 50% + bonos del set
+	public double healthCurrent;
+	public double healthMax;
+	public double healthRegen; //no estudiado
+	public double lifeSteal;  //sin ocupar
+	public double reflect; //no estudiado y sin ocupar
+	public double fire; //sin ocupar
+	public double ice; //no estudiado y sin ocupar
+	public double poison; //cuando es un mob inmune a veneno, se reemplaza por wither
+	public double wither; //sin ocupar
+	public double harming; //no estudiado y sin ocupar
+	public double blind; //no estudiado y sin ocupar
+	public double XPMultiplier; //??
+	public double movementSpeed;
 	
 	// stats por programar --------------------
 	
-	double manaMax;
-	double manaCurrent;
-	double manaRegen;
-	double spellCooldownReduction; //maximo 50%, reduccion tiempo entre lanzamientos
-	double magicPower; //la aletoriedad del daño dependerá del echizo
-	double magicArmor;  
-	double magicPercentArmor; 
-	double armorPen; // penetración de armadura
-	double magicArmorPen; // penetración de armadura mágica
-	double stab; // probabilidad de apuñalar por detras, stat para dagas
-	double stabDamage; //multiplicador del stab
-	double Luck; //quien sabe :v
+	public double manaMax;
+	public double manaCurrent;
+	public double manaRegen;
+	public double spellCooldownReduction; //maximo 50%, reduccion tiempo entre lanzamientos
+	public double magicPower; //la aletoriedad del daño dependerá del echizo
+	public double magicArmor;  
+	public double magicPercentArmor; 
+	public double armorPen; // penetración de armadura
+	public double magicArmorPen; // penetración de armadura mágica
+	public double stab; // probabilidad de apuñalar por detras, stat para dagas
+	public double stabDamage; //multiplicador del stab
+	public double Luck; //quien sabe :v
+	public long lastSpellCast;
+	public long spellCastWait;
+	public long lastMessage;
 	
 	
 	public PlayerStats(Player player) {
@@ -58,6 +61,9 @@ public class PlayerStats {
 		this.uuid = player.getUniqueId();
 		this.name = player.getName();
 		this.manaCurrent=0;
+		this.lastSpellCast=System.currentTimeMillis();
+		this.spellCastWait=System.currentTimeMillis();
+		this.lastMessage=System.currentTimeMillis();
 	}
 	public void UpdateAll() {
 		UpdateDamage();
@@ -115,7 +121,9 @@ public class PlayerStats {
 		this.spellCooldownReduction = PlayerStatsFormules.getCdReductionStat(player);
 	}
 	public void ManaRegen() {
-		if(manaMax>manaCurrent)
+		if(manaCurrent+manaRegen>manaMax)
+			this.manaCurrent =this.manaMax;
+		else
 			this.manaCurrent =this.manaCurrent + this.manaRegen;
 	}
 	public void ShowStats(Player player) {

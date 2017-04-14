@@ -8,16 +8,42 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
 import net.nifheim.yitan.loncoloreitems.SwordActionBar;
 
 public class SpellCast {
 
     public static void spellBuilder(Spell spell, Player player) {
-        Projectile projectile = getProjectile(spell, player);
-        projectile.setShooter(player);
-        projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
-        setProjectileProperties(projectile, spell);
-        BukkitTask task = new SpellParticles(Main.getInstance(),spell,projectile).runTaskTimer(Main.getInstance(), 0, 2);
+    	PlayerStats ps = Main.plugin.getPlayerStats(player);
+    	ps.UpdateAll();
+    	if(ps.manaCurrent>=spell.manaCost){
+    		if(ps.spellCastWait<System.currentTimeMillis()){
+    			player.sendMessage("lanzando " + spell.name);
+    			ps.lastMessage=System.currentTimeMillis();
+    			ps.lastSpellCast = System.currentTimeMillis();
+    			ps.spellCastWait = System.currentTimeMillis() + spell.cooldown;
+        		ps.manaCurrent = ps.manaCurrent - spell.manaCost;
+                Projectile projectile = getProjectile(spell, player);
+                projectile.setShooter(player);
+                projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
+                setProjectileProperties(projectile, spell, ps);
+                BukkitTask task = new SpellParticles(Main.getInstance(),spell,projectile).runTaskTimer(Main.getInstance(), 0, 2);
+    		}
+    		else{
+    			if(ps.lastMessage+1000<System.currentTimeMillis()){
+        			long wait= (ps.spellCastWait-System.currentTimeMillis())/1000;
+            		player.sendMessage("Debes esperar "+wait+" segundos mas para usar otro hechizo");
+            		ps.lastMessage=System.currentTimeMillis();
+    			}
+
+        	}
+    	}
+    	else{
+    		if(ps.lastMessage+2000<System.currentTimeMillis()){
+    		player.sendMessage("Necesitas más maná!");
+    		ps.lastMessage=System.currentTimeMillis();
+    		}
+    	}
     }
 
     public static Projectile getProjectile(Spell spell, Player player) {
@@ -31,11 +57,11 @@ public class SpellCast {
 
     }
 
-    public static void setProjectileProperties(Projectile projectile, Spell spell) {
-        double DHA = spell.directHeal;
-        double AHA = spell.aoeHealAmount;
-        double DDA = spell.directDamageAmount;
-        double ADA = spell.aoeDamageAmount;
+    public static void setProjectileProperties(Projectile projectile, Spell spell, PlayerStats ps) {
+        double DHA = spell.directHeal * ps.magicPower;
+        double AHA = spell.aoeHealAmount * ps.magicPower;
+        double DDA = spell.directDamageAmount * ps.magicPower;
+        double ADA = spell.aoeDamageAmount * ps.magicPower;
 
         projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getInstance(), spell.name));
         projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getInstance(), DHA));

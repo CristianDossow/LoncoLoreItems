@@ -36,6 +36,7 @@ public class PlayerStatsFormules {
 	public static String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
 	public static String weaponspeed ="V Ataque";
 	public static String magicPower ="Poder Mágico";
+	public static String magicPen ="Penetración magia";
 	public static String manaMax ="Maná";
 	public static String manaRegen ="Regeneración de maná";
 	public static String cdReduction ="Reducción de enfriamiento";
@@ -113,7 +114,7 @@ public class PlayerStatsFormules {
 		return getGearStat(player,magicPower);
 	}
 	static public double getCdReductionStat(Player player) {
-		return getGearStat(player,cdReduction);
+		return getGearStat(player,cdReduction)/100;
 	}
 	
 	static public double[] getDoubleGearStat(Player player, String stat) {

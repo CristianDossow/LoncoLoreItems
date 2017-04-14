@@ -12,6 +12,7 @@ public class PlayerItemHeldListener implements Listener {
 
     @EventHandler
     public void onPlayerHeldItemChange(final PlayerItemHeldEvent event) {
+    	Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
             final Player playerFinal = event.getPlayer();
             Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, () -> {

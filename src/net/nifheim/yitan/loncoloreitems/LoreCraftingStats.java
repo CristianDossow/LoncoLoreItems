@@ -37,6 +37,7 @@ public class LoreCraftingStats {
     
 	public static String weaponspeed = PlayerStatsFormules.weaponspeed;
 	public static String magicPower =PlayerStatsFormules.magicPower;
+	public static String magicPen =PlayerStatsFormules.magicPen;
 	public static String manaMax = PlayerStatsFormules.manaMax;
 	public static String manaRegen = PlayerStatsFormules.manaRegen;
 	public static String cdReduction = PlayerStatsFormules.cdReduction;
@@ -44,7 +45,7 @@ public class LoreCraftingStats {
 
     static DecimalFormat df = new DecimalFormat("#.#");
 
-    static final double ArmorGrowthrate = -0.26;
+    //static final double ArmorGrowthrate = -0.26;
     static final double Armorxlvl = 4;
     static final double Armorxbase = 100;
 
@@ -92,28 +93,70 @@ public class LoreCraftingStats {
         double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
         return ChatColor.DARK_AQUA + armour + ": " + ChatColor.AQUA + (int) armourtotal;
     }
-
-    static public String getRandomDamage(int lvl, double speed) {
-        return getRandomDamage(lvl, speed, 1);
+    static public String getMagicPower(double lvl, double bonus, double variability) {
+    	double base = 6;
+    	double xlvl = 1.25;
+    	double max = base + (xlvl*lvl);
+        double min = max * variability;
+        double total = Math.random() * (max - min) + min;
+        total = total * bonus;
+        return ChatColor.LIGHT_PURPLE + magicPower + ": " + ChatColor.DARK_PURPLE + (int) total;
     }
-
-    static public String getRandomDamage(int lvl, double speed, double bonus) {
-        Random r = new Random();
+    static public String getManaRegenBonus(double lvl, double bonus, double variability) {
+    	double base = 0;
+    	double xlvl = 0.25; //25 top
+    	double max = base + (xlvl*lvl);
+        double min = max * variability;
+        double total = Math.random() * (max - min) + min;
+        total = total * bonus;
+        return ChatColor.LIGHT_PURPLE + manaRegen + ": " + ChatColor.DARK_PURPLE + df.format(total);
+    }
+    static public String getManaBonus(double lvl, double bonus, double variability) {
+    	double base = 0;
+    	double xlvl = 9; //top 900
+    	double max = base + (xlvl*lvl);
+        double min = max * variability;
+        double total = Math.random() * (max - min) + min;
+        total = total * bonus;
+        return ChatColor.LIGHT_PURPLE + manaMax + ": " + ChatColor.DARK_PURPLE + df.format(total);
+    }
+    static public String getCDR(double lvl, double bonus, double variability) {
+    	double base = 0;
+    	double xlvl = 0.5; //top 50%
+    	double max = base + (xlvl*lvl);
+        double min = max * variability;
+        double total = Math.random() * (max - min) + min;
+        total = total * bonus;
+        return ChatColor.LIGHT_PURPLE + cdReduction + ": " + ChatColor.DARK_PURPLE + df.format(total)+"%";
+    }
+    static public String getMagicPen(double lvl, double bonus, double variability) {
+    	double base = 0;
+    	double xlvl = 0.5; //top 50%
+    	double max = base + (xlvl*lvl);
+        double min = max * variability;
+        double total = Math.random() * (max - min) + min;
+        total = total * bonus;
+        return ChatColor.LIGHT_PURPLE + magicPen + ": " + ChatColor.DARK_PURPLE + df.format(total)+"%";
+    }
+    static public String getRandomDamage(int lvl, double speed) {
+        return getRandomDamage(lvl, speed, 1 , 1);
+    }
+    static public String getRandomDamage(int lvl, double speed, double bonus, double variability) {
         double mindamage = 0;
         double maxdamage = 0;
 
         //double dmgxlvl=0.40;
         double dmgxlvl = speed / 5;
-        double rmarginxlvl = dmgxlvl / 2;
+        //double rmarginxlvl = dmgxlvl / 2;
 
-        double basedmg = speed * 2;
-        double basermddmg = speed / 2;
-
+        double basedmg = (speed * 2)+1;
         double dmg = basedmg + (dmgxlvl * lvl);
-        double rmargin = basermddmg + (rmarginxlvl * lvl);
-
-        double damage1 = dmg + (rmargin * 2 * r.nextDouble() - rmargin);
-        double damage2 = dmg + (rmargin * 2 * r.nextDouble() - rmargin);
+        
+    	double maxDmg = dmg + (dmgxlvl*lvl);
+        double minDmg = maxDmg * variability;
+        
+        double damage1 = Math.random() * (maxDmg - minDmg) + minDmg;
+        double damage2 = Math.random() * (maxDmg - minDmg) + minDmg;
 
         if (damage1 == damage2) {
             mindamage = damage1 - 1;

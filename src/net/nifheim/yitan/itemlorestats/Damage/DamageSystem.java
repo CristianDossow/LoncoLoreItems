@@ -110,7 +110,16 @@ public class DamageSystem implements org.bukkit.event.Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getDamager().getWorld().getName())) {
-            if (!(event.getEntity() instanceof LivingEntity)) {
+            
+        	if(event.getDamager() instanceof Player)
+        		Main.plugin.getPlayerStats((Player)event.getDamager()).UpdateAll();
+        	if(event.getEntity() instanceof Player)
+        		Main.plugin.getPlayerStats((Player)event.getEntity()).UpdateAll();
+        	if(event.getDamager() instanceof Projectile)
+        		if(((Projectile)event.getDamager()).getShooter() instanceof Player)
+        			Main.plugin.getPlayerStats((Player)((Projectile)event.getDamager()).getShooter()).UpdateAll();
+        	
+        	if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
             if ((Main.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) && (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))) {

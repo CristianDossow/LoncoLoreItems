@@ -48,7 +48,7 @@ public class LoreItemMaker {
                     generatebow(item, player, lvl, 6, 4, 275); //balletas
                     break;
                 case 1:
-                    generatebow(item, player, lvl, 4, 3, 385, 1.1, 1.1, 1.1); //arco astral
+                    generatebow(item, player, lvl, 4, 3, 385, 1.1, 1.1, 1.1,1); //arco astral
                     break;
                 default:
                     generatebow(item, player, lvl, 4, 2, 385);
@@ -64,17 +64,21 @@ public class LoreItemMaker {
             generatesword(item, player, lvl, 1, 2, 250);
         } else if (item.getType().equals(Material.DIAMOND_SWORD)) {
             switch (item.getDurability()) {
+            	case 7:
+            		//Baston magico 1
+            		generateMagicWeapon(item, player, lvl, 2, 3, 200, 0.5,0.5);
+            	break;
                 case 27:
                     //espada caballero
                     generatesword(item, player, lvl, 1, 2.5, 600, 1.1, 1, 1);
                     break;
                 case 43:
                     //maza de guerra
-                    generatesword(item, player, lvl, 3, 5, 400);
+                    generatesword(item, player, lvl, 3, 5, 400,1.2,1,1,0.5,true);
                     break;
                 case 38:
                     //guadaña
-                    generatesword(item, player, lvl, 3, 4, 1300, 1, 1.2, 1);
+                    generatesword(item, player, lvl, 3, 4, 1300, 1.3, 1, 1.3 , 0.35,true);
                     break;
                 case 25:
                     //cimitarra
@@ -122,25 +126,24 @@ public class LoreItemMaker {
         } else if (item.getType().equals(Material.SHIELD)) {
             generatescudo(item, player, lvl, 337);
         }
-
         return item;
     }
 
-    @Deprecated
+
     public static void generatebow(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl) {
-        generatebow(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1);
+        generatebow(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1,1);
     }
 
-    public static void generatebow(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus) {
+    public static void generatebow(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, double variability) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
-
         List<String> temlore = new ArrayList<>();
         if (item.getItemMeta().hasLore()) {
             temlore = item.getItemMeta().getLore();
         }
+        
         ItemMeta meta = item.getItemMeta();
         temlore.add(LoreCraftingStats.getLvL(lvl));
-        temlore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus));
+        temlore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus,variability));
         temlore.add(LoreCraftingStats.getSpeed(speed));
         temlore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus));
         if (Math.random() < 0.25) {
@@ -159,17 +162,15 @@ public class LoreItemMaker {
         item.setItemMeta(meta);
     }
 
-    @Deprecated
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl) {
         generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1);
     }
 
-    @Deprecated
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus) {
-        generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1, true);
+        generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1,0.75, true);
     }
 
-    public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, boolean enchantable) {
+    public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, double variability, boolean enchantable) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
         List<String> lore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
@@ -177,7 +178,7 @@ public class LoreItemMaker {
             lore = item.getItemMeta().getLore();
         }
         lore.add(LoreCraftingStats.getLvL(lvl)); // 1
-        lore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus)); // 2
+        lore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus,variability)); // 2
         lore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 4
         if (Math.random() < 0.25) {
             lore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 5
@@ -186,17 +187,7 @@ public class LoreItemMaker {
             lore.add(LoreCraftingStats.getPoison(lvl)); // 6
         }
         if (enchantable) {
-            if (lvl >= 30) {
-                    lore.add(""); // 7
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 8
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
-            }
-            if (lvl >= 60) {
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 10 Enchant
-            }
-            if (lvl >= 90) {
-                    lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 11 Enchant
-            }
+        	addEnchantSlots(lore,lvl);
         }
         lore.add(""); // 12
         lore.add(LoreCraftingStats.getSpeed(speed)); // 13
@@ -207,6 +198,51 @@ public class LoreItemMaker {
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
         item.setItemMeta(meta);
+    }
+    public static void generateMagicWeapon(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double variability) {
+    	generateMagicWeapon(item, player, lvl, speedmax, speedmin, materiallvl,damagebonus,1,1,1,1,1,variability,true);
+    }
+
+    public static void generateMagicWeapon(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus,double magicPowerB,double manaB,double manaRegenB,double CDRB,double magicPenB, double variability, boolean enchantable) {
+        double speed = Math.random() * (speedmax - speedmin) + speedmin;
+        List<String> lore = new ArrayList<>();
+        ItemMeta meta = item.getItemMeta();
+        if (item.getItemMeta().hasLore()) {
+            lore = item.getItemMeta().getLore();
+        }
+        lore.add(LoreCraftingStats.getLvL(lvl)); 
+        lore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus,variability)); 
+        lore.add(LoreCraftingStats.getMagicPower(lvl, 1, variability));
+        lore.add(LoreCraftingStats.getManaBonus(lvl, 1, 0.5));
+        lore.add(LoreCraftingStats.getManaRegenBonus(lvl, 1, 0.5));
+        lore.add(LoreCraftingStats.getMagicPen(lvl, 1, 0.25));
+        lore.add(LoreCraftingStats.getCDR(lvl, 1, 0.25));
+        if (enchantable) {
+        	addEnchantSlots(lore,lvl);
+        }
+        lore.add(""); 
+        lore.add(LoreCraftingStats.getSpeed(speed)); 
+        lore.add(LoreCraftingStats.getDurability(lvl, materiallvl)); 
+        item.getItemMeta().setLore(lore);
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.setUnbreakable(true);
+        item.setItemMeta(meta);
+    }
+    
+    public static void addEnchantSlots(List<String> lore, int lvl){
+        if (lvl >= 30) {
+            lore.add(""); // 7
+            lore.add(plugin.rep(messages.getString("Lores.Enchants.Header"))); // 8
+            lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 9 Enchant
+    }
+    if (lvl >= 60) {
+            lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 10 Enchant
+    }
+    if (lvl >= 90) {
+            lore.add(plugin.rep(messages.getString("Lores.Enchants.Empty"))); // 11 Enchant
+    }
     }
 
     public static void generataxe(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl) {

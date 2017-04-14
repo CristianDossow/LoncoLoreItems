@@ -8,6 +8,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStatsFormules;
+
 public class SpellListeners implements Listener {
 
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
@@ -16,6 +19,7 @@ public class SpellListeners implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack offhand = event.getPlayer().getInventory().getItemInOffHand();
+            ItemStack mainhand = event.getPlayer().getInventory().getItemInMainHand();
             if (offhand != null && offhand.getType().equals(Material.DIAMOND_HOE) && offhand.getDurability()==98) {
                 if (offhand.hasItemMeta()) {
                     if (offhand.getItemMeta().hasLore()) {
@@ -23,10 +27,20 @@ public class SpellListeners implements Listener {
                         spellname = ChatColor.stripColor(spellname);
                         Spell spell = SpellsList.getSpell(spellname);
                         if (spell != null) {
-                            event.getPlayer().sendMessage("lanzando " + spell.name);
-                            SpellCast.spellBuilder(spell, event.getPlayer());
+                        	double power = PlayerStatsFormules.getStat(PlayerStatsFormules.magicPower, mainhand);
+                            if(mainhand.getType().equals(Material.DIAMOND_SWORD)&& power>0){
+                                SpellCast.spellBuilder(spell, event.getPlayer());
+                            }else {
+                            	if(Main.plugin.getPlayerStats(event.getPlayer()).lastMessage+2000<System.currentTimeMillis()){
+                            		event.getPlayer().sendMessage("Se requiere un arma mágica para lanzar hechizos");
+                            		Main.plugin.getPlayerStats(event.getPlayer()).lastMessage=System.currentTimeMillis();
+                            	}
+                            }
                         } else {
-                            event.getPlayer().sendMessage("no contiene echizos");
+                        	if(Main.plugin.getPlayerStats(event.getPlayer()).lastMessage+2000<System.currentTimeMillis()){
+                        		event.getPlayer().sendMessage("no contiene echizos");
+                        		Main.plugin.getPlayerStats(event.getPlayer()).lastMessage=System.currentTimeMillis();
+                        	}
                         }
                     }
                 }

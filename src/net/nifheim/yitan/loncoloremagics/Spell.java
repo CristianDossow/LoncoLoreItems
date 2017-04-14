@@ -14,13 +14,14 @@ public class Spell {
 	public long lifeTime;
 	public double speed;
 	public Effect hitEffect;
-	public double cooldown;
+	public long cooldown;
 	public double directHeal;
 	public double aoeHealAmount;
 	public double aoeHealRange;
 	public double directDamageAmount;
 	public double aoeDamageAmount;
 	public double aoeDamageRange;
+	public double manaCost;
 	public List<String> lore;
 	public ParticleEffect particleEffectSphere;
 	public double particleEffectSphereradio;
@@ -39,6 +40,7 @@ public class Spell {
 		this.directDamageAmount=0;
 		this.aoeDamageAmount=0;
 		this.aoeDamageRange=0;
+		this.manaCost=0;
 		lore=new ArrayList<>();
 		particleEffectSphereradio=0;
 		particleEffectSphere=null;
