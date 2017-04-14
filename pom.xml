@@ -11,16 +11,20 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <repositories>
-      <repository>
-  		  <id>sk89q-snapshots</id>
-    	  <url>http://maven.sk89q.com/artifactory/repo</url>
-  		  <releases>
-      	  <enabled>true</enabled> <!-- releases enabled: this specific repository also hosts release versions -->
-   	      </releases>
-   		  <snapshots>
-  	      <enabled>true</enabled> <!-- snapshots enabled: we declare a SNAPSHOT repository because we need to download a SNAPSHOT dependency -->
-   		  </snapshots>
- 	  </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
+            <id>sk89q-snapshots</id>
+            <url>http://maven.sk89q.com/artifactory/repo</url>
+            <releases>
+                <enabled>true</enabled> <!-- releases enabled: this specific repository also hosts release versions -->
+            </releases>
+            <snapshots>
+                <enabled>true</enabled> <!-- snapshots enabled: we declare a SNAPSHOT repository because we need to download a SNAPSHOT dependency -->
+            </snapshots>
+        </repository>
         <repository>
             <id>citizens-repo</id>
             <url>http://repo.citizensnpcs.co/</url>
@@ -43,9 +47,9 @@
             <url>http://maven.elmakers.com/repository/ </url>
         </repository>
         <repository>
-			<id>inventive-repo</id>
-			<url>https://repo.inventivetalent.org/content/groups/public/</url>
-	    </repository>
+            <id>inventive-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public/</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -98,15 +102,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-        	<groupId>com.sk89q.worldedit</groupId>
-        	<artifactId>worldedit-bukkit</artifactId>
-        	<version>6.1.1-SNAPSHOT</version>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>6.1.1-SNAPSHOT</version>
         </dependency>
-	<dependency>
-		<groupId>org.inventivetalent</groupId>
-		<artifactId>bossbarapi</artifactId>
-		<version>2.4.1</version>
-	</dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.0.8</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <finalName>${project.name}</finalName>
