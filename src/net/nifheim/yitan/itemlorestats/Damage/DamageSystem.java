@@ -25,6 +25,7 @@ import net.nifheim.yitan.loncoloremagics.SpellsList;
 import net.nifheim.yitan.itemlorestats.Classes;
 import net.nifheim.yitan.itemlorestats.GearStats;
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
 import net.nifheim.yitan.itemlorestats.SetBonuses;
 import net.nifheim.yitan.itemlorestats.Soulbound;
 import net.nifheim.yitan.itemlorestats.XpLevel;
@@ -110,15 +111,21 @@ public class DamageSystem implements org.bukkit.event.Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getDamager().getWorld().getName())) {
-            
-        	if(event.getDamager() instanceof Player)
-        		Main.plugin.getPlayerStats((Player)event.getDamager()).UpdateAll();
-        	if(event.getEntity() instanceof Player)
-        		Main.plugin.getPlayerStats((Player)event.getEntity()).UpdateAll();
+            PlayerStats damagerStats=null;
+            PlayerStats defenderStats=null;
+        	if(event.getDamager() instanceof Player){
+        		damagerStats=Main.plugin.getPlayerStats((Player)event.getDamager());
+        		damagerStats.UpdateAll();
+        	}
+        	if(event.getEntity() instanceof Player){
+        		defenderStats=Main.plugin.getPlayerStats((Player)event.getEntity());
+        		defenderStats.UpdateAll();
+        	}
         	if(event.getDamager() instanceof Projectile)
-        		if(((Projectile)event.getDamager()).getShooter() instanceof Player)
-        			Main.plugin.getPlayerStats((Player)((Projectile)event.getDamager()).getShooter()).UpdateAll();
-        	
+        		if(((Projectile)event.getDamager()).getShooter() instanceof Player){
+            		damagerStats=Main.plugin.getPlayerStats((Player)((Projectile)event.getDamager()).getShooter());
+            		damagerStats.UpdateAll();
+        		}
         	if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
@@ -149,70 +156,56 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                 double DirectDamageAmount = ((MetadataValue) projectile.getMetadata("DDA=").get(0)).asDouble();
                                 double AOEDamageAmount = ((MetadataValue) projectile.getMetadata("ADA=").get(0)).asDouble();
                                 double AOEDamageRange = ((MetadataValue) projectile.getMetadata("ADR=").get(0)).asDouble();
-                                Effect projectileHitEffect = spell.hitEffect;
-
-                                event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), projectileHitEffect, 3);
-
+                                double magicPen = ((MetadataValue) projectile.getMetadata("MAGICPEN=").get(0)).asDouble();
                                 if (((event.getEntity() instanceof Player))
                                         && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
                                     ((Player) event.getEntity()).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, event.getEntity(), String.valueOf((int) DirectDamageAmount), String.valueOf((int) DirectDamageAmount)));
+                                    double damage = DirectDamageAmount*(defenderStats.magicArmor* (1-magicPen) );
+                                    event.setDamage(damage);
+                                    return;
                                 }
-
-                                if ((event.getEntity() instanceof LivingEntity)) {
-                                    ((LivingEntity) event.getEntity()).damage(DirectDamageAmount);
+                                else{
+                                	if ((event.getEntity() instanceof LivingEntity)) {
+                                		event.setDamage(DirectDamageAmount);
+                                		return;
+                                	}
                                 }
-
+                                /*
                                 if (AOEDamageRange > 0.0D) {
                                     for (Iterator<Entity> iterator = event.getEntity().getNearbyEntities(AOEDamageRange, 256.0D, AOEDamageRange).iterator(); iterator.hasNext();) {
                                         Entity entity = (Entity) iterator.next();
-
                                         if (entity.equals(event.getDamager())) {
-                                            event.getEntity().getLocation().getWorld().playEffect(entity.getLocation(), projectileHitEffect, 3);
-
                                             if (((entity instanceof Player))
                                                     && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
                                                 ((Player) entity).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, entity, String.valueOf((int) AOEDamageAmount), String.valueOf((int) AOEDamageAmount)));
                                             }
-
                                             if ((entity instanceof LivingEntity)) {
                                                 ((LivingEntity) entity).damage(AOEDamageAmount);
                                             }
                                         }
                                     }
-                                }
+                                }*/
                             } else {
                                 event.setCancelled(true);
                             }
-
                             if (projectile.hasMetadata("Heal=")) {
                                 double DirectHealAmount = ((MetadataValue) projectile.getMetadata("DHA=").get(0)).asDouble();
                                 double AOEHealAmount = ((MetadataValue) projectile.getMetadata("AHA=").get(0)).asDouble();
                                 double AOEHealRange = ((MetadataValue) projectile.getMetadata("AHR=").get(0)).asDouble();
-
-                                Effect projectileHitEffect = spell.hitEffect;
-
-                                event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), projectileHitEffect, 3);
-
                                 if ((event.getEntity() instanceof Player)) {
                                     ((Player) event.getEntity()).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Heal", shooter, event.getEntity(), String.valueOf((int) DirectHealAmount), String.valueOf((int) DirectHealAmount)));
                                 }
-
                                 if (this.util_EntityManager.returnEntityCurrentHealth(event.getEntity()) + DirectHealAmount > this.util_EntityManager.returnEntityMaxHealth(event.getEntity())) {
                                     this.util_EntityManager.setEntityCurrentHealth(event.getEntity(), this.util_EntityManager.returnEntityMaxHealth(event.getEntity()));
                                 } else {
                                     this.util_EntityManager.setEntityCurrentHealth(event.getEntity(), this.util_EntityManager.returnEntityCurrentHealth(event.getEntity()) + DirectHealAmount);
                                 }
-
                                 if (AOEHealRange > 0.0D) {
                                     for (Iterator<Entity> iterator = event.getEntity().getNearbyEntities(AOEHealRange, 256.0D, AOEHealRange).iterator(); iterator.hasNext();) {
                                         Entity entity = (Entity) iterator.next();
-
-                                        event.getEntity().getLocation().getWorld().playEffect(entity.getLocation(), projectileHitEffect, 3);
-
                                         if ((entity instanceof Player)) {
                                             ((Player) entity).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Heal", shooter, entity, String.valueOf((int) AOEHealAmount), String.valueOf((int) AOEHealAmount)));
                                         }
-
                                         if (this.util_EntityManager.returnEntityCurrentHealth(entity) + AOEHealAmount > this.util_EntityManager.returnEntityMaxHealth(entity)) {
                                             this.util_EntityManager.setEntityCurrentHealth(entity, this.util_EntityManager.returnEntityMaxHealth(entity));
                                         } else {
@@ -221,7 +214,6 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                     }
                                 }
                             }
-
                             return;
                         }
                     }

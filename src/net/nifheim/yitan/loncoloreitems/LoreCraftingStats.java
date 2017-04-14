@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import net.nifheim.yitan.itemlorestats.Main;
@@ -37,6 +38,7 @@ public class LoreCraftingStats {
     
 	public static String weaponspeed = PlayerStatsFormules.weaponspeed;
 	public static String magicPower =PlayerStatsFormules.magicPower;
+	public static String magicArmor =PlayerStatsFormules.magicArmor;
 	public static String magicPen =PlayerStatsFormules.magicPen;
 	public static String manaMax = PlayerStatsFormules.manaMax;
 	public static String manaRegen = PlayerStatsFormules.manaRegen;
@@ -76,11 +78,14 @@ public class LoreCraftingStats {
         if (item.getType().toString().contains("_BOOTS")) {
             maxstrength = maxstrength * 0.17;
         }
+        if (item.getType().toString().contains("DIAMOND_")) {
+            maxstrength = maxstrength * 1;
+        }
         if (item.getType().toString().contains("IRON_")) {
             maxstrength = maxstrength * 0.9;
         }
         if (item.getType().toString().contains("CHAINMAIL_")) {
-            maxstrength = maxstrength * 0.8;
+            maxstrength = maxstrength * 0.4;
         }
         if (item.getType().toString().contains("GOLD_")) {
             maxstrength = maxstrength * 0.7;
@@ -89,13 +94,50 @@ public class LoreCraftingStats {
             maxstrength = maxstrength * 0.6;
         }
 
-        double minstrength = maxstrength * 0.6;
+        double minstrength = maxstrength * 0.75;
         double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
         return ChatColor.DARK_AQUA + armour + ": " + ChatColor.AQUA + (int) armourtotal;
     }
+    static public String getMagicArmour(double lvl, ItemStack item) {
+
+        double maxstrength = Armorxbase + (Armorxlvl * lvl);
+
+        if (item.getType().toString().contains("_HELMET")) {
+            maxstrength = maxstrength * 0.2;
+        }
+        if (item.getType().toString().contains("_CHESTPLATE")) {
+            maxstrength = maxstrength * 0.34;
+        }
+        if (item.getType().toString().contains("_LEGGINGS")) {
+            maxstrength = maxstrength * 0.29;
+        }
+        if (item.getType().toString().contains("_BOOTS")) {
+            maxstrength = maxstrength * 0.17;
+        }
+        if (item.getType().toString().contains("DIAMOND_")) {
+            maxstrength = maxstrength * 0.1;
+        }
+        if (item.getType().toString().contains("IRON_")) {
+            maxstrength = maxstrength * 0.2;
+        }
+        if (item.getType().toString().contains("CHAINMAIL_")) {
+            maxstrength = maxstrength * 1;
+        }
+        if (item.getType().toString().contains("GOLD_")) {
+            maxstrength = maxstrength * 0.3;
+        }
+        if (item.getType().toString().contains("LEATHER_")) {
+            maxstrength = maxstrength * 0.4;
+        }
+
+        double minstrength = maxstrength * 0.75;
+        double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
+        return ChatColor.LIGHT_PURPLE + magicArmor + ": " + ChatColor.DARK_PURPLE + (int) armourtotal;
+    }
+    
     static public String getMagicPower(double lvl, double bonus, double variability) {
-    	double base = 6;
-    	double xlvl = 1.25;
+    	double base = 5;
+    	double xlvl = 0.35; //top 40
     	double max = base + (xlvl*lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;
@@ -228,15 +270,15 @@ public class LoreCraftingStats {
     }
 
     static public String getMSpeed(ItemStack item) {
-        int speed = 0;
+        double speed = 0;
         if (item.getType().toString().contains("LEATHER")) {
-            speed = 0;
+            speed = -0.5;
         }
         if (item.getType().toString().contains("GOLD")) {
             speed = -1;
         }
         if (item.getType().toString().contains("CHAINMAIL")) {
-            speed = -2;
+            speed = 0;
         }
         if (item.getType().toString().contains("IRON")) {
             speed = -3;
@@ -248,19 +290,19 @@ public class LoreCraftingStats {
             speed = -5;
         }
 
-        return ChatColor.DARK_AQUA + movementspeed + ": " + ChatColor.AQUA + df.format(speed) + "%";
+        return ChatColor.RED + movementspeed + ": " + ChatColor.DARK_RED + df.format(speed) + "%";
     }
 
     static public String getArmorDurability(int lvl, ItemStack item) {
         int materiallvl = 5;
         if (item.getType().toString().contains("LEATHER")) {
-            materiallvl = 150;
-        }
-        if (item.getType().toString().contains("GOLD")) {
             materiallvl = 200;
         }
+        if (item.getType().toString().contains("GOLD")) {
+            materiallvl = 250;
+        }
         if (item.getType().toString().contains("CHAINMAIL")) {
-            materiallvl = 290;
+            materiallvl = 150;
         }
         if (item.getType().toString().contains("IRON")) {
             materiallvl = 330;
@@ -315,28 +357,26 @@ public class LoreCraftingStats {
     }
 
     static public String getArmorDodge(int lvl, ItemStack item) {
-        double dodgebase = 1;
+        double dodgemax = 10; //maximo en % luego dividido en 4
 
         if (item.getType().toString().contains("LEATHER")) {
-            dodgebase = 8;
+        	dodgemax = 70;
         }
         if (item.getType().toString().contains("GOLD")) {
-            dodgebase = 6;
+        	dodgemax = 50;
         }
         if (item.getType().toString().contains("CHAINMAIL")) {
-            dodgebase = 5;
+        	dodgemax = 80;
         }
         if (item.getType().toString().contains("IRON")) {
-            dodgebase = 4;
+        	dodgemax = 35;
         }
         if (item.getType().toString().contains("DIAMOND")) {
-            dodgebase = 3;
+        	dodgemax = 20;
         }
-
-        double dodgexlvl = dodgebase * 0.02;
-        double dodgemax = dodgebase + (dodgexlvl * (double) lvl);
-        double dodgemin = dodgebase;
-        dodgemin = dodgemin + (dodgemax - dodgemin) / 2;
+        dodgemax = dodgemax/4;
+        dodgemax = dodgemax * ((double)lvl/100);
+        double dodgemin = dodgemax * 0.5;
         double dodgefinal = Math.random() * (dodgemax - dodgemin) + dodgemin;
 
         return ChatColor.DARK_AQUA + dodge + ": " + ChatColor.AQUA + df.format(dodgefinal) + "%";

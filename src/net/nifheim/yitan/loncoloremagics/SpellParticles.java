@@ -5,6 +5,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
+import de.slikey.effectlib.effect.DragonEffect;
 import de.slikey.effectlib.effect.SphereEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.nifheim.yitan.itemlorestats.Main;
@@ -18,6 +19,7 @@ public class SpellParticles extends BukkitRunnable {
     private final Spell spell;
     Long startime;
     EffectManager em;
+    EffectManager em2;
 
     public SpellParticles(Main plugin, Spell spell, Projectile projectile) {
         this.instance = plugin;
@@ -26,7 +28,6 @@ public class SpellParticles extends BukkitRunnable {
         this.startime = System.currentTimeMillis();
         this.maxTime = spell.lifeTime;
         em= new EffectManager(plugin);
-        
         if(spell.particleEffectSphere!=null){
             ParticleEffect peffect=null;
             peffect = spell.particleEffectSphere;
@@ -38,6 +39,7 @@ public class SpellParticles extends BukkitRunnable {
     		effect.setEntity(projectile);
     		effect.delay=0;
     		effect.speed=0.025F;
+    		effect.period = 2;
     		effect.start();
     		projectile.setGlowing(true);
         }
@@ -47,6 +49,23 @@ public class SpellParticles extends BukkitRunnable {
 	public void run() {
 		
 		if(startime+maxTime<System.currentTimeMillis()){
+			em.dispose();
+			this.cancel();
+			projectile.remove();
+		}
+		if(projectile.isDead()){
+			em2= new EffectManager(instance);
+            ParticleEffect peffect=null;
+            peffect = spell.hitEffect;
+            DragonEffect effect = new DragonEffect(em2); 
+            effect.particle=peffect;
+            effect.particles=6;
+            //effect.radius=spell.particleEffectSphereradio;
+            effect.iterations=1;
+            effect.setLocation(projectile.getLocation());
+    		effect.delay=0;
+    		effect.speed=0.035F;
+    		effect.start();
 			em.dispose();
 			this.cancel();
 			projectile.remove();

@@ -100,13 +100,13 @@ public class LoreItemMaker {
         } else if (item.getType().equals(Material.DIAMOND_AXE)) {
             generataxe(item, player, lvl, 2, 3, 1600);
         } else if (item.getType().toString().contains("HELMET")) {
-            generatarmor(item, player, lvl);
+            generateArmor(item, player, lvl);
         } else if (item.getType().toString().contains("CHESTPLATE")) {
-            generatarmor(item, player, lvl);
+            generateArmor(item, player, lvl);
         } else if (item.getType().toString().contains("LEGGINGS")) {
-            generatarmor(item, player, lvl);
+            generateArmor(item, player, lvl);
         } else if (item.getType().toString().contains("BOOTS")) {
-            generatarmor(item, player, lvl);
+            generateArmor(item, player, lvl);
         } else if (item.getType().toString().contains("PICKAXE")) {
             generatetool(item, player, lvl);
         } else if (item.getType().toString().contains("HOE")) {
@@ -212,11 +212,11 @@ public class LoreItemMaker {
         }
         lore.add(LoreCraftingStats.getLvL(lvl)); 
         lore.add(LoreCraftingStats.getRandomDamage(lvl, speed, damagebonus,variability)); 
-        lore.add(LoreCraftingStats.getMagicPower(lvl, 1, variability));
-        lore.add(LoreCraftingStats.getManaBonus(lvl, 1, 0.5));
-        lore.add(LoreCraftingStats.getManaRegenBonus(lvl, 1, 0.5));
+        lore.add(LoreCraftingStats.getMagicPower(lvl, 0.5, variability));
         lore.add(LoreCraftingStats.getMagicPen(lvl, 1, 0.25));
-        lore.add(LoreCraftingStats.getCDR(lvl, 1, 0.25));
+        //lore.add(LoreCraftingStats.getManaBonus(lvl, 1, 0.5));
+        lore.add(LoreCraftingStats.getManaRegenBonus(lvl, 0.5, 0.5));
+        lore.add(LoreCraftingStats.getCDR(lvl, 0.5, 0.25));
         if (enchantable) {
         	addEnchantSlots(lore,lvl);
         }
@@ -275,8 +275,33 @@ public class LoreItemMaker {
         item.setItemMeta(meta);
     }
 
-    public static void generatarmor(ItemStack item, Player player, int lvl) {
-        //double speed = Math.random()*(speedmax-speedmin)+speedmin;
+    public static void generateArmor(ItemStack item, Player player, int lvl) {
+    	
+    	if (item.getType().toString().contains("CHAINMAIL")) {
+    		generateMagicArmor(item,player,lvl);
+    	}
+    	else{
+            List<String> temlore = new ArrayList<>();
+            ItemMeta meta = item.getItemMeta();
+            if (item.getItemMeta().hasLore()) {
+                temlore = item.getItemMeta().getLore();
+            }
+            temlore.add(LoreCraftingStats.getLvL(lvl));
+            temlore.add(LoreCraftingStats.getArmour(lvl, item));
+            temlore.add(LoreCraftingStats.getMagicArmour(lvl, item));
+            temlore.add(LoreCraftingStats.getArmorDodge(lvl, item));
+            temlore.add(LoreCraftingStats.getMSpeed(item));
+            temlore.add("");
+            temlore.add(LoreCraftingStats.getArmorDurability(lvl, item));
+            item.getItemMeta().setLore(temlore);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setUnbreakable(true);
+            meta.setLore(temlore);
+            item.setItemMeta(meta);
+    	}
+    }
+    public static void generateMagicArmor(ItemStack item, Player player, int lvl) {
         List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
         if (item.getItemMeta().hasLore()) {
@@ -284,7 +309,13 @@ public class LoreItemMaker {
         }
         temlore.add(LoreCraftingStats.getLvL(lvl));
         temlore.add(LoreCraftingStats.getArmour(lvl, item));
+        temlore.add(LoreCraftingStats.getMagicArmour(lvl, item));
         temlore.add(LoreCraftingStats.getArmorDodge(lvl, item));
+        temlore.add(LoreCraftingStats.getMagicPower(lvl, 0.125, 1));
+        //lore.add(LoreCraftingStats.getMagicPen(lvl, 1, 0.25));
+        temlore.add(LoreCraftingStats.getManaBonus(lvl, 0.25, 0.5));
+        temlore.add(LoreCraftingStats.getManaRegenBonus(lvl, 0.125, 0.5));
+        temlore.add(LoreCraftingStats.getCDR(lvl, 0.125, 0.25));
         temlore.add(LoreCraftingStats.getMSpeed(item));
         temlore.add("");
         temlore.add(LoreCraftingStats.getArmorDurability(lvl, item));

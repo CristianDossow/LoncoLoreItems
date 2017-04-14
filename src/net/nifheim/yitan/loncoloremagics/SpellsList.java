@@ -11,7 +11,7 @@ public class SpellsList {
 	static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 
 	public static Spell magicDard(){
-		Spell spell = new Spell("Dardo Mágico",1,1,1,Effect.FIREWORKS_SPARK);
+		Spell spell = new Spell("Dardo Mágico",1,1,1,ParticleEffect.FIREWORKS_SPARK);
 		spell.directDamageAmount=1;
 		spell.particleEffectSphere=ParticleEffect.FIREWORKS_SPARK;
 		spell.particleEffectSphereradio=0.3;
@@ -22,12 +22,14 @@ public class SpellsList {
 	}
 	
 	public static Spell fireBall(){
-		Spell spell = new Spell("Bola de Fuego",1,1,1,Effect.FLAME);
-		spell.directDamageAmount=1.2;
+		Spell spell = new Spell("Bola de Fuego",1,1,1,ParticleEffect.FLAME);
+		spell.directDamageAmount=1.1;
 		spell.particleEffectSphere=ParticleEffect.FLAME;
 		spell.particleEffectSphereradio=0.3;
 		spell.lore.add("Hechizo de fuego");
-		spell.manaCost = 35;
+		spell.manaCost = 40;
+		spell.cooldown = 4000;
+		spell.fireTicks=4;
 		return spell;
 	}
 	

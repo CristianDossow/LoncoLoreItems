@@ -7,12 +7,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerItemHeldListener implements Listener {
 
     @EventHandler
     public void onPlayerHeldItemChange(final PlayerItemHeldEvent event) {
-    	Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+            	Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();}
+        }.runTaskLater(Main.plugin, 1);
+
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
             final Player playerFinal = event.getPlayer();
             Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, () -> {

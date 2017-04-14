@@ -34,6 +34,7 @@ public class PlayerStatsFormules {
 	public static String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
 	public static String level = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
 	public static String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
+	public static String magicArmor ="Armadura Mágica";
 	public static String weaponspeed ="V Ataque";
 	public static String magicPower ="Poder Mágico";
 	public static String magicPen ="Penetración magia";
@@ -63,6 +64,9 @@ public class PlayerStatsFormules {
 	}
 	static public double getArmorStat(Player player) {
 		return getGearStat(player,armour);
+	}
+	static public double getMagicArmorStat(Player player) {
+		return getGearStat(player,magicArmor);
 	}
 	static public  double getPercentArmorStat(Player player,double armor) {
         double basearmor = armor;

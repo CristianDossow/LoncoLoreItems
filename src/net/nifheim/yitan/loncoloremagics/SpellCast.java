@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.SpectralArrow;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -21,7 +22,7 @@ public class SpellCast {
     			player.sendMessage("lanzando " + spell.name);
     			ps.lastMessage=System.currentTimeMillis();
     			ps.lastSpellCast = System.currentTimeMillis();
-    			ps.spellCastWait = System.currentTimeMillis() + spell.cooldown;
+    			ps.spellCastWait = System.currentTimeMillis() + (long)(spell.cooldown*(1-ps.spellCooldownReduction));
         		ps.manaCurrent = ps.manaCurrent - spell.manaCost;
                 Projectile projectile = getProjectile(spell, player);
                 projectile.setShooter(player);
@@ -51,6 +52,7 @@ public class SpellCast {
 
         LlamaSpit projectile = (LlamaSpit) player.getWorld().spawn(loc, LlamaSpit.class);
         projectile.setGravity(false);
+        //projectile.setGlowingTicks(0);
         //projectile.setGlowing(true);
         //projectile.setMetadata("ILS_DragonFireball", new FixedMetadataValue(Main.getInstance(), player.getName()));
         return projectile;
@@ -63,7 +65,9 @@ public class SpellCast {
         double DDA = spell.directDamageAmount * ps.magicPower;
         double ADA = spell.aoeDamageAmount * ps.magicPower;
 
+        projectile.setFireTicks(spell.fireTicks*20);
         projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getInstance(), spell.name));
+        projectile.setMetadata("MAGICPEN=", new FixedMetadataValue(Main.getInstance(), ps.magicArmorPen));
         projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getInstance(), DHA));
         projectile.setMetadata("AHA=", new FixedMetadataValue(Main.getInstance(), AHA));
         projectile.setMetadata("AHR=", new FixedMetadataValue(Main.getInstance(), spell.aoeHealRange));

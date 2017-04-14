@@ -1,13 +1,11 @@
+/*
 package net.nifheim.beelzebu.rpgcore.utils;
 
 import net.nifheim.yitan.itemlorestats.Main;
 import me.clip.placeholderapi.external.EZPlaceholderHook;
 import org.bukkit.entity.Player;
 
-/**
- *
- * @author Beelzebu
- */
+
 public class PlaceholderAPI extends EZPlaceholderHook {
     private Main plugin;
     public PlaceholderAPI(Main plugin) {
@@ -29,3 +27,4 @@ public class PlaceholderAPI extends EZPlaceholderHook {
         return "Invalid Placeholder";
     }
 }
+*/

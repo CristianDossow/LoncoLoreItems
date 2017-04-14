@@ -13,7 +13,7 @@ public class Spell {
 	public int castype; // 1 Proyectile - 2 Self
 	public long lifeTime;
 	public double speed;
-	public Effect hitEffect;
+	public ParticleEffect hitEffect;
 	public long cooldown;
 	public double directHeal;
 	public double aoeHealAmount;
@@ -26,7 +26,9 @@ public class Spell {
 	public ParticleEffect particleEffectSphere;
 	public double particleEffectSphereradio;
 	
-	public Spell(String name, int lvl, int castype, double speed, Effect hitEffect) {
+	public int fireTicks;
+	
+	public Spell(String name, int lvl, int castype, double speed, ParticleEffect hitEffect) {
 		super();
 		this.name = name;
 		this.lvl = lvl;
@@ -44,6 +46,7 @@ public class Spell {
 		lore=new ArrayList<>();
 		particleEffectSphereradio=0;
 		particleEffectSphere=null;
+		fireTicks = 0;
 	}
 	
 }
