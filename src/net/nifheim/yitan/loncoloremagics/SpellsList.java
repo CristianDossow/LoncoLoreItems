@@ -13,7 +13,7 @@ public class SpellsList {
 	public static Spell magicDard(){
 		Spell spell = new Spell("Dardo Mágico",1,1,1,ParticleEffect.FIREWORKS_SPARK);
 		spell.directDamageAmount=1;
-		spell.particleEffectSphere=ParticleEffect.FIREWORKS_SPARK;
+		spell.particleEffectSphere.add(ParticleEffect.FIREWORKS_SPARK);
 		spell.particleEffectSphereradio=0.3;
 		spell.manaCost=25;
 		spell.cooldown = 3000;
@@ -24,7 +24,7 @@ public class SpellsList {
 	public static Spell fireBall(){
 		Spell spell = new Spell("Bola de Fuego",1,1,1,ParticleEffect.FLAME);
 		spell.directDamageAmount=1.1;
-		spell.particleEffectSphere=ParticleEffect.FLAME;
+		spell.particleEffectSphere.add(ParticleEffect.FLAME);
 		spell.particleEffectSphereradio=0.3;
 		spell.lore.add("Hechizo de fuego");
 		spell.manaCost = 40;
@@ -32,11 +32,45 @@ public class SpellsList {
 		spell.fireTicks=4;
 		return spell;
 	}
+	public static Spell thunder(){
+		Spell spell = new Spell("Ira Eléctrica",1,1,1,ParticleEffect.VILLAGER_ANGRY);
+		spell.directDamageAmount=2;
+		spell.particleEffectSphere.add(ParticleEffect.VILLAGER_ANGRY);
+		spell.particleEffectSphereradio=0.2;
+		spell.particlesAmountOnHit=8;
+		spell.particleSpeedOnHit=0.05F;
+		spell.particleRadioOnhit=1;
+		spell.onHitType=2;
+		spell.lore.add("Hechizo de rayos");
+		spell.manaCost = 100;
+		spell.cooldown = 6000;
+		return spell;
+	}
+	public static Spell Cataclism(){
+		Spell spell = new Spell("Cataclismo",1,1,1,ParticleEffect.EXPLOSION_HUGE);
+		spell.particlesAmount=1;
+		spell.directDamageAmount=3;
+		spell.particleEffectSphere.add(ParticleEffect.REDSTONE);
+		spell.particleEffectSphere.add(ParticleEffect.END_ROD);
+		spell.particleEffectSphere.add(ParticleEffect.LAVA);
+		spell.particleEffectSphere.add(ParticleEffect.SNOW_SHOVEL);
+		spell.particleEffectSphereradio=0.5;
+		spell.particleRadioOnhit=0.5;
+		spell.particlesAmountOnHit=3;
+		spell.particleSpeedOnHit=0.01F;
+		spell.onHitType=2;
+		spell.lore.add("Cataclismo");
+		spell.manaCost = 200;
+		spell.cooldown = 6000;
+		return spell;
+	}
 	
 	public static List<Spell> getSpellList(){
 		List<Spell> list = new ArrayList<>();
 		list.add(magicDard());
 		list.add(fireBall());
+		list.add(thunder());
+		list.add(Cataclism());
 		return list;
 	}
 	public static Spell getSpell(String name){

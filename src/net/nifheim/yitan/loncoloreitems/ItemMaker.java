@@ -57,7 +57,7 @@ public class ItemMaker {
         ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName(plugin.rep(messages.getString("Items.Spell Book.Name") + spell.name));
+        im.setDisplayName(plugin.rep(messages.getString("Items.Spell Book.Name")+": " + spell.name));
         ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + spell.name);
         spell.lore.stream().forEach((loreline) -> {

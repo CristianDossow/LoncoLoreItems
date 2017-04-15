@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 public class PlayerStats {
-	Player player;
-	UUID uuid;
-	String name;
+	public Player player;
+	public UUID uuid;
+	public String name;
 	//int lvl;  - se ocupará directo de la clase player
 	public double baseDamage; //base 1, podria ser modificable mediante nivel o clase
 	public double minDamage;
@@ -67,7 +67,9 @@ public class PlayerStats {
 		UpdateDamage();
 		UpdateWeaponSpeed();
 		UpdateArmor();
+		UpdateMagicArmor();
 		UpdatePercentArmor();
+		UpdateMagicPercentArmor();
 		UpdateDodge();
 		UpdateBlock();
 		UpdateCritChance();
@@ -77,10 +79,23 @@ public class PlayerStats {
 		UpdateManaRegen();
 		UpdateMagicPower();
 		UpdateCdReduction();
+		UpdateMagicArmorPen();
 	}
+	public void UpdateDefence() {
+		UpdateArmor();
+		UpdateMagicArmor();
+		UpdatePercentArmor();
+		UpdateMagicPercentArmor();
+		UpdateDodge();
+		UpdateBlock();
+	}
+	
 	public void UpdateDamage() {
 		this.minDamage = PlayerStatsFormules.getDamageGearStat(player)[0];
 		this.maxDamage = PlayerStatsFormules.getDamageGearStat(player)[1];
+	}
+	public void UpdateMagicArmorPen() {
+		this.magicArmorPen = PlayerStatsFormules.getMagicArmorPenStat(player);
 	}
 	public void UpdateWeaponSpeed() {
 		this.weaponSpeed = PlayerStatsFormules.getWeaponSpeedStat(player);
@@ -88,8 +103,14 @@ public class PlayerStats {
 	public void UpdateArmor() {
 		this.armor = PlayerStatsFormules.getArmorStat(player);
 	}
+	public void UpdateMagicArmor() {
+		this.magicArmor = PlayerStatsFormules.getMagicArmorStat(player);
+	}
 	public void UpdatePercentArmor() {
 		this.percentArmor = PlayerStatsFormules.getPercentArmorStat(player,armor);
+	}
+	public void UpdateMagicPercentArmor() {
+		this.magicPercentArmor = PlayerStatsFormules.getPercentArmorStat(player,magicArmor);
 	}
 	public void UpdateDodge() {
 		this.dodge = PlayerStatsFormules.getDodgeStat(player);
@@ -133,6 +154,7 @@ public class PlayerStats {
 		player.sendMessage("Magic Power: "+df.format(magicPower)+"");
 		player.sendMessage("Mana: "+df.format(manaCurrent)+"/"+df.format(manaMax));
 		player.sendMessage("Armor: "+armor+" ("+df.format(percentArmor*100)+"%)");
+		player.sendMessage("Magic Armor: "+magicArmor+" ("+df.format(magicPercentArmor*100)+"%)");
 		player.sendMessage("Dodge: "+df.format(dodge*100)+"%");
 		player.sendMessage("Block: "+df.format(block*100)+"%");
 		player.sendMessage("Crit. Chance: "+df.format(critChance*100)+"%");
@@ -140,6 +162,7 @@ public class PlayerStats {
 		player.sendMessage("Poison: "+df.format(poison*100)+"%");
 		player.sendMessage("Mana Regen: "+df.format(manaRegen));
 		player.sendMessage("CD Reduction: "+df.format(spellCooldownReduction*100)+"%");
+		player.sendMessage("Magic Pen.: "+df.format(magicArmorPen*100)+"%");
 	}
 	public void ShowStats() {
 		ShowStats(player);

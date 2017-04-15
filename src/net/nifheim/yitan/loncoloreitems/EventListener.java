@@ -563,6 +563,16 @@ public class EventListener implements Listener {
                     }
                     return false;
                 }
+                if (args[0].equalsIgnoreCase("loreclear")) {
+                	Player player = (Player) sender;
+                	ItemStack item = player.getInventory().getItemInMainHand();
+                    if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
+                        ItemMeta meta = item.getItemMeta();
+                        meta.setLore(new ArrayList<>());
+                        item.setItemMeta(meta);
+                        return true;
+                    }
+                }
             }
         }
 

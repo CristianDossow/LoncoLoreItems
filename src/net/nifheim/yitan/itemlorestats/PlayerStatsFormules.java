@@ -68,6 +68,9 @@ public class PlayerStatsFormules {
 	static public double getMagicArmorStat(Player player) {
 		return getGearStat(player,magicArmor);
 	}
+	static public double getMagicArmorPenStat(Player player) {
+		return getGearStat(player,magicPen)/100;
+	}
 	static public  double getPercentArmorStat(Player player,double armor) {
         double basearmor = armor;
         if (basearmor == 0) {

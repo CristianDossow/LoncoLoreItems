@@ -2,6 +2,8 @@ package net.nifheim.yitan.itemlorestats.Damage;
 
 import java.util.Iterator;
 import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -157,10 +159,10 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                 double AOEDamageAmount = ((MetadataValue) projectile.getMetadata("ADA=").get(0)).asDouble();
                                 double AOEDamageRange = ((MetadataValue) projectile.getMetadata("ADR=").get(0)).asDouble();
                                 double magicPen = ((MetadataValue) projectile.getMetadata("MAGICPEN=").get(0)).asDouble();
-                                if (((event.getEntity() instanceof Player))
-                                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
-                                    ((Player) event.getEntity()).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, event.getEntity(), String.valueOf((int) DirectDamageAmount), String.valueOf((int) DirectDamageAmount)));
-                                    double damage = DirectDamageAmount*(defenderStats.magicArmor* (1-magicPen) );
+                                if ((event.getEntity() instanceof Player)){
+                                    //((Player) event.getEntity()).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, event.getEntity(), String.valueOf((int) DirectDamageAmount), String.valueOf((int) DirectDamageAmount)));
+                                    double damage = DirectDamageAmount*(1-(defenderStats.magicPercentArmor* (1-magicPen)) );
+                                    damagerStats.player.sendMessage(defenderStats.magicPercentArmor+"-"+magicPen);
                                     event.setDamage(damage);
                                     return;
                                 }

@@ -136,8 +136,8 @@ public class LoreCraftingStats {
     }
     
     static public String getMagicPower(double lvl, double bonus, double variability) {
-    	double base = 5;
-    	double xlvl = 0.35; //top 40
+    	double base = 10;
+    	double xlvl = 0.70; //top 80
     	double max = base + (xlvl*lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;

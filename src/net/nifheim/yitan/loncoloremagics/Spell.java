@@ -23,10 +23,18 @@ public class Spell {
 	public double aoeDamageRange;
 	public double manaCost;
 	public List<String> lore;
-	public ParticleEffect particleEffectSphere;
+	public List<ParticleEffect> particleEffectSphere;
 	public double particleEffectSphereradio;
-	
+	public int particlesAmount;
+	public int Interval;
+	public float particleSpeed;
 	public int fireTicks;
+	
+	public float particleSpeedOnHit;
+	public double particleRadioOnhit;
+	public int particlesAmountOnHit;
+	
+	public int onHitType;
 	
 	public Spell(String name, int lvl, int castype, double speed, ParticleEffect hitEffect) {
 		super();
@@ -43,9 +51,19 @@ public class Spell {
 		this.aoeDamageAmount=0;
 		this.aoeDamageRange=0;
 		this.manaCost=0;
+		this.particlesAmount=2;
+		this.Interval=2;
+		this.particleSpeed = 0.025F;
+		
+		this.particleSpeedOnHit = 0.035F;
+		this.particleRadioOnhit = 0.5;
+		this.particlesAmountOnHit = 6;
+		
+		this.onHitType=1;
+		
 		lore=new ArrayList<>();
 		particleEffectSphereradio=0;
-		particleEffectSphere=null;
+		particleEffectSphere=new ArrayList<>();
 		fireTicks = 0;
 	}
 	

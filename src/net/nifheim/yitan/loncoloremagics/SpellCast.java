@@ -60,10 +60,13 @@ public class SpellCast {
     }
 
     public static void setProjectileProperties(Projectile projectile, Spell spell, PlayerStats ps) {
-        double DHA = spell.directHeal * ps.magicPower;
-        double AHA = spell.aoeHealAmount * ps.magicPower;
-        double DDA = spell.directDamageAmount * ps.magicPower;
-        double ADA = spell.aoeDamageAmount * ps.magicPower;
+    	double max = ps.magicPower;
+        double min = max * 0.8;
+        double power = Math.random() * (max - min) + min;
+        double DHA = spell.directHeal * power;
+        double AHA = spell.aoeHealAmount * power;
+        double DDA = spell.directDamageAmount * power;
+        double ADA = spell.aoeDamageAmount * power;
 
         projectile.setFireTicks(spell.fireTicks*20);
         projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getInstance(), spell.name));
