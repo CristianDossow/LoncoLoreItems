@@ -3,6 +3,7 @@ package net.nifheim.yitan.loncoloremagics;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 
 import de.slikey.effectlib.util.ParticleEffect;
@@ -18,6 +19,7 @@ public class SpellsList {
 		spell.manaCost=25;
 		spell.cooldown = 3000;
 		spell.lore.add("Hechizo básico");
+		spell.colorName = ChatColor.RED;
 		return spell;
 	}
 	
@@ -30,6 +32,7 @@ public class SpellsList {
 		spell.manaCost = 40;
 		spell.cooldown = 4000;
 		spell.fireTicks=4;
+		spell.colorName = ChatColor.RED;
 		return spell;
 	}
 	public static Spell thunder(){
@@ -44,12 +47,15 @@ public class SpellsList {
 		spell.lore.add("Hechizo de rayos");
 		spell.manaCost = 100;
 		spell.cooldown = 6000;
+		spell.colorName = ChatColor.RED;
 		return spell;
 	}
 	public static Spell Cataclism(){
 		Spell spell = new Spell("Cataclismo",1,1,1,ParticleEffect.EXPLOSION_HUGE);
 		spell.particlesAmount=1;
 		spell.directDamageAmount=3;
+		spell.aoeDamageAmount=1;
+		spell.aoeDamageRange=4;
 		spell.particleEffectSphere.add(ParticleEffect.REDSTONE);
 		spell.particleEffectSphere.add(ParticleEffect.END_ROD);
 		spell.particleEffectSphere.add(ParticleEffect.LAVA);
@@ -60,8 +66,9 @@ public class SpellsList {
 		spell.particleSpeedOnHit=0.01F;
 		spell.onHitType=2;
 		spell.lore.add("Cataclismo");
-		spell.manaCost = 200;
+		spell.manaCost = 250;
 		spell.cooldown = 6000;
+		spell.colorName = ChatColor.DARK_RED;
 		return spell;
 	}
 	

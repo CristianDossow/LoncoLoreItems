@@ -17,7 +17,7 @@ import net.nifheim.yitan.itemlorestats.ItemUpgrading.PlayerLevelEvents;
 
 import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
 import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
-
+import net.nifheim.yitan.itemlorestats.Repair.RepairEvents;
 import net.nifheim.yitan.itemlorestats.Util.*;
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
 
@@ -161,8 +161,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         plma.registerEvents(new PotionListener(), this);
         plma.registerEvents(new InteractEvents(), this);
         plma.registerEvents(new PlayerLevelEvents(), this);
-        plma.registerEvents(new net.nifheim.yitan.itemlorestats.Repair.RepairEvents(), this);
-
+        plma.registerEvents(new RepairEvents(), this);
+        plma.registerEvents(new MerchantClickListener(), this);
         plugin = this;
 
         writeDefaultFiles.checkExistence();
@@ -178,6 +178,19 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         this.spigotStatCapWarning.updateSpigotValues();
 
         fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 20, 20);
+        
+        for(Player player:Bukkit.getOnlinePlayers()){
+        	if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+                try {
+                	PlayerStats ps = Main.plugin.getPlayerStats(player);
+                	Main.plugin.PlayerDataConfig = new YamlConfiguration();
+                	Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                	ps.manaCurrent = Main.plugin.PlayerDataConfig.getDouble("extra.mana");
+                } catch (IOException | InvalidConfigurationException e) {
+                    System.out.println("*********** Failed to load player data for " + player.getName() + " when logging in! ***********");
+                }
+            }
+        }
 
     }
 
@@ -186,6 +199,26 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
             m.getValue().removeAll();
         }
+        for(Player player:Bukkit.getOnlinePlayers()){
+        	if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+                try {
+                	PlayerStats ps = Main.plugin.getPlayerStats(player);
+                    Main.plugin.PlayerDataConfig = new YamlConfiguration();
+                    Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                    Main.plugin.PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
+                    Main.plugin.PlayerDataConfig.set("extra.maxHealth", Math.round(player.getMaxHealth()));
+                    Main.plugin.PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
+                    Main.plugin.PlayerDataConfig.set("extra.xp", player.getExp());
+                    Main.plugin.PlayerDataConfig.set("extra.level", player.getLevel());
+                    Main.plugin.PlayerDataConfig.set("extra.mana", ps.manaCurrent);
+                    Main.plugin.PlayerDataConfig.set("extra.combatLogVisible", Main.plugin.combatLogVisible.get(player.getName()));
+                    Main.plugin.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
+                } catch (IOException | InvalidConfigurationException e) {
+                    System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
+                }
+            }
+        }
+        
         console.sendMessage(String.format("[%s] Disabled Version %s", new Object[]{
             getDescription().getName(), getDescription().getVersion()
         }));

@@ -24,6 +24,7 @@ public class PlayerJoinListener implements Listener {
             Main.plugin.playersStats.put(playerFinal.getUniqueId(), ps);
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
+                	
                 	Main.plugin.PlayerDataConfig = new YamlConfiguration();
 
                 	Main.plugin.updateHealth(playerFinal);
@@ -41,7 +42,7 @@ public class PlayerJoinListener implements Listener {
                 try {
                 	Main.plugin.PlayerDataConfig = new YamlConfiguration();
                 	Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
-
+                	ps.manaCurrent = Main.plugin.PlayerDataConfig.getDouble("extra.mana");
                     playerFinal.setMaxHealth(Main.plugin.PlayerDataConfig.getDouble("extra.maxHealth"));
                     playerFinal.setHealth(Main.plugin.PlayerDataConfig.getDouble("extra.logoutHealth"));
                     playerFinal.setFoodLevel(Main.plugin.PlayerDataConfig.getInt("extra.hunger"));

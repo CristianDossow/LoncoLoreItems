@@ -245,12 +245,12 @@ public class EventListener implements Listener {
 
     }
 
-    private ItemStack AddItemLore(ItemStack item, Player player) {
+    public static ItemStack AddItemLore(ItemStack item, Player player) {
 
         return LoreItemMaker.AddItemLore(item, player);
     }
 
-    private ItemStack ClearAndAddItemLore(ItemStack item, Player player) {
+    public static ItemStack ClearAndAddItemLore(ItemStack item, Player player) {
 
         return LoreItemMaker.ClearAndAddItemLore(item, player);
     }

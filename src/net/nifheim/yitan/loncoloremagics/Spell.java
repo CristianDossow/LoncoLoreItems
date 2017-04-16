@@ -3,12 +3,14 @@ package net.nifheim.yitan.loncoloremagics;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class Spell {
 	public String name;
+	public ChatColor colorName;
 	public int lvl;
 	public int castype; // 1 Proyectile - 2 Self
 	public long lifeTime;
@@ -38,6 +40,7 @@ public class Spell {
 	
 	public Spell(String name, int lvl, int castype, double speed, ParticleEffect hitEffect) {
 		super();
+		this.colorName = ChatColor.GOLD;
 		this.name = name;
 		this.lvl = lvl;
 		this.castype = castype;

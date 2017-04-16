@@ -11,6 +11,7 @@ import de.slikey.effectlib.effect.DragonEffect;
 import de.slikey.effectlib.effect.SphereEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.listeners.magicProjectileHit;
 
 
 public class SpellParticles extends BukkitRunnable {
@@ -95,6 +96,7 @@ public class SpellParticles extends BukkitRunnable {
             }
 			em.dispose();
 			this.cancel();
+			magicProjectileHit.onProjectileHitEvent(projectile);
 			projectile.remove();
 		}
 	}

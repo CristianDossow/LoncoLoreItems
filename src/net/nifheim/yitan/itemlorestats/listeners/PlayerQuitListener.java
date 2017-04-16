@@ -20,9 +20,6 @@ public class PlayerQuitListener implements Listener {
     	
         if ((event.getPlayer() instanceof Player)) {
             Player player = event.getPlayer();
-            
-            Main.plugin.playersStats.remove(player.getUniqueId());
-
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 if (!player.isDead()) {
                     player.setMaxHealth(20.0D);
@@ -34,6 +31,7 @@ public class PlayerQuitListener implements Listener {
                 }
             } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 try {
+                	PlayerStats ps = Main.plugin.getPlayerStats(player);
                     Main.plugin.PlayerDataConfig = new YamlConfiguration();
                     Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
 
@@ -42,6 +40,7 @@ public class PlayerQuitListener implements Listener {
                     Main.plugin.PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
                     Main.plugin.PlayerDataConfig.set("extra.xp", player.getExp());
                     Main.plugin.PlayerDataConfig.set("extra.level", player.getLevel());
+                    Main.plugin.PlayerDataConfig.set("extra.mana", ps.manaCurrent);
                     Main.plugin.PlayerDataConfig.set("extra.combatLogVisible", Main.plugin.combatLogVisible.get(player.getName()));
                     Main.plugin.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
 
@@ -57,6 +56,7 @@ public class PlayerQuitListener implements Listener {
                     System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
                 }
             }
+            Main.plugin.playersStats.remove(player.getUniqueId());
         }
     }
 }

@@ -151,6 +151,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                     shooter = (Entity) projectile.getShooter();
 
                     if (projectile.hasMetadata("SPELLNAME=")) {
+                    	projectile.setLastDamageCause(event);
                         String SpellName = ((MetadataValue) projectile.getMetadata("SPELLNAME=").get(0)).asString();
                         Spell spell = SpellsList.getSpell(SpellName);
                         if (spell != null) {
@@ -159,34 +160,40 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                 double AOEDamageAmount = ((MetadataValue) projectile.getMetadata("ADA=").get(0)).asDouble();
                                 double AOEDamageRange = ((MetadataValue) projectile.getMetadata("ADR=").get(0)).asDouble();
                                 double magicPen = ((MetadataValue) projectile.getMetadata("MAGICPEN=").get(0)).asDouble();
+                            	//if(damagerStats.player.hasPermission("ils.admin")){
+                            	//	damagerStats.player.sendMessage(AOEDamageAmount+"-"+AOEDamageRange);
+                            	//}
                                 if ((event.getEntity() instanceof Player)){
-                                    //((Player) event.getEntity()).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, event.getEntity(), String.valueOf((int) DirectDamageAmount), String.valueOf((int) DirectDamageAmount)));
                                     double damage = DirectDamageAmount*(1-(defenderStats.magicPercentArmor* (1-magicPen)) );
-                                    damagerStats.player.sendMessage(defenderStats.magicPercentArmor+"-"+magicPen);
+                                    //damagerStats.player.sendMessage(defenderStats.magicPercentArmor+"-"+magicPen);
                                     event.setDamage(damage);
-                                    return;
                                 }
                                 else{
                                 	if ((event.getEntity() instanceof LivingEntity)) {
                                 		event.setDamage(DirectDamageAmount);
-                                		return;
                                 	}
                                 }
-                                /*
+                                
                                 if (AOEDamageRange > 0.0D) {
-                                    for (Iterator<Entity> iterator = event.getEntity().getNearbyEntities(AOEDamageRange, 256.0D, AOEDamageRange).iterator(); iterator.hasNext();) {
+                                    for (Iterator<Entity> iterator = event.getEntity().getNearbyEntities(AOEDamageRange, AOEDamageRange, AOEDamageRange).iterator(); iterator.hasNext();) {
                                         Entity entity = (Entity) iterator.next();
-                                        if (entity.equals(event.getDamager())) {
-                                            if (((entity instanceof Player))
-                                                    && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
-                                                ((Player) entity).sendMessage(this.util_GetResponse.getResponse("SpellMessages.CastSpell.Damage", shooter, entity, String.valueOf((int) AOEDamageAmount), String.valueOf((int) AOEDamageAmount)));
+                                        //damagerStats.player.sendMessage(entity.getName());
+                                        if (!entity.equals(damagerStats.player)) {
+                                            if ((entity instanceof Player)) {
+                                            	if(util_WorldGuard.playerInPVPRegion((Player)entity)){
+                                                	PlayerStats ps = Main.plugin.getPlayerStats((Player)entity);
+                                                	ps.UpdateDefence();
+                                                	double damage = AOEDamageAmount*(1-(ps.magicPercentArmor* (1-magicPen)) );
+                                                	((LivingEntity) entity).damage(damage);
+                                            	}
                                             }
-                                            if ((entity instanceof LivingEntity)) {
+                                            else if((entity instanceof LivingEntity)) {
                                                 ((LivingEntity) entity).damage(AOEDamageAmount);
                                             }
                                         }
                                     }
-                                }*/
+                                }
+                                return;
                             } else {
                                 event.setCancelled(true);
                             }
