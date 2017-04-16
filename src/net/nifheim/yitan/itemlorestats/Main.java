@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
 import net.nifheim.beelzebu.rpgcore.utils.MySQL;
+import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
 
 import net.nifheim.yitan.itemlorestats.listeners.*;
 
@@ -71,7 +72,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
     private static MySQL mysql;
-    //Messages
+    private PlaceholderAPI placeholderAPI;
+    // Files
     final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
     final File mysqlFile = new File(getDataFolder(), "MySQL.yml");
@@ -248,6 +250,11 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find EffectLib, you need this API to run this plugin ..."));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
+        }
+        if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            placeholderAPI = new PlaceholderAPI(this);
+            placeholderAPI.hook();
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into PlaceholderAPI."));
         }
         if (getWorldGuard() != null) {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into WorldGuard."));
