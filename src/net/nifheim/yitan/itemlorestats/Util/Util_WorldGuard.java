@@ -30,7 +30,7 @@ public class Util_WorldGuard {
     public boolean playerInPVPRegion(Player player) {
     	ApplicableRegionSet set = (Main.plugin.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()));
     	LocalPlayer localPlayer = Main.plugin.getWorldGuard().wrapPlayer(player);
-    	if (set.testState(localPlayer, DefaultFlag.PVP)!= StateFlag.State.DENY ) {
+    	if (set.queryState(localPlayer, DefaultFlag.PVP)!= StateFlag.State.DENY) {
     	    return true;
     	}
     	else
