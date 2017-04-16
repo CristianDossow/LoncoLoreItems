@@ -16,7 +16,7 @@ public class MerchantClickListener implements Listener {
     	if(event.getClickedInventory() !=null && event.getClickedInventory().getType().equals(InventoryType.MERCHANT)){
     		event.getSlotType().equals(InventoryType.SlotType.RESULT);
     		ItemStack item = event.getCurrentItem();
-    		item=LoreItemMaker.ClearAndAddItemLore(item, (Player)event.getWhoClicked());
+    		item=LoreItemMaker.CheckItemLore(item, (Player)event.getWhoClicked());
     	}
     }
 }

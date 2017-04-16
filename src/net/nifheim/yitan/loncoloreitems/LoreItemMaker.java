@@ -16,9 +16,18 @@ public class LoreItemMaker {
 
     private static final Main plugin = Main.getInstance();
     private static final FileConfiguration messages = Main.getInstance().getMessages();
-    public String unknownItem = EspecialAtributes.unknownItem;
+    public static String unknownItem = EspecialAtributes.unknownItem;
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 
+    static public ItemStack CheckItemLore(ItemStack item, Player player) {
+        if(EspecialAtributes.HasEffect(item, unknownItem)){
+        	return ClearAndAddItemLore(item, player);
+        }
+        else{
+        	return AddItemLore(item, player);
+        }
+    }
+    
     static public ItemStack AddItemLore(ItemStack item, Player player) {
         double lvl = player.getLevel();
         lvl = Math.random() * (lvl - lvl / 2) + lvl / 2;
@@ -394,7 +403,7 @@ public class LoreItemMaker {
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
-
+    /*
     public static void AddCustomEnchant(ItemStack item, String enchant) {
         List<String> temlore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
@@ -406,4 +415,5 @@ public class LoreItemMaker {
         meta.setLore(temlore);
         item.setItemMeta(meta);
     }
+    */
 }

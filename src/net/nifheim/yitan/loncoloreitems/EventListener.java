@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -50,8 +51,9 @@ public class EventListener implements Listener {
     public HashMap<UUID, Boolean> bowActionControl;
     public HashMap<UUID, Long> shootpower;
     public LoreCraftingStats getlorestrings;
-    public String unknownItem = "Artículo no identificado";
-    static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
+    public static String unknownItem = "Artículo no identificado";
+    public static String enchantSlot = Main.getInstance().getMessages().getString("Lores.Enchants.Empty");
+    public static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
     Main instance;
     Durability durabilityclass = new Durability();
 
@@ -355,10 +357,26 @@ public class EventListener implements Listener {
                 } else if (item.getAmount() > 1) {
                     player.sendMessage("Este objeto solo se puede usar de uno a la vez");
                 } else {
-                    player.setItemOnCursor(null);
-                    LoreItemMaker.AddCustomEnchant(itemcliked, enchant);
-                    player.sendMessage("Se ha encantado el objeto con " + enchant);
-                    event.setCancelled(true);
+                	boolean enchanted=false;
+                	ItemMeta meta = itemcliked.getItemMeta();
+                	List<String> lores = meta.getLore();
+                	for(String lore:lores){
+                		if(!enchanted && lore.equals(Main.plugin.rep(enchantSlot))){
+                			enchanted=true;
+                            player.setItemOnCursor(null);
+                            lores.set(lores.indexOf(lore), ChatColor.GRAY + enchant);
+                            player.sendMessage("Se ha encantado el objeto con " + enchant);
+                            event.setCancelled(true);
+                		}
+                	}
+                	if(enchanted){
+                		meta.setLore(lores);
+                    	itemcliked.setItemMeta(meta);
+                    	event.setCurrentItem(itemcliked);
+                	}
+                	else{
+                		player.sendMessage("El objeto no tiene ranuras para encantar");
+                	}
                 }
             }
         }
