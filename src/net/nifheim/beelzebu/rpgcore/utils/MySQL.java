@@ -17,15 +17,15 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class MySQL {
 
-    private static final FileConfiguration config = Main.getInstance().getConfig();
+    private static final FileConfiguration mysqlconfig = Main.getInstance().getMySQLFile();
     final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private static final String host = config.getString("MySQL.Host");
-    private static final int port = config.getInt("MySQL.Port");
-    private static final String name = config.getString("MySQL.Database");
-    private static final String user = config.getString("MySQL.User");
-    private static final String passwd = config.getString("MySQL.Password");
-    private static final String prefix = config.getString("MySQL.Prefix");
+    private static final String host = mysqlconfig.getString("MySQL.Host");
+    private static final int port = mysqlconfig.getInt("MySQL.Port");
+    private static final String name = mysqlconfig.getString("MySQL.Database");
+    private static final String user = mysqlconfig.getString("MySQL.User");
+    private static final String passwd = mysqlconfig.getString("MySQL.Password");
+    private static final String prefix = mysqlconfig.getString("MySQL.Prefix");
     private static Connection c;
 
     public static Connection getConnection() {
@@ -46,12 +46,11 @@ public class MySQL {
                 + "PRIMARY KEY (`uuid`));";
         String createCharacters
                 = "CREATE TABLE IF NOT EXISTS `" + prefix + "Characters`"
-                + "(`id` INT NOT NULL,"
+                + "(`uuid` VARCHAR(50) NOT NULL,"
+                + "`id` INT NOT NULL,"
                 + "`name` VARCHAR (50) NOT NULL,"
-                + "`minhp` INT,"
                 + "`maxhp` INT,"
                 + "`hp` INT,"
-                + "`minmana` INT,"
                 + "`maxmana` INT,"
                 + "`mana` INT,"
                 + "`stamina` INT,"

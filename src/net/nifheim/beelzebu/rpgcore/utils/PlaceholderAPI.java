@@ -1,4 +1,3 @@
-/*
 package net.nifheim.beelzebu.rpgcore.utils;
 
 import net.nifheim.yitan.itemlorestats.Main;
@@ -7,10 +6,10 @@ import org.bukkit.entity.Player;
 
 
 public class PlaceholderAPI extends EZPlaceholderHook {
-    private Main plugin;
+    private final Main plugin;
     public PlaceholderAPI(Main plugin) {
         super(plugin, "rpgcore");
-        plugin = this.plugin;
+        this.plugin = plugin;
     }
 
     @Override
@@ -19,12 +18,10 @@ public class PlaceholderAPI extends EZPlaceholderHook {
             return "Player is needed!";
         }
         if (str.equals("mana")) {
-            
+            return String.valueOf(plugin.getPlayerStats(p).manaCurrent);
         }
-        if (str.equals("")) {
-            
+        else {
+            return "Invalid Placeholder";
         }
-        return "Invalid Placeholder";
     }
 }
-*/
