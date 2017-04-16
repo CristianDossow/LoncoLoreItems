@@ -63,6 +63,7 @@ public class ItemMaker {
         spell.lore.stream().forEach((loreline) -> {
             lore.add(ChatColor.AQUA + loreline);
         });
+        LoreItemMaker.addEnchantSlots(lore,30);
         im.setLore(lore);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);

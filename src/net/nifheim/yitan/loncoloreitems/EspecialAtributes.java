@@ -41,6 +41,23 @@ public class EspecialAtributes {
         }
         return false;
     }
+    
+    static public boolean HasEffect(ItemStack item, String effect) {
+    	
+        if (item.hasItemMeta()) {
+            if (item.getItemMeta().hasLore()) {
+                List<String> lore = item.getItemMeta().getLore();
+                for (String loreline : lore) {
+                    loreline = ChatColor.stripColor(loreline);
+                    loreline = loreline.toLowerCase();
+                    if (loreline.replaceAll(languageRegex, "").matches(effect.toLowerCase().replaceAll(languageRegex, ""))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     static public boolean Hasdurability(ItemStack item) {
 
