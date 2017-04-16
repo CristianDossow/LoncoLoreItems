@@ -78,7 +78,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
     final File mysqlFile = new File(getDataFolder(), "MySQL.yml");
     private final FileConfiguration mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
-    
+
     public ActivateEnchant activateEnchant;
 
     public FileConfiguration PlayerDataConfig;
@@ -180,14 +180,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         this.spigotStatCapWarning.updateSpigotValues();
 
         fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 20, 20);
-        
-        for(Player player:Bukkit.getOnlinePlayers()){
-        	if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 try {
-                	PlayerStats ps = Main.plugin.getPlayerStats(player);
-                	Main.plugin.PlayerDataConfig = new YamlConfiguration();
-                	Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
-                	ps.manaCurrent = Main.plugin.PlayerDataConfig.getDouble("extra.mana");
+                    PlayerStats ps = Main.plugin.getPlayerStats(player);
+                    Main.plugin.PlayerDataConfig = new YamlConfiguration();
+                    Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                    ps.manaCurrent = Main.plugin.PlayerDataConfig.getDouble("extra.mana");
                 } catch (IOException | InvalidConfigurationException e) {
                     System.out.println("*********** Failed to load player data for " + player.getName() + " when logging in! ***********");
                 }
@@ -201,10 +201,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
             m.getValue().removeAll();
         }
-        for(Player player:Bukkit.getOnlinePlayers()){
-        	if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 try {
-                	PlayerStats ps = Main.plugin.getPlayerStats(player);
+                    PlayerStats ps = Main.plugin.getPlayerStats(player);
                     Main.plugin.PlayerDataConfig = new YamlConfiguration();
                     Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
                     Main.plugin.PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
@@ -220,7 +220,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 }
             }
         }
-        
+
         console.sendMessage(String.format("[%s] Disabled Version %s", new Object[]{
             getDescription().getName(), getDescription().getVersion()
         }));
@@ -233,6 +233,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public void loadManagers() {
         if (!messagesFile.exists()) {
             copy(getResource("messages.yml"), messagesFile);
+        }
+        if (!mysqlFile.exists()) {
+            copy(getResource("MySQL.yml"), mysqlFile);
         }
         checkDependencies();
     }
