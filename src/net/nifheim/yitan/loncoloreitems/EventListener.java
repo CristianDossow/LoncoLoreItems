@@ -354,8 +354,8 @@ public class EventListener implements Listener {
                 String enchant = EspecialAtributes.getEnchantGiverPower(item);
                 if (EspecialAtributes.HaveEnchant(itemcliked, enchant)) {
                     player.sendMessage("Este objeto ya posee el encantamiento");
-                } else if (item.getAmount() > 1) {
-                    player.sendMessage("Este objeto solo se puede usar de uno a la vez");
+                } else if (item.getAmount() > 1 && itemcliked.getAmount()>1) {
+                    player.sendMessage("Este objeto solo se puede usar/encantar de uno a la vez");
                 } else {
                 	boolean enchanted=false;
                 	ItemMeta meta = itemcliked.getItemMeta();

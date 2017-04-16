@@ -12,6 +12,7 @@ public class CreatureSpawnListener implements Listener {
 
     @EventHandler
     public void modifyMobHealth(CreatureSpawnEvent event) {
+    	/*
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName())) {
             LivingEntity entity = event.getEntity();
             Location entityLoc = entity.getLocation();
@@ -21,7 +22,7 @@ public class CreatureSpawnListener implements Listener {
                 entity.setMetadata("naturalSpawn", new FixedMetadataValue(Main.plugin, Boolean.valueOf(true)));
             }
 
-            /*if ((ItemLoreStats.plugin.util_WorldGuard != null) /*&& (ItemLoreStats.plugin.util_WorldGuard.entityInLevelRegion(entity))) {
+            if ((ItemLoreStats.plugin.util_WorldGuard != null) /*&& (ItemLoreStats.plugin.util_WorldGuard.entityInLevelRegion(entity))) {
                     String regionName = ItemLoreStats.plugin.util_WorldGuard.getRegionNameFromLocation(entityLoc);
 
                     int minLevelRange = Integer.parseInt(regionName.split("_")[1].split("-")[0]);
@@ -50,7 +51,7 @@ public class CreatureSpawnListener implements Listener {
 
                     entity.setMaxHealth(Double.valueOf(newHealth).intValue());
                     entity.setHealth(Double.valueOf(newHealth).intValue());
-                } else*/ if (Main.plugin.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
+                } else if (Main.plugin.getConfig().getString("npcModifier." + event.getEntity().getWorld().getName()) != null) {
                 String worldName = entity.getWorld().getName();
 
                 Location loc = new Location(entity.getWorld(), Main.plugin.getConfig().getInt("npcModifier." + worldName + ".location.x"), Main.plugin.getConfig().getInt("npcModifier." + worldName + ".location.y"), Main.plugin.getConfig().getInt("npcModifier." + worldName + ".location.z"));
@@ -69,6 +70,6 @@ public class CreatureSpawnListener implements Listener {
                 entity.setMaxHealth(Double.valueOf(newHealth).intValue());
                 entity.setHealth(Double.valueOf(newHealth).intValue());
             }
-        }
+        }*/
     }
 }
