@@ -46,8 +46,8 @@ public class MySQL {
                 + "PRIMARY KEY (`uuid`));";
         String createCharacters
                 = "CREATE TABLE IF NOT EXISTS `" + prefix + "Characters`"
-                + "(`uuid` VARCHAR(50) NOT NULL,"
-                + "`id` INT NOT NULL,"
+                + "(`id` INT NOT NULL AUTO_INCREMENT,"
+                + "`uuid` VARCHAR(50) NOT NULL,"
                 + "`name` VARCHAR (50) NOT NULL,"
                 + "`maxhp` INT,"
                 + "`hp` INT,"
