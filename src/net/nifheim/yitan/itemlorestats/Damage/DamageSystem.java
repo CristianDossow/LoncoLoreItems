@@ -167,10 +167,14 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                     double damage = DirectDamageAmount*(1-(defenderStats.magicPercentArmor* (1-magicPen)) );
                                     //damagerStats.player.sendMessage(defenderStats.magicPercentArmor+"-"+magicPen);
                                     event.setDamage(damage);
+                                    if(util_WorldGuard.playerInPVPRegion((Player)event.getEntity() )){
+                                    	((Player)event.getEntity()).setFireTicks(spell.fireTicks*20);
+                                    }
                                 }
                                 else{
                                 	if ((event.getEntity() instanceof LivingEntity)) {
                                 		event.setDamage(DirectDamageAmount);
+                                		((LivingEntity)event.getEntity()).setFireTicks(spell.fireTicks*20);
                                 	}
                                 }
                                 
@@ -185,10 +189,16 @@ public class DamageSystem implements org.bukkit.event.Listener {
                                                 	ps.UpdateDefence();
                                                 	double damage = AOEDamageAmount*(1-(ps.magicPercentArmor* (1-magicPen)) );
                                                 	((LivingEntity) entity).damage(damage);
+                                                	if(spell.fireTicks>=2){
+                                                		((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
+                                                	}
                                             	}
                                             }
                                             else if((entity instanceof LivingEntity)) {
                                                 ((LivingEntity) entity).damage(AOEDamageAmount);
+                                            	if(spell.fireTicks>=2){
+                                            		((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
+                                            	}
                                             }
                                         }
                                     }

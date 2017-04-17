@@ -62,21 +62,22 @@
             <artifactId>worldguard</artifactId>
             <version>6.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/worldguard-6.2.jar</systemPath>
+            <systemPath>${project.basedir}/libs/worldguard-6.2.jar</systemPath>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.zettelnet</groupId>
             <artifactId>armorweight</artifactId>
             <version>0.3.6</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/ArmorWeight.jar</systemPath>
+            <systemPath>${project.basedir}/libs/ArmorWeight.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.connorlinfoot.actionbarapi</groupId>
             <artifactId>ActionBarAPI</artifactId>
             <version>1.5.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/ActionBarAPI-1.5.2.jar</systemPath>
+            <systemPath>${project.basedir}/libs/ActionBarAPI-1.5.2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>

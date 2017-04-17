@@ -23,10 +23,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    private static final Main plugin = Main.getInstance();
-    private final FileConfiguration config = Main.getInstance().getConfig();
-    private final FileConfiguration sqlfile = plugin.getMySQLFile();
-    private final String prefix = sqlfile.getString("MySQL.Prefix");
+    private static Main plugin = Main.getInstance();
+    //private FileConfiguration config = Main.getInstance().getConfig();
+    //private FileConfiguration sqlfile = plugin.getMySQLFile();
+    //private String prefix = sqlfile.getString("MySQL.Prefix");
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

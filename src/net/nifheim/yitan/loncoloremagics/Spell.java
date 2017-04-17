@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Sound;
 
 import de.slikey.effectlib.util.ParticleEffect;
 
@@ -38,6 +39,10 @@ public class Spell {
 	
 	public int onHitType;
 	
+	Sound soundOnCast;
+	Sound soundOnHit;
+	
+	
 	public Spell(String name, int lvl, int castype, double speed, ParticleEffect hitEffect) {
 		super();
 		this.colorName = ChatColor.GOLD;
@@ -63,6 +68,9 @@ public class Spell {
 		this.particlesAmountOnHit = 6;
 		
 		this.onHitType=1;
+		
+		this.soundOnCast=null;
+		this.soundOnHit=null;
 		
 		lore=new ArrayList<>();
 		particleEffectSphereradio=0;

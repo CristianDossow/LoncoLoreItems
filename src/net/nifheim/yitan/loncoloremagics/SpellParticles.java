@@ -60,6 +60,9 @@ public class SpellParticles extends BukkitRunnable {
 			em2= new EffectManager(instance);
             ParticleEffect peffect=null;
             peffect = spell.hitEffect;
+            if(spell.soundOnCast!=null){
+            	projectile.getLocation().getWorld().playSound(projectile.getLocation(), spell.soundOnHit, 1, 1);
+            }
             if(spell.onHitType ==1){
             	DragonEffect effect = new DragonEffect(em2);
                 effect.particle=peffect;
@@ -80,7 +83,6 @@ public class SpellParticles extends BukkitRunnable {
                 effect.setLocation(projectile.getLocation());
         		effect.delay=0;
         		effect.speed=spell.particleSpeedOnHit;
-        		projectile.getLocation().getWorld().playSound(projectile.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
         		effect.start();
             }
             if(spell.onHitType ==3){

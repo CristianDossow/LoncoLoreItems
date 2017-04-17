@@ -1,6 +1,7 @@
 package net.nifheim.yitan.loncoloremagics;
 
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -28,6 +29,9 @@ public class SpellCast {
                 projectile.setShooter(player);
                 projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
                 setProjectileProperties(projectile, spell, ps);
+                if(spell.soundOnCast!=null){
+                	player.getLocation().getWorld().playSound(projectile.getLocation(), spell.soundOnCast, 1, 1);
+                }
                 BukkitTask task = new SpellParticles(Main.getInstance(),spell,projectile).runTaskTimer(Main.getInstance(), 0, 2);
     		}
     		else{
@@ -68,7 +72,7 @@ public class SpellCast {
         double DDA = spell.directDamageAmount * power;
         double ADA = spell.aoeDamageAmount * power;
 
-        projectile.setFireTicks(spell.fireTicks*20);
+        //projectile.setFireTicks(spell.fireTicks*20);
         projectile.setMetadata("SPELLNAME=", new FixedMetadataValue(Main.getInstance(), spell.name));
         projectile.setMetadata("MAGICPEN=", new FixedMetadataValue(Main.getInstance(), ps.magicArmorPen));
         projectile.setMetadata("DHA=", new FixedMetadataValue(Main.getInstance(), DHA));

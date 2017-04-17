@@ -54,10 +54,16 @@ public class magicProjectileHit{
                                     	ps.UpdateDefence();
                                     	double damage = AOEDamageAmount*(1-(ps.magicPercentArmor* (1-magicPen)) );
                                     	((LivingEntity) entity).damage(damage);
+                                    	if(spell.fireTicks>=2){
+                                    		((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
+                                    	}
                                 	}
                                 }
                                 else if((entity instanceof LivingEntity)) {
                                     ((LivingEntity) entity).damage(AOEDamageAmount);
+                                	if(spell.fireTicks>=2){
+                                		((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
+                                	}
                                 }
                             }
                         }

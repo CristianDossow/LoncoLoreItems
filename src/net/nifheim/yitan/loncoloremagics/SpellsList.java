@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Sound;
 
 import de.slikey.effectlib.util.ParticleEffect;
 
@@ -20,12 +21,14 @@ public class SpellsList {
 		spell.cooldown = 3000;
 		spell.lore.add("Hechizo básico");
 		spell.colorName = ChatColor.RED;
+		spell.soundOnCast=Sound.ENTITY_FIREWORK_LAUNCH;
+		spell.soundOnHit=Sound.ENTITY_PLAYER_BREATH;
 		return spell;
 	}
 	
 	public static Spell fireBall(){
 		Spell spell = new Spell("Bola de Fuego",1,1,1,ParticleEffect.FLAME);
-		spell.directDamageAmount=1.1;
+		spell.directDamageAmount=1.2;
 		spell.particleEffectSphere.add(ParticleEffect.FLAME);
 		spell.particleEffectSphereradio=0.3;
 		spell.lore.add("Hechizo de fuego");
@@ -33,6 +36,31 @@ public class SpellsList {
 		spell.cooldown = 4000;
 		spell.fireTicks=4;
 		spell.colorName = ChatColor.RED;
+		spell.soundOnCast=Sound.ENTITY_GHAST_SHOOT;
+		spell.soundOnHit=Sound.BLOCK_FIRE_AMBIENT;
+		return spell;
+	}
+	public static Spell fireBlast(){
+		Spell spell = new Spell("Estallido de fuego",1,1,1,ParticleEffect.FLAME);
+		spell.directDamageAmount=1.4;
+		spell.aoeDamageAmount=0.5;
+		spell.aoeDamageRange=2;
+		spell.particlesAmount=2;
+		spell.Interval=2;
+		spell.particleEffectSphere.add(ParticleEffect.FLAME);
+		spell.particleEffectSphereradio=0.4;
+		spell.particlesAmountOnHit=40;
+		spell.particleRadioOnhit=2;
+		spell.particleSpeedOnHit=0.04F;
+		spell.onHitType=2;
+		spell.lore.add("Hechizo de fuego poderoso que");
+		spell.lore.add("daña a los seres vivos cercanos");
+		spell.manaCost = 60;
+		spell.cooldown = 5000;
+		spell.fireTicks=4;
+		spell.colorName = ChatColor.RED;
+		spell.soundOnCast=Sound.ENTITY_GHAST_SHOOT;
+		spell.soundOnHit=Sound.ENTITY_GENERIC_EXPLODE;
 		return spell;
 	}
 	public static Spell thunder(){
@@ -48,6 +76,8 @@ public class SpellsList {
 		spell.manaCost = 100;
 		spell.cooldown = 6000;
 		spell.colorName = ChatColor.RED;
+		spell.soundOnCast=Sound.ENTITY_WITHER_SHOOT;
+		spell.soundOnHit=Sound.ENTITY_ZOMBIE_INFECT;
 		return spell;
 	}
 	public static Spell Cataclism(){
@@ -69,6 +99,8 @@ public class SpellsList {
 		spell.manaCost = 250;
 		spell.cooldown = 6000;
 		spell.colorName = ChatColor.DARK_RED;
+		spell.soundOnCast=Sound.ENTITY_GHAST_SHOOT;
+		spell.soundOnHit=Sound.ENTITY_GENERIC_EXPLODE;
 		return spell;
 	}
 	
@@ -78,6 +110,7 @@ public class SpellsList {
 		list.add(fireBall());
 		list.add(thunder());
 		list.add(Cataclism());
+		list.add(fireBlast());
 		return list;
 	}
 	public static Spell getSpell(String name){
