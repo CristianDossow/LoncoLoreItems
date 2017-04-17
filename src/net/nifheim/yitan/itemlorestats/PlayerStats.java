@@ -188,43 +188,332 @@ public class PlayerStats {
         ShowStats(player);
     }
 
-    /**
-     * Set the mana of the player.
-     *
-     * @param mana The mana to set.
-     */
-    public void setMana(double mana) {
-        this.manaCurrent = mana;
-        this.UpdateAll();
-    }
+	public Player getPlayer() {
+		return player;
+	}
 
-    /**
-     * Set the max mana of the player.
-     *
-     * @param maxmana The max mana to set.
-     */
-    public void setMaxMana(double maxmana) {
-        this.manaMax = maxmana;
-        this.UpdateAll();
-    }
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 
-    /**
-     * Set the hp of the player.
-     *
-     * @param hp The hp to set.
-     */
-    public void setHP(double hp) {
-        this.healthCurrent = hp;
-        this.UpdateAll();
-    }
+	public UUID getUuid() {
+		return uuid;
+	}
 
-    /**
-     * Set the max hp of the player.
-     *
-     * @param maxhp The max hp to set.
-     */
-    public void setMaxHP(double maxhp) {
-        this.healthMax = maxhp;
-        this.UpdateAll();
-    }
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getBaseDamage() {
+		return baseDamage;
+	}
+
+	public void setBaseDamage(double baseDamage) {
+		this.baseDamage = baseDamage;
+	}
+
+	public double getMinDamage() {
+		return minDamage;
+	}
+
+	public void setMinDamage(double minDamage) {
+		this.minDamage = minDamage;
+	}
+
+	public double getMaxDamage() {
+		return maxDamage;
+	}
+
+	public void setMaxDamage(double maxDamage) {
+		this.maxDamage = maxDamage;
+	}
+
+	public double getWeaponSpeed() {
+		return weaponSpeed;
+	}
+
+	public void setWeaponSpeed(double weaponSpeed) {
+		this.weaponSpeed = weaponSpeed;
+	}
+
+	public double getArmor() {
+		return armor;
+	}
+
+	public void setArmor(double armor) {
+		this.armor = armor;
+	}
+
+	public double getPercentArmor() {
+		return percentArmor;
+	}
+
+	public void setPercentArmor(double percentArmor) {
+		this.percentArmor = percentArmor;
+	}
+
+	public double getDodge() {
+		return dodge;
+	}
+
+	public void setDodge(double dodge) {
+		this.dodge = dodge;
+	}
+
+	public double getBlock() {
+		return block;
+	}
+
+	public void setBlock(double block) {
+		this.block = block;
+	}
+
+	public double getCritChance() {
+		return critChance;
+	}
+
+	public void setCritChance(double critChance) {
+		this.critChance = critChance;
+	}
+
+	public double getCritDamage() {
+		return critDamage;
+	}
+
+	public void setCritDamage(double critDamage) {
+		this.critDamage = critDamage;
+	}
+
+	public double getHealthCurrent() {
+		return healthCurrent;
+	}
+
+	public void setHealthCurrent(double healthCurrent) {
+		this.healthCurrent = healthCurrent;
+	}
+
+	public double getHealthMax() {
+		return healthMax;
+	}
+
+	public void setHealthMax(double healthMax) {
+		this.healthMax = healthMax;
+	}
+
+	public double getHealthRegen() {
+		return healthRegen;
+	}
+
+	public void setHealthRegen(double healthRegen) {
+		this.healthRegen = healthRegen;
+	}
+
+	public double getLifeSteal() {
+		return lifeSteal;
+	}
+
+	public void setLifeSteal(double lifeSteal) {
+		this.lifeSteal = lifeSteal;
+	}
+
+	public double getReflect() {
+		return reflect;
+	}
+
+	public void setReflect(double reflect) {
+		this.reflect = reflect;
+	}
+
+	public double getFire() {
+		return fire;
+	}
+
+	public void setFire(double fire) {
+		this.fire = fire;
+	}
+
+	public double getIce() {
+		return ice;
+	}
+
+	public void setIce(double ice) {
+		this.ice = ice;
+	}
+
+	public double getPoison() {
+		return poison;
+	}
+
+	public void setPoison(double poison) {
+		this.poison = poison;
+	}
+
+	public double getWither() {
+		return wither;
+	}
+
+	public void setWither(double wither) {
+		this.wither = wither;
+	}
+
+	public double getHarming() {
+		return harming;
+	}
+
+	public void setHarming(double harming) {
+		this.harming = harming;
+	}
+
+	public double getBlind() {
+		return blind;
+	}
+
+	public void setBlind(double blind) {
+		this.blind = blind;
+	}
+
+	public double getXPMultiplier() {
+		return XPMultiplier;
+	}
+
+	public void setXPMultiplier(double xPMultiplier) {
+		XPMultiplier = xPMultiplier;
+	}
+
+	public double getMovementSpeed() {
+		return movementSpeed;
+	}
+
+	public void setMovementSpeed(double movementSpeed) {
+		this.movementSpeed = movementSpeed;
+	}
+
+	public double getManaMax() {
+		return manaMax;
+	}
+
+	public void setManaMax(double manaMax) {
+		this.manaMax = manaMax;
+	}
+
+	public double getManaCurrent() {
+		return manaCurrent;
+	}
+
+	public void setManaCurrent(double manaCurrent) {
+		this.manaCurrent = manaCurrent;
+	}
+
+	public double getManaRegen() {
+		return manaRegen;
+	}
+
+	public void setManaRegen(double manaRegen) {
+		this.manaRegen = manaRegen;
+	}
+
+	public double getSpellCooldownReduction() {
+		return spellCooldownReduction;
+	}
+
+	public void setSpellCooldownReduction(double spellCooldownReduction) {
+		this.spellCooldownReduction = spellCooldownReduction;
+	}
+
+	public double getMagicPower() {
+		return magicPower;
+	}
+
+	public void setMagicPower(double magicPower) {
+		this.magicPower = magicPower;
+	}
+
+	public double getMagicArmor() {
+		return magicArmor;
+	}
+
+	public void setMagicArmor(double magicArmor) {
+		this.magicArmor = magicArmor;
+	}
+
+	public double getMagicPercentArmor() {
+		return magicPercentArmor;
+	}
+
+	public void setMagicPercentArmor(double magicPercentArmor) {
+		this.magicPercentArmor = magicPercentArmor;
+	}
+
+	public double getArmorPen() {
+		return armorPen;
+	}
+
+	public void setArmorPen(double armorPen) {
+		this.armorPen = armorPen;
+	}
+
+	public double getMagicArmorPen() {
+		return magicArmorPen;
+	}
+
+	public void setMagicArmorPen(double magicArmorPen) {
+		this.magicArmorPen = magicArmorPen;
+	}
+
+	public double getStab() {
+		return stab;
+	}
+
+	public void setStab(double stab) {
+		this.stab = stab;
+	}
+
+	public double getStabDamage() {
+		return stabDamage;
+	}
+
+	public void setStabDamage(double stabDamage) {
+		this.stabDamage = stabDamage;
+	}
+
+	public double getLuck() {
+		return Luck;
+	}
+
+	public void setLuck(double luck) {
+		Luck = luck;
+	}
+
+	public long getLastSpellCast() {
+		return lastSpellCast;
+	}
+
+	public void setLastSpellCast(long lastSpellCast) {
+		this.lastSpellCast = lastSpellCast;
+	}
+
+	public long getSpellCastWait() {
+		return spellCastWait;
+	}
+
+	public void setSpellCastWait(long spellCastWait) {
+		this.spellCastWait = spellCastWait;
+	}
+
+	public long getLastMessage() {
+		return lastMessage;
+	}
+
+	public void setLastMessage(long lastMessage) {
+		this.lastMessage = lastMessage;
+	}
+
 }

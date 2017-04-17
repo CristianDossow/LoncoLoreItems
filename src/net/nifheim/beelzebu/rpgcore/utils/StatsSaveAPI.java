@@ -56,10 +56,10 @@ public class StatsSaveAPI {
             double hp = res.getDouble("hp");
             double maxmana = res.getDouble("maxmana");
             double mana = res.getDouble("mana");
-            ps.setHP(hp);
-            ps.setMana(mana);
-            ps.setMaxHP(maxhp);
-            ps.setMaxMana(maxmana);
+            ps.setHealthCurrent(hp);
+            ps.setManaCurrent(mana);
+            ps.setHealthMax(maxhp);
+            ps.setManaMax(maxmana);
         }
     }
 }
