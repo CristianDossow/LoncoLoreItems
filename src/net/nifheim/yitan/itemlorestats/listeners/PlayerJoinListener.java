@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
@@ -24,10 +23,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    private static final Main plugin = Main.getInstance();
-    private final FileConfiguration config = Main.getInstance().getConfig();
-    private final FileConfiguration sqlfile = plugin.getMySQLFile();
-    private final String prefix = sqlfile.getString("MySQL.Prefix");
+    Main plugin;
+    File mysqlFile;
+    FileConfiguration sqlconf;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -85,13 +83,16 @@ public class PlayerJoinListener implements Listener {
         //plugin.activateEnchant.onJoin(playerFinal);
 
         // SQL Stats
+        mysqlFile = new File(plugin.getDataFolder(), "MySQL.yml");
+        sqlconf = YamlConfiguration.loadConfiguration(mysqlFile);
+        String prefix = sqlconf.getString("MySQL.Prefix");
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             try {
                 Player p = event.getPlayer();
                 String name;
                 name = p.getUniqueId().toString();
 
-                Connection c = MySQL.getConnection();
+                Connection c = plugin.mysql.getConnection();
                 Statement check = c.createStatement();
                 ResultSet res = check.executeQuery("SELECT uuid FROM " + prefix + "Data WHERE uuid = '" + name + "';");
                 if (!res.next()) {

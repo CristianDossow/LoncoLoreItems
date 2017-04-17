@@ -69,15 +69,20 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
+    MySQL mysqlc;
+
     public static Main plugin;
-    public final ConsoleCommandSender console = Bukkit.getConsoleSender();
+    public Main instance;
+    public static final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
+    public MySQL mysql = new MySQL(this);
     private PlaceholderAPI placeholderAPI;
     // Files
-    final File messagesFile = new File(getDataFolder(), "messages.yml");
+    private final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
-    File mysqlFile = new File(getDataFolder(), "MySQL.yml");
-    FileConfiguration mysql = YamlConfiguration.loadConfiguration(mysqlFile);
+    public File mysqlFile = new File(getDataFolder(), "MySQL.yml");
+    private final FileConfiguration mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
+    private final int checkdb = mysqlf.getInt("MySQL.Connection Interval") * 1200;
 
     public ActivateEnchant activateEnchant;
 
@@ -125,16 +130,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     BukkitTask fastTasks;
 
+    public static Main getInstance() {
+        return plugin;
+    }
+
     @Override
     public void onEnable() {
         this.loadManagers();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            try {
-                StatsSaveAPI.setAllStats(player);
-            } catch (SQLException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
-            }
-        }
         Locale.setDefault(Locale.ROOT);
 
         PluginManager plma = getServer().getPluginManager();
@@ -198,7 +200,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 }
             }
         }
-
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            try {
+                StatsSaveAPI.setAllStats(player);
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
+            }
+        }
     }
 
     @Override
@@ -232,10 +240,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         }));
     }
 
-    public static Main getInstance() {
-        return plugin;
-    }
-
     public void loadManagers() {
         if (!messagesFile.exists()) {
             copy(getResource("messages.yml"), messagesFile);
@@ -244,26 +248,28 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             copy(getResource("MySQL.yml"), mysqlFile);
         }
         checkDependencies();
-        try {
-            MySQL.SQLConnection();
-        } catch (SQLException e) {
-            Logger.getLogger(Main.class.getName()).log(Level.WARNING, "Something was wrong with the connection, the error code is: " + e.getErrorCode(), e);
-            Bukkit.getScheduler().cancelTasks(Main.getInstance());
-            console.sendMessage(plugin.rep("%prefix% Can't connect to the database, disabling plugin..."));
-            Bukkit.getServer().getPluginManager().disablePlugin(Main.getInstance());
-        }
+        mysql.SQLConnection();
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
+            console.sendMessage(plugin.rep("%prefix% Checking the database connection ..."));
+            if (mysql.getConnection() == null) {
+                console.sendMessage(plugin.rep("%prefix% The database connection is null, reconnecting ..."));
+            } else {
+                console.sendMessage(plugin.rep("%prefix% The connection to the database is still active."));
+            }
+        }, 0L, checkdb);
+        
     }
 
     public void checkDependencies() {
         if (Bukkit.getServer().getPluginManager().getPlugin("ActionBarAPI") != null) {
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into ActionBarAPI."));
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into ActionBarAPI."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find ActionBarAPI, you need this API to run this plugin ..."));
             console.sendMessage(rep("                 &7You can download this in &chttps://www.spigotmc.org/resources/1315/"));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
         if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into EffectLib."));
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into EffectLib."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find EffectLib, you need this API to run this plugin ..."));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
@@ -271,7 +277,15 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             placeholderAPI = new PlaceholderAPI(this);
             placeholderAPI.hook();
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into PlaceholderAPI."));
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into PlaceholderAPI."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find PlaceholderAPI."));
+        }
+        if (Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI") != null) {
+            MVdWPlaceholderAPIHook.hook(this);
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into MVdWPlaceholderAPI."));
+        } else {
+            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find MVdWPlaceholderAPI."));
         }
         if (getWorldGuard() != null) {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into WorldGuard."));
@@ -287,12 +301,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into Citizens."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find Citizens!"));
-        }
-        if (Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI") != null) {
-            MVdWPlaceholderAPIHook.hook(this);
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Succesfully found and hooked into MVdWPlaceholderAPI."));
-        } else {
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find MVdWPlaceholderAPI."));
         }
     }
 
@@ -888,10 +896,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public FileConfiguration getMessages() {
         return messages;
-    }
-
-    public static FileConfiguration getMySQLFile() {
-        return getInstance().mysql;
     }
 
     public PlayerStats getPlayerStats(Player player) {
