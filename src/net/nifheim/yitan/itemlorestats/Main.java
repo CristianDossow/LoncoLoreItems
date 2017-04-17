@@ -23,7 +23,6 @@ import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
 
 import net.citizensnpcs.Citizens;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.zettelnet.armorweight.ArmorWeightPlugin;
 import net.milkbowl.vault.Vault;
 
 import java.io.File;
@@ -31,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
 import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
+import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 
 import net.nifheim.yitan.itemlorestats.listeners.*;
 
@@ -71,13 +72,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public static Main plugin;
     public final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
-    private static MySQL mysql;
     private PlaceholderAPI placeholderAPI;
     // Files
     final File messagesFile = new File(getDataFolder(), "messages.yml");
     private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
-    final File mysqlFile = new File(getDataFolder(), "MySQL.yml");
-    private final FileConfiguration mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
+    File mysqlFile = new File(getDataFolder(), "MySQL.yml");
+    FileConfiguration mysql = YamlConfiguration.loadConfiguration(mysqlFile);
 
     public ActivateEnchant activateEnchant;
 
@@ -112,7 +112,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Util_Format util_Format = new Util_Format();
     public Util_GetResponse util_GetResponse = new Util_GetResponse();
     Util_Random util_Random = new Util_Random();
-    Util_ArmourWeight util_ArmourWeight = new Util_ArmourWeight(plugin);
 
     SpigotStatCapWarning spigotStatCapWarning = new SpigotStatCapWarning();
 
@@ -129,7 +128,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     @Override
     public void onEnable() {
         this.loadManagers();
-
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            try {
+                StatsSaveAPI.setAllStats(player);
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
+            }
+        }
         Locale.setDefault(Locale.ROOT);
 
         PluginManager plma = getServer().getPluginManager();
@@ -198,6 +203,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelTasks(this);
         for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
             m.getValue().removeAll();
         }
@@ -238,6 +244,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             copy(getResource("MySQL.yml"), mysqlFile);
         }
         checkDependencies();
+        try {
+            MySQL.SQLConnection();
+        } catch (SQLException e) {
+            Logger.getLogger(Main.class.getName()).log(Level.WARNING, "Something was wrong with the connection, the error code is: " + e.getErrorCode(), e);
+            Bukkit.getScheduler().cancelTasks(Main.getInstance());
+            console.sendMessage(plugin.rep("%prefix% Can't connect to the database, disabling plugin..."));
+            Bukkit.getServer().getPluginManager().disablePlugin(Main.getInstance());
+        }
     }
 
     public void checkDependencies() {
@@ -289,17 +303,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         } catch (NumberFormatException nfe) {
         }
         return false;
-    }
-
-    public ArmorWeightPlugin getArmourWeight() {
-        Plugin ArmorWeightPlugin = Bukkit.getServer().getPluginManager().getPlugin("ArmorWeight");
-
-        if ((ArmorWeightPlugin == null) || (!(ArmorWeightPlugin instanceof ArmorWeightPlugin))) {
-            return null;
-        }
-
-        this.util_ArmourWeight = new Util_ArmourWeight(plugin);
-        return (ArmorWeightPlugin) ArmorWeightPlugin;
     }
 
     public WorldGuardPlugin getWorldGuard() {
@@ -887,8 +890,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         return messages;
     }
 
-    public FileConfiguration getMySQLFile() {
-        return mysqlf;
+    public static FileConfiguration getMySQLFile() {
+        return getInstance().mysql;
     }
 
     public PlayerStats getPlayerStats(Player player) {

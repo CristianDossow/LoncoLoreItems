@@ -5,3 +5,4 @@ MySQL:
     User: root
     Password: password
     Prefix: 'RPG_'
+    Connection Interval: 5

@@ -9,7 +9,6 @@ import net.nifheim.yitan.itemlorestats.Main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  *
@@ -17,22 +16,41 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class MySQL {
 
-    private static final FileConfiguration mysqlconfig = Main.getInstance().getMySQLFile();
-    final ConsoleCommandSender console = Bukkit.getConsoleSender();
+    private static final Main plugin = Main.getInstance();
+    private static final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private static final String host = mysqlconfig.getString("MySQL.Host");
-    private static final int port = mysqlconfig.getInt("MySQL.Port");
-    private static final String name = mysqlconfig.getString("MySQL.Database");
-    private static final String user = mysqlconfig.getString("MySQL.User");
-    private static final String passwd = mysqlconfig.getString("MySQL.Password");
-    private static final String prefix = mysqlconfig.getString("MySQL.Prefix");
+    private static final String host = Main.getMySQLFile().getString("MySQL.Host");
+    private static final int port = Main.getMySQLFile().getInt("MySQL.Port");
+    private static final String name = Main.getMySQLFile().getString("MySQL.Database");
+    private static final String user = Main.getMySQLFile().getString("MySQL.User");
+    private static final String passwd = Main.getMySQLFile().getString("MySQL.Password");
+    private static final String prefix = Main.getMySQLFile().getString("MySQL.Prefix");
+    private static final int checkdb = Main.getMySQLFile().getInt("MySQL.Connection Interval") * 1200;
     private static Connection c;
 
     public static Connection getConnection() {
         return c;
     }
 
-    public static void Connect() throws SQLException {
+    public static void SQLConnection() throws SQLException {
+        Connect();
+
+        if (!getConnection().isClosed()) {
+            console.sendMessage(plugin.rep("%prefix% Plugin conected sucesful to the MySQL."));
+        }
+
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
+            console.sendMessage(plugin.rep("%prefix% Checking the database connection ..."));
+            if (getConnection() == null) {
+                console.sendMessage(plugin.rep("%prefix% The database connection is null, reconnecting ..."));
+                Reconnect();
+            } else {
+                console.sendMessage(plugin.rep("%prefix% The connection to the database is still active."));
+            }
+        }, 0L, checkdb);
+    }
+
+    private static void Connect() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {

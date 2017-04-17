@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.nifheim.beelzebu.rpgcore.utils.MySQL;
+import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 import org.bukkit.Bukkit;
@@ -23,10 +24,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    private static Main plugin = Main.getInstance();
-    //private FileConfiguration config = Main.getInstance().getConfig();
-    //private FileConfiguration sqlfile = plugin.getMySQLFile();
-    //private String prefix = sqlfile.getString("MySQL.Prefix");
+    private static final Main plugin = Main.getInstance();
+    private final FileConfiguration config = Main.getInstance().getConfig();
+    private final FileConfiguration sqlfile = plugin.getMySQLFile();
+    private final String prefix = sqlfile.getString("MySQL.Prefix");
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -84,34 +85,32 @@ public class PlayerJoinListener implements Listener {
         //plugin.activateEnchant.onJoin(playerFinal);
 
         // SQL Stats
-//        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-//            try {
-//                Player p = event.getPlayer();
-//                String name;
-//                if (config.getBoolean("Online Mode")) {
-//                    name = p.getUniqueId().toString();
-//                } else {
-//                    name = p.getName();
-//                }
-//
-//                Connection c = MySQL.getConnection();
-//                Statement check = c.createStatement();
-//                ResultSet res = check.executeQuery("SELECT uuid FROM " + prefix + "Data WHERE uuid = '" + name + "';");
-//                if (!res.next()) {
-//                    Statement update = c.createStatement();
-//                    update.executeUpdate("INSERT INTO " + prefix + "Data VALUES ('" + name + "', '" + p.getName() + "', 0, " + System.currentTimeMillis() + ");");
-//                } else {
-//                    Statement update = c.createStatement();
-//                    update.executeUpdate("UPDATE " + prefix + "Data SET nick = " + p.getName() + " WHERE uuid = '" + name + "';");
-//                }
-//
-//            } catch (SQLException ex) {
-//                if (ex.getSQLState().equals("closed")) {
-//                    Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Seems that the database connection is closed.");
-//                } else {
-//                    Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Something was wrong executing this query, the error code is: " + ex.getErrorCode(), ex.getCause());
-//                }
-//            }
-//        }, 5L);
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+            try {
+                Player p = event.getPlayer();
+                String name;
+                name = p.getUniqueId().toString();
+
+                Connection c = MySQL.getConnection();
+                Statement check = c.createStatement();
+                ResultSet res = check.executeQuery("SELECT uuid FROM " + prefix + "Data WHERE uuid = '" + name + "';");
+                if (!res.next()) {
+                    Statement update = c.createStatement();
+                    update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES ('null, " + name + "', '" + p.getName() + "', 20, 1, 100, 0, 0, 0, 0);");
+                    StatsSaveAPI.setAllStats(p);
+                } else {
+                    Statement update = c.createStatement();
+                    //update.executeUpdate("UPDATE " + prefix + "Data SET nick = " + p.getName() + " WHERE uuid = '" + name + "';");
+                    StatsSaveAPI.setAllStats(p);
+                }
+
+            } catch (SQLException ex) {
+                if (ex.getSQLState().equals("closed")) {
+                    Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Seems that the database connection is closed.");
+                } else {
+                    Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Something was wrong executing this query, the error code is: " + ex.getErrorCode(), ex.getCause());
+                }
+            }
+        }, 5L);
     }
 }
