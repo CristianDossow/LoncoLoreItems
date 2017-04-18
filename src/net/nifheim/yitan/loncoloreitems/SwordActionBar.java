@@ -30,6 +30,7 @@ public class SwordActionBar extends BukkitRunnable {
                 if (weaponspeed >= 1) {
                     if (instance.damagefix.IsAttackInCooldown(player.getUniqueId())) {
                         double power = instance.damagefix.getAttackpower(player);
+                        instance.console.sendMessage(player.getPlayer().getName());
                         ActionBarAPI.sendActionBar(player.getPlayer(), "§e§lPoder: §a§l" + df.format(power * 100) + "%", 10);
                     } else {
                         ActionBarAPI.sendActionBar(player.getPlayer(),"§e§lPoder: §cListo!", 40);
