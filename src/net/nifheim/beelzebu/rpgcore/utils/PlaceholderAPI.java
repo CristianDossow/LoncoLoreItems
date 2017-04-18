@@ -21,10 +21,10 @@ public class PlaceholderAPI extends EZPlaceholderHook {
             return "Player is needed!";
         }
         if (str.equals("mana")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).getManaCurrent()));
+            return String.valueOf(df.format(plugin.getPlayerStats(p).manaCurrent));
         }
         if (str.equals("mana_max")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).getMaxMana()));
+            return String.valueOf(df.format(plugin.getPlayerStats(p).manaMax));
         } else {
             return "Invalid Placeholder";
         }
