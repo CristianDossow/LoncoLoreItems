@@ -1,5 +1,7 @@
 package net.nifheim.yitan.loncoloremagics;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.LlamaSpit;
@@ -8,12 +10,16 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.SpectralArrow;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Scoreboard;
+import org.inventivetalent.glow.GlowAPI;
 
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 import net.nifheim.yitan.loncoloreitems.SwordActionBar;
 
 public class SpellCast {
+	
+	
 
     public static void spellBuilder(Spell spell, Player player) {
     	PlayerStats ps = Main.plugin.getPlayerStats(player);
@@ -56,11 +62,14 @@ public class SpellCast {
 
         LlamaSpit projectile = (LlamaSpit) player.getWorld().spawn(loc, LlamaSpit.class);
         projectile.setGravity(false);
-        //projectile.setGlowingTicks(0);
-        //projectile.setGlowing(true);
-        //projectile.setMetadata("ILS_DragonFireball", new FixedMetadataValue(Main.getInstance(), player.getName()));
-        return projectile;
+        //GlowAPI.setGlowing(projectile, GlowAPI.Color.DARK_RED, Bukkit.getOnlinePlayers());
+        //Main.scoreboard.getTeam("RedCT").addEntry(projectile.getUniqueId().toString());
+        //projectile.setCustomName("asdasd1");
+        //Main.scoreboard.getTeam("RedCT").addEntry(projectile.getCustomName());
 
+        
+        projectile.setGlowing(true);
+        return projectile;
     }
 
     public static void setProjectileProperties(Projectile projectile, Spell spell, PlayerStats ps) {

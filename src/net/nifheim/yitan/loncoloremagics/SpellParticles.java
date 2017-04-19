@@ -45,7 +45,6 @@ public class SpellParticles extends BukkitRunnable {
     		effect.start();
         	}
         }
-        projectile.setGlowing(true);
     }
 	
 	@Override

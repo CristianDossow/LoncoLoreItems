@@ -66,6 +66,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Scoreboard;
 
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
@@ -127,6 +128,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Lore_Com lore_Com = new Lore_Com();
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
+    
+    static public Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
 
     BukkitTask fastTasks;
 
@@ -186,7 +189,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         this.spigotStatCapWarning.updateSpigotValues();
 
-        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 20, 20);
+        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 10, 10);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
@@ -207,10 +210,19 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
             }
         }
+        scoreboard.registerNewTeam("BlueCT");
+        scoreboard.registerNewTeam("RedCT");
+        scoreboard.registerNewTeam("YellowCT");
+        scoreboard.getTeam("BlueCT").setPrefix(ChatColor.BLUE + "");
+        scoreboard.getTeam("RedCT").setPrefix(ChatColor.RED + "");
+        scoreboard.getTeam("YellowCT").setPrefix(ChatColor.YELLOW + "");
     }
 
     @Override
     public void onDisable() {
+        scoreboard.getTeam("BlueCT").unregister();
+        scoreboard.getTeam("RedCT").unregister();
+        scoreboard.getTeam("YellowCT").unregister();
         Bukkit.getScheduler().cancelTasks(this);
         for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
             m.getValue().removeAll();
