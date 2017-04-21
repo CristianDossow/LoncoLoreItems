@@ -24,7 +24,7 @@ public class MainFastRunnable extends BukkitRunnable {
 	public void run() {
 		for(Player player: Bukkit.getOnlinePlayers()){
 			PlayerStats ps = instance.getPlayerStats(player);
-			ps.ManaRegen();
+			ps.ManaRegen(0.25);
 			float progress= (float) (ps.manaCurrent/ps.manaMax);
 			String barText = (ChatColor.BLUE+""+ChatColor.BOLD+"Maná: "+ChatColor.BLUE.AQUA+(int)ps.manaCurrent+" / "+(int)ps.manaMax 
 					+ChatColor.DARK_RED+""+ChatColor.BOLD+" Vida: "+ChatColor.RED+(int)ps.player.getHealth()+" / "+(int)ps.player.getMaxHealth()

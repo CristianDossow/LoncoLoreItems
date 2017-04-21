@@ -156,11 +156,12 @@ public class PlayerStats {
         this.spellCooldownReduction = PlayerStatsFormules.getCdReductionStat(player);
     }
 
-    public void ManaRegen() {
+    public void ManaRegen(Double multiplier) {
+    	double manaRegen = this.manaRegen*multiplier;
         if (manaCurrent + manaRegen > manaMax) {
             this.manaCurrent = this.manaMax;
         } else {
-            this.manaCurrent = this.manaCurrent + this.manaRegen;
+            this.manaCurrent = this.manaCurrent + manaRegen;
         }
     }
 

@@ -189,7 +189,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         this.spigotStatCapWarning.updateSpigotValues();
 
-        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 10, 10);
+        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 5, 5);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
