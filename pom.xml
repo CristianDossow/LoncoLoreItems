@@ -58,11 +58,6 @@
             <version>1.11.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-    	<dependency>
-			<groupId>org.inventivetalent</groupId>
-			<artifactId>glowapi</artifactId>
-			<version>1.4.4</version>
-		</dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizens</artifactId>

@@ -76,14 +76,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public Main instance;
     public static final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
-    public MySQL mysql = new MySQL(this);
+    public static MySQL mysql;
     private PlaceholderAPI placeholderAPI;
     // Files
     private final File messagesFile = new File(getDataFolder(), "messages.yml");
-    private final FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
+    public static FileConfiguration messages ;
     public File mysqlFile = new File(getDataFolder(), "MySQL.yml");
-    private final FileConfiguration mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
-    private final int checkdb = mysqlf.getInt("MySQL.Connection Interval") * 1200;
+    public static FileConfiguration mysqlf;
+    public static int checkdb;
 
     public ActivateEnchant activateEnchant;
 
@@ -129,7 +129,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
     
-    static public Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
+    static public Scoreboard scoreboard;
 
     BukkitTask fastTasks;
 
@@ -139,9 +139,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.loadManagers();
         Locale.setDefault(Locale.ROOT);
-
+        messages = YamlConfiguration.loadConfiguration(messagesFile);
+        mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
+        checkdb = mysqlf.getInt("MySQL.Connection Interval") * 1200;
+        mysql = new MySQL(this);
+        this.loadManagers();
+        
+        
         PluginManager plma = getServer().getPluginManager();
 
         //New events clases
@@ -210,19 +215,23 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
             }
         }
+        scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
         scoreboard.registerNewTeam("BlueCT");
         scoreboard.registerNewTeam("RedCT");
         scoreboard.registerNewTeam("YellowCT");
         scoreboard.getTeam("BlueCT").setPrefix(ChatColor.BLUE + "");
         scoreboard.getTeam("RedCT").setPrefix(ChatColor.RED + "");
         scoreboard.getTeam("YellowCT").setPrefix(ChatColor.YELLOW + "");
+        
     }
 
     @Override
     public void onDisable() {
-        scoreboard.getTeam("BlueCT").unregister();
-        scoreboard.getTeam("RedCT").unregister();
-        scoreboard.getTeam("YellowCT").unregister();
+    	if(scoreboard!=null){
+            scoreboard.getTeam("BlueCT").unregister();
+            scoreboard.getTeam("RedCT").unregister();
+            scoreboard.getTeam("YellowCT").unregister();
+    	}
         Bukkit.getScheduler().cancelTasks(this);
         for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
             m.getValue().removeAll();
@@ -277,7 +286,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into ActionBarAPI."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find ActionBarAPI, you need this API to run this plugin ..."));
-            console.sendMessage(rep("                 &7You can download this in &chttps://www.spigotmc.org/resources/1315/"));
+            console.sendMessage(rep("&7You can download this in &chttps://www.spigotmc.org/resources/1315/"));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
         if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
@@ -901,9 +910,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public String rep(String str) {
-        return str
-                .replaceAll("%prefix%", getMessages().getString("Prefix"))
-                .replaceAll("&", "§");
+    	if(str==null){
+    		return "";
+    	}
+        return str.replaceAll("%prefix%", getMessages().getString("Prefix")).replaceAll("&", "§");
     }
 
     public FileConfiguration getMessages() {

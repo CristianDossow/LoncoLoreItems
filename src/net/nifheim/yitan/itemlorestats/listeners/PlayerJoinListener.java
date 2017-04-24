@@ -83,7 +83,8 @@ public class PlayerJoinListener implements Listener {
         //plugin.activateEnchant.onJoin(playerFinal);
 
         // SQL Stats
-        sqlconf = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
+        //sqlconf = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
+        sqlconf = Main.mysqlf;
         String prefix = sqlconf.getString("MySQL.Prefix");
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             try {
