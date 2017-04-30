@@ -260,7 +260,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
             }
         }
     }
-
+    /*
     @EventHandler
     public void onLightningStrike(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.LIGHTNING))
@@ -289,7 +289,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
             }
         }
     }
-
+    */
     @EventHandler
     public void onMagic(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.MAGIC))

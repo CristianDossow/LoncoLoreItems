@@ -1,22 +1,21 @@
  package net.nifheim.yitan.itemlorestats.Enchants;
  
- import net.nifheim.yitan.itemlorestats.Durability.Durability;
-import net.nifheim.yitan.itemlorestats.CharacterSheet;
- import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.Main;
- import net.nifheim.yitan.itemlorestats.SetBonuses;
- import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
- import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
- import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
- import net.nifheim.yitan.itemlorestats.Util.Util_Format;
- import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
- import net.nifheim.yitan.itemlorestats.Util.Util_Random;
- import java.util.HashMap;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
- import org.bukkit.Bukkit;
- import org.bukkit.configuration.file.FileConfiguration;
- import org.bukkit.entity.LivingEntity;
- import org.bukkit.entity.Player;
+import net.nifheim.yitan.itemlorestats.GearStats;
+import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
+import net.nifheim.yitan.itemlorestats.SetBonuses;
+import net.nifheim.yitan.itemlorestats.Durability.Durability;
+import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
+import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
+import net.nifheim.yitan.itemlorestats.Util.Util_Format;
+import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
+import net.nifheim.yitan.itemlorestats.Util.Util_Random;
+import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  
  public class Block
  {
@@ -31,34 +30,39 @@ import net.nifheim.yitan.itemlorestats.CharacterSheet;
    Util_GetResponse util_GetResponse = new Util_GetResponse();
    Util_Random util_Random = new Util_Random();
    
-   public boolean blockChanceOnHit(LivingEntity getDefender, boolean isTool) {
-     if (this.gearStats.getBlockGear(getDefender) + this.gearStats.getBlockItemInHand(Main.plugin.itemInMainHand(getDefender)) + this.gearStats.getBlockItemInHand(Main.plugin.itemInOffHand(getDefender)) <= 0.0D) { return false;
-     }
-     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getDefender) + ".blo", Main.plugin.getConfig().getInt("secondaryStats.block.internalCooldown"))) {
-       if ((getDefender instanceof org.bukkit.entity.Player)) {
-         Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getDefender) + ".blo", Long.valueOf(System.currentTimeMillis()));
+   public boolean checkBlock(EntityDamageByEntityEvent e ,Entity getAttacker ,Entity getDefender, PlayerStats defenderStats) {
+	   if (blockChanceOnHit(getDefender, defenderStats)) {
+		   if (((getAttacker instanceof Player))
+	               && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyBlockedAttack"))) {
+	           ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyBlockSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
+	       }
+	       if (((getDefender instanceof Player))
+	               && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.blockAttack"))) {
+	           ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.BlockSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
+	           ((Player) getDefender).addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SLOW, 30, 1));
+	       }
+	       
+	       e.setDamage(0);
+	       e.setCancelled(true);
+	       return true;
+	   }
+	   return false;
+
+   }
+   
+   public boolean blockChanceOnHit(Entity getDefender, PlayerStats defenderStats) {
+	   double blockPercent = 0;
+	   if(getDefender instanceof Player && defenderStats !=null){
+		   blockPercent = defenderStats.block;
+	   }
+       
+       if (blockPercent > 1) {
+         blockPercent = 1;
        }
        
-       double blockPercent = 0.0D;
-
-       if (isTool) {
-         blockPercent = this.util_Format.format(this.gearStats.getBlockGear(getDefender) + this.gearStats.getBlockItemInHand(Main.plugin.itemInMainHand(getDefender)) + this.gearStats.getBlockItemInHand(Main.plugin.itemInMainHand(getDefender)));
-			   
-                } else {
-                 CharacterSheet stats = new CharacterSheet();
-         blockPercent = stats.getBlockValuedouble((Player) getDefender);
-       }
-
-       if (blockPercent > 100.0D) {
-         blockPercent = 100.0D;
-       }
-       
-       if (blockPercent >= this.util_Random.random(100)) {
+       if (blockPercent >= Math.random()) {
          return true;
-      }
+       }
        return false;
-     }
-     
-     return false;
    }
  }

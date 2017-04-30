@@ -58,6 +58,7 @@ public class PlayerStats {
         this.uuid = player.getUniqueId();
         this.name = player.getName();
         this.manaCurrent = 0;
+        this.baseDamage = 1;
         this.lastSpellCast = System.currentTimeMillis();
         this.spellCastWait = System.currentTimeMillis();
         this.lastMessage = System.currentTimeMillis();
@@ -92,8 +93,8 @@ public class PlayerStats {
     }
 
     public void UpdateDamage() {
-        this.minDamage = PlayerStatsFormules.getDamageGearStat(player)[0];
-        this.maxDamage = PlayerStatsFormules.getDamageGearStat(player)[1];
+        this.minDamage = this.baseDamage + PlayerStatsFormules.getDamageGearStat(player)[0];
+        this.maxDamage = this.baseDamage + PlayerStatsFormules.getDamageGearStat(player)[1];
     }
 
     public void UpdateMagicArmorPen() {

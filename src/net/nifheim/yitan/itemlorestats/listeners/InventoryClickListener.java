@@ -2,15 +2,51 @@ package net.nifheim.yitan.itemlorestats.listeners;
 
 import net.nifheim.yitan.itemlorestats.Main;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryClickListener implements Listener {
 
+	@EventHandler
+    public void ItemToStack(InventoryClickEvent event) {
+		/*
+		Player player = (Player) event.getWhoClicked();
+		if(event.getCurrentItem().getType().equals(Material.DIAMOND_HOE)&&event.getCurrentItem().getDurability()!=0 && event.getClick().equals(ClickType.LEFT)){
+			if(event.getCursor()!=null && event.getCurrentItem()!=null){
+				if(event.getCursor().isSimilar(event.getCurrentItem())){
+					
+	        		if(event.getCurrentItem().getAmount()+event.getCursor().getAmount()>64){
+	        			int dif =64 - event.getCurrentItem().getAmount() ;
+	        			//event.getCurrentItem().setAmount(event.getCurrentItem().getAmount()+dif);
+	        			//event.getCursor().setAmount(event.getCursor().getAmount()-dif);
+	        			ItemStack c1 = event.getCurrentItem().clone();
+	        			c1.setAmount(64);
+	        			ItemStack c2 = event.getCursor().clone();
+	        			c2.setAmount(dif);
+	        			//event.setCancelled(true);
+	        			event.setCurrentItem(c1);
+	        			event.setCursor(c2);
+	        			event.setCancelled(true);
+	        		}else{
+	        			event.getCursor().setAmount(event.getCurrentItem().getAmount()+event.getCursor().getAmount());
+	        			ItemStack c1 = event.getCurrentItem().clone();
+	        			c1.setAmount(event.getCursor().getAmount());
+	        			//event.getCursor().setAmount(0);
+	        			event.setCurrentItem(c1);
+	        			player.setItemOnCursor(null);
+	        			event.setCancelled(true);
+	        		}
+	        		
+				}
+			}
+		}*/
+	}
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
@@ -28,7 +64,8 @@ public class InventoryClickListener implements Listener {
                     || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
                     || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) {
                 Player player = (Player) event.getWhoClicked();
-
+                
+                
                 if (event.getCurrentItem() != null) {
                     ItemStack item = event.getCursor().clone();
 

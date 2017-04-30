@@ -84,7 +84,7 @@ public class DamageFix {
 
             return damage;
         }
-
+        /*
         if ((entity instanceof Projectile)) {
             Projectile projectile = (Projectile) entity;
             if (!(projectile.getShooter() instanceof Entity)) {
@@ -121,7 +121,7 @@ public class DamageFix {
                     }
                 }
             }
-        }
+        }*/
         return damage;
     }
 }

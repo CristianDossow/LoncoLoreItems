@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
+import net.nifheim.yitan.loncoloreitems.ItemCategory;
 
 public class PlayerStatsFormules {
 	
@@ -125,34 +126,35 @@ public class PlayerStatsFormules {
 	}
 	
 	static public double[] getDoubleGearStat(Player player, String stat) {
-        double MinValue = 1;
-        double MaxValue = 1;
+        double MinValue = 0;
+        double MaxValue = 0;
         if (player != null) {
             if (player.getEquipment() != null) {
 
                 List<ItemStack> arrayOfItemStack = new ArrayList<>();
                 arrayOfItemStack.addAll(Arrays.asList(player.getEquipment().getArmorContents()));
-                arrayOfItemStack.add(player.getEquipment().getItemInMainHand());
-                if(!stat.equals(damage)){
-                    arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                if(!stat.equals(damage) && ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
+                	arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
                 }
-                else{
-                	double mainSpeed = 1;
-                	double offSpeed = 1;
-                	mainSpeed = getWeaponSpeedStat(player.getEquipment().getItemInMainHand());
-                	offSpeed = getWeaponSpeedStat(player.getEquipment().getItemInOffHand());
-                	double difSpeed = (mainSpeed/offSpeed)*0.5;
-                	MinValue = MinValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand())[0])*difSpeed;
-                    MaxValue = MaxValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand())[1])*difSpeed;
-                    
+                if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInMainHand())||ItemCategory.isBow(player.getEquipment().getItemInMainHand())){
+                	arrayOfItemStack.add(player.getEquipment().getItemInMainHand());
                 }
-                
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
                         MinValue = MinValue + getDoubleStat(stat,gear)[0];
                         MaxValue = MaxValue + getDoubleStat(stat,gear)[1];
                     }
                 }
+            }
+            else{
+            	double mainSpeed = 1;
+            	double offSpeed = 1;
+            	mainSpeed = getWeaponSpeedStat(player.getEquipment().getItemInMainHand());
+            	offSpeed = getWeaponSpeedStat(player.getEquipment().getItemInOffHand());
+            	double difSpeed = (mainSpeed/offSpeed)*0.5;
+            	MinValue = MinValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand())[0])*difSpeed;
+                MaxValue = MaxValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand())[1])*difSpeed;
+                
             }
         }
         double[] values = {MinValue, MaxValue};
@@ -194,8 +196,12 @@ public class PlayerStatsFormules {
 
                 List<ItemStack> arrayOfItemStack = new ArrayList<>();
                 arrayOfItemStack.addAll(Arrays.asList(player.getEquipment().getArmorContents()));
-                arrayOfItemStack.add(player.getEquipment().getItemInMainHand());
-                arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
+                	arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                }
+                if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInMainHand())||ItemCategory.isBow(player.getEquipment().getItemInMainHand())){
+                	arrayOfItemStack.add(player.getEquipment().getItemInMainHand());
+                }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
                     	value = value + getStat(stat,gear);

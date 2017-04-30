@@ -50,6 +50,10 @@
             <id>elmakers-repo</id>
             <url>http://maven.elmakers.com/repository/ </url>
         </repository>
+		<repository>
+			<id>betonquest-repo</id>
+			<url>http://betonquest.betoncraft.pl/mvn</url>
+		</repository>
     </repositories>
     <dependencies>
     	<dependency>
@@ -104,6 +108,11 @@
             <artifactId>worldedit-bukkit</artifactId>
             <version>6.1.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+			<groupId>net.elseland.xikage.MythicMobs</groupId>
+			<artifactId>mythicmobs</artifactId>
+			<version>4.0.1</version>
+		</dependency>
     </dependencies>
     <build>
         <finalName>${project.name}</finalName>

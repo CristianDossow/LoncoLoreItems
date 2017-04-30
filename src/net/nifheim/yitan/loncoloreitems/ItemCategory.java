@@ -38,11 +38,23 @@ public class ItemCategory {
 			return true;
 		return false;
 	}
-	static public boolean isSword(ItemStack item){
-		if(Main.plugin.isSword(item))
+	static public boolean isSword(ItemStack item) {
+        return (item.getType().equals(Material.WOOD_SWORD)) || (item.getType().equals(Material.STONE_SWORD)) || (item.getType().equals(Material.IRON_SWORD)) || (item.getType().equals(Material.GOLD_SWORD)) || (item.getType().equals(Material.DIAMOND_SWORD));
+    }
+	static public boolean isAxe(ItemStack item) {
+        return (item.getType().equals(Material.WOOD_AXE)) || (item.getType().equals(Material.STONE_AXE)) || (item.getType().equals(Material.IRON_AXE)) || (item.equals(Material.GOLD_AXE)) || (item.getType().equals(Material.DIAMOND_AXE));
+    }
+	static public boolean isMelle(ItemStack item){
+		if(isSword(item)  || isAxe(item) )
+		{
 			return true;
-		if(Main.plugin.isAxe(item))
+		}
+		return false;
+	}
+	static public boolean isSwordOrShield(ItemStack item){
+		if(isMelle(item) || isShield(item)){
 			return true;
+		}
 		return false;
 	}
 	static public boolean isBow(ItemStack item){
@@ -69,7 +81,7 @@ public class ItemCategory {
 		if(type.matches(allweapontype.toLowerCase().replaceAll(languageRegex, "")))
 			return isAnyWeapon(item);
 		if(type.matches(swordtype.toLowerCase().replaceAll(languageRegex, "")))
-			return isSword(item);
+			return isMelle(item);
 		if(type.matches(bowtype.toLowerCase().replaceAll(languageRegex, "")))
 			return isBow(item);
 		if(type.matches(anytype.toLowerCase().replaceAll(languageRegex, "")))

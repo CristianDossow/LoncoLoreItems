@@ -1,7 +1,11 @@
 package net.nifheim.yitan.itemlorestats.listeners;
 
 import net.nifheim.yitan.itemlorestats.Main;
+
+import java.util.Map.Entry;
+
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +15,29 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class PlayerPickupItemListener implements Listener {
 
+    @EventHandler
+    public void ItemToStack(PlayerPickupItemEvent event) {
+        Player player = event.getPlayer();
+        ItemStack item = event.getItem().getItemStack();
+        if(item.getType().equals(Material.DIAMOND_HOE)&&item.getDurability()!=0){
+            for( Entry<Integer, ? extends ItemStack> entry : player.getInventory().all(item.getType()).entrySet()){
+            	if(item.getAmount()>0&&entry.getValue().isSimilar(item)){
+            		if(entry.getValue().getAmount()+item.getAmount()>64){
+            			int dif =64 - entry.getValue().getAmount() ;
+            			entry.getValue().setAmount(entry.getValue().getAmount()+dif);
+            			event.getItem().getItemStack().setAmount(item.getAmount()-dif);
+            		}else{
+            			entry.getValue().setAmount(entry.getValue().getAmount()+item.getAmount());
+            			event.getItem().getItemStack().setAmount(0);
+            			event.getItem().remove();
+            			
+            		}
+            		event.setCancelled(true);
+            	}
+            }
+        }
+    }
+	
     @EventHandler
     public void onPickupCustomItem(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();

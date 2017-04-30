@@ -286,7 +286,9 @@ public class LoreItemMaker {
 
     public static void generateArmor(ItemStack item, Player player, int lvl) {
     	
-    	if (item.getType().toString().contains("CHAINMAIL")) {
+    	if (item.hasItemMeta()
+    			&&item.getItemMeta().hasDisplayName()
+    			&&item.getItemMeta().getDisplayName().contains("§5")) {
     		generateMagicArmor(item,player,lvl);
     	}
     	else{

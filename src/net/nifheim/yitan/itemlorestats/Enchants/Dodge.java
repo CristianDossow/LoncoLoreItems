@@ -1,18 +1,20 @@
  package net.nifheim.yitan.itemlorestats.Enchants;
  
- import net.nifheim.yitan.itemlorestats.Durability.Durability;
- import net.nifheim.yitan.itemlorestats.GearStats;
- import net.nifheim.yitan.itemlorestats.Main;
- import net.nifheim.yitan.itemlorestats.SetBonuses;
- import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
- import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
- import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
- import net.nifheim.yitan.itemlorestats.Util.Util_Format;
- import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
- import net.nifheim.yitan.itemlorestats.Util.Util_Random;
- import java.util.HashMap;
- import org.bukkit.entity.LivingEntity;
- import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+import net.nifheim.yitan.itemlorestats.GearStats;
+import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
+import net.nifheim.yitan.itemlorestats.SetBonuses;
+import net.nifheim.yitan.itemlorestats.Durability.Durability;
+import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
+import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
+import net.nifheim.yitan.itemlorestats.Util.Util_Format;
+import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
+import net.nifheim.yitan.itemlorestats.Util.Util_Random;
+import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
  
  public class Dodge
  {
@@ -27,43 +29,36 @@
    Util_GetResponse util_GetResponse = new Util_GetResponse();
    Util_Random util_Random = new Util_Random();
    
-   public boolean dodgeChanceOnHit(LivingEntity getDefender, boolean isTool) {
-     if (this.gearStats.getDodgeGear(getDefender) + this.gearStats.getDodgeItemInHand(Main.plugin.itemInMainHand(getDefender)) + this.gearStats.getDodgeItemInHand(Main.plugin.itemInOffHand(getDefender)) <= 0.0D) { return false;
-     }
-     if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getDefender) + ".dod", Main.plugin.getConfig().getInt("secondaryStats.dodge.internalCooldown"))) {
-       if ((getDefender instanceof org.bukkit.entity.Player)) {
-         Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getDefender) + ".dod", Long.valueOf(System.currentTimeMillis()));
+   public boolean checkDodge(EntityDamageByEntityEvent e ,Entity getAttacker ,Entity getDefender, PlayerStats defenderStats) {
+	   if (dodgeChanceOnHit(getDefender, defenderStats)) {
+		   if (((getAttacker instanceof Player))
+	               && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyDodgedAttack"))) {
+	           ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyDodgeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
+	       }
+	       if (((getDefender instanceof Player))
+	               && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.dodgeAttack"))) {
+	           ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DodgeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
+	       }
+	       e.setDamage(0);
+	       e.setCancelled(true);
+	       return true;
+	   }
+	   return false;
+   }
+   
+   public boolean dodgeChanceOnHit(Entity getDefender, PlayerStats defenderStats) {
+	   double dodgePercent = 0;
+	   if(getDefender instanceof Player && defenderStats !=null){
+		   dodgePercent = defenderStats.dodge;
+	   }
+       
+       if (dodgePercent > 1) {
+         dodgePercent = 1;
        }
        
-       double dodgePercent = 0.0D;
-       
- 
- 
- 
- 
- 
- 
- 
-       if (Main.plugin.isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
-         dodgePercent += this.gearStats.getDodgeItemInHand(Main.plugin.itemInMainHand(getDefender));
-       }
-       
-       if (Main.plugin.isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
-         dodgePercent += this.gearStats.getDodgeItemInHand(Main.plugin.itemInOffHand(getDefender));
-       }
-       
-       dodgePercent += this.gearStats.getDodgeGear(getDefender);
-       
-       if (dodgePercent > 100.0D) {
-         dodgePercent = 100.0D;
-       }
-       
-       if (dodgePercent >= this.util_Random.random(100)) {
+       if (dodgePercent >= Math.random()) {
          return true;
        }
        return false;
-     }
-     
-     return false;
    }
- }
+}

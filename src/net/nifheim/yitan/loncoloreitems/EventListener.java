@@ -9,9 +9,15 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attributable;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +27,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -33,10 +40,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
 import net.nifheim.yitan.loncoloremagics.Spell;
 import net.nifheim.yitan.loncoloremagics.SpellsList;
@@ -49,7 +58,7 @@ public class EventListener implements Listener {
 
     public HashMap<UUID, Long> bowCooldowns;
     public HashMap<UUID, Boolean> bowActionControl;
-    public HashMap<UUID, Long> shootpower;
+    //public HashMap<UUID, Long> shootpower;
     public LoreCraftingStats getlorestrings;
     public static String unknownItem = "Artículo no identificado";
     public static String enchantSlot = Main.getInstance().getMessages().getString("Lores.Enchants.Empty");
@@ -61,7 +70,7 @@ public class EventListener implements Listener {
         super();
         this.bowCooldowns = new HashMap<UUID, Long>();
         this.bowActionControl = new HashMap<UUID, Boolean>();
-        this.shootpower = new HashMap<UUID, Long>();
+        //this.shootpower = new HashMap<UUID, Long>();
         getlorestrings = new LoreCraftingStats();
         this.instance = instance;
     }
@@ -125,31 +134,67 @@ public class EventListener implements Listener {
     public void onEntityShootBow(EntityShootBowEvent event) {
 
         if (event.getEntity() instanceof Player) {
-
-            UUID uuid = event.getEntity().getUniqueId();
-            bowActionControl.put(uuid, false);
-            Long power = System.currentTimeMillis() - bowCooldowns.get(uuid);
-            shootpower.put(uuid, power);
-
             Player player = (Player) event.getEntity();
+            UUID uuid = player.getUniqueId();
+            bowActionControl.put(uuid, false);
+            Long time = System.currentTimeMillis() - bowCooldowns.get(uuid);
+            //shootpower.put(uuid, power);
+            PlayerStats damagerStats=Main.plugin.getPlayerStats(player);
+    		damagerStats.UpdateAll();
+    		double bowDamage = 1;
+            if (bowCooldowns.containsKey(uuid)) {
+            	bowDamage = damagerStats.minDamage + Math.random() * (damagerStats.maxDamage-damagerStats.minDamage);
+                if (time < damagerStats.weaponSpeed * 1000) {
+                    if (damagerStats.weaponSpeed != 0) {
+                        double damagereduction = bowDamage - (bowDamage * (time / (damagerStats.weaponSpeed * 1000)));
+                        bowDamage = bowDamage - damagereduction;
+                    }
+                }
+            }
+            event.getProjectile().setMetadata("Damage=", new FixedMetadataValue(Main.getInstance(), bowDamage));
             this.durability.durabilityCalcForItemInHand(player, 1, "damage", player.getInventory().getItemInMainHand(), "Main");
             if (player.getInventory().getItemInOffHand().getType().equals(Material.BOW)) {
                 this.durability.durabilityCalcForItemInHand(player, 1, "damage", player.getInventory().getItemInOffHand(), "Off");
             }
+        }else if(event.getEntity() != null){
+    		if(event.getEntity() instanceof LivingEntity){
+        		double damage = MythicMobs.inst().getMobManager().getMythicMobInstance((Entity) event.getEntity()).getDamage();
+        		event.getProjectile().setMetadata("Damage=", new FixedMetadataValue(Main.getInstance(), damage));
+    		}
         }
+    }
+    
+    @EventHandler
+    public void onShootProjectile(ProjectileLaunchEvent event)
+    {/*
+    	if(event.getEntity() != null &&event.getEntityType() != EntityType.ARROW &&event.getEntity().getShooter()!=null ){
+    		if(event.getEntity().getShooter() instanceof LivingEntity){
+        		double damage = MythicMobs.inst().getMobManager().getMythicMobInstance((Entity) event.getEntity().getShooter()).getDamage();
+        		event.getEntity().setMetadata("Damage=", new FixedMetadataValue(Main.getInstance(), damage));
+    		}
+    		if(event.getEntity().getShooter() instanceof Attributable){
+            	Attributable entity = (Attributable)event.getEntity().getShooter();
+            	AttributeInstance ai = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+            	if(ai !=null){
+            		event.getEntity().setMetadata("Damage=", new FixedMetadataValue(Main.getInstance(), ai.getValue()));
+            	}
+    		}
+
+    	}*/
+    	
     }
 
     @EventHandler
     public void onCraftItem(CraftItemEvent event) {
         ItemStack item = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
-        item = ClearAndAddItemLore(item, player);
+        item = CheckItemLore(item, player);
     }
 
     @EventHandler
     public void addStatsToCraftedItem(PrepareItemCraftEvent event) {
         ItemStack item = event.getInventory().getResult();
-        if (Main.plugin.isTool(item.getType())) {
+        if (item!=null && Main.plugin.isTool(item.getType())) {
             if (!(item.getType().equals(Material.DIAMOND_HOE) && item.getDurability() != 0)) {
                 List<String> temlore = new ArrayList<String>();
                 ItemMeta meta = item.getItemMeta();
@@ -255,6 +300,11 @@ public class EventListener implements Listener {
     public static ItemStack ClearAndAddItemLore(ItemStack item, Player player) {
 
         return LoreItemMaker.ClearAndAddItemLore(item, player);
+    }
+    
+    public static ItemStack CheckItemLore(ItemStack item, Player player) {
+
+        return LoreItemMaker.CheckItemLore(item, player);
     }
 
     @EventHandler
@@ -493,8 +543,10 @@ public class EventListener implements Listener {
                         ItemStack item = player.getInventory().getItemInMainHand();
                         if (item != null) {
                             item = LoreItemMaker.ClearAndAddItemLore(item, player, lvl);
+                            sender.sendMessage("Item Reconstruido");
                         }
                         return true;
+                        
                     }
                 }
                 if (args[0].equalsIgnoreCase("stats2")) {
@@ -588,8 +640,65 @@ public class EventListener implements Listener {
                         ItemMeta meta = item.getItemMeta();
                         meta.setLore(new ArrayList<>());
                         item.setItemMeta(meta);
+                        sender.sendMessage("Lore Borrado");
                         return true;
                     }
+                }
+                if (args[0].equalsIgnoreCase("mana")) {
+                	if(args.length==3){
+                    	Player p = Bukkit.getPlayer(args[1]);
+                    	if(p==null){
+                    		sender.sendMessage(ChatColor.RED+"Can't found the player");
+                    		return true;
+                    	}
+            			try{
+            				int amount= Integer.parseInt(args[2]);
+            				PlayerStats ps = Main.plugin.getPlayerStats(p);
+            				if(ps.manaCurrent +amount>ps.manaMax){
+            					ps.manaCurrent = ps.manaMax;
+            				}if(ps.manaCurrent +amount<0){
+            					ps.manaCurrent = 0;
+            				}else{
+            					ps.manaCurrent = ps.manaCurrent + amount;
+            				}
+            				
+            				p.sendMessage("has obtenido "+amount+" puntos de maná");
+            				sender.sendMessage(p.getDisplayName()+" ha obtenido "+amount+" puntos de maná");
+                			return true;
+            			}catch(NumberFormatException e){
+            				sender.sendMessage(ChatColor.RED+"invalid given amount");
+            				return true;
+            			}
+                	}else{
+                		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
+                	}
+                }
+                if (args[0].equalsIgnoreCase("vida")) {
+                	if(args.length==3){
+                    	Player p = Bukkit.getPlayer(args[1]);
+                    	if(p==null){
+                    		sender.sendMessage(ChatColor.RED+"Can't found the player");
+                    		return true;
+                    	}
+            			try{
+            				int amount= Integer.parseInt(args[2]);
+            				if(p.getHealth()+amount>p.getMaxHealth()){
+            					p.setHealth(p.getMaxHealth());
+            				}if(p.getHealth()+amount<0){
+            					p.setHealth(0);
+            				}else{
+            					p.setHealth(p.getHealth()+amount);
+            				}
+            				p.sendMessage("has sanado por "+amount+" puntos de vida");
+            				sender.sendMessage(p.getDisplayName()+" ha obtenido "+amount+" puntos de vida");
+                			return true;
+            			}catch(NumberFormatException e){
+            				sender.sendMessage(ChatColor.RED+"invalid given amount");
+            				return true;
+            			}
+                	}else{
+                		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
+                	}
                 }
             }
         }
