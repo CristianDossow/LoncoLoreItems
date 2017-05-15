@@ -115,13 +115,6 @@
 			 <scope>system</scope>
             <systemPath>${project.basedir}/libs/MythicMobs-4.1.0.jar</systemPath>
 		</dependency>
-		<dependency>
-			<groupId>MultiLineAPI</groupId>
-			<artifactId>MultiLineAPI</artifactId>
-			<version>1.2.6</version>
-			 <scope>system</scope>
-            <systemPath>${project.basedir}/libs/MultiLineAPI-1.2.6.jar</systemPath>
-		</dependency>
     </dependencies>
     <build>
         <finalName>${project.name}</finalName>
