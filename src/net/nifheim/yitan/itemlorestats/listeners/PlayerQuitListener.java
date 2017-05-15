@@ -20,6 +20,8 @@ public class PlayerQuitListener implements Listener {
     	
         if ((event.getPlayer() instanceof Player)) {
             Player player = event.getPlayer();
+        	Main.getInstance().damagefix.attackCooldownsEnd.remove(player.getUniqueId());
+        	Main.getInstance().damagefix.attackCooldowns.remove(player.getUniqueId());
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 if (!player.isDead()) {
                     player.setMaxHealth(20.0D);

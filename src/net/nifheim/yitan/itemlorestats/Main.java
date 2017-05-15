@@ -1,37 +1,11 @@
 package net.nifheim.yitan.itemlorestats;
 
-import net.nifheim.yitan.loncoloreitems.DamageFix;
-import net.nifheim.yitan.loncoloreitems.EventListener;
-import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
-import net.nifheim.yitan.loncoloremagics.SpellListeners;
-import net.nifheim.yitan.itemlorestats.Commands.*;
-
-import net.nifheim.yitan.itemlorestats.Damage.*;
-
-import net.nifheim.yitan.itemlorestats.Durability.Durability;
-
-import net.nifheim.yitan.itemlorestats.Interact.InteractEvents;
-
-import net.nifheim.yitan.itemlorestats.ItemUpgrading.ItemUpgrade;
-import net.nifheim.yitan.itemlorestats.ItemUpgrading.PlayerLevelEvents;
-
-import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
-import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
-import net.nifheim.yitan.itemlorestats.Repair.RepairEvents;
-import net.nifheim.yitan.itemlorestats.Util.*;
-import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
-
-import net.citizensnpcs.Citizens;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import net.milkbowl.vault.Vault;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,12 +13,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
-import net.nifheim.beelzebu.rpgcore.utils.MySQL;
-import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
-import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
-
-import net.nifheim.yitan.itemlorestats.listeners.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -67,6 +35,64 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
+
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
+import net.citizensnpcs.Citizens;
+import net.milkbowl.vault.Vault;
+import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
+import net.nifheim.beelzebu.rpgcore.utils.MySQL;
+import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
+import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
+import net.nifheim.yitan.itemlorestats.Commands.CreateLore_Com;
+import net.nifheim.yitan.itemlorestats.Commands.CustomMaterial_Com;
+import net.nifheim.yitan.itemlorestats.Commands.Export_Com;
+import net.nifheim.yitan.itemlorestats.Commands.Give_Com;
+import net.nifheim.yitan.itemlorestats.Commands.Lore_Com;
+import net.nifheim.yitan.itemlorestats.Commands.Name_Com;
+import net.nifheim.yitan.itemlorestats.Commands.Repair_Com;
+import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
+import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
+import net.nifheim.yitan.itemlorestats.Damage.PotionListener;
+import net.nifheim.yitan.itemlorestats.Durability.Durability;
+import net.nifheim.yitan.itemlorestats.Interact.InteractEvents;
+import net.nifheim.yitan.itemlorestats.ItemUpgrading.ItemUpgrade;
+import net.nifheim.yitan.itemlorestats.ItemUpgrading.PlayerLevelEvents;
+import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
+import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
+import net.nifheim.yitan.itemlorestats.Repair.RepairEvents;
+import net.nifheim.yitan.itemlorestats.Util.Util_Citizens;
+import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
+import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
+import net.nifheim.yitan.itemlorestats.Util.Util_Format;
+import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
+import net.nifheim.yitan.itemlorestats.Util.Util_Random;
+import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
+import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
+import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
+import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
+import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.EntityRegainHealthListener;
+import net.nifheim.yitan.itemlorestats.listeners.EntityShotBowListener;
+import net.nifheim.yitan.itemlorestats.listeners.GamemodeChangeListener;
+import net.nifheim.yitan.itemlorestats.listeners.InventoryClickListener;
+import net.nifheim.yitan.itemlorestats.listeners.InventoryDragListener;
+import net.nifheim.yitan.itemlorestats.listeners.MerchantClickListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerChangeWorldListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerDeathListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerDropItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerExpChangeListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerInteractEntityListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerInteractListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerItemHeldListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerJoinListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerPickupItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerQuitListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerRespawnListener;
+import net.nifheim.yitan.loncoloreitems.DamageFix;
+import net.nifheim.yitan.loncoloreitems.EventListener;
+import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
+import net.nifheim.yitan.loncoloremagics.SpellListeners;
 
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
@@ -191,7 +217,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         eventlistener = new EventListener(this);
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
-
+        
+        
         this.spigotStatCapWarning.updateSpigotValues();
 
         fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 5, 5);

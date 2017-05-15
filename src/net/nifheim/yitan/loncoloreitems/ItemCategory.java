@@ -30,11 +30,7 @@ public class ItemCategory {
 		return false;
 	}
 	static public boolean isAnyWeapon(ItemStack item){
-		if(Main.plugin.isSword(item))
-			return true;
-		if(Main.plugin.isAxe(item))
-			return true;
-		if(item.getType() == Material.BOW)
+		if(isSword(item)  || isAxe(item) || isBow(item) )
 			return true;
 		return false;
 	}

@@ -53,7 +53,7 @@
            player.updateInventory();
            return;
          }
-         
+         /*
          final Player playerFinal = player;
          Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
            public void run() {
@@ -62,7 +62,7 @@
              Main.plugin.setBonuses.updateSetBonus(playerFinal);
            }
            
-         }, 3L);
+         }, 3L);*/
        }
        else if ((event.getItem() != null) && (Main.plugin.isPotion(event.getItem().getDurability()))) {
          if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 
@@ -103,6 +104,37 @@ public class SpellsList {
 		spell.soundOnHit=Sound.ENTITY_GENERIC_EXPLODE;
 		return spell;
 	}
+	public static Spell Explosion(){
+		Spell spell = new Spell("Explosion",1,1,1,ParticleEffect.EXPLOSION_HUGE);
+		spell.particlesAmount=4;
+		spell.directDamageAmount=20;
+		spell.aoeDamageAmount=5;
+		spell.aoeDamageRange=10;
+		spell.particleEffectSphere.add(ParticleEffect.FLAME);
+		spell.particleWarmupEffect.add(ParticleEffect.FLAME);
+		spell.particleEffectSphereradio=0.8;
+		spell.particleRadioOnhit=8;
+		spell.particlesAmountOnHit=8;
+		spell.particleSpeedOnHit=0.01F;
+		spell.onHitType=2;
+		spell.manaCost = 750;
+		spell.postManaCost = 4250;
+		spell.warmup = 6000;
+		spell.cooldown = 60000;
+		spell.colorName = ChatColor.DARK_RED;
+		spell.soundOnCast=Sound.ENTITY_GHAST_SHOOT;
+		spell.soundOnHit=Sound.ENTITY_GENERIC_EXPLODE;
+		spell.particleColor = Color.RED;
+		spell.lore.add("Explosion");
+		spell.spellChants.add("Más oscuro que el negro");
+		spell.spellChants.add("más sombrio que la oscuridad");
+		spell.spellChants.add("combínense con mi carmesí interior");
+		spell.spellChants.add("la hora de su despertar ha llegado");
+		spell.spellChants.add("desciendan hasta estas fronteras");
+		spell.spellChants.add("y aparezcan como una distorsión intangible");
+		spell.spellChants.add("!!Explosion!!");
+		return spell;
+	}
 	
 	public static List<Spell> getSpellList(){
 		List<Spell> list = new ArrayList<>();
@@ -111,6 +143,7 @@ public class SpellsList {
 		list.add(thunder());
 		list.add(Cataclism());
 		list.add(fireBlast());
+		list.add(Explosion());
 		return list;
 	}
 	public static Spell getSpell(String name){

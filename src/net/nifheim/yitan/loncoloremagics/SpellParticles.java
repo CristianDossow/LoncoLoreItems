@@ -18,7 +18,7 @@ public class SpellParticles extends BukkitRunnable {
 
     private final Long maxTime;
     private final Main instance;
-    private final Projectile projectile;
+    Projectile projectile;
     private final Spell spell;
     Long startime;
     EffectManager em;

@@ -24,6 +24,7 @@ public class EspecialAtributes {
     //public static String repairer = Main.getInstance().getMessages().getString("Especial Atributes.Repairer");
     public static String repairer ="Reparación";
     public static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
+    
 
     static public boolean HasDestroy(Player player) {
 

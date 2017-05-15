@@ -1,5 +1,7 @@
 package net.nifheim.yitan.loncoloreitems;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -11,6 +13,7 @@ import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
 import be.maximvdw.placeholderapi.PlaceholderReplacer;
 
 public class MVdWPlaceholderAPIHook {
+	static DecimalFormat df = new DecimalFormat("#.#");
     public static void hook(Main plugin) {
         if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceHolderAPI")) {
         	
@@ -18,7 +21,8 @@ public class MVdWPlaceholderAPIHook {
                     new PlaceholderReplacer() {
                         @Override
                         public String onPlaceholderReplace(PlaceholderReplaceEvent e) {
-                            return plugin.gearStats.getArmourGear(e.getPlayer())+"%";
+                        	
+                            return df.format(Main.getInstance().getPlayerStats(e.getPlayer()).percentArmor*100)+"%";
                         }
             	}
             );
@@ -26,9 +30,17 @@ public class MVdWPlaceholderAPIHook {
                     new PlaceholderReplacer() {
                         @Override
                         public String onPlaceholderReplace(PlaceholderReplaceEvent e) {
-                            
-                            		
-                            return plugin.gearStats.getPlayerDamage(e.getPlayer());
+                            String damageMin = df.format(Main.getInstance().getPlayerStats(e.getPlayer()).minDamage);
+                            String damageMax = df.format(Main.getInstance().getPlayerStats(e.getPlayer()).maxDamage);
+                            return damageMin +"-"+ damageMax;
+                        }
+            	}
+            );
+            PlaceholderAPI.registerPlaceholder(plugin, "ilsmagicpower",
+                    new PlaceholderReplacer() {
+                        @Override
+                        public String onPlaceholderReplace(PlaceholderReplaceEvent e) {
+                            return Main.getInstance().getPlayerStats(e.getPlayer()).magicPower+"";
                         }
             	}
             );
@@ -38,7 +50,7 @@ public class MVdWPlaceholderAPIHook {
                         public String onPlaceholderReplace(PlaceholderReplaceEvent e) {
                             
                             		
-                            return plugin.gearStats.getDodgeGear(e.getPlayer())+"%";
+                            return df.format(Main.getInstance().getPlayerStats(e.getPlayer()).dodge*100)+"%";
                         }
             	}
             );
@@ -48,7 +60,7 @@ public class MVdWPlaceholderAPIHook {
                         public String onPlaceholderReplace(PlaceholderReplaceEvent e) {
                             
                             		
-                            return plugin.gearStats.getTotalMovementSpeed(e.getPlayer())+"%";
+                            return df.format(Main.getInstance().getPlayerStats(e.getPlayer()).movementSpeed*100)+"%";
                         }
             	}
             );

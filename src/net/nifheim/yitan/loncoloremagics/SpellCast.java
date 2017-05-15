@@ -25,19 +25,16 @@ public class SpellCast {
     	ps.UpdateAll();
     	if(ps.manaCurrent>=spell.manaCost){
     		if(ps.spellCastWait<System.currentTimeMillis()){
-    			player.sendMessage("lanzando " + spell.name);
-    			ps.lastMessage=System.currentTimeMillis();
-    			ps.lastSpellCast = System.currentTimeMillis();
-    			ps.spellCastWait = System.currentTimeMillis() + (long)(spell.cooldown*(1-ps.spellCooldownReduction));
-        		ps.manaCurrent = ps.manaCurrent - spell.manaCost;
-                Projectile projectile = getProjectile(spell, player);
-                projectile.setShooter(player);
-                projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
-                setProjectileProperties(projectile, spell, ps);
-                if(spell.soundOnCast!=null){
-                	player.getLocation().getWorld().playSound(projectile.getLocation(), spell.soundOnCast, 1, 1);
-                }
-                BukkitTask task = new SpellParticles(Main.getInstance(),spell,projectile).runTaskTimer(Main.getInstance(), 0, 2);
+    			if(spell.warmup>0){
+    				ps.spellCastWait = System.currentTimeMillis()+spell.warmup+500;
+    				if(ps.spellCastWait<System.currentTimeMillis()+500){
+    					ps.spellCastWait=System.currentTimeMillis()+500;
+    				}
+    				BukkitTask task = new SpellCastChants(Main.getInstance(),player,ps,spell).runTaskTimer(Main.getInstance(), 0, 2);
+    			}else{
+    				Cast(player, ps, spell);
+    			}
+    			
     		}
     		else{
     			if(ps.lastMessage+1000<System.currentTimeMillis()){
@@ -54,6 +51,25 @@ public class SpellCast {
     		ps.lastMessage=System.currentTimeMillis();
     		}
     	}
+    }
+    
+    static void Cast(Player player, PlayerStats ps, Spell spell) {
+		player.sendMessage("lanzando " + spell.name);
+		ps.lastMessage=System.currentTimeMillis();
+		ps.lastSpellCast = System.currentTimeMillis();
+		ps.spellCastWait = System.currentTimeMillis() + (long)(spell.cooldown*(1-ps.spellCooldownReduction));
+		if(ps.spellCastWait<System.currentTimeMillis()+500){
+			ps.spellCastWait=System.currentTimeMillis()+500;
+		}
+		ps.manaCurrent = ps.manaCurrent - (spell.manaCost + spell.postManaCost);
+        Projectile projectile = getProjectile(spell, player);
+        projectile.setShooter(player);
+        projectile.setVelocity(player.getLocation().getDirection().multiply(spell.speed));
+        setProjectileProperties(projectile, spell, ps);
+        if(spell.soundOnCast!=null){
+        	player.getLocation().getWorld().playSound(projectile.getLocation(), spell.soundOnCast, 1, 1);
+        }
+        BukkitTask task = new SpellParticles(Main.getInstance(),spell,projectile).runTaskTimer(Main.getInstance(), 0, 2);
     }
 
     public static Projectile getProjectile(Spell spell, Player player) {

@@ -71,5 +71,52 @@ public class ItemMaker {
         item.setDurability((short) 98);
         return item;
     }
+    public static ItemStack Weapon(int data) {
 
+        ItemStack item = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta im = item.getItemMeta();
+        im.setUnbreakable(true);
+        im.setDisplayName("Weapon Data: "+data);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(im);
+        item.setDurability((short) data);
+        return item;
+    }
+    public static ItemStack Bow(int data) {
+
+        ItemStack item = new ItemStack(Material.BOW, 1);
+        ItemMeta im = item.getItemMeta();
+        im.setUnbreakable(true);
+        im.setDisplayName("Bow Data: "+data);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(im);
+        item.setDurability((short) data);
+        return item;
+    }
+    public static ItemStack Tool(int data) {
+
+        ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
+        ItemMeta im = item.getItemMeta();
+        im.setUnbreakable(true);
+        im.setDisplayName("Tool Data: "+data);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(im);
+        item.setDurability((short) data);
+        return item;
+    }
+    public static ItemStack Shield(int data) {
+
+        ItemStack item = new ItemStack(Material.SHIELD, 1);
+        ItemMeta im = item.getItemMeta();
+        im.setUnbreakable(true);
+        im.setDisplayName("Shield Data: "+data);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(im);
+        item.setDurability((short) data);
+        return item;
+    }
 }

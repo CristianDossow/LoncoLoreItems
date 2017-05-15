@@ -31,7 +31,7 @@ public class EnchantsAPI {
         enchants = new HashMap<>();
 
         // Start Sword Enchants
-        addEnchant(new Backstab());
+        //addEnchant(new Backstab());
 
     }
 

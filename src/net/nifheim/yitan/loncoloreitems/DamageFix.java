@@ -12,6 +12,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitTask;
 
 import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.itemlorestats.PlayerStats;
 
 public class DamageFix {
 
@@ -23,7 +24,7 @@ public class DamageFix {
 
     public DamageFix(Main instance) {
         super();
-        this.weaponspeed = "vataque";
+        //this.weaponspeed = "vataque";
         this.attackCooldowns = new HashMap<UUID, Long>();
         this.attackCooldownsEnd = new HashMap<UUID, Long>();
         this.languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
@@ -77,7 +78,8 @@ public class DamageFix {
             }
             //if(!attackCooldowns.containsKey(player.getUniqueId())){
             instance.damagefix.attackCooldowns.put(player.getUniqueId(), System.currentTimeMillis());
-            double weaponspeed = LoreUtils.getWeaponSpeed(player.getInventory().getItemInMainHand());
+            PlayerStats ps = Main.plugin.getPlayerStats(player);
+            double weaponspeed = ps.weaponSpeed;
             instance.damagefix.attackCooldownsEnd.put(player.getUniqueId(), System.currentTimeMillis() + (long) (weaponspeed * 1000));
             BukkitTask task = new SwordActionBar(this.instance, player).runTaskTimer(this.instance, 0, 2);
             // }

@@ -27,7 +27,7 @@ public class SpellListeners implements Listener {
                         spellname = ChatColor.stripColor(spellname);
                         Spell spell = SpellsList.getSpell(spellname);
                         if (spell != null) {
-                        	double power = PlayerStatsFormules.getStat(PlayerStatsFormules.magicPower, mainhand);
+                        	double power = PlayerStatsFormules.getStat(PlayerStatsFormules.magicPower, mainhand,1);
                             if(mainhand.getType().equals(Material.DIAMOND_SWORD)&& power>0){
                                 SpellCast.spellBuilder(spell, event.getPlayer());
                             }else {

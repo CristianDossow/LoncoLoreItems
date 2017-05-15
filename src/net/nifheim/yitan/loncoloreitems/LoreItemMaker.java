@@ -76,23 +76,36 @@ public class LoreItemMaker {
             	case 7:
             		//Baston magico 1
             		generateMagicWeapon(item, player, lvl, 2, 3, 200, 0.5,0.5);
-            	break;
+            		break;
+            	case 21:
+            		//Espada Dorada
+            		generatesword(item, player, lvl, 0.9, 1.5, 250, 1.2, 1, 1,0,0,0.8,true);
+            		break;
+                case 25:
+                    //cimitarra
+                    generatesword(item, player, lvl, 1.5, 2.2, 1600, 1, 1, 1.2,0,0,0.7,true);
+                    break;
                 case 27:
                     //espada caballero
-                    generatesword(item, player, lvl, 1, 2.5, 600, 1.1, 1, 1);
+                    generatesword(item, player, lvl, 1, 2.5, 600, 1.1, 1, 1,0,0,0.8,true);
+                    break;
+
+                case 38:
+                    //guadaña
+                    generatesword(item, player, lvl, 3, 4, 1300, 1.3, 0.6, 1.3 , 0.35,true);
                     break;
                 case 43:
                     //maza de guerra
-                    generatesword(item, player, lvl, 3, 5, 400,1.2,1,1,0.5,true);
+                    generatesword(item, player, lvl, 3, 5, 400,0.8,1,2,0.5,0,0.5,true);
                     break;
-                case 38:
-                    //guadaña
-                    generatesword(item, player, lvl, 3, 4, 1300, 1.3, 1, 1.3 , 0.35,true);
+                case 90:
+                    //Daga
+                    generatesword(item, player, lvl, 0.6, 1, 500,0.7,2,2,0.4,0.7,0.8,true);
                     break;
-                case 25:
-                    //cimitarra
-                    generatesword(item, player, lvl, 1.5, 2.2, 1600, 1, 1, 1.2);
-                    break;
+            	case 125:
+            		//Baston magico sin nombre
+            		generateMagicWeapon(item, player, lvl, 2, 3, 200, 0.5,0.5);
+            		break;
                 default:
                     generatesword(item, player, lvl, 1, 2, 1600);
                     break;
@@ -178,8 +191,10 @@ public class LoreItemMaker {
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus) {
         generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1,0.75, true);
     }
-
     public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, double variability, boolean enchantable) {
+    	generatesword(item, player, lvl, speedmax, speedmin, materiallvl, 1, 1, 1,0.75,0,0, true);
+    }
+    public static void generatesword(ItemStack item, Player player, int lvl, double speedmax, double speedmin, int materiallvl, double damagebonus, double criticalbonus, double criticaldamagebonus, double maxArmorPen, double maxStab, double variability, boolean enchantable) {
         double speed = Math.random() * (speedmax - speedmin) + speedmin;
         List<String> lore = new ArrayList<>();
         ItemMeta meta = item.getItemMeta();
@@ -191,6 +206,12 @@ public class LoreItemMaker {
         lore.add(LoreCraftingStats.getRandomCriticalChance(lvl, criticalbonus)); // 4
         if (Math.random() < 0.25) {
             lore.add(LoreCraftingStats.getRandomCriticalDamage(lvl, criticaldamagebonus)); // 5
+        }
+        if(maxArmorPen>0){
+        	lore.add(LoreCraftingStats.getArmourPen(maxArmorPen));
+        }
+        if(maxStab>0){
+        	lore.add(LoreCraftingStats.getBackstab(maxStab));
         }
         if (Math.random() < 0.20) {
             lore.add(LoreCraftingStats.getPoison(lvl)); // 6

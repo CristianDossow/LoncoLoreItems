@@ -25,7 +25,7 @@ public class MainFastRunnable extends BukkitRunnable {
 		for(Player player: Bukkit.getOnlinePlayers()){
 			PlayerStats ps = instance.getPlayerStats(player);
 			ps.ManaRegen(0.25);
-			float progress= (float) (ps.manaCurrent/ps.manaMax);
+			float progress= (float) (ps.manaCurrent/ps.manaMax>=0 ? ps.manaCurrent/ps.manaMax : 0);
 			String barText = (ChatColor.BLUE+""+ChatColor.BOLD+"Maná: "+ChatColor.BLUE.AQUA+(int)ps.manaCurrent+" / "+(int)ps.manaMax 
 					+ChatColor.DARK_RED+""+ChatColor.BOLD+" Vida: "+ChatColor.RED+(int)ps.player.getHealth()+" / "+(int)ps.player.getMaxHealth()
 					+ChatColor.GOLD+""+ChatColor.BOLD+" Nivel: "+ChatColor.YELLOW+ps.player.getLevel());
@@ -42,7 +42,8 @@ public class MainFastRunnable extends BukkitRunnable {
 			}
 			else{
 				BossBar bs = Bukkit.createBossBar(barText, BarColor.BLUE, BarStyle.SEGMENTED_10);
-				bs.setProgress((float) (ps.manaCurrent/ps.manaMax));
+				progress = (float) (ps.manaCurrent/ps.manaMax>=0 ? ps.manaCurrent/ps.manaMax : 0);
+				bs.setProgress(progress);
 				bs.addPlayer(player);
 				instance.manaBar.put(player, bs);
 			}

@@ -43,6 +43,8 @@ public class LoreCraftingStats {
 	public static String manaMax = PlayerStatsFormules.manaMax;
 	public static String manaRegen = PlayerStatsFormules.manaRegen;
 	public static String cdReduction = PlayerStatsFormules.cdReduction;
+	public static String armorPen = PlayerStatsFormules.armorPen;
+	public static String backstab = PlayerStatsFormules.backstab;
     //static String durabilitycolor = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above75%");
 
     static DecimalFormat df = new DecimalFormat("#.#");
@@ -61,7 +63,23 @@ public class LoreCraftingStats {
     static public String getLvL(int lvl) {
         return (ChatColor.DARK_GREEN + lvlname + ": " + ChatColor.GREEN + lvl);
     }
-
+    static public String getBackstab(double Max) {
+        //double statschance = Max;
+        double statsChanceMin = Max/2;
+        double statsChanceMax = Max;
+        double stats = statsChanceMin+ Math.random() * (statsChanceMax - statsChanceMin);
+        stats = stats * 100;
+        return ChatColor.DARK_AQUA + backstab + ": " + ChatColor.AQUA + df.format(stats) + "%";
+    }
+    static public String getArmourPen(double Max) {
+        //double statschance = Max;
+        double statsChanceMin = Max/2;
+        double statsChanceMax = Max;
+        double stats = statsChanceMin+ Math.random() * (statsChanceMax - statsChanceMin);
+        stats = stats * 100;
+        return ChatColor.DARK_AQUA + armorPen + ": " + ChatColor.AQUA + df.format(stats) + "%";
+    }
+    
     static public String getArmour(double lvl, ItemStack item) {
 
         double maxstrength = Armorxbase + (Armorxlvl * lvl);

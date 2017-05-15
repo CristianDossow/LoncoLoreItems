@@ -5,6 +5,7 @@ import net.nifheim.yitan.itemlorestats.Main;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EnvironmentalDamage implements org.bukkit.event.Listener {
@@ -16,7 +17,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
 
     Vanilla_Base_Armour vanilla_Base_Armour = new Vanilla_Base_Armour();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockExplosion(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -45,7 +46,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onCactus(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.CONTACT))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -74,7 +75,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDrowning(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.DROWNING))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -103,7 +104,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityExplosion(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -133,7 +134,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onFallDamage(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.FALL))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -174,7 +175,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onFire(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.FIRE))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -203,7 +204,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onFireTick(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -232,7 +233,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onLavaBurn(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.LAVA))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -290,7 +291,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
     */
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onMagic(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.MAGIC))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -319,7 +320,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPoison(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.POISON))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -348,7 +349,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onStarvation(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.STARVATION))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -377,7 +378,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSuffocation(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.SUFFOCATION))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -406,25 +407,8 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
-    public void onSuicide(EntityDamageEvent event) {
-        if ((event.getCause().equals(EntityDamageEvent.DamageCause.SUICIDE))
-                && ((event.getEntity() instanceof LivingEntity))) {
-            LivingEntity entity = (LivingEntity) event.getEntity();
 
-            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(entity.getWorld().getName())) {
-                double newDamage = entity.getMaxHealth();
-
-                if (newDamage > entity.getHealth()) {
-                    event.setDamage(entity.getHealth());
-                } else {
-                    event.setDamage(newDamage);
-                }
-            }
-        }
-    }
-
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onThorns(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.THORNS))
                 && ((event.getEntity() instanceof LivingEntity))) {
@@ -453,7 +437,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onVoid(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.VOID))
                 && ((event.getEntity() instanceof LivingEntity))) {

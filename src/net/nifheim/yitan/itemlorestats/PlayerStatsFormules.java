@@ -42,25 +42,34 @@ public class PlayerStatsFormules {
 	public static String manaMax ="Maná";
 	public static String manaRegen ="Regeneración de maná";
 	public static String cdReduction ="Reducción de enfriamiento";
+    public static String armorPen = "Penetración Armadura";
+    public static String backstab = "Apuñalar";
 	
 	static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 	final static double ArmorGrowthrate = -0.26;
 	final static double Armorxlvl = 4;
     final static double Armorxbase = 100;
 	
+	static public double getArmorPenStat(Player player) {
+		return (getGearStat(player,armorPen)/100);
+	}
+	static public double getBackstabStat(Player player) {
+		return (getGearStat(player,backstab)/100);
+	}
+    
 	static public double[] getDamageGearStat(Player player) {
 		return getDoubleGearStat(player, damage);
 	}
 	static public double getWeaponSpeedStat(Player player) {
-		double speed= getStat(weaponspeed,player.getEquipment().getItemInMainHand() );
-		if(speed<1)
-			speed=1;
+		double speed= getStat(weaponspeed,player.getEquipment().getItemInMainHand(),1);
+		if(speed<0.5)
+			speed=0.5;
 		return speed;
 	}
 	static public double getWeaponSpeedStat(ItemStack gear) {
-		double speed= getStat(weaponspeed,gear);
-		if(speed<1)
-			speed=1;
+		double speed= getStat(weaponspeed,gear,1);
+		if(speed<0.5)
+			speed=0.5;
 		return speed;
 	}
 	static public double getArmorStat(Player player) {
@@ -133,16 +142,28 @@ public class PlayerStatsFormules {
 
                 List<ItemStack> arrayOfItemStack = new ArrayList<>();
                 arrayOfItemStack.addAll(Arrays.asList(player.getEquipment().getArmorContents()));
-                if(!stat.equals(damage) && ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
-                	arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                if(!player.getEquipment().getItemInMainHand().getType().equals(Material.BOW)){
+                    if(!stat.equals(damage) && ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
+                    	//arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                    	MinValue = MinValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
+                        MaxValue = MaxValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[1];
+                    }else{
+                    	double tempMinValue = + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
+                    	double tempMaxValue = + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
+                    	double mainSpeed = getWeaponSpeedStat(player);
+                    	double offSpeed = getWeaponSpeedStat(player.getEquipment().getItemInOffHand());
+                    	double speedFactor = mainSpeed/offSpeed;
+                    	MinValue = MinValue + tempMinValue * speedFactor;
+                    	MaxValue = MaxValue + tempMaxValue * speedFactor;
+                    }
                 }
                 if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInMainHand())||ItemCategory.isBow(player.getEquipment().getItemInMainHand())){
                 	arrayOfItemStack.add(player.getEquipment().getItemInMainHand());
                 }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
-                        MinValue = MinValue + getDoubleStat(stat,gear)[0];
-                        MaxValue = MaxValue + getDoubleStat(stat,gear)[1];
+                        MinValue = MinValue + getDoubleStat(stat,gear,1)[0];
+                        MaxValue = MaxValue + getDoubleStat(stat,gear,1)[1];
                     }
                 }
             }
@@ -152,15 +173,15 @@ public class PlayerStatsFormules {
             	mainSpeed = getWeaponSpeedStat(player.getEquipment().getItemInMainHand());
             	offSpeed = getWeaponSpeedStat(player.getEquipment().getItemInOffHand());
             	double difSpeed = (mainSpeed/offSpeed)*0.5;
-            	MinValue = MinValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand())[0])*difSpeed;
-                MaxValue = MaxValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand())[1])*difSpeed;
+            	MinValue = MinValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand(),1)[0])*difSpeed;
+                MaxValue = MaxValue + (getDoubleStat(stat,player.getEquipment().getItemInOffHand(),1)[1])*difSpeed;
                 
             }
         }
         double[] values = {MinValue, MaxValue};
         return values;
     }
-	static public double[] getDoubleStat(String stat,ItemStack gear) {
+	static public double[] getDoubleStat(String stat,ItemStack gear, double multiplier ) {
     	stat = stat.replaceAll(languageRegex, "");
         double MinValue = 0;
         double MaxValue = 0;
@@ -173,11 +194,11 @@ public class PlayerStatsFormules {
                         lore = lore.toLowerCase();
                         if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
                             if (lore.contains("-")) {
-                                MinValue += Double.parseDouble(lore.split("-")[0].replaceAll("[^0-9.+-]", ""));
-                                MaxValue += Double.parseDouble(lore.split("-")[1].replaceAll("[^0-9.+-]", ""));
+                                MinValue += (Double.parseDouble(lore.split("-")[0].replaceAll("[^0-9.+-]", ""))*multiplier);
+                                MaxValue += (Double.parseDouble(lore.split("-")[1].replaceAll("[^0-9.+-]", ""))*multiplier);
                             } else {
-                                MinValue += Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""));
-                                MaxValue += Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""));
+                                MinValue += (Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""))*multiplier);
+                                MaxValue += (Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""))*multiplier);
                             }
                         }
                     }
@@ -196,22 +217,25 @@ public class PlayerStatsFormules {
 
                 List<ItemStack> arrayOfItemStack = new ArrayList<>();
                 arrayOfItemStack.addAll(Arrays.asList(player.getEquipment().getArmorContents()));
-                if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
-                	arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                if(!player.getEquipment().getItemInMainHand().getType().equals(Material.BOW)){
+                    if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
+                    	//arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                    	value = value + getStat(stat,player.getEquipment().getItemInOffHand(),0.5);
+                    }
                 }
                 if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInMainHand())||ItemCategory.isBow(player.getEquipment().getItemInMainHand())){
                 	arrayOfItemStack.add(player.getEquipment().getItemInMainHand());
                 }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
-                    	value = value + getStat(stat,gear);
+                    	value = value + getStat(stat,gear,1);
                     }
                 }
             }
         }
         return value;
     }
-	static public double getStat(String stat,ItemStack gear) {
+	static public double getStat(String stat,ItemStack gear, double multiplier) {
     	stat = stat.replaceAll(languageRegex, "");
         double value = 0;
         if (gear != null) {
@@ -222,7 +246,12 @@ public class PlayerStatsFormules {
                         String lore = ChatColor.stripColor(line.toString());
                         lore = lore.toLowerCase();
                         if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
-                        	value += Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""));
+                        	try{
+                        		value += (Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""))*multiplier);
+                        	}catch (NumberFormatException e) {
+
+							}
+                        	
                         }
                     }
                 }

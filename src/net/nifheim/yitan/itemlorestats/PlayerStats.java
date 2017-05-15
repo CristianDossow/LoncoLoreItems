@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class PlayerStats {
 
     public Player player;
@@ -63,6 +65,7 @@ public class PlayerStats {
         this.spellCastWait = System.currentTimeMillis();
         this.lastMessage = System.currentTimeMillis();
     }
+    
 
     public void UpdateAll() {
         UpdateDamage();
@@ -81,8 +84,25 @@ public class PlayerStats {
         UpdateMagicPower();
         UpdateCdReduction();
         UpdateMagicArmorPen();
+        UpdateBackstab();
+        UpdateArmorPen();
     }
-
+    public void UpdateAttack() {
+        UpdateDamage();
+        UpdateWeaponSpeed();
+        UpdateCritChance();
+        UpdateCritDamage();
+        UpdatePoison();
+        UpdateMagicPower();
+        UpdateCdReduction();
+        UpdateMagicArmorPen();
+        UpdateBackstab();
+        UpdateArmorPen();
+    }
+    public void UpdateMana() {
+        UpdateManaMax();
+        UpdateManaRegen();
+    }
     public void UpdateDefence() {
         UpdateArmor();
         UpdateMagicArmor();
@@ -156,6 +176,12 @@ public class PlayerStats {
     public void UpdateCdReduction() {
         this.spellCooldownReduction = PlayerStatsFormules.getCdReductionStat(player);
     }
+    public void UpdateBackstab() {
+        this.stab = PlayerStatsFormules.getBackstabStat(player);
+    }
+    public void UpdateArmorPen() {
+        this.armorPen = PlayerStatsFormules.getArmorPenStat(player);
+    }
 
     public void ManaRegen(Double multiplier) {
     	double manaRegen = this.manaRegen*multiplier;
@@ -170,20 +196,24 @@ public class PlayerStats {
         DecimalFormat df = new DecimalFormat("#.#");
         double dp = (minDamage + maxDamage) / 2;
         double dps = dp / weaponSpeed;
-        player.sendMessage("Damage: " + df.format(minDamage) + " - " + df.format(maxDamage) + " DP(" + df.format(dp) + ")");
-        player.sendMessage("Weapon Speed: " + weaponSpeed + " DPS(" + df.format(dps) + ")");
-        player.sendMessage("Magic Power: " + df.format(magicPower) + "");
-        player.sendMessage("Mana: " + df.format(manaCurrent) + "/" + df.format(manaMax));
-        player.sendMessage("Armor: " + armor + " (" + df.format(percentArmor * 100) + "%)");
-        player.sendMessage("Magic Armor: " + magicArmor + " (" + df.format(magicPercentArmor * 100) + "%)");
-        player.sendMessage("Dodge: " + df.format(dodge * 100) + "%");
-        player.sendMessage("Block: " + df.format(block * 100) + "%");
-        player.sendMessage("Crit. Chance: " + df.format(critChance * 100) + "%");
-        player.sendMessage("Crit. Damage: " + df.format(critDamage * 100) + "%");
-        player.sendMessage("Poison: " + df.format(poison * 100) + "%");
-        player.sendMessage("Mana Regen: " + df.format(manaRegen));
-        player.sendMessage("CD Reduction: " + df.format(spellCooldownReduction * 100) + "%");
-        player.sendMessage("Magic Pen.: " + df.format(magicArmorPen * 100) + "%");
+        ChatColor color = ChatColor.DARK_AQUA;
+        player.sendMessage(color+""+ChatColor.BOLD+"------------- Player Stats -------------");
+        player.sendMessage(color+"Damage: " + df.format(minDamage) + " - " + df.format(maxDamage) + " DP(" + df.format(dp) + ")");
+        player.sendMessage(color+"Weapon Speed: " + weaponSpeed + " DPS(" + df.format(dps) + ")");
+        player.sendMessage(color+"Magic Power: " + df.format(magicPower) + "");
+        player.sendMessage(color+"Mana: " + df.format(manaCurrent) + "/" + df.format(manaMax));
+        player.sendMessage(color+"Armor: " + armor + " (" + df.format(percentArmor * 100) + "%)");
+        player.sendMessage(color+"Magic Armor: " + magicArmor + " (" + df.format(magicPercentArmor * 100) + "%)");
+        player.sendMessage(color+"Dodge: " + df.format(dodge * 100) + "%");
+        player.sendMessage(color+"Block: " + df.format(block * 100) + "%");
+        player.sendMessage(color+"Crit. Chance: " + df.format(critChance * 100) + "%");
+        player.sendMessage(color+"Crit. Damage: " + df.format(critDamage * 100) + "%");
+        player.sendMessage(color+"Poison: " + df.format(poison * 100) + "%");
+        player.sendMessage(color+"Mana Regen: " + df.format(manaRegen));
+        player.sendMessage(color+"CD Reduction: " + df.format(spellCooldownReduction * 100) + "%");
+        player.sendMessage(color+"Magic Pen.: " + df.format(magicArmorPen * 100) + "%");
+        player.sendMessage(color+"Armor Pen.: " + df.format(armorPen * 100) + "%");
+        player.sendMessage(color+"Stab: " + df.format(stab * 100) + "%");
     }
 
     public void ShowStats() {

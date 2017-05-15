@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
@@ -78,6 +79,17 @@ public class EventListener implements Listener {
     @EventHandler
     public void onBlockExpEvent(BlockExpEvent event) {
     	event.setExpToDrop(0);
+    }
+    
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+    	Player p =event.getPlayer();
+		ItemStack weapon = p.getInventory().getItemInMainHand();
+		if(ItemCategory.isAnyWeapon(weapon) || ItemCategory.isTool(weapon)){
+			if(!weapon.hasItemMeta() || !weapon.getItemMeta().hasLore()){
+				p.getInventory().setItemInMainHand(LoreItemMaker.CheckItemLore(weapon, p)); 
+			}
+		}
     }
 
     @EventHandler
@@ -633,7 +645,7 @@ public class EventListener implements Listener {
                     }
                     return false;
                 }
-                if (args[0].equalsIgnoreCase("loreclear")) {
+                if (args[0].equalsIgnoreCase("loreclear")  && sender.hasPermission("ils.admin")) {
                 	Player player = (Player) sender;
                 	ItemStack item = player.getInventory().getItemInMainHand();
                     if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -644,7 +656,7 @@ public class EventListener implements Listener {
                         return true;
                     }
                 }
-                if (args[0].equalsIgnoreCase("mana")) {
+                if (args[0].equalsIgnoreCase("mana")  && sender.hasPermission("ils.admin")) {
                 	if(args.length==3){
                     	Player p = Bukkit.getPlayer(args[1]);
                     	if(p==null){
@@ -673,7 +685,7 @@ public class EventListener implements Listener {
                 		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
                 	}
                 }
-                if (args[0].equalsIgnoreCase("vida")) {
+                if (args[0].equalsIgnoreCase("vida")  && sender.hasPermission("ils.admin")) {
                 	if(args.length==3){
                     	Player p = Bukkit.getPlayer(args[1]);
                     	if(p==null){
@@ -696,6 +708,102 @@ public class EventListener implements Listener {
             				sender.sendMessage(ChatColor.RED+"invalid given amount");
             				return true;
             			}
+                	}else{
+                		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
+                	}
+                }
+                if (args[0].equalsIgnoreCase("weapons")  && sender.hasPermission("ils.admin")) {
+                	if(args.length==2 ){
+                		if(sender instanceof Player){
+                			Player p = (Player) sender;
+                			try{
+                				int data= Integer.parseInt(args[1]);
+                				for (int i = data*35+1 ;i<data*35+36 ; i++){
+                					ItemStack item = ItemMaker.Weapon(i);
+                					p.getInventory().addItem(item);
+                				}
+                    			return true;
+                			}catch(NumberFormatException e){
+                				sender.sendMessage(ChatColor.RED+"invalid given amount");
+                				return true;
+                			}
+                			
+                		}
+                		else{
+                			sender.sendMessage(ChatColor.RED+"only a player can use the command");
+                		}
+                	}else{
+                		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
+                	}
+                }
+                if (args[0].equalsIgnoreCase("bows")  && sender.hasPermission("ils.admin")) {
+                	if(args.length==2 ){
+                		if(sender instanceof Player){
+                			Player p = (Player) sender;
+                			try{
+                				int data= Integer.parseInt(args[1]);
+                				for (int i = data*35+1 ;i<data*35+36 ; i++){
+                					ItemStack item = ItemMaker.Bow(i);
+                					p.getInventory().addItem(item);
+                				}
+                    			return true;
+                			}catch(NumberFormatException e){
+                				sender.sendMessage(ChatColor.RED+"invalid given amount");
+                				return true;
+                			}
+                			
+                		}
+                		else{
+                			sender.sendMessage(ChatColor.RED+"only a player can use the command");
+                		}
+                	}else{
+                		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
+                	}
+                }
+                if (args[0].equalsIgnoreCase("tools")  && sender.hasPermission("ils.admin")) {
+                	if(args.length==2 ){
+                		if(sender instanceof Player){
+                			Player p = (Player) sender;
+                			try{
+                				int data= Integer.parseInt(args[1]);
+                				for (int i = data*35+1 ;i<data*35+36 ; i++){
+                					ItemStack item = ItemMaker.Tool(i);
+                					p.getInventory().addItem(item);
+                				}
+                    			return true;
+                			}catch(NumberFormatException e){
+                				sender.sendMessage(ChatColor.RED+"invalid given amount");
+                				return true;
+                			}
+                			
+                		}
+                		else{
+                			sender.sendMessage(ChatColor.RED+"only a player can use the command");
+                		}
+                	}else{
+                		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
+                	}
+                }
+                if (args[0].equalsIgnoreCase("shields")  && sender.hasPermission("ils.admin")) {
+                	if(args.length==2 ){
+                		if(sender instanceof Player){
+                			Player p = (Player) sender;
+                			try{
+                				int data= Integer.parseInt(args[1]);
+                				for (int i = data*35+1 ;i<data*35+36 ; i++){
+                					ItemStack item = ItemMaker.Shield(i);
+                					p.getInventory().addItem(item);
+                				}
+                    			return true;
+                			}catch(NumberFormatException e){
+                				sender.sendMessage(ChatColor.RED+"invalid given amount");
+                				return true;
+                			}
+                			
+                		}
+                		else{
+                			sender.sendMessage(ChatColor.RED+"only a player can use the command");
+                		}
                 	}else{
                 		sender.sendMessage(ChatColor.RED+"Invalid number of arguments");
                 	}

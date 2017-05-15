@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.blitzcube.mlapi.MultiLineAPI;
 import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
@@ -26,14 +28,15 @@ public class PlayerJoinListener implements Listener {
     Main plugin;
     File mysqlFile;
     FileConfiguration sqlconf;
+    
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player playerFinal = event.getPlayer();
-
+        
         Main.plugin.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, () -> {
             PlayerStats ps = new PlayerStats(playerFinal);
-            ps.UpdateAll();
+            ps.UpdateAll(); 
             Main.plugin.playersStats.put(playerFinal.getUniqueId(), ps);
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
