@@ -3,7 +3,7 @@ name: LoncoLoreItems
 version: ${project.version}
 author: YitanTribal, Beelzebu
 description: The RPG Core of Nifheim Minecraft
-softdepend: [EffectLib, ActionBarAPI, WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI,MythicMobs]
+softdepend: [EffectLib, WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI, MythicMobs]
 commands:
   ils:
     description: The core ILS command.
