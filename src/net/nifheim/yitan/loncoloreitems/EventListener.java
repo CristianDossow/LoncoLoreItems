@@ -52,6 +52,7 @@ import net.nifheim.yitan.loncoloremagics.Spell;
 import net.nifheim.yitan.loncoloremagics.SpellsList;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
+import net.nifheim.yitan.itemlorestats.PlayerStatsFormules;
 
 public class EventListener implements Listener {
 
@@ -136,7 +137,12 @@ public class EventListener implements Listener {
                 if (meta.hasEnchant(Enchantment.MENDING)) {
                     meta.removeEnchant(Enchantment.MENDING);
                 }
-
+                if (meta.hasEnchant(Enchantment.ARROW_FIRE)) {
+                    meta.removeEnchant(Enchantment.ARROW_FIRE);
+                }
+                if (meta.hasEnchant(Enchantment.FIRE_ASPECT)) {
+                    meta.removeEnchant(Enchantment.FIRE_ASPECT);
+                }
                 item.setItemMeta(meta);
             }
         }
@@ -461,6 +467,28 @@ public class EventListener implements Listener {
                 }
             }
         }
+        if (itemcliked != null && !itemcliked.getType().equals(Material.AIR) && EspecialAtributes.IsItemBooter(item)) {
+            if (!EspecialAtributes.HasLevel(itemcliked)) {
+                player.sendMessage("Este objeto no es reformable");
+            } else if (item.getAmount() > 1) {
+                player.sendMessage("Este objeto solo se puede usar de uno a la vez");
+            } else {
+                int bootpower = EspecialAtributes.getItemBooterPower(item);
+                int itemlvl= PlayerStatsFormules.getItemLvl(itemcliked);
+                int newlvl = itemlvl+bootpower;
+                if(newlvl>100)
+                	newlvl=100;
+                ItemStack reformeditem = LoreItemMaker.ClearAndAddItemLore(itemcliked, player, newlvl);
+                if (reformeditem != null) {
+                    player.setItemOnCursor(null);
+                    player.sendMessage("El objeto ha sido reformado al nivel "+newlvl);
+                    itemcliked = reformeditem;
+                    event.setCancelled(true);
+                } else {
+                    player.sendMessage("Este objeto no es reformable");
+                }
+            }
+        }
 
         if (itemcliked != null && itemcliked.getType().equals(Material.ENCHANTED_BOOK)) {
             if (itemcliked.getItemMeta() != null && itemcliked.getItemMeta() instanceof EnchantmentStorageMeta) {
@@ -570,21 +598,6 @@ public class EventListener implements Listener {
                         return true;
                     }
                 }
-                if (args[0].equalsIgnoreCase("add")) {
-                    if (sender instanceof Player && sender.hasPermission("ils.admin")) {
-                        if (args.length > 1) {
-                            if (args[1].equalsIgnoreCase("voidbound")) {
-                                Player player = (Player) sender;
-                                ItemStack item = player.getInventory().getItemInMainHand();
-                                LoreItemMaker.AddVoidbound(item);
-                                return true;
-                            }
-                            return false;
-                        }
-                        return false;
-                    }
-                    return false;
-                }
                 if (args[0].equalsIgnoreCase("pergamino")) {
                     if (sender instanceof Player && sender.hasPermission("ils.admin")) {
                         if (args.length > 1) {
@@ -604,16 +617,22 @@ public class EventListener implements Listener {
                 if (args[0].equalsIgnoreCase("giveitem")) {
                     if (sender instanceof Player && sender.hasPermission("ils.admin")) {
                         if (args.length > 2) {
+                            int power = 1;
+                            try {
+                                power = Integer.parseInt(args[2]);
+                            } catch (NumberFormatException e) {
+                                sender.sendMessage(ChatColor.DARK_RED + "El nivel debe ser numerico");
+                                return false;
+                            }
+                            Player player = (Player) sender;
+                            ItemStack item;
                             if (args[1].equalsIgnoreCase("repairstone")) {
-                                int power = 1;
-                                try {
-                                    power = Integer.parseInt(args[2]);
-                                } catch (NumberFormatException e) {
-                                    sender.sendMessage(ChatColor.DARK_RED + "El nivel debe ser numerico");
-                                    return false;
-                                }
-                                Player player = (Player) sender;
-                                ItemStack item = ItemMaker.RepairerStone(power);
+                            	item = ItemMaker.RepairerStone(power);
+                                player.getInventory().addItem(item);
+                                return true;
+                            }
+                            if (args[1].equalsIgnoreCase("itembooststone")) {
+                            	item = ItemMaker.itemLevelBoost(power);
                                 player.getInventory().addItem(item);
                                 return true;
                             }

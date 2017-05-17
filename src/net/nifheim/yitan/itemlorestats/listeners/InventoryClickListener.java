@@ -96,12 +96,12 @@ public class InventoryClickListener implements Listener {
                     if ((event.getSlot() == 45) || (event.getRawSlot() == 45)
                             || ((event.getSlotType().equals(InventoryType.SlotType.ARMOR)) && (Main.plugin.isArmour(item.getType())))
                             || ((event.isShiftClick())) || ((event.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) && (event.getSlot() == player.getInventory().getHeldItemSlot()) && (Main.plugin.isTool(item.getType())))) {
-                        if (!Main.plugin.xpLevel.checkXPLevel(player, item)) {
+                        /*if (!Main.plugin.xpLevel.checkXPLevel(player, item)) {
                             event.setCancelled(true);
                             player.updateInventory();
 
                             return;
-                        }
+                        }*/
 
                         if (!Main.plugin.soulbound.checkSoulbound(player, item)) {
                             event.setCancelled(true);

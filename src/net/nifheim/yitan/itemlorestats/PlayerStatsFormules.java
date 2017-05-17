@@ -162,8 +162,15 @@ public class PlayerStatsFormules {
                 }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
-                        MinValue = MinValue + getDoubleStat(stat,gear,1)[0];
-                        MaxValue = MaxValue + getDoubleStat(stat,gear,1)[1];
+                    	double multiplier = 1;
+                    	int itemlvl= getItemLvl(gear);
+                    	if(itemlvl>player.getLevel()){
+                    		multiplier = 1-(0.05*(itemlvl-player.getLevel()));
+                    		if(multiplier<0)
+                    			multiplier=0;
+                    	}
+                        MinValue = MinValue + getDoubleStat(stat,gear,multiplier)[0];
+                        MaxValue = MaxValue + getDoubleStat(stat,gear,multiplier)[1];
                     }
                 }
             }
@@ -228,7 +235,14 @@ public class PlayerStatsFormules {
                 }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
-                    	value = value + getStat(stat,gear,1);
+                    	double multiplier = 1;
+                    	int itemlvl= getItemLvl(gear);
+                    	if(itemlvl>player.getLevel()){
+                    		multiplier = 1-(0.05*(itemlvl-player.getLevel()));
+                    		if(multiplier<0)
+                    			multiplier=0;
+                    	}
+                    	value = value + getStat(stat,gear,multiplier);
                     }
                 }
             }
@@ -248,6 +262,30 @@ public class PlayerStatsFormules {
                         if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
                         	try{
                         		value += (Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""))*multiplier);
+                        	}catch (NumberFormatException e) {
+
+							}
+                        	
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    }
+	static public int getItemLvl(ItemStack gear) {
+    	String stat = level.replaceAll(languageRegex, "");
+        int value = 0;
+        if (gear != null) {
+            if (gear.getItemMeta() != null) {
+                if (gear.getItemMeta().getLore() != null) {
+                    List<String> itemLore = gear.getItemMeta().getLore();
+                    for (String line : itemLore) {
+                        String lore = ChatColor.stripColor(line.toString());
+                        lore = lore.toLowerCase();
+                        if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
+                        	try{
+                        		value += (Integer.parseInt(lore.replaceAll("[^0-9.+-]", "")));
                         	}catch (NumberFormatException e) {
 
 							}

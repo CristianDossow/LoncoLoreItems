@@ -51,6 +51,26 @@ public class ItemMaker {
         item.setDurability((short) 103);
         return item;
     }
+    public static ItemStack itemLevelBoost(int poder) {
+
+        ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
+        ItemMeta im = item.getItemMeta();
+        im.setUnbreakable(true);
+        im.setDisplayName(ChatColor.GOLD+"Piedra Reformadora");
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GOLD + EspecialAtributes.itemLevelBoost + " " + poder);
+        lore.add(ChatColor.DARK_AQUA+"Piedra mágica capaz de alterar la");
+        lore.add(ChatColor.DARK_AQUA+"composicion elemental de un objeto");
+        lore.add(ChatColor.DARK_AQUA+"y aumentar su nivel");
+        lore.add(ChatColor.RED+"Los Encantamientos se perderán y el");
+        lore.add(ChatColor.RED+"resultado es totalmente impredecible");
+        im.setLore(lore);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(im);
+        item.setDurability((short) 205);
+        return item;
+    }
 
     public static ItemStack SpellBook(Spell spell) {
 
