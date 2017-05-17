@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.Effect;
 import org.bukkit.Sound;
 
 import de.slikey.effectlib.util.ParticleEffect;

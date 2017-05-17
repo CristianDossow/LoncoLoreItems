@@ -3,24 +3,16 @@ package net.nifheim.yitan.loncoloremagics;
 import java.util.Iterator;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.CircleEffect;
-import de.slikey.effectlib.effect.ConeEffect;
-import de.slikey.effectlib.effect.DragonEffect;
 import de.slikey.effectlib.effect.HelixEffect;
-import de.slikey.effectlib.effect.SphereEffect;
-import de.slikey.effectlib.effect.TornadoEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
-import net.nifheim.yitan.itemlorestats.listeners.magicProjectileHit;
 
 public class SpellCastChants extends BukkitRunnable {
 
