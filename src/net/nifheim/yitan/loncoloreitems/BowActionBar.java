@@ -1,7 +1,7 @@
 package net.nifheim.yitan.loncoloreitems;
 
-import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import java.text.DecimalFormat;
+import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

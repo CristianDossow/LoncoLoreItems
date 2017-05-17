@@ -1,8 +1,8 @@
 package net.nifheim.yitan.loncoloreitems;
 
-import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import java.text.DecimalFormat;
 import java.util.Objects;
+import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
