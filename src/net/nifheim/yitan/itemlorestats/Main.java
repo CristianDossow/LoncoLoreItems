@@ -59,8 +59,15 @@ import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
 import net.nifheim.yitan.itemlorestats.Repair.RepairEvents;
 import net.nifheim.yitan.itemlorestats.Util.*;
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
+import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
+import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
+import net.nifheim.yitan.itemlorestats.listeners.EntityRegainHealthListener;
+import net.nifheim.yitan.itemlorestats.listeners.EntityShotBowListener;
+import net.nifheim.yitan.itemlorestats.listeners.GamemodeChangeListener;
+import net.nifheim.yitan.itemlorestats.listeners.InventoryClickListener;
+import net.nifheim.yitan.itemlorestats.listeners.InventoryDragListener;
+import net.nifheim.yitan.itemlorestats.listeners.PlayerChangeWorldListener;
 import net.nifheim.yitan.itemlorestats.listeners.*;
-
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
@@ -128,7 +135,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     static public Scoreboard scoreboard;
 
     BukkitTask fastTasks;
-    
+
     public MySQL getMySQL() {
         return mysql;
     }
@@ -139,15 +146,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     @Override
     public void onEnable() {
-        
+
         this.loadManagers();
         Locale.setDefault(Locale.ROOT);
-        
+
         plugin = this;
         instance = this;
-        
+
         mysql = new MySQL();
         aba = new ActionBarAPI();
+        aba.loadActionBar();
 
         PluginManager plma = getServer().getPluginManager();
 
@@ -272,13 +280,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public void checkDependencies() {
-/*        if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
+        /*        if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into EffectLib."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find EffectLib, you need this API to run this plugin ..."));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
-*/
+         */
         if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             placeholderAPI = new PlaceholderAPI(this);
             placeholderAPI.hook();
