@@ -84,7 +84,7 @@ public class PlayerJoinListener implements Listener {
 
         // SQL Stats
         //sqlconf = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
-        String prefix = Main.mysqlf.getString("MySQL.Prefix");
+        String prefix = plugin.getMySQL().prefix;
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             try {
                 Player p = event.getPlayer();

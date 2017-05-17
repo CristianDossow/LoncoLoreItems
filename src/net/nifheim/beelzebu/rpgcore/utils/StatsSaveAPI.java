@@ -7,7 +7,6 @@ import java.sql.Statement;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -16,10 +15,9 @@ import org.bukkit.entity.Player;
  */
 public class StatsSaveAPI {
 
-    private static final Main plugin = Main.getInstance();
     private static final Connection c = MySQL.getConnection();
-    private static final FileConfiguration sqlfile = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
-    private static final String prefix = sqlfile.getString("MySQL.Prefix");
+    private static final FileConfiguration config = Main.getInstance().getConfig();
+    private static final String prefix = Main.getInstance().getMySQL().prefix;
     private static PlayerStats ps;
 
     public static void saveAllStats(Player p) throws SQLException {

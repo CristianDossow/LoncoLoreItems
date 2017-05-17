@@ -1,6 +1,6 @@
 # Default config for LoncoLoreItems
 
-fileVersion: 736
+fileVersion: 0
 serverVersion: 0
 # languageFile - This is the default language file loaded for in-game messages. This can be "language-en", "language-de, "language-pl".
 languageFile: language-en
@@ -1086,3 +1086,11 @@ npcModifier:
     healthMultiplier: 1.2
     damageMultiplier: 0.8
     expMultiplier: 0.0045
+MySQL:
+    Host: localhost
+    Port: 3306
+    Database: minecraft
+    User: root
+    Password: password
+    Prefix: 'RPG_'
+    Connection Interval: 5

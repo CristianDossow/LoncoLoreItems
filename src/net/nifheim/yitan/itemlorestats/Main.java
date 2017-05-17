@@ -70,17 +70,15 @@ import net.nifheim.yitan.loncoloremagics.SpellListeners;
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public static Main plugin;
+    private static MySQL mysql;
     public Main instance;
     public static final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
-    private static MySQL mysql;
     private PlaceholderAPI placeholderAPI;
     private ActionBarAPI aba;
     // Files
     private final File messagesFile = new File(getDataFolder(), "messages.yml");
-    public static FileConfiguration messages ;
-    public File mysqlFile = new File(getDataFolder(), "MySQL.yml");
-    public static FileConfiguration mysqlf;
+    public static FileConfiguration messages;
     public static int checkdb;
 
     public ActivateEnchant activateEnchant;
@@ -126,10 +124,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Lore_Com lore_Com = new Lore_Com();
     Name_Com name_Com = new Name_Com();
     Repair_Com repair_Com = new Repair_Com();
-    
+
     static public Scoreboard scoreboard;
 
     BukkitTask fastTasks;
+    
+    public MySQL getMySQL() {
+        return mysql;
+    }
 
     public static Main getInstance() {
         return plugin;
@@ -137,14 +139,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     @Override
     public void onEnable() {
-        Locale.setDefault(Locale.ROOT);
-        messages = YamlConfiguration.loadConfiguration(messagesFile);
-        mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
-        checkdb = mysqlf.getInt("MySQL.Connection Interval") * 1200;
-        mysql = new MySQL();
-        this.loadManagers();
-        aba = new ActionBarAPI();
         
+        this.loadManagers();
+        Locale.setDefault(Locale.ROOT);
+        
+        plugin = this;
+        instance = this;
+        
+        mysql = new MySQL();
+        aba = new ActionBarAPI();
+
         PluginManager plma = getServer().getPluginManager();
 
         //New events clases
@@ -189,8 +193,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         eventlistener = new EventListener(this);
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
-        
-        
+
         this.spigotStatCapWarning.updateSpigotValues();
 
         fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 5, 5);
@@ -207,6 +210,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 }
             }
         }
+        mysql.SQLConnection();
         for (Player player : Bukkit.getOnlinePlayers()) {
             try {
                 StatsSaveAPI.setAllStats(player);
@@ -221,16 +225,15 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         scoreboard.getTeam("BlueCT").setPrefix(ChatColor.BLUE + "");
         scoreboard.getTeam("RedCT").setPrefix(ChatColor.RED + "");
         scoreboard.getTeam("YellowCT").setPrefix(ChatColor.YELLOW + "");
-        
     }
 
     @Override
     public void onDisable() {
-    	if(scoreboard!=null){
+        if (scoreboard != null) {
             scoreboard.getTeam("BlueCT").unregister();
             scoreboard.getTeam("RedCT").unregister();
             scoreboard.getTeam("YellowCT").unregister();
-    	}
+        }
         Bukkit.getScheduler().cancelTasks(this);
         for (Map.Entry<Player, BossBar> m : manaBar.entrySet()) {
             m.getValue().removeAll();
@@ -264,20 +267,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         if (!messagesFile.exists()) {
             copy(getResource("messages.yml"), messagesFile);
         }
-        if (!mysqlFile.exists()) {
-            copy(getResource("MySQL.yml"), mysqlFile);
-        }
+        messages = YamlConfiguration.loadConfiguration(messagesFile);
         checkDependencies();
-        mysql.SQLConnection();
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
-            console.sendMessage(plugin.rep("%prefix% Checking the database connection ..."));
-            if (mysql.getConnection() == null) {
-                console.sendMessage(plugin.rep("%prefix% The database connection is null, reconnecting ..."));
-            } else {
-                console.sendMessage(plugin.rep("%prefix% The connection to the database is still active."));
-            }
-        }, 0L, checkdb);
-        
     }
 
     public void checkDependencies() {
@@ -902,9 +893,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public String rep(String str) {
-    	if(str==null){
-    		return "";
-    	}
+        if (str == null) {
+            return "";
+        }
         return str.replaceAll("%prefix%", getMessages().getString("Prefix")).replaceAll("&", "§");
     }
 

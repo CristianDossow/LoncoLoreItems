@@ -1,6 +1,5 @@
 package net.nifheim.beelzebu.rpgcore.utils;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,22 +12,19 @@ import net.nifheim.yitan.itemlorestats.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public class MySQL {
 
-    private final Main plugin = Main.getInstance();
-    private final File mysqlFile = new File(plugin.getDataFolder(), "MySQL.yml");
-    private final FileConfiguration mysql = YamlConfiguration.loadConfiguration(mysqlFile);
+    private final FileConfiguration config = Main.getInstance().getConfig();
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private final String host = mysql.getString("MySQL.Host");
-    private final int port = mysql.getInt("MySQL.Port");
-    private final String name = mysql.getString("MySQL.Database");
-    private final String user = mysql.getString("MySQL.User");
-    private final String passwd = mysql.getString("MySQL.Password");
-    public final String prefix = mysql.getString("MySQL.Prefix");
-    private final int checkdb = mysql.getInt("MySQL.Connection Interval") * 1200;
+    private final String host = config.getString("MySQL.Host");
+    private final int port = config.getInt("MySQL.Port");
+    private final String name = config.getString("MySQL.Database");
+    private final String user = config.getString("MySQL.User");
+    private final String passwd = config.getString("MySQL.Password");
+    public final String prefix = config.getString("MySQL.Prefix");
+    private final int checkdb = config.getInt("MySQL.Connection Interval") * 1200;
     private static Connection c;
 
     public static Connection getConnection() {

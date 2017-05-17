@@ -1,8 +1,0 @@
-MySQL:
-    Host: localhost
-    Port: 3306
-    Database: minecraft
-    User: root
-    Password: password
-    Prefix: 'RPG_'
-    Connection Interval: 5
