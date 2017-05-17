@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 
 import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 import net.nifheim.yitan.itemlorestats.Main;
@@ -15,7 +16,6 @@ import net.nifheim.yitan.itemlorestats.PlayerStats;
 import org.bukkit.Bukkit;
 
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,9 +24,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    Main plugin;
-    File mysqlFile;
-    FileConfiguration sqlconf;
+    private final Main plugin = Main.getInstance();
     
 
     @EventHandler
@@ -86,20 +84,19 @@ public class PlayerJoinListener implements Listener {
 
         // SQL Stats
         //sqlconf = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
-        sqlconf = Main.mysqlf;
-        String prefix = sqlconf.getString("MySQL.Prefix");
+        String prefix = Main.mysqlf.getString("MySQL.Prefix");
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             try {
                 Player p = event.getPlayer();
                 String name;
                 name = p.getUniqueId().toString();
 
-                Connection c = plugin.mysql.getConnection();
+                Connection c = MySQL.getConnection();
                 Statement check = c.createStatement();
                 ResultSet res = check.executeQuery("SELECT uuid FROM " + prefix + "Data WHERE uuid = '" + name + "';");
                 if (!res.next()) {
                     Statement update = c.createStatement();
-                    update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES ('null, " + name + "', '" + p.getName() + "', 20, 1, 100, 0, 0, 0, 0);");
+                    update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES ('NULL, " + name + "', '" + p.getName() + "', 20, 1, 100, 0, 0, 0, 0);");
                     StatsSaveAPI.setAllStats(p);
                 } else {
                     Statement update = c.createStatement();
