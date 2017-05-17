@@ -37,20 +37,16 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-
 import net.citizensnpcs.Citizens;
 import net.milkbowl.vault.Vault;
+
 import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
+import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
 import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
 import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
-import net.nifheim.yitan.itemlorestats.Commands.CreateLore_Com;
-import net.nifheim.yitan.itemlorestats.Commands.CustomMaterial_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Export_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Give_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Lore_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Name_Com;
-import net.nifheim.yitan.itemlorestats.Commands.Repair_Com;
+
+import net.nifheim.yitan.itemlorestats.Commands.*;
 import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
 import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
 import net.nifheim.yitan.itemlorestats.Damage.PotionListener;
@@ -61,49 +57,25 @@ import net.nifheim.yitan.itemlorestats.ItemUpgrading.PlayerLevelEvents;
 import net.nifheim.yitan.itemlorestats.Misc.SpigotStatCapWarning;
 import net.nifheim.yitan.itemlorestats.Misc.WriteDefaultFiles;
 import net.nifheim.yitan.itemlorestats.Repair.RepairEvents;
-import net.nifheim.yitan.itemlorestats.Util.Util_Citizens;
-import net.nifheim.yitan.itemlorestats.Util.Util_Colours;
-import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
-import net.nifheim.yitan.itemlorestats.Util.Util_Format;
-import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
-import net.nifheim.yitan.itemlorestats.Util.Util_Random;
-import net.nifheim.yitan.itemlorestats.Util.Util_Vault;
-import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
+import net.nifheim.yitan.itemlorestats.Util.*;
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
-import net.nifheim.yitan.itemlorestats.listeners.CreatureSpawnListener;
-import net.nifheim.yitan.itemlorestats.listeners.EnchantItemListener;
-import net.nifheim.yitan.itemlorestats.listeners.EntityRegainHealthListener;
-import net.nifheim.yitan.itemlorestats.listeners.EntityShotBowListener;
-import net.nifheim.yitan.itemlorestats.listeners.GamemodeChangeListener;
-import net.nifheim.yitan.itemlorestats.listeners.InventoryClickListener;
-import net.nifheim.yitan.itemlorestats.listeners.InventoryDragListener;
-import net.nifheim.yitan.itemlorestats.listeners.MerchantClickListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerChangeWorldListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerDeathListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerDropItemListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerExpChangeListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerInteractEntityListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerInteractListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerItemHeldListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerJoinListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerPickupItemListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerQuitListener;
-import net.nifheim.yitan.itemlorestats.listeners.PlayerRespawnListener;
+import net.nifheim.yitan.itemlorestats.listeners.*;
+
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
+
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
 
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
-
-    MySQL mysqlc;
 
     public static Main plugin;
     public Main instance;
     public static final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
-    public static MySQL mysql;
+    private static MySQL mysql;
     private PlaceholderAPI placeholderAPI;
+    private ActionBarAPI aba;
     // Files
     private final File messagesFile = new File(getDataFolder(), "messages.yml");
     public static FileConfiguration messages ;
@@ -169,9 +141,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         messages = YamlConfiguration.loadConfiguration(messagesFile);
         mysqlf = YamlConfiguration.loadConfiguration(mysqlFile);
         checkdb = mysqlf.getInt("MySQL.Connection Interval") * 1200;
-        mysql = new MySQL(this);
+        mysql = new MySQL();
         this.loadManagers();
-        
+        aba = new ActionBarAPI();
         
         PluginManager plma = getServer().getPluginManager();
 
