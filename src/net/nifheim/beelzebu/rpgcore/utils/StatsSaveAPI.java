@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 public class StatsSaveAPI {
 
     private static final Main plugin = Main.getInstance();
-    private static final Connection c = plugin.mysql.getConnection();
+    private static final Connection c = MySQL.getConnection();
     private static final FileConfiguration sqlfile = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
     private static final String prefix = sqlfile.getString("MySQL.Prefix");
     private static PlayerStats ps;
