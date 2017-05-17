@@ -272,12 +272,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public void checkDependencies() {
-        if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
+/*        if (Bukkit.getServer().getPluginManager().getPlugin("EffectLib") != null) {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into EffectLib."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find EffectLib, you need this API to run this plugin ..."));
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
+*/
         if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             placeholderAPI = new PlaceholderAPI(this);
             placeholderAPI.hook();
