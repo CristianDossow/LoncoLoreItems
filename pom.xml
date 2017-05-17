@@ -48,6 +48,10 @@
             <id>betonquest-repo</id>
             <url>http://betonquest.betoncraft.pl/mvn</url>
         </repository>
+        <repository>
+            <id>elmakers-repo</id>
+            <url>http://maven.elmakers.com/repository/ </url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -133,7 +137,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>${project.name}</finalName>
         <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
