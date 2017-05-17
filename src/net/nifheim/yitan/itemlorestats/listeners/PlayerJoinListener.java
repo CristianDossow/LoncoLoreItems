@@ -96,7 +96,7 @@ public class PlayerJoinListener implements Listener {
                 ResultSet res = check.executeQuery("SELECT uuid FROM " + prefix + "Data WHERE uuid = '" + name + "';");
                 if (!res.next()) {
                     Statement update = c.createStatement();
-                    update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES ('NULL, " + name + "', '" + p.getName() + "', 20, 1, 100, 0, 0, 0, 0);");
+                    update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES ('NULL, '" + name + "', '" + p.getName() + "', 20, 1, 100, 0, 0, 0, 0);");
                     StatsSaveAPI.setAllStats(p);
                 } else {
                     Statement update = c.createStatement();
