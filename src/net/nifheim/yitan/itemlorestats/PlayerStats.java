@@ -1,11 +1,16 @@
 package net.nifheim.yitan.itemlorestats;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import net.md_5.bungee.api.ChatColor;
+import net.nifheim.yitan.StatsModifier.StatModifier;
+import net.nifheim.yitan.StatsModifier.StatModifierType;
+import net.nifheim.yitan.StatsModifier.StatType;
 
 public class PlayerStats {
 
@@ -35,9 +40,8 @@ public class PlayerStats {
     public double harming; //no estudiado y sin ocupar
     public double blind; //no estudiado y sin ocupar
     public double XPMultiplier; //??
+    public float baseMovementSpeed;
     public double movementSpeed;
-
-    // stats por programar --------------------
     public double manaMax;
     public double manaCurrent;
     public double manaRegen;
@@ -48,11 +52,19 @@ public class PlayerStats {
     public double armorPen; // penetración de armadura
     public double magicArmorPen; // penetración de armadura mágica
     public double stab; // probabilidad de apuñalar por detras, stat para dagas
-    public double stabDamage; //multiplicador del stab
-    public double Luck; //quien sabe :v
     public long lastSpellCast;
     public long spellCastWait;
     public long lastMessage;
+    
+    public List<StatModifier> Buffs;
+    public List<StatModifier> DeBuffs;
+    
+    
+    // stats por programar --------------------
+    public double stabDamage; //multiplicador del stab
+    public double Luck; //quien sabe :v
+    
+    static String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
 
     public PlayerStats(Player player) {
         super();
@@ -64,6 +76,9 @@ public class PlayerStats {
         this.lastSpellCast = System.currentTimeMillis();
         this.spellCastWait = System.currentTimeMillis();
         this.lastMessage = System.currentTimeMillis();
+        this.Buffs = new ArrayList<>();
+        this.DeBuffs = new ArrayList<>();
+        this.baseMovementSpeed = 0.2f;
     }
     
 
@@ -86,6 +101,7 @@ public class PlayerStats {
         UpdateMagicArmorPen();
         UpdateBackstab();
         UpdateArmorPen();
+        UpdateMovementSpeed();
     }
     public void UpdateAttack() {
         UpdateDamage();
@@ -98,6 +114,7 @@ public class PlayerStats {
         UpdateMagicArmorPen();
         UpdateBackstab();
         UpdateArmorPen();
+        UpdateMovementSpeed();
     }
     public void UpdateMana() {
         UpdateManaMax();
@@ -110,11 +127,59 @@ public class PlayerStats {
         UpdateMagicPercentArmor();
         UpdateDodge();
         UpdateBlock();
+        UpdateMovementSpeed();
     }
-
+    double BuffStat(double stat,StatType st){
+        double accumulative=0;
+        for(StatModifier sm : this.Buffs){
+        	if(sm.getStatType().equals(st)){
+        		if(sm.getSmt().equals(StatModifierType.ABSOLUTE)){
+        			stat = stat + sm.getValue();
+        		}
+        		if(sm.getSmt().equals(StatModifierType.ACCUMULATIVE)){
+        			accumulative = accumulative + sm.getValue();
+        		}
+        		if(sm.getSmt().equals(StatModifierType.MULTIPLICATIVE)){
+        			stat = stat * (1+sm.getValue());
+        		}
+        	}
+        }
+        stat = stat * (1+accumulative);
+		return stat;
+    }
+    double DeBuffStat(double stat,StatType st){
+        double accumulative=0;
+        for(StatModifier sm : this.DeBuffs){
+        	if(sm.getStatType().equals(st)){
+        		if(sm.getSmt().equals(StatModifierType.ABSOLUTE)){
+        			stat = stat - sm.getValue();
+        		}
+        		if(sm.getSmt().equals(StatModifierType.ACCUMULATIVE)){
+        			accumulative = accumulative + sm.getValue();
+        		}
+        		if(sm.getSmt().equals(StatModifierType.MULTIPLICATIVE)){
+        	        if(sm.getValue()>1)
+        	        	stat=0;
+        	        else
+        	        	stat = stat * (1-sm.getValue());
+        		}
+        	}
+        }
+        if(accumulative>1)
+        	accumulative=1;
+        stat = stat * (1-accumulative);
+        if(stat<0)
+        	stat=0;
+		return stat;
+    }
+    
     public void UpdateDamage() {
         this.minDamage = this.baseDamage + PlayerStatsFormules.getDamageGearStat(player)[0];
         this.maxDamage = this.baseDamage + PlayerStatsFormules.getDamageGearStat(player)[1];
+        minDamage = BuffStat(minDamage,StatType.DAMAGE);
+        maxDamage = BuffStat(maxDamage,StatType.DAMAGE);
+        minDamage = DeBuffStat(minDamage,StatType.DAMAGE);
+        maxDamage = DeBuffStat(maxDamage,StatType.DAMAGE);
     }
 
     public void UpdateMagicArmorPen() {
@@ -127,10 +192,14 @@ public class PlayerStats {
 
     public void UpdateArmor() {
         this.armor = PlayerStatsFormules.getArmorStat(player);
+        armor = BuffStat(armor,StatType.ARMOR);
+        armor = DeBuffStat(armor,StatType.ARMOR);
     }
 
     public void UpdateMagicArmor() {
         this.magicArmor = PlayerStatsFormules.getMagicArmorStat(player);
+        magicArmor = BuffStat(magicArmor,StatType.MAGIC_ARMOR);
+        magicArmor = DeBuffStat(magicArmor,StatType.MAGIC_ARMOR);
     }
 
     public void UpdatePercentArmor() {
@@ -182,6 +251,12 @@ public class PlayerStats {
     public void UpdateArmorPen() {
         this.armorPen = PlayerStatsFormules.getArmorPenStat(player);
     }
+    public void UpdateMovementSpeed() {
+        this.movementSpeed = (1+PlayerStatsFormules.getMovementSpeedStat(player));
+        movementSpeed = BuffStat(movementSpeed,StatType.MOVEMENT_SPEED);
+        movementSpeed = DeBuffStat(movementSpeed,StatType.MOVEMENT_SPEED);
+        player.setWalkSpeed((float) (baseMovementSpeed*movementSpeed));
+    }
 
     public void ManaRegen(Double multiplier) {
     	double manaRegen = this.manaRegen*multiplier;
@@ -214,6 +289,38 @@ public class PlayerStats {
         player.sendMessage(color+"Magic Pen.: " + df.format(magicArmorPen * 100) + "%");
         player.sendMessage(color+"Armor Pen.: " + df.format(armorPen * 100) + "%");
         player.sendMessage(color+"Stab: " + df.format(stab * 100) + "%");
+        player.sendMessage(color+"Movement Speed: " + df.format(movementSpeed * 100) + "%");
+    }
+    
+    public void addBuff(StatModifier sm){
+    	if(sm.getId()>=0){
+    		StatModifier old=null;
+    		for(StatModifier asm :Buffs ){
+    			if(asm.getId()==sm.getId()){
+    				old=asm;
+    			}
+    			break;
+    		}
+    		if(old!=null)
+    			Buffs.remove(old);
+    	}
+    	Buffs.add(sm);
+    	this.UpdateAll();
+    }
+    public void addDeBuff(StatModifier sm){
+    	if(sm.getId()>=0){
+    		StatModifier old=null;
+    		for(StatModifier asm :DeBuffs ){
+    			if(asm.getId()==sm.getId()){
+    				old=asm;
+    			}
+    			break;
+    		}
+    		if(old!=null)
+    			DeBuffs.remove(old);
+    	}
+    	DeBuffs.add(sm);
+    	this.UpdateAll();
     }
 
     public void ShowStats() {

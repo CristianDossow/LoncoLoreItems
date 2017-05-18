@@ -31,6 +31,7 @@ public class PlayerRespawnListener implements Listener {
                         Main.plugin.updatePlayerSpeed(playerFinal);
                         Main.plugin.setBonuses.updateSetBonus(playerFinal);
                         playerFinal.setHealth(playerFinal.getMaxHealth());
+                        Main.plugin.getPlayerStats(playerFinal).UpdateAll();
                     } catch (IOException | InvalidConfigurationException e) {
                         System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when respawning! ***********");
                     }
@@ -38,6 +39,7 @@ public class PlayerRespawnListener implements Listener {
                     Main.plugin.updateHealth(playerFinal);
                     Main.plugin.updatePlayerSpeed(playerFinal);
                     Main.plugin.setBonuses.updateSetBonus(playerFinal);
+                    Main.plugin.getPlayerStats(playerFinal).UpdateAll();
                 }
             }, 3L);
         }

@@ -322,8 +322,8 @@ public class LoreItemMaker {
                 temlore = item.getItemMeta().getLore();
             }
             temlore.add(LoreCraftingStats.getLvL(lvl));
-            temlore.add(LoreCraftingStats.getArmour(lvl, item));
-            temlore.add(LoreCraftingStats.getMagicArmour(lvl, item));
+            temlore.add(LoreCraftingStats.getArmour(lvl, item,1));
+            temlore.add(LoreCraftingStats.getMagicArmour(lvl, item,0.5));
             temlore.add(LoreCraftingStats.getArmorDodge(lvl, item));
             temlore.add(LoreCraftingStats.getMSpeed(item));
             if (enchantable) {
@@ -346,8 +346,8 @@ public class LoreItemMaker {
             temlore = item.getItemMeta().getLore();
         }
         temlore.add(LoreCraftingStats.getLvL(lvl));
-        temlore.add(LoreCraftingStats.getArmour(lvl, item));
-        temlore.add(LoreCraftingStats.getMagicArmour(lvl, item));
+        temlore.add(LoreCraftingStats.getArmour(lvl, item,0.5));
+        temlore.add(LoreCraftingStats.getMagicArmour(lvl, item,1));
         temlore.add(LoreCraftingStats.getArmorDodge(lvl, item));
         temlore.add(LoreCraftingStats.getMagicPower(lvl, 0.125, 1));
         //lore.add(LoreCraftingStats.getMagicPen(lvl, 1, 0.25));

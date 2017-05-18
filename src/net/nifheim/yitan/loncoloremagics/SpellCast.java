@@ -1,20 +1,14 @@
 package net.nifheim.yitan.loncoloremagics;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.SpectralArrow;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Scoreboard;
 
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
-import net.nifheim.yitan.loncoloreitems.SwordActionBar;
 
 public class SpellCast {
 	

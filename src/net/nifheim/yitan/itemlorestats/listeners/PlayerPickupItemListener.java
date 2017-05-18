@@ -110,8 +110,8 @@ public class PlayerPickupItemListener implements Listener {
 
             Main.plugin.updateHealth(player);
             Main.plugin.updatePlayerSpeed(player);
-
             Main.plugin.setBonuses.updateSetBonus(player);
+            Main.plugin.getPlayerStats(player).UpdateAll();
         }
     }
 }

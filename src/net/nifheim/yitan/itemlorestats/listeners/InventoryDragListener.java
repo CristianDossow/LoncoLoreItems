@@ -89,6 +89,7 @@ public class InventoryDragListener implements Listener {
                 player.updateInventory();
                 Main.plugin.updateHealth(player);
                 Main.plugin.updatePlayerSpeed(player);
+                Main.plugin.getPlayerStats(player).UpdateAll();
             }, 1L);
         }
     }

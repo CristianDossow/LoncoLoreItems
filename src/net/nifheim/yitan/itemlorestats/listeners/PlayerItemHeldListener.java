@@ -58,8 +58,8 @@ public class PlayerItemHeldListener implements Listener {
                 
                 Main.plugin.updateHealth(playerFinal);
                 Main.plugin.updatePlayerSpeed(playerFinal);
-                
                 Main.plugin.setBonuses.updateSetBonus(playerFinal);
+                Main.plugin.getPlayerStats(playerFinal).UpdateAll();
             }, 2L);
         }
     }
