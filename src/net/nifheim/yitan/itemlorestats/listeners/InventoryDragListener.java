@@ -44,12 +44,12 @@ public class InventoryDragListener implements Listener {
 
                 if (Main.plugin.getSlots.isOffHandSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))
                         || ((Main.plugin.getSlots.isArmourSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (Main.plugin.isArmour(item.getType()))) || ((Main.plugin.getSlots.isHotbarSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (player.getInventory().getHeldItemSlot() == Main.plugin.getSlots.getRawHeldItemSlot(event.getRawSlots().toString().replaceAll("\\[|\\]", ""))) && (Main.plugin.isTool(item.getType())))) {
-                    if (!Main.plugin.xpLevel.checkXPLevel(player, item)) {
+                    /*if (!Main.plugin.xpLevel.checkXPLevel(player, item)) {
                         event.setCancelled(true);
                         player.updateInventory();
 
                         return;
-                    }
+                    }*/
 
                     if (!Main.plugin.soulbound.checkSoulbound(player, item)) {
                         event.setCancelled(true);
@@ -89,6 +89,7 @@ public class InventoryDragListener implements Listener {
                 player.updateInventory();
                 Main.plugin.updateHealth(player);
                 Main.plugin.updatePlayerSpeed(player);
+                Main.plugin.getPlayerStats(player).UpdateAll();
             }, 1L);
         }
     }

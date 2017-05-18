@@ -80,7 +80,7 @@ public class LoreCraftingStats {
         return ChatColor.DARK_AQUA + armorPen + ": " + ChatColor.AQUA + df.format(stats) + "%";
     }
     
-    static public String getArmour(double lvl, ItemStack item) {
+    static public String getArmour(double lvl, ItemStack item, double multiplier) {
 
         double maxstrength = Armorxbase + (Armorxlvl * lvl);
 
@@ -103,20 +103,21 @@ public class LoreCraftingStats {
             maxstrength = maxstrength * 0.9;
         }
         if (item.getType().toString().contains("CHAINMAIL_")) {
-            maxstrength = maxstrength * 0.4;
+            maxstrength = maxstrength * 0.8;
         }
         if (item.getType().toString().contains("GOLD_")) {
-            maxstrength = maxstrength * 0.7;
+            maxstrength = maxstrength * 0.6;
         }
         if (item.getType().toString().contains("LEATHER_")) {
-            maxstrength = maxstrength * 0.6;
+            maxstrength = maxstrength * 0.5;
         }
 
         double minstrength = maxstrength * 0.75;
         double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
+        armourtotal =armourtotal*multiplier;
         return ChatColor.DARK_AQUA + armour + ": " + ChatColor.AQUA + (int) armourtotal;
     }
-    static public String getMagicArmour(double lvl, ItemStack item) {
+    static public String getMagicArmour(double lvl, ItemStack item, double multiplier) {
 
         double maxstrength = Armorxbase + (Armorxlvl * lvl);
 
@@ -133,23 +134,24 @@ public class LoreCraftingStats {
             maxstrength = maxstrength * 0.17;
         }
         if (item.getType().toString().contains("DIAMOND_")) {
-            maxstrength = maxstrength * 0.1;
+            maxstrength = maxstrength * 0.5;
         }
         if (item.getType().toString().contains("IRON_")) {
-            maxstrength = maxstrength * 0.2;
+            maxstrength = maxstrength * 0.6;
         }
         if (item.getType().toString().contains("CHAINMAIL_")) {
-            maxstrength = maxstrength * 1;
+            maxstrength = maxstrength * 0.7;
         }
         if (item.getType().toString().contains("GOLD_")) {
-            maxstrength = maxstrength * 0.3;
+            maxstrength = maxstrength * 0.9;
         }
         if (item.getType().toString().contains("LEATHER_")) {
-            maxstrength = maxstrength * 0.4;
+            maxstrength = maxstrength * 1;
         }
 
         double minstrength = maxstrength * 0.75;
         double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
+        armourtotal =armourtotal*multiplier;
         return ChatColor.LIGHT_PURPLE + magicArmor + ": " + ChatColor.DARK_PURPLE + (int) armourtotal;
     }
     
@@ -293,16 +295,16 @@ public class LoreCraftingStats {
             speed = -0.5;
         }
         if (item.getType().toString().contains("GOLD")) {
-            speed = -1;
+            speed = -2;
         }
         if (item.getType().toString().contains("CHAINMAIL")) {
-            speed = 0;
+            speed = -3.5;
         }
         if (item.getType().toString().contains("IRON")) {
-            speed = -3;
+            speed = -4;
         }
         if (item.getType().toString().contains("DIAMOND")) {
-            speed = -4;
+            speed = -5;
         }
         if (item.getType().toString().contains("SHIELD")) {
             speed = -5;
@@ -369,8 +371,8 @@ public class LoreCraftingStats {
         double base = 10;
         double xlvl = 0.4;
         double max = base + (xlvl * (double) lvl);
-        double min = base + (max - base) / 2;
-        double total = Math.random() * (max - base) + base;
+        double min = max * 0.5;
+        double total = Math.random() * (max - min) + min;
         return ChatColor.DARK_AQUA + block + ": " + ChatColor.AQUA + df.format(total) + "%";
     }
 

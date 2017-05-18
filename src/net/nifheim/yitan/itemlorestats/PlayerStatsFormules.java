@@ -6,33 +6,31 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
 import net.nifheim.yitan.loncoloreitems.ItemCategory;
 
 public class PlayerStatsFormules {
 	
-	public static String armour = Main.plugin.getConfig().getString("primaryStats.armour.colour") + Main.plugin.getConfig().getString("primaryStats.armour.name");
-	public static String dodge = Main.plugin.getConfig().getString("secondaryStats.dodge.colour") + Main.plugin.getConfig().getString("secondaryStats.dodge.name");
-	public static String block = Main.plugin.getConfig().getString("secondaryStats.block.colour") + Main.plugin.getConfig().getString("secondaryStats.block.name");
-	public static String critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.colour") + Main.plugin.getConfig().getString("secondaryStats.critChance.name");
-	public static String critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.colour") + Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
-	public static String damage = Main.plugin.getConfig().getString("primaryStats.damage.colour") + Main.plugin.getConfig().getString("primaryStats.damage.name");
-	public static String health = Main.plugin.getConfig().getString("primaryStats.health.colour") + Main.plugin.getConfig().getString("primaryStats.health.name");
-	public static String healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.colour") + Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
-	public static String lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.colour") + Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
-	public static String reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.colour") + Main.plugin.getConfig().getString("secondaryStats.reflect.name");
-	public static String fire = Main.plugin.getConfig().getString("secondaryStats.fire.colour") + Main.plugin.getConfig().getString("secondaryStats.fire.name");
-	public static String ice = Main.plugin.getConfig().getString("secondaryStats.ice.colour") + Main.plugin.getConfig().getString("secondaryStats.ice.name");
-	public static String poison = Main.plugin.getConfig().getString("secondaryStats.poison.colour") + Main.plugin.getConfig().getString("secondaryStats.poison.name");
-	public static String wither = Main.plugin.getConfig().getString("secondaryStats.wither.colour") + Main.plugin.getConfig().getString("secondaryStats.wither.name");
-	public static String harming = Main.plugin.getConfig().getString("secondaryStats.harming.colour") + Main.plugin.getConfig().getString("secondaryStats.harming.name");
-	public static String blind = Main.plugin.getConfig().getString("secondaryStats.blind.colour") + Main.plugin.getConfig().getString("secondaryStats.blind.name");
-	public static String xpmultiplier = Main.plugin.getConfig().getString("bonusStats.xpMultiplier.colour") + Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
-	public static String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.colour") + Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
+	public static String armour = Main.plugin.getConfig().getString("primaryStats.armour.name");
+	public static String dodge =  Main.plugin.getConfig().getString("secondaryStats.dodge.name");
+	public static String block =  Main.plugin.getConfig().getString("secondaryStats.block.name");
+	public static String critChance =  Main.plugin.getConfig().getString("secondaryStats.critChance.name");
+	public static String critDamage =  Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
+	public static String damage =  Main.plugin.getConfig().getString("primaryStats.damage.name");
+	public static String health =  Main.plugin.getConfig().getString("primaryStats.health.name");
+	public static String healthRegen =  Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
+	public static String lifeSteal =  Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
+	public static String reflect =  Main.plugin.getConfig().getString("secondaryStats.reflect.name");
+	public static String fire =  Main.plugin.getConfig().getString("secondaryStats.fire.name");
+	public static String ice =  Main.plugin.getConfig().getString("secondaryStats.ice.name");
+	public static String poison =  Main.plugin.getConfig().getString("secondaryStats.poison.name");
+	public static String wither =  Main.plugin.getConfig().getString("secondaryStats.wither.name");
+	public static String harming =  Main.plugin.getConfig().getString("secondaryStats.harming.name");
+	public static String blind =  Main.plugin.getConfig().getString("secondaryStats.blind.name");
+	public static String xpmultiplier =  Main.plugin.getConfig().getString("bonusStats.xpMultiplier.name");
+	public static String movementspeed =  Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
 	public static String level = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
 	public static String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
 	public static String magicArmor ="Armadura Mágica";
@@ -62,18 +60,29 @@ public class PlayerStatsFormules {
 	}
 	static public double getWeaponSpeedStat(Player player) {
 		double speed= getStat(weaponspeed,player.getEquipment().getItemInMainHand(),1);
+		if(speed==0)
+			speed=1;
 		if(speed<0.5)
 			speed=0.5;
 		return speed;
 	}
 	static public double getWeaponSpeedStat(ItemStack gear) {
 		double speed= getStat(weaponspeed,gear,1);
+		if(speed==0)
+			speed=1;
 		if(speed<0.5)
 			speed=0.5;
 		return speed;
 	}
 	static public double getArmorStat(Player player) {
 		return getGearStat(player,armour);
+	}
+	static public double getMovementSpeedStat(Player player) {
+		double speed= getGearStat(player,movementspeed,false);
+		speed = speed /100;
+		if(speed<-1)
+			speed=-1;
+		return speed;
 	}
 	static public double getMagicArmorStat(Player player) {
 		return getGearStat(player,magicArmor);
@@ -145,8 +154,15 @@ public class PlayerStatsFormules {
                 if(!player.getEquipment().getItemInMainHand().getType().equals(Material.BOW)){
                     if(!stat.equals(damage) && ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
                     	//arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
-                    	MinValue = MinValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
-                        MaxValue = MaxValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[1];
+                    	if(ItemCategory.isShield(player.getEquipment().getItemInOffHand())){
+                    		MinValue = MinValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),1)[0];
+                            MaxValue = MaxValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),1)[1];
+                    	}
+                    	else{
+                    		MinValue = MinValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
+                            MaxValue = MaxValue + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[1];
+                    	}
+                    	
                     }else{
                     	double tempMinValue = + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
                     	double tempMaxValue = + getDoubleStat(stat,player.getEquipment().getItemInOffHand(),0.5)[0];
@@ -162,8 +178,15 @@ public class PlayerStatsFormules {
                 }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
-                        MinValue = MinValue + getDoubleStat(stat,gear,1)[0];
-                        MaxValue = MaxValue + getDoubleStat(stat,gear,1)[1];
+                    	double multiplier = 1;
+                    	int itemlvl= getItemLvl(gear);
+                    	if(itemlvl>player.getLevel()){
+                    		multiplier = 1-(0.05*(itemlvl-player.getLevel()));
+                    		if(multiplier<0)
+                    			multiplier=0;
+                    	}
+                        MinValue = MinValue + getDoubleStat(stat,gear,multiplier)[0];
+                        MaxValue = MaxValue + getDoubleStat(stat,gear,multiplier)[1];
                     }
                 }
             }
@@ -209,8 +232,10 @@ public class PlayerStatsFormules {
         double[] values = {MinValue, MaxValue};
         return values;
     }
-	
 	static public double getGearStat(Player player, String stat) {
+		return getGearStat(player,stat,true);
+	}
+	static public double getGearStat(Player player, String stat,boolean useMultiplier) {
         double value = 0;
         if (player != null) {
             if (player.getEquipment() != null) {
@@ -218,9 +243,11 @@ public class PlayerStatsFormules {
                 List<ItemStack> arrayOfItemStack = new ArrayList<>();
                 arrayOfItemStack.addAll(Arrays.asList(player.getEquipment().getArmorContents()));
                 if(!player.getEquipment().getItemInMainHand().getType().equals(Material.BOW)){
-                    if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInOffHand())){
-                    	//arrayOfItemStack.add(player.getEquipment().getItemInOffHand());
+                    if(ItemCategory.isMelle(player.getEquipment().getItemInOffHand())){
                     	value = value + getStat(stat,player.getEquipment().getItemInOffHand(),0.5);
+                    }
+                    else if(ItemCategory.isShield(player.getEquipment().getItemInOffHand())){
+                    	value = value + getStat(stat,player.getEquipment().getItemInOffHand(),1);
                     }
                 }
                 if(ItemCategory.isSwordOrShield(player.getEquipment().getItemInMainHand())||ItemCategory.isBow(player.getEquipment().getItemInMainHand())){
@@ -228,7 +255,16 @@ public class PlayerStatsFormules {
                 }
                 for (ItemStack gear : arrayOfItemStack) {
                     if ((gear != null) && (gear.hasItemMeta()) && (gear.getItemMeta().hasLore())) {
-                    	value = value + getStat(stat,gear,1);
+                    	double multiplier = 1;
+                    	if(useMultiplier){
+                    		int itemlvl= getItemLvl(gear);
+                        	if(itemlvl>player.getLevel()){
+                        		multiplier = 1-(0.05*(itemlvl-player.getLevel()));
+                        		if(multiplier<0)
+                        			multiplier=0;
+                        	}
+                    	}
+                    	value = value + getStat(stat,gear,multiplier);
                     }
                 }
             }
@@ -248,6 +284,30 @@ public class PlayerStatsFormules {
                         if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
                         	try{
                         		value += (Double.parseDouble(lore.replaceAll("[^0-9.+-]", ""))*multiplier);
+                        	}catch (NumberFormatException e) {
+
+							}
+                        	
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    }
+	static public int getItemLvl(ItemStack gear) {
+    	String stat = level.replaceAll(languageRegex, "");
+        int value = 0;
+        if (gear != null) {
+            if (gear.getItemMeta() != null) {
+                if (gear.getItemMeta().getLore() != null) {
+                    List<String> itemLore = gear.getItemMeta().getLore();
+                    for (String line : itemLore) {
+                        String lore = ChatColor.stripColor(line.toString());
+                        lore = lore.toLowerCase();
+                        if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
+                        	try{
+                        		value += (Integer.parseInt(lore.replaceAll("[^0-9.+-]", "")));
                         	}catch (NumberFormatException e) {
 
 							}

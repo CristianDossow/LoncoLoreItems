@@ -861,6 +861,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public void updatePlayerSpeed(Player player) {
+    	/*
         if (!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
             final Player playerFinal = player;
 
@@ -884,6 +885,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         } else {
             player.setWalkSpeed((float) plugin.getConfig().getDouble("baseMovementSpeed"));
         }
+        */
     }
 
     public void copy(InputStream in, File file) {
@@ -922,5 +924,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             playersStats.put(player.getUniqueId(), ps);
             return ps;
         }
+    }
+    public void setPlayerStats(PlayerStats ps) {
+    	playersStats.put(ps.player.getUniqueId(), ps);
     }
 }

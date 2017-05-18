@@ -11,6 +11,9 @@ import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.CircleEffect;
 import de.slikey.effectlib.effect.HelixEffect;
 import de.slikey.effectlib.util.ParticleEffect;
+import net.nifheim.yitan.StatsModifier.StatModifier;
+import net.nifheim.yitan.StatsModifier.StatModifierType;
+import net.nifheim.yitan.StatsModifier.StatType;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 
@@ -43,6 +46,14 @@ public class SpellCastChants extends BukkitRunnable {
         }else{
         	chantTime = spell.warmup;
         }
+        
+        StatModifier sm1 = new StatModifier(0,StatType.MOVEMENT_SPEED
+        		,StatModifierType.MULTIPLICATIVE,1,spell.warmup,"Preparando Hechizo");
+        StatModifier sm2 = new StatModifier(1,StatType.DAMAGE
+        		,StatModifierType.MULTIPLICATIVE,1,spell.warmup,"Preparando Hechizo");
+        ps.addDeBuff(sm1);
+        ps.addDeBuff(sm2);
+        instance.setPlayerStats(ps);
         em= new EffectManager(plugin);
         if(spell.particleEffectSphere!=null){
         	for(ParticleEffect peffect : spell.particleWarmupEffect){

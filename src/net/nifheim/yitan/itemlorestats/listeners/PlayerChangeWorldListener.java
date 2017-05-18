@@ -17,6 +17,7 @@ public class PlayerChangeWorldListener implements Listener {
                 Main.plugin.updateHealth(playerFinal);
                 Main.plugin.updatePlayerSpeed(playerFinal);
                 Main.plugin.setBonuses.updateSetBonus(playerFinal);
+                Main.plugin.getPlayerStats(playerFinal).UpdateAll();
             }, 2L);
 
             if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(playerFinal.getWorld().getName())) {

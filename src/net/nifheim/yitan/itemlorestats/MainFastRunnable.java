@@ -1,6 +1,8 @@
 package net.nifheim.yitan.itemlorestats;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.md_5.bungee.api.chat.TextComponent;
+import net.nifheim.yitan.StatsModifier.StatModifier;
 
 public class MainFastRunnable extends BukkitRunnable { 
 	
@@ -47,6 +50,23 @@ public class MainFastRunnable extends BukkitRunnable {
 				bs.addPlayer(player);
 				instance.manaBar.put(player, bs);
 			}
+			List<StatModifier> tr = new ArrayList<>();
+			for(StatModifier sm : ps.Buffs){
+				if(sm.getEndTime()<System.currentTimeMillis()){
+					tr.add(sm);
+				}
+			}
+			if(ps.Buffs.removeAll(tr))
+				ps.UpdateAll();
+			tr = new ArrayList<>();
+			for(StatModifier sm : ps.DeBuffs){
+				if(sm.getEndTime()<System.currentTimeMillis()){
+					tr.add(sm);
+				}
+			}
+			if(ps.DeBuffs.removeAll(tr))
+				ps.UpdateAll();
+			instance.setPlayerStats(ps);
 		}
 	}
 }

@@ -23,8 +23,9 @@ public class EspecialAtributes {
     public static String enchantgiver = "Poder almacenado:";
     //public static String repairer = Main.getInstance().getMessages().getString("Especial Atributes.Repairer");
     public static String repairer ="Reparación";
+    public static String itemLevelBoost ="Reformar";
     public static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
-    
+    static String lvlname = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
 
     static public boolean HasDestroy(Player player) {
 
@@ -69,6 +70,22 @@ public class EspecialAtributes {
                     loreline = ChatColor.stripColor(loreline);
                     loreline = loreline.toLowerCase();
                     if (loreline.replaceAll(languageRegex, "").matches(durability.toLowerCase().replaceAll(languageRegex, ""))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    static public boolean HasLevel(ItemStack item) {
+
+        if (item.hasItemMeta()) {
+            if (item.getItemMeta().hasLore()) {
+                List<String> lore = item.getItemMeta().getLore();
+                for (String loreline : lore) {
+                    loreline = ChatColor.stripColor(loreline);
+                    loreline = loreline.toLowerCase();
+                    if (loreline.replaceAll(languageRegex, "").matches(lvlname.toLowerCase().replaceAll(languageRegex, ""))) {
                         return true;
                     }
                 }
@@ -144,7 +161,6 @@ public class EspecialAtributes {
         }
         return false;
     }
-
     static public int getRepairerPower(ItemStack item) {
         int repairPower = 0;
         if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -159,6 +175,36 @@ public class EspecialAtributes {
         }
         return repairPower;
     }
+    static public boolean IsItemBooter(ItemStack item) {
+        if (item != null) {
+            if (item.getItemMeta() != null) {
+                if (item.getItemMeta().getLore() != null && item.getItemMeta().getLore().size() > 0) {
+                    String loreline = item.getItemMeta().getLore().get(0);
+                    loreline = ChatColor.stripColor(loreline);
+                    loreline = loreline.toLowerCase();
+                    if (loreline.replaceAll(languageRegex, "").matches(itemLevelBoost.toLowerCase().replaceAll(languageRegex, ""))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    static public int getItemBooterPower(ItemStack item) {
+        int repairPower = 0;
+        if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            if (item.getItemMeta().getLore() != null && item.getItemMeta().getLore().size() > 0) {
+                String loreline = item.getItemMeta().getLore().get(0);
+                loreline = ChatColor.stripColor(loreline);
+                loreline = loreline.toLowerCase();
+                if (loreline.replaceAll(languageRegex, "").matches(itemLevelBoost.toLowerCase().replaceAll(languageRegex, ""))) {
+                    repairPower = Integer.parseInt(loreline.replaceAll("[^0-9]", ""));
+                }
+            }
+        }
+        return repairPower;
+    }
+
 
     static public String getEnchantGiverPower(ItemStack item) {
         String power = "";

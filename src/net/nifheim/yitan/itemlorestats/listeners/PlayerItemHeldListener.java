@@ -46,20 +46,20 @@ public class PlayerItemHeldListener implements Listener {
                         
                         return;
                     }
-                    
+                    /*
                     if ((Main.plugin.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) != 0)
                             && (Main.plugin.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld) > playerFinal.getLevel())) {
                         Main.plugin.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
                         playerFinal.sendMessage(Main.plugin.util_GetResponse.getResponse("LevelRequirementMessages.LevelTooLowForItemInHand", playerFinal, playerFinal, String.valueOf(Main.plugin.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(Main.plugin.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
                         
                         return;
-                    }
+                    }*/
                 }
                 
                 Main.plugin.updateHealth(playerFinal);
                 Main.plugin.updatePlayerSpeed(playerFinal);
-                
                 Main.plugin.setBonuses.updateSetBonus(playerFinal);
+                Main.plugin.getPlayerStats(playerFinal).UpdateAll();
             }, 2L);
         }
     }
