@@ -69,7 +69,6 @@ import net.nifheim.yitan.itemlorestats.listeners.PlayerChangeWorldListener;
 import net.nifheim.yitan.itemlorestats.listeners.*;
 import net.nifheim.yitan.loncoloreitems.DamageFix;
 import net.nifheim.yitan.loncoloreitems.EventListener;
-import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
 
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
 import net.nifheim.yitan.skills.SkillListener;
@@ -292,12 +291,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into PlaceholderAPI."));
         } else {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find PlaceholderAPI."));
-        }
-        if (Bukkit.getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI") != null) {
-            MVdWPlaceholderAPIHook.hook(this);
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into MVdWPlaceholderAPI."));
-        } else {
-            console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Unable to find MVdWPlaceholderAPI."));
         }
         if (getWorldGuard() != null) {
             console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7Successfully found and hooked into WorldGuard."));
