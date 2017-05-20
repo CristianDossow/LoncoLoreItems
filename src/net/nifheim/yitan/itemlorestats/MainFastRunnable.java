@@ -54,6 +54,12 @@ public class MainFastRunnable extends BukkitRunnable {
 			for(StatModifier sm : ps.Buffs){
 				if(sm.getEndTime()<System.currentTimeMillis()){
 					tr.add(sm);
+					for(StatModifier boe : sm.getBuffOnEnd()){
+						ps.addBuff(boe);
+					}
+					for(StatModifier boe : sm.getDeBuffOnEnd()){
+						ps.addDeBuff(boe);
+					}
 				}
 			}
 			if(ps.Buffs.removeAll(tr))
@@ -62,6 +68,12 @@ public class MainFastRunnable extends BukkitRunnable {
 			for(StatModifier sm : ps.DeBuffs){
 				if(sm.getEndTime()<System.currentTimeMillis()){
 					tr.add(sm);
+					for(StatModifier boe : sm.getBuffOnEnd()){
+						ps.addBuff(boe);
+					}
+					for(StatModifier boe : sm.getDeBuffOnEnd()){
+						ps.addDeBuff(boe);
+					}
 				}
 			}
 			if(ps.DeBuffs.removeAll(tr))

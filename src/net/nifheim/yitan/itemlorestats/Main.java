@@ -73,6 +73,7 @@ import net.nifheim.yitan.loncoloreitems.EventListener;
 import net.nifheim.yitan.loncoloreitems.MVdWPlaceholderAPIHook;
 
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
+import net.nifheim.yitan.skills.SkillListener;
 
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
@@ -161,6 +162,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         //New events clases
         plma.registerEvents(new SpellListeners(), this);
+        plma.registerEvents(new SkillListener(), this);
         plma.registerEvents(new CreatureSpawnListener(), this);
         plma.registerEvents(new EnchantItemListener(), this);
         plma.registerEvents(new EntityRegainHealthListener(), this);

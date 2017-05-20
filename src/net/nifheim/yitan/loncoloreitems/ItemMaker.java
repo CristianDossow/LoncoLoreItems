@@ -18,7 +18,7 @@ public class ItemMaker {
     private static final Main plugin = Main.getInstance();
     private static final FileConfiguration messages = plugin.getMessages();
 
-    public static ItemStack EnchantScroll(String enchant, String Type) {
+    public static ItemStack EnchantScroll(String enchant, String Type,List<String> description) {
 
         ItemStack scroll = new ItemStack(Material.PAPER, 1);
         ItemMeta im = scroll.getItemMeta();
@@ -27,6 +27,11 @@ public class ItemMaker {
         lore.add(ChatColor.GRAY + Type);
         lore.add(ChatColor.GOLD + EspecialAtributes.enchantgiver);
         lore.add(ChatColor.GRAY + enchant);
+        lore.add("");
+        if(description!=null)
+	        for(String desc : description){
+	        	lore.add(ChatColor.DARK_AQUA + desc);
+	        }
         im.setLore(lore);
         scroll.setItemMeta(im);
         return scroll;

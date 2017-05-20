@@ -50,6 +50,7 @@ import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.nifheim.yitan.itemlorestats.Durability.Durability;
 import net.nifheim.yitan.loncoloremagics.Spell;
 import net.nifheim.yitan.loncoloremagics.SpellsList;
+import net.nifheim.yitan.skills.List.WindStep;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 import net.nifheim.yitan.itemlorestats.PlayerStatsFormules;
@@ -432,7 +433,7 @@ public class EventListener implements Listener {
                 		if(!enchanted && lore.equals(Main.plugin.rep(enchantSlot))){
                 			enchanted=true;
                             player.setItemOnCursor(null);
-                            lores.set(lores.indexOf(lore), ChatColor.GRAY + enchant);
+                            lores.set(lores.indexOf(lore), ChatColor.GRAY +"- "+enchant);
                             player.sendMessage("Se ha encantado el objeto con " + enchant);
                             event.setCancelled(true);
                 		}
@@ -603,7 +604,15 @@ public class EventListener implements Listener {
                         if (args.length > 1) {
                             if (args[1].equalsIgnoreCase("voidbound")) {
                                 Player player = (Player) sender;
-                                ItemStack item = ItemMaker.EnchantScroll(EspecialAtributes.voidbound, ItemCategory.anytype);
+                                ItemStack item = ItemMaker.EnchantScroll(EspecialAtributes.voidbound, ItemCategory.anytype,null);
+                                player.getInventory().addItem(item);
+                                return true;
+                            }
+                            if (args[1].equalsIgnoreCase("windstep")) {
+                                Player player = (Player) sender;
+                                List<String> desc = new ArrayList<>();
+                                desc.add("Al usar aumenta la velocidad temporalmente");
+                                ItemStack item = ItemMaker.EnchantScroll(new WindStep().getName(), ItemCategory.swordtype,desc);
                                 player.getInventory().addItem(item);
                                 return true;
                             }
