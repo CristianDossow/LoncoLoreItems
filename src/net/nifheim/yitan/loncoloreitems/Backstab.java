@@ -1,15 +1,12 @@
 package net.nifheim.yitan.loncoloreitems;
 
 import net.md_5.bungee.api.ChatColor;
-import net.nifheim.beelzebu.rpgcore.enchants.Enchant;
-import net.nifheim.beelzebu.rpgcore.enchants.EnchantTypes;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 
 import java.text.DecimalFormat;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * Backstab enchant, this enchant adds extra damage to the backstab attacks.

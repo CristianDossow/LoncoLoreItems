@@ -40,7 +40,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.citizensnpcs.Citizens;
 import net.milkbowl.vault.Vault;
 
-import net.nifheim.beelzebu.rpgcore.enchants.ActivateEnchant;
 import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
 import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
@@ -88,8 +87,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     private final File messagesFile = new File(getDataFolder(), "messages.yml");
     public static FileConfiguration messages;
     public static int checkdb;
-
-    public ActivateEnchant activateEnchant;
 
     public FileConfiguration PlayerDataConfig;
 
