@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.enchants.sword;
+package net.nifheim.yitan.loncoloreitems;
 
 import net.md_5.bungee.api.ChatColor;
 import net.nifheim.beelzebu.rpgcore.enchants.Enchant;

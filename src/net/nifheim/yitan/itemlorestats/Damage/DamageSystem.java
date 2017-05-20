@@ -36,7 +36,6 @@ import com.google.common.collect.Maps;
 
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import net.md_5.bungee.api.ChatColor;
-import net.nifheim.beelzebu.rpgcore.enchants.sword.Backstab;
 import net.nifheim.yitan.itemlorestats.Classes;
 import net.nifheim.yitan.itemlorestats.GearStats;
 import net.nifheim.yitan.itemlorestats.Main;
@@ -68,6 +67,7 @@ import net.nifheim.yitan.itemlorestats.Util.Util_Material;
 import net.nifheim.yitan.itemlorestats.Util.Util_Random;
 import net.nifheim.yitan.itemlorestats.Util.Util_WorldGuard;
 import net.nifheim.yitan.itemlorestats.Util.InvSlot.GetSlots;
+import net.nifheim.yitan.loncoloreitems.Backstab;
 import net.nifheim.yitan.loncoloreitems.EspecialAtributes;
 import net.nifheim.yitan.loncoloreitems.ItemCategory;
 import net.nifheim.yitan.loncoloreitems.LoreItemMaker;
