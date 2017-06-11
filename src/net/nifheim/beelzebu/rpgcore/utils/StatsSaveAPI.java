@@ -32,7 +32,7 @@ public class StatsSaveAPI {
         ResultSet res = check.executeQuery("SELECT * FROM " + prefix + "Characters WHERE uuid ='" + name + "';");
         res.next();
 
-        if (res.getString("uuid") != null) {
+        if (res.next()) {
             Statement update = c.createStatement();
             update.executeUpdate("UPDATE " + prefix + "Characters SET "
                     + "maxhp = " + maxhp + ","
@@ -50,9 +50,9 @@ public class StatsSaveAPI {
 
         Statement check = c.createStatement();
         ResultSet res = check.executeQuery("SELECT * FROM " + prefix + "Characters WHERE uuid ='" + name + "';");
-        res.next();
+        //res.next();
 
-        if (res.getString("uuid") != null) {
+        if (res.next()) {
             ps = new PlayerStats(p);
             double maxhp = res.getDouble("maxhp");
             double hp = res.getDouble("hp");
