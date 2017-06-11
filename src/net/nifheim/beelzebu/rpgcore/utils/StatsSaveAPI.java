@@ -41,7 +41,7 @@ public class StatsSaveAPI {
                     + "mana = " + mana + "WHERE uuid = '" + name + "';");
         } else {
             Statement update = c.createStatement();
-            update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES(NULL, '" + name + "', '" + p.getName() + "', " + maxhp + ", " + hp + ", " + maxmana + ", " + mana + ");");
+            update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES(NULL, '" + name + "', '" + p.getName() + "', " + maxhp + ", " + hp + ", " + maxmana + ", " + mana + ", 0, 0, 0);");
         }
     }
 

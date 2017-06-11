@@ -73,13 +73,13 @@ public class MySQL {
                     + "(`id` INT NOT NULL AUTO_INCREMENT,"
                     + "`uuid` VARCHAR(50) NOT NULL,"
                     + "`name` VARCHAR (50) NOT NULL,"
-                    + "`maxhp` INT,"
-                    + "`hp` INT,"
-                    + "`maxmana` INT,"
-                    + "`mana` INT,"
-                    + "`stamina` INT,"
-                    + "`strength` INT,"
-                    + "`intelligence` INT,"
+                    + "`maxhp` DOUBLE,"
+                    + "`hp` DOUBLE,"
+                    + "`maxmana` DOUBLE,"
+                    + "`mana` DOUBLE,"
+                    + "`stamina` DOUBLE,"
+                    + "`strength` DOUBLE,"
+                    + "`intelligence` DOUBLE,"
                     + "PRIMARY KEY (`id`));";
 
             Statement update = c.createStatement();
