@@ -82,28 +82,10 @@ public class PlayerJoinListener implements Listener {
         }, 5L);
         //plugin.activateEnchant.onJoin(playerFinal);
 
-        // SQL Stats
-        //sqlconf = YamlConfiguration.loadConfiguration(plugin.mysqlFile);
-        String prefix = plugin.getMySQL().prefix;
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             try {
-                Player p = event.getPlayer();
-                String name;
-                name = p.getUniqueId().toString();
-
-                Connection c = MySQL.getConnection();
-                Statement check = c.createStatement();
-                ResultSet res = check.executeQuery("SELECT uuid FROM " + prefix + "Data WHERE uuid = '" + name + "';");
-                if (!res.next()) {
-                    Statement update = c.createStatement();
-                    update.executeUpdate("INSERT INTO " + prefix + "Characters VALUES ('NULL, '" + name + "', '" + p.getName() + "', 20, 1, 100, 0, 0, 0, 0);");
-                    StatsSaveAPI.setAllStats(p);
-                } else {
-                    Statement update = c.createStatement();
-                    //update.executeUpdate("UPDATE " + prefix + "Data SET nick = " + p.getName() + " WHERE uuid = '" + name + "';");
-                    StatsSaveAPI.setAllStats(p);
-                }
-
+                StatsSaveAPI.saveAllStats(event.getPlayer());
+                StatsSaveAPI.setAllStats(event.getPlayer());
             } catch (SQLException ex) {
                 if (ex.getSQLState().equals("closed")) {
                     Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Seems that the database connection is closed.");
