@@ -16,14 +16,15 @@ public class PlayerItemHeldListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-            	Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();}
-        }.runTaskLater(Main.plugin, 1);
+                Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();
+            }
+        }.runTaskAsynchronously(Main.getInstance());
 
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
             final Player playerFinal = event.getPlayer();
             Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, () -> {
                 ItemStack checkItemHeld = playerFinal.getInventory().getItem(event.getNewSlot());
-                
+
                 if ((checkItemHeld != null)
                         && (checkItemHeld.getType() != Material.AIR)
                         && (checkItemHeld.getItemMeta() != null)
@@ -33,17 +34,17 @@ public class PlayerItemHeldListener implements Listener {
                             && (!Main.plugin.gearStats.phic_SoulboundNameItemInHand(checkItemHeld).equals(playerFinal.getName()))) {
                         Main.plugin.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
                         playerFinal.sendMessage(Main.plugin.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, String.valueOf(Main.plugin.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld)), String.valueOf(Main.plugin.gearStats.phic_XPLevelRequirementItemInHand(checkItemHeld))));
-                        
+
                         playerFinal.sendMessage(Main.plugin.util_GetResponse.getResponse("SoulboundMessages.BoundToSomeoneElseForItemInHand", playerFinal, playerFinal, Main.plugin.gearStats.phic_SoulboundNameItemInHand(checkItemHeld), Main.plugin.gearStats.phic_SoulboundNameItemInHand(checkItemHeld)));
-                        
+
                         return;
                     }
-                    
+
                     if ((Main.plugin.gearStats.phic_ClassItemInHand(checkItemHeld) != null)
                             && (!playerFinal.hasPermission("ils.use." + Main.plugin.gearStats.phic_ClassItemInHand(checkItemHeld)))) {
                         Main.plugin.swapItems(event.getNewSlot(), event.getPreviousSlot(), playerFinal.getInventory());
                         playerFinal.sendMessage(Main.plugin.util_GetResponse.getResponse("ClassRequirementMessages.NotRequiredClassForItemInHand", playerFinal, playerFinal, String.valueOf(Main.plugin.gearStats.phic_ClassItemInHand(checkItemHeld)), String.valueOf(Main.plugin.gearStats.phic_ClassItemInHand(checkItemHeld))));
-                        
+
                         return;
                     }
                     /*
@@ -55,7 +56,7 @@ public class PlayerItemHeldListener implements Listener {
                         return;
                     }*/
                 }
-                
+
                 Main.plugin.updateHealth(playerFinal);
                 Main.plugin.updatePlayerSpeed(playerFinal);
                 Main.plugin.setBonuses.updateSetBonus(playerFinal);

@@ -81,7 +81,7 @@ public class DamageFix {
             PlayerStats ps = Main.plugin.getPlayerStats(player);
             double weaponspeed = ps.weaponSpeed;
             instance.damagefix.attackCooldownsEnd.put(player.getUniqueId(), System.currentTimeMillis() + (long) (weaponspeed * 1000));
-            BukkitTask task = new SwordActionBar(this.instance, player).runTaskTimer(this.instance, 0, 2);
+            BukkitTask task = new SwordActionBar(this.instance, player).runTaskTimer(this.instance, 0, 20);
             // }
 
             return damage;

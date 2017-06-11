@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.nifheim.yitan.itemlorestats.Main;
 
 public class SwordActionBar extends BukkitRunnable {
+
     private final Main instance;
     private final Player player;
     static DecimalFormat df = new DecimalFormat("#.#");
@@ -32,11 +33,12 @@ public class SwordActionBar extends BukkitRunnable {
                         double power = instance.damagefix.getAttackpower(player);
                         ActionBarAPI.sendActionBar(player.getPlayer(), "§e§lPoder: §a§l" + df.format(power * 100) + "%", 10);
                     } else {
-                        ActionBarAPI.sendActionBar(player.getPlayer(),"§e§lPoder: §cListo!", 40);
+                        ActionBarAPI.sendActionBar(player.getPlayer(), "§e§lPoder: §cListo!"
+                        );
                         if (instance.damagefix.attackCooldownsEnd.get(player.getUniqueId()) + 2000 < System.currentTimeMillis()) {
-                        	instance.damagefix.attackCooldownsEnd.remove(player.getUniqueId());
-                        	instance.damagefix.attackCooldowns.remove(player.getUniqueId());
-                        	this.cancel();
+                            instance.damagefix.attackCooldownsEnd.remove(player.getUniqueId());
+                            instance.damagefix.attackCooldowns.remove(player.getUniqueId());
+                            this.cancel();
                         }
                     }
                 } else {

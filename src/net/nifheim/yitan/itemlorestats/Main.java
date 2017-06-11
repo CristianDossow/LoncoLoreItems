@@ -202,7 +202,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
         this.spigotStatCapWarning.updateSpigotValues();
 
-        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 5, 5);
+        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 10, 10);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
@@ -853,7 +853,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public void updatePlayerSpeed(Player player) {
-    	/*
+        /*
         if (!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
             final Player playerFinal = player;
 
@@ -877,7 +877,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         } else {
             player.setWalkSpeed((float) plugin.getConfig().getDouble("baseMovementSpeed"));
         }
-        */
+         */
     }
 
     public void copy(InputStream in, File file) {
@@ -899,7 +899,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         if (str == null) {
             return "";
         }
-        return str.replaceAll("%prefix%", getMessages().getString("Prefix")).replaceAll("&", "§");
+        return str
+                .replaceAll("%prefix%", getMessages().getString("Prefix"))
+                .replaceAll("&", "§");
     }
 
     public FileConfiguration getMessages() {
@@ -917,7 +919,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             return ps;
         }
     }
+
     public void setPlayerStats(PlayerStats ps) {
-    	playersStats.put(ps.player.getUniqueId(), ps);
+        playersStats.put(ps.player.getUniqueId(), ps);
     }
 }
