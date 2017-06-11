@@ -219,6 +219,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         mysql.SQLConnection();
         for (Player player : Bukkit.getOnlinePlayers()) {
             try {
+                StatsSaveAPI.saveAllStats(player);
                 StatsSaveAPI.setAllStats(player);
             } catch (SQLException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());

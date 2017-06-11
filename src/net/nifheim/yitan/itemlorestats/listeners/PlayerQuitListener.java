@@ -2,6 +2,10 @@ package net.nifheim.yitan.itemlorestats.listeners;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 
@@ -17,7 +21,11 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
     	
-    	
+        try {
+            StatsSaveAPI.saveAllStats(event.getPlayer());
+        } catch (SQLException ex) {
+            Logger.getLogger(PlayerQuitListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if ((event.getPlayer() instanceof Player)) {
             Player player = event.getPlayer();
         	Main.getInstance().damagefix.attackCooldownsEnd.remove(player.getUniqueId());

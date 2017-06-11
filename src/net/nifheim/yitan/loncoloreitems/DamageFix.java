@@ -1,14 +1,11 @@
 package net.nifheim.yitan.loncoloreitems;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitTask;
 
 import net.nifheim.yitan.itemlorestats.Main;
@@ -19,7 +16,7 @@ public class DamageFix {
     String weaponspeed;
     public HashMap<UUID, Long> attackCooldowns;
     public HashMap<UUID, Long> attackCooldownsEnd;
-    private String languageRegex;
+    private final String languageRegex;
     public Main instance;
 
     public DamageFix(Main instance) {
@@ -81,7 +78,7 @@ public class DamageFix {
             PlayerStats ps = Main.plugin.getPlayerStats(player);
             double weaponspeed = ps.weaponSpeed;
             instance.damagefix.attackCooldownsEnd.put(player.getUniqueId(), System.currentTimeMillis() + (long) (weaponspeed * 1000));
-            BukkitTask task = new SwordActionBar(this.instance, player).runTaskTimer(this.instance, 0, 20);
+            BukkitTask task = new SwordActionBar(this.instance, player).runTaskTimer(this.instance, 0, 2);
             // }
 
             return damage;

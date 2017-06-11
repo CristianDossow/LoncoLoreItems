@@ -22,23 +22,26 @@ public class StatsSaveAPI {
 
     public static void saveAllStats(Player p) throws SQLException {
         String name = p.getUniqueId().toString();
+        ps = new PlayerStats(p);
+        double maxhp = ps.healthMax;
+        double hp = ps.healthCurrent;
+        double maxmana = ps.manaMax;
+        double mana = ps.manaCurrent;
 
         Statement check = c.createStatement();
         ResultSet res = check.executeQuery("SELECT * FROM " + prefix + "Characters WHERE uuid ='" + name + "';");
         res.next();
 
         if (res.getString("uuid") != null) {
-            ps = new PlayerStats(p);
-            double maxhp = ps.healthMax;
-            double hp = ps.healthCurrent;
-            double maxmana = ps.manaMax;
-            double mana = ps.manaCurrent;
             Statement update = c.createStatement();
             update.executeUpdate("UPDATE " + prefix + "Characters SET "
                     + "maxhp = " + maxhp + ","
                     + "hp = " + hp + ","
                     + "maxmana = " + maxmana + ","
                     + "mana = " + mana + "WHERE uuid = '" + name + "';");
+        } else {
+            Statement update = c.createStatement();
+            update.executeQuery("INSERT INTO " + prefix + "Characters VALUES(NULL, '" + name + "', '" + p.getName() + "', " + maxhp + ", " + hp + ", " + maxmana + ", " + mana + ");");
         }
     }
 

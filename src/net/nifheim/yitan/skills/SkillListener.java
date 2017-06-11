@@ -32,23 +32,23 @@ public class SkillListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void Damage(EntityDamageByEntityEvent e) {
-        Entity eAttacker = e.getDamager();
-        if (eAttacker instanceof Arrow) {
-            eAttacker = (Entity) ((Arrow) eAttacker).getShooter();
-        }
-        // No sé si alguna habilidad lanza bolas de fuego, así que mejor dejo esto por aquí
-        if (eAttacker instanceof Fireball) {
-            eAttacker = (Entity) ((Fireball) eAttacker).getShooter();
-        }
-        if (eAttacker instanceof SmallFireball) {
-            eAttacker = (Entity) ((SmallFireball) eAttacker).getShooter();
-        }
-        if (eAttacker instanceof Player) {
-            Player p = (Player) eAttacker;
-            ItemStack mainhand = p.getInventory().getItemInMainHand();
-            sl.RunSkills(p, mainhand);
-        }
-    }
+//    @EventHandler
+//    public void Damage(EntityDamageByEntityEvent e) {
+//        Entity eAttacker = e.getDamager();
+//        if (eAttacker instanceof Arrow) {
+//            eAttacker = (Entity) ((Arrow) eAttacker).getShooter();
+//        }
+//        // No sé si alguna habilidad lanza bolas de fuego, así que mejor dejo esto por aquí
+//        if (eAttacker instanceof Fireball) {
+//            eAttacker = (Entity) ((Fireball) eAttacker).getShooter();
+//        }
+//        if (eAttacker instanceof SmallFireball) {
+//            eAttacker = (Entity) ((SmallFireball) eAttacker).getShooter();
+//        }
+//        if (eAttacker instanceof Player) {
+//            Player p = (Player) eAttacker;
+//            ItemStack mainhand = p.getInventory().getItemInMainHand();
+//            sl.RunSkills(p, mainhand);
+//        }
+//    }
 }
