@@ -82,7 +82,7 @@ public class PlayerJoinListener implements Listener {
         }, 5L);
         //plugin.activateEnchant.onJoin(playerFinal);
 
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+        Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
             try {
                 StatsSaveAPI.saveAllStats(event.getPlayer());
                 StatsSaveAPI.setAllStats(event.getPlayer());

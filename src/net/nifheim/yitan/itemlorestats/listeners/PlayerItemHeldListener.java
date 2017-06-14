@@ -18,7 +18,7 @@ public class PlayerItemHeldListener implements Listener {
             public void run() {
                 Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();
             }
-        }.runTaskAsynchronously(Main.getInstance());
+        }.runTask(Main.getInstance());
 
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getPlayer().getWorld().getName())) {
             final Player playerFinal = event.getPlayer();
