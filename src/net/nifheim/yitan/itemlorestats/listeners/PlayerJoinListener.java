@@ -98,6 +98,6 @@ public class PlayerJoinListener implements Listener {
 
         Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
             ps.UpdateAll();
-        }, 6L);
+        }, 3L);
     }
 }
