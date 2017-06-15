@@ -20,20 +20,19 @@ public class PlayerInteractListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-    	
+
         ItemStack itemInHand = e.getPlayer().getInventory().getItemInMainHand();
         Player player = e.getPlayer();
         //plugin.activateEnchant.onInteract(player, itemInHand, e);
-        
-        if( Action.RIGHT_CLICK_BLOCK.equals(e.getAction()) 
-        		&& e.getPlayer().getEquipment().getItemInOffHand().getData().equals(Material.DIAMOND_HOE)
-        		&& e.getPlayer().getEquipment().getItemInOffHand().getDurability()!=0
-        		&& (e.getClickedBlock().getType().equals(Material.DIRT)
-        			|| e.getClickedBlock().getType().equals(Material.GRASS)
-        			|| e.getClickedBlock().getType().equals(Material.GRASS_PATH)))
-        {
-        	e.setCancelled(true);
+
+        if (Action.RIGHT_CLICK_BLOCK.equals(e.getAction())
+                && e.getPlayer().getEquipment().getItemInOffHand().getData().getItemType().equals(Material.DIAMOND_HOE)
+                && e.getPlayer().getEquipment().getItemInOffHand().getItemMeta().isUnbreakable()
+                //&& e.getPlayer().getEquipment().getItemInOffHand().getDurability() != 0
+                && (e.getClickedBlock().getType().equals(Material.DIRT)
+                || e.getClickedBlock().getType().equals(Material.GRASS)
+                || e.getClickedBlock().getType().equals(Material.GRASS_PATH))) {
+            e.setCancelled(true);
         }
-        
     }
 }
