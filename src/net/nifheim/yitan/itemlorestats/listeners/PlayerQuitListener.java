@@ -17,10 +17,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
+    
+    private final Main plugin;
+    
+    public PlayerQuitListener(Main main) {
+        plugin = main;
+    }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-    	
+        // Async tasks
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+            plugin.playersStats.remove(event.getPlayer().getUniqueId());
+        });
+        
         try {
             StatsSaveAPI.saveAllStats(event.getPlayer());
         } catch (SQLException ex) {

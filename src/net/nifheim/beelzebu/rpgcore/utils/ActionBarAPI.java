@@ -70,16 +70,16 @@ public class ActionBarAPI {
         }
 
         // Re-sends the messages every 3 seconds so it doesn't go away from the player's screen.
-        while (duration > 60) {
-            duration -= 60;
-            int sched = duration % 60;
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    sendActionBar(player, message);
-                }
-            }.runTaskLater(Main.getInstance(), (long) sched);
-        }
+//        while (duration > 60) {
+//            duration -= 60;
+//            int sched = duration % 60;
+//            new BukkitRunnable() {
+//                @Override
+//                public void run() {
+//                    sendActionBar(player, message);
+//                }
+//            }.runTaskLater(Main.getInstance(), (long) sched);
+//        }
     }
 
     public static void sendActionBarToAllPlayers(String message) {

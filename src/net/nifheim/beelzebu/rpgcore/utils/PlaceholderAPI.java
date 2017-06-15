@@ -22,29 +22,29 @@ public class PlaceholderAPI extends EZPlaceholderHook {
             return "Player is needed!";
         }
         if (str.equals("mana")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).manaCurrent));
+            return String.valueOf(df.format(plugin.getPlayerStats(p).getManaCurrent()));
         }
         if (str.equals("mana_max")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).manaMax));
+            return String.valueOf(df.format(plugin.getPlayerStats(p).getManaMax()));
         }
         if (str.equals("defense")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).percentArmor * 100) + "%");
+            return String.valueOf(df.format(plugin.getPlayerStats(p).getPercentArmor() * 100) + "%");
 
         }
         if (str.equals("damage")) {
 
-            String damageMin = df.format(plugin.getPlayerStats(p).minDamage);
-            String damageMax = df.format(plugin.getPlayerStats(p).maxDamage);
+            String damageMin = df.format(plugin.getPlayerStats(p).getMinDamage());
+            String damageMax = df.format(plugin.getPlayerStats(p).getMaxDamage());
             return String.valueOf(damageMin + "-" + damageMax);
         }
         if (str.equals("magicpower")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).magicPower));
+            return String.valueOf(df.format(plugin.getPlayerStats(p).getMagicPower()));
         }
         if (str.equals("dodge")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).dodge * 100) + "%");
+            return String.valueOf(df.format(plugin.getPlayerStats(p).getDodge() * 100) + "%");
         }
         if (str.equals("movementspeed")) {
-            return String.valueOf(df.format(plugin.getPlayerStats(p).movementSpeed * 100) + "%");
+            return String.valueOf(df.format(plugin.getPlayerStats(p).getMovementSpeed() * 100) + "%");
         } else {
             return "Invalid Placeholder";
         }
