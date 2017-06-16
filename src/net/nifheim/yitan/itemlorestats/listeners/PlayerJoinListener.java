@@ -84,7 +84,7 @@ public class PlayerJoinListener implements Listener {
             Main.plugin.updateHealth(playerFinal);
             Main.plugin.updatePlayerSpeed(playerFinal);
             try {
-                StatsSaveAPI.saveAllStats(event.getPlayer());
+		//                StatsSaveAPI.saveAllStats(event.getPlayer());
                 StatsSaveAPI.setAllStats(event.getPlayer());
             } catch (SQLException ex) {
                 if (ex.getSQLState().equals("closed")) {
@@ -93,11 +93,11 @@ public class PlayerJoinListener implements Listener {
                     Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Something was wrong executing this query, the error code is: " + ex.getErrorCode(), ex.getCause());
                 }
             }
-        }, 5L);
+        }, 3L);
         //plugin.activateEnchant.onJoin(playerFinal);
 
         Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
             ps.UpdateAll();
-        }, 3L);
+        }, 6L);
     }
 }

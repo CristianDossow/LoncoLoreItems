@@ -216,6 +216,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         mysql.SQLConnection();
         Bukkit.getOnlinePlayers().forEach((player) -> {
             try {
+                getPlayerStats(player);
                 StatsSaveAPI.saveAllStats(player);
                 StatsSaveAPI.setAllStats(player);
             } catch (SQLException ex) {
@@ -259,9 +260,17 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
             }
         });
-        log(String.format("[%s] Disabled Version %s", new Object[]{
-            getDescription().getName(), getDescription().getVersion()
+        log(String.format("Disabled Version %s", new Object[]{
+            getDescription().getVersion()
         }));
+        Bukkit.getOnlinePlayers().forEach((player) -> {
+            try {
+                getPlayerStats(player);
+                StatsSaveAPI.saveAllStats(player);
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
+            }
+        });
     }
 
     public void loadManagers() {
@@ -911,7 +920,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public void setPlayerStats(PlayerStats ps) {
         playersStats.put(ps.player.getUniqueId(), ps);
     }
-    
+
     public void log(String msg) {
         console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + msg));
     }
