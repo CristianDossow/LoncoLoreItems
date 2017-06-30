@@ -17,9 +17,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
-    
+
     private final Main plugin;
-    
+
     public PlayerQuitListener(Main main) {
         plugin = main;
     }
@@ -30,7 +30,7 @@ public class PlayerQuitListener implements Listener {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             plugin.playersStats.remove(event.getPlayer().getUniqueId());
         });
-        
+
         try {
             StatsSaveAPI.saveAllStats(event.getPlayer());
         } catch (SQLException ex) {
@@ -38,8 +38,8 @@ public class PlayerQuitListener implements Listener {
         }
         if ((event.getPlayer() instanceof Player)) {
             Player player = event.getPlayer();
-        	Main.getInstance().damagefix.attackCooldownsEnd.remove(player.getUniqueId());
-        	Main.getInstance().damagefix.attackCooldowns.remove(player.getUniqueId());
+            Main.getInstance().damagefix.attackCooldownsEnd.remove(player.getUniqueId());
+            Main.getInstance().damagefix.attackCooldowns.remove(player.getUniqueId());
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 if (!player.isDead()) {
                     player.setMaxHealth(20.0D);
@@ -51,7 +51,7 @@ public class PlayerQuitListener implements Listener {
                 }
             } else if (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 try {
-                	PlayerStats ps = Main.plugin.getPlayerStats(player);
+                    PlayerStats ps = Main.plugin.getPlayerStats(player);
                     Main.plugin.PlayerDataConfig = new YamlConfiguration();
                     Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
 

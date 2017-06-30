@@ -34,21 +34,20 @@ import net.nifheim.yitan.loncoloremagics.SpellsList;
 //no es un evento propiamente tal, pero el projecthitevent no reconoce al llamaSpit
 //por esto se llama este evento desde la clase SpellParticles cuando el proyectil
 //adquiere el estado de "dead"
+public class magicProjectileHit {
 
-public class magicProjectileHit{
-	
-	private static final Function<? super Double, Double> ZERO = Functions.constant(-0.0);
-	static Util_WorldGuard util_WorldGuard = new Util_WorldGuard(Main.plugin);
-	
+    private static final Function<? super Double, Double> ZERO = Functions.constant(-0.0);
+    static Util_WorldGuard util_WorldGuard = new Util_WorldGuard(Main.plugin);
+
     public static void onProjectileHitEvent(Projectile projectile) {
-		Entity shooter = null;
-		//Projectile projectile=event.getEntity();
+        Entity shooter = null;
+        //Projectile projectile=event.getEntity();
         shooter = (Entity) projectile.getShooter();
         if (projectile.hasMetadata("SPELLNAME=")) {
-        	PlayerStats damagerStats=null;
-    		if(shooter instanceof Player){
-        		damagerStats=Main.plugin.getPlayerStats((Player)shooter);
-    		}
+            PlayerStats damagerStats = null;
+            if (shooter instanceof Player) {
+                damagerStats = Main.plugin.getPlayerStats((Player) shooter);
+            }
             String SpellName = ((MetadataValue) projectile.getMetadata("SPELLNAME=").get(0)).asString();
             Spell spell = SpellsList.getSpell(SpellName);
             if (spell != null) {
@@ -62,30 +61,29 @@ public class magicProjectileHit{
                             Entity entity = (Entity) iterator.next();
                             if (!entity.equals(damagerStats.player)) {
                                 if ((entity instanceof Player)) {
-                                	if(util_WorldGuard.playerInPVPRegion((Player)entity)){
-                                    	PlayerStats ps = Main.plugin.getPlayerStats((Player)entity);
-                                    	ps.UpdateDefence();
-                                    	double damage = AOEDamageAmount*(1-(ps.magicPercentArmor* (1-magicPen)) );
-                                    	if(spell.fireTicks>=2){
-                                    		entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks*20/2));
-                                    	}
-                                    	Map<DamageModifier,Double> mapDM = Maps.newHashMap();
-                                		mapDM.put(DamageModifier.BASE, damage);
-                                		Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity)(damagerStats.player),entity,DamageCause.LIGHTNING,mapDM,(Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
-                                	}
-                                }
-                                else if((entity instanceof LivingEntity)&&entity.getType()!=EntityType.ARMOR_STAND) {
-                                	if(damagerStats!=null && damagerStats.magicArmorPen>0){
-                            			entity.setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), AOEDamageAmount));
-                            			entity.setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.magicArmorPen));
+                                    if (util_WorldGuard.playerInPVPRegion((Player) entity)) {
+                                        PlayerStats ps = Main.plugin.getPlayerStats((Player) entity);
+                                        ps.UpdateDefence();
+                                        double damage = AOEDamageAmount * (1 - (ps.magicPercentArmor * (1 - magicPen)));
+                                        if (spell.fireTicks >= 2) {
+                                            entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks * 20 / 2));
+                                        }
+                                        Map<DamageModifier, Double> mapDM = Maps.newHashMap();
+                                        mapDM.put(DamageModifier.BASE, damage);
+                                        Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity) (damagerStats.player), entity, DamageCause.LIGHTNING, mapDM, (Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
                                     }
-                            		Map<DamageModifier,Double> mapDM = Maps.newHashMap();
-                            		mapDM.put(DamageModifier.BASE, AOEDamageAmount);
-                            		Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity)(damagerStats.player),entity,DamageCause.LIGHTNING,mapDM,(Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
-                                	if(spell.fireTicks>=2){
-                                		//((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
-                                		entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks*20/2));
-                                	}
+                                } else if ((entity instanceof LivingEntity) && entity.getType() != EntityType.ARMOR_STAND) {
+                                    if (damagerStats != null && damagerStats.magicArmorPen > 0) {
+                                        entity.setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), AOEDamageAmount));
+                                        entity.setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.magicArmorPen));
+                                    }
+                                    Map<DamageModifier, Double> mapDM = Maps.newHashMap();
+                                    mapDM.put(DamageModifier.BASE, AOEDamageAmount);
+                                    Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity) (damagerStats.player), entity, DamageCause.LIGHTNING, mapDM, (Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
+                                    if (spell.fireTicks >= 2) {
+                                        //((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
+                                        entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks * 20 / 2));
+                                    }
                                 }
                             }
                         }
@@ -120,5 +118,5 @@ public class magicProjectileHit{
                 }*/
             }
         }
-	}
+    }
 }

@@ -9,21 +9,22 @@ import org.bukkit.inventory.ItemStack;
 import net.nifheim.yitan.itemlorestats.Main;
 
 public class EspecialAtributes {
+
     public static Main plugin;
 
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
     //public static String destroyname = Main.getInstance().getMessages().getString("Especial Atributes.Desroy");
     public static String destroyname = "Destrucción";
     //public static String weaponspeed = Main.getInstance().getMessages().getString("Especial Atributes.Weapon Speed");
-    public static String weaponspeed ="vataque";
+    public static String weaponspeed = "vataque";
     //public static String voidbound = Main.getInstance().getMessages().getString("Especial Atributes.Void Bound");
-    public static String voidbound ="Retorno del End";
+    public static String voidbound = "Retorno del End";
     //public static String unknownItem = Main.getInstance().getMessages().getString("Especial Atributes.Unknow Item");
-    public static String unknownItem ="Artículo no identificado";
+    public static String unknownItem = "Artículo no identificado";
     public static String enchantgiver = "Poder almacenado:";
     //public static String repairer = Main.getInstance().getMessages().getString("Especial Atributes.Repairer");
-    public static String repairer ="Reparación";
-    public static String itemLevelBoost ="Reformar";
+    public static String repairer = "Reparación";
+    public static String itemLevelBoost = "Reformar";
     public static String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
     static String lvlname = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
 
@@ -43,9 +44,9 @@ public class EspecialAtributes {
         }
         return false;
     }
-    
+
     static public boolean HasEffect(ItemStack item, String effect) {
-    	
+
         if (item.hasItemMeta()) {
             if (item.getItemMeta().hasLore()) {
                 List<String> lore = item.getItemMeta().getLore();
@@ -77,6 +78,7 @@ public class EspecialAtributes {
         }
         return false;
     }
+
     static public boolean HasLevel(ItemStack item) {
 
         if (item.hasItemMeta()) {
@@ -161,6 +163,7 @@ public class EspecialAtributes {
         }
         return false;
     }
+
     static public int getRepairerPower(ItemStack item) {
         int repairPower = 0;
         if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -175,6 +178,7 @@ public class EspecialAtributes {
         }
         return repairPower;
     }
+
     static public boolean IsItemBooter(ItemStack item) {
         if (item != null) {
             if (item.getItemMeta() != null) {
@@ -190,6 +194,7 @@ public class EspecialAtributes {
         }
         return false;
     }
+
     static public int getItemBooterPower(ItemStack item) {
         int repairPower = 0;
         if (item != null && item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -204,7 +209,6 @@ public class EspecialAtributes {
         }
         return repairPower;
     }
-
 
     static public String getEnchantGiverPower(ItemStack item) {
         String power = "";

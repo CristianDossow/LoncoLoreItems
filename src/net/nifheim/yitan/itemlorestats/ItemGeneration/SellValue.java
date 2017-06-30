@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class SellValue {
 
     private final FileConfiguration config = Main.getInstance().getConfig();
+
     public double get(Material getMaterial) {
         String material = getMaterial.toString();
 

@@ -114,7 +114,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
     Vanilla_Power vanilla_Power = new Vanilla_Power();
 
     Vanilla_Base_Armour vanilla_Base_Armour = new Vanilla_Base_Armour();
-    
+
     private static final Function<? super Double, Double> ZERO = Functions.constant(-0.0);
     static DecimalFormat df = new DecimalFormat("#.#");
     //private static final Function<? super Double, Double> ZERO = Functions.constant(-1.1);
@@ -129,6 +129,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
     public void setMetadata(Entity entity, String key, Object value, Plugin plugin) {
         entity.setMetadata(key, new org.bukkit.metadata.FixedMetadataValue(plugin, value));
     }
+
     /*
     @EventHandler(priority = EventPriority.LOWEST)
     public void MagicDeath(EntityDeathEvent event) {
@@ -161,11 +162,11 @@ public class DamageSystem implements org.bukkit.event.Listener {
     }*/
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamage2(EntityDamageByEntityEvent event) {
-    	if(!event.isCancelled()&&event.getDamage()>0){
-    		
-    		Entity getAttacker = event.getDamager();
+        if (!event.isCancelled() && event.getDamage() > 0) {
+
+            Entity getAttacker = event.getDamager();
             Entity getDefender = event.getEntity();
-    		
+
             if (((getDefender instanceof Player))) {
                 this.durability.durabilityCalcForArmour((Player) getDefender, 1, "damage");
                 if (((Player) getDefender).isBlocking()) {
@@ -177,7 +178,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                 this.durability.durabilityCalcForItemInHand((Player) getAttacker, 1, "damage", this.getSlots.returnItemInMainHand(getAttacker), "Main");
                 this.durability.durabilityCalcForItemInHand((Player) getAttacker, 1, "damage", this.getSlots.returnItemInOffHand(getAttacker), "Off");
             }
-            
+
             if (getAttacker instanceof Player && getDefender instanceof Player) {
                 if (EspecialAtributes.HasDestroy((Player) getAttacker)) {
                     if (!instance.damagefix.IsAttackInCooldown(((Player) getAttacker).getUniqueId())) {
@@ -186,92 +187,93 @@ public class DamageSystem implements org.bukkit.event.Listener {
                 }
             }
 
-            if(event.getEntity().hasMetadata("FireTicks=")){
-            	double fireTicks = ((MetadataValue) event.getEntity().getMetadata("FireTicks=").get(0)).asDouble();
-            	event.getEntity().setFireTicks((int)fireTicks);
-            	event.getEntity().removeMetadata("FireTicks=",Main.getInstance());
+            if (event.getEntity().hasMetadata("FireTicks=")) {
+                double fireTicks = ((MetadataValue) event.getEntity().getMetadata("FireTicks=").get(0)).asDouble();
+                event.getEntity().setFireTicks((int) fireTicks);
+                event.getEntity().removeMetadata("FireTicks=", Main.getInstance());
             }
-    		if(event.getEntity().hasMetadata("DamageBefore=")&&event.getEntity().hasMetadata("ArmorPen=")){
-    			double damageBeforeReduction = ((MetadataValue) event.getEntity().getMetadata("DamageBefore=").get(0)).asDouble();
-    			double armorPen = ((MetadataValue) event.getEntity().getMetadata("ArmorPen=").get(0)).asDouble();
-        		if(armorPen>1)
-        			armorPen=1;
-    			if(damageBeforeReduction>event.getDamage()){
-        			double newDamage =event.getDamage() + ((damageBeforeReduction - event.getDamage())*armorPen);
-        			event.setDamage(newDamage);
-        		}
-        		event.getEntity().removeMetadata("DamageBefore=", Main.getInstance());
-        		event.getEntity().removeMetadata("ArmorPen=", Main.getInstance());
-    		}
-    	}
-    	if(!event.isCancelled() &&event.getCause().equals(DamageCause.LIGHTNING)){
-    		if(event.getEntity() instanceof LivingEntity && event.getEntity().getType()!=EntityType.ARMOR_STAND){
-    			LivingEntity entity = (LivingEntity)event.getEntity();
-    			if(entity.getNoDamageTicks()<=0){
-    				entity.setNoDamageTicks(5);
-    	    		event.getEntity().setLastDamageCause(event);
-    	    		if(entity.getHealth()<event.getDamage()){
-    	    			entity.setHealth(0);
-    	    		}
-    	    		else{
-    	    			entity.setHealth(entity.getHealth()-event.getDamage());
-    	    		}
-    	    		
-    	    		//((LivingEntity)event.getEntity()).damage(event.getDamage());
-    	    		//((LivingEntity)event.getEntity()).damage(event.getDamage(), event.getDamager());
-    	    		return;
-    	    	}
-    			return;
-    		}
-    	}
+            if (event.getEntity().hasMetadata("DamageBefore=") && event.getEntity().hasMetadata("ArmorPen=")) {
+                double damageBeforeReduction = ((MetadataValue) event.getEntity().getMetadata("DamageBefore=").get(0)).asDouble();
+                double armorPen = ((MetadataValue) event.getEntity().getMetadata("ArmorPen=").get(0)).asDouble();
+                if (armorPen > 1) {
+                    armorPen = 1;
+                }
+                if (damageBeforeReduction > event.getDamage()) {
+                    double newDamage = event.getDamage() + ((damageBeforeReduction - event.getDamage()) * armorPen);
+                    event.setDamage(newDamage);
+                }
+                event.getEntity().removeMetadata("DamageBefore=", Main.getInstance());
+                event.getEntity().removeMetadata("ArmorPen=", Main.getInstance());
+            }
+        }
+        if (!event.isCancelled() && event.getCause().equals(DamageCause.LIGHTNING)) {
+            if (event.getEntity() instanceof LivingEntity && event.getEntity().getType() != EntityType.ARMOR_STAND) {
+                LivingEntity entity = (LivingEntity) event.getEntity();
+                if (entity.getNoDamageTicks() <= 0) {
+                    entity.setNoDamageTicks(5);
+                    event.getEntity().setLastDamageCause(event);
+                    if (entity.getHealth() < event.getDamage()) {
+                        entity.setHealth(0);
+                    } else {
+                        entity.setHealth(entity.getHealth() - event.getDamage());
+                    }
+
+                    //((LivingEntity)event.getEntity()).damage(event.getDamage());
+                    //((LivingEntity)event.getEntity()).damage(event.getDamage(), event.getDamager());
+                    return;
+                }
+                return;
+            }
+        }
     }
-    
-    @EventHandler(priority = EventPriority.LOWEST )
+
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-    	if(event.getCause().equals(DamageCause.LIGHTNING)||event.getEntity().getType().equals(EntityType.ARMOR_STAND)){
-    		return;
-    	}
+        if (event.getCause().equals(DamageCause.LIGHTNING) || event.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+            return;
+        }
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getDamager().getWorld().getName())) {
             Entity getAttacker = event.getDamager();
             Entity getDefender = event.getEntity();
-        	if (!(event.getEntity() instanceof LivingEntity)) {
+            if (!(event.getEntity() instanceof LivingEntity)) {
                 return;
             }
             if ((Main.plugin.util_WorldGuard != null) && ((event.getEntity() instanceof Player)) && (this.util_WorldGuard.playerInInvincibleRegion((Player) event.getEntity()))) {
                 event.setCancelled(true);
                 return;
             }
-            
+
             if ((getDefender.hasMetadata("NPC"))
                     && (!this.util_Citizens.checkVulnerability(getDefender))) {
                 event.setCancelled(true);
                 return;
             }
-            PlayerStats damagerStats=null;
-            PlayerStats defenderStats=null;
-        	if(event.getDamager() instanceof Player){
-        		Player p =(Player)event.getDamager();
-        		ItemStack weapon = p.getInventory().getItemInMainHand();
-        		if(ItemCategory.isAnyWeapon(weapon) ){
-        			if(!weapon.hasItemMeta() || !weapon.getItemMeta().hasLore()){
-        				p.getInventory().setItemInMainHand(LoreItemMaker.CheckItemLore(weapon, p)); 
-        			}
-        		}
-        		damagerStats=Main.plugin.getPlayerStats((Player)event.getDamager());
-        		damagerStats.UpdateAttack();
-        	}
-        	if(event.getEntity() instanceof Player){
-        		defenderStats=Main.plugin.getPlayerStats((Player)event.getEntity());
-        		defenderStats.UpdateDefence();
-        	}
-        	if(event.getDamager() instanceof Projectile)
-        		if(((Projectile)event.getDamager()).getShooter() instanceof Player){
-            		damagerStats=Main.plugin.getPlayerStats((Player)((Projectile)event.getDamager()).getShooter());
-            		damagerStats.UpdateAll();
-        		}
+            PlayerStats damagerStats = null;
+            PlayerStats defenderStats = null;
+            if (event.getDamager() instanceof Player) {
+                Player p = (Player) event.getDamager();
+                ItemStack weapon = p.getInventory().getItemInMainHand();
+                if (ItemCategory.isAnyWeapon(weapon)) {
+                    if (!weapon.hasItemMeta() || !weapon.getItemMeta().hasLore()) {
+                        p.getInventory().setItemInMainHand(LoreItemMaker.CheckItemLore(weapon, p));
+                    }
+                }
+                damagerStats = Main.plugin.getPlayerStats((Player) event.getDamager());
+                damagerStats.UpdateAttack();
+            }
+            if (event.getEntity() instanceof Player) {
+                defenderStats = Main.plugin.getPlayerStats((Player) event.getEntity());
+                defenderStats.UpdateDefence();
+            }
+            if (event.getDamager() instanceof Projectile) {
+                if (((Projectile) event.getDamager()).getShooter() instanceof Player) {
+                    damagerStats = Main.plugin.getPlayerStats((Player) ((Projectile) event.getDamager()).getShooter());
+                    damagerStats.UpdateAll();
+                }
+            }
             //-------------------- Mágico---------------------------------
             if ((event.getDamager() instanceof Projectile)) {
-            	Projectile projectile = (Projectile) event.getDamager();
+                Projectile projectile = (Projectile) event.getDamager();
                 Entity shooter = null;
                 if (!(projectile.getShooter() instanceof Entity)) {
                     return;
@@ -279,7 +281,7 @@ public class DamageSystem implements org.bukkit.event.Listener {
                 shooter = (Entity) projectile.getShooter();
 
                 if (projectile.hasMetadata("SPELLNAME=")) {
-                	projectile.setLastDamageCause(event);
+                    projectile.setLastDamageCause(event);
                     String SpellName = ((MetadataValue) projectile.getMetadata("SPELLNAME=").get(0)).asString();
                     Spell spell = SpellsList.getSpell(SpellName);
                     if (spell != null) {
@@ -289,63 +291,61 @@ public class DamageSystem implements org.bukkit.event.Listener {
                             projectile.removeMetadata("SPELLNAME=", Main.getInstance());
                             double AOEDamageRange = ((MetadataValue) projectile.getMetadata("ADR=").get(0)).asDouble();
                             double magicPen = ((MetadataValue) projectile.getMetadata("MAGICPEN=").get(0)).asDouble();
-                            if ((getDefender instanceof Player)){
-                                double damage = DirectDamageAmount*(1-(defenderStats.magicPercentArmor* (1-magicPen)) );
+                            if ((getDefender instanceof Player)) {
+                                double damage = DirectDamageAmount * (1 - (defenderStats.magicPercentArmor * (1 - magicPen)));
                                 this.durability.durabilityCalcForArmour((Player) getDefender, 1, "damage");
                                 event.setDamage(damage);
-                                event.getEntity().setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks*20));
+                                event.getEntity().setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks * 20));
                                 //if(util_WorldGuard.playerInPVPRegion((Player)event.getEntity() )){
-                                	//((Player)event.getEntity()).setFireTicks(spell.fireTicks*20);
-                                	
+                                //((Player)event.getEntity()).setFireTicks(spell.fireTicks*20);
+
                                 //}
-                            }
-                            else{
-                            	if ((event.getEntity() instanceof LivingEntity) && event.getEntity().getType()!=EntityType.ARMOR_STAND) {
-                            		if(spell.fireTicks>=2){
-                                		//((LivingEntity) event.getEntity()).setFireTicks(spell.fireTicks*20);
-                                		event.getEntity().setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks*20));
-                                	}
-                            		event.setDamage(0);
-                                    if(damagerStats!=null && damagerStats.magicArmorPen>0){
-                                    	event.getEntity().setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), DirectDamageAmount));
-                                    	event.getEntity().setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.magicArmorPen));
+                            } else {
+                                if ((event.getEntity() instanceof LivingEntity) && event.getEntity().getType() != EntityType.ARMOR_STAND) {
+                                    if (spell.fireTicks >= 2) {
+                                        //((LivingEntity) event.getEntity()).setFireTicks(spell.fireTicks*20);
+                                        event.getEntity().setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks * 20));
                                     }
-                            		Map<DamageModifier,Double> mapDM = Maps.newHashMap();
-                            		mapDM.put(DamageModifier.BASE, DirectDamageAmount); 
-                            		//(Entity)(damagerStats.player)
-                            		Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity)(damagerStats.player),event.getEntity(),DamageCause.LIGHTNING,mapDM,(Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
-                            	}
+                                    event.setDamage(0);
+                                    if (damagerStats != null && damagerStats.magicArmorPen > 0) {
+                                        event.getEntity().setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), DirectDamageAmount));
+                                        event.getEntity().setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.magicArmorPen));
+                                    }
+                                    Map<DamageModifier, Double> mapDM = Maps.newHashMap();
+                                    mapDM.put(DamageModifier.BASE, DirectDamageAmount);
+                                    //(Entity)(damagerStats.player)
+                                    Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity) (damagerStats.player), event.getEntity(), DamageCause.LIGHTNING, mapDM, (Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
+                                }
                             }
-                            
+
                             if (AOEDamageRange > 0.0D) {
                                 for (Iterator<Entity> iterator = event.getEntity().getNearbyEntities(AOEDamageRange, AOEDamageRange, AOEDamageRange).iterator(); iterator.hasNext();) {
                                     Entity entity = (Entity) iterator.next();
                                     if (!entity.equals(damagerStats.player) && !entity.equals(event.getEntity())) {
                                         if ((entity instanceof Player)) {
-                                        	if(util_WorldGuard.playerInPVPRegion((Player)entity)){
-                                            	PlayerStats ps = Main.plugin.getPlayerStats((Player)entity);
-                                            	ps.UpdateDefence();
-                                            	double damage = AOEDamageAmount*(1-(ps.magicPercentArmor* (1-magicPen)) );
-                                            	if(spell.fireTicks>=2){
-                                            		entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks*20/2));
-                                            	}
-                                            	Map<DamageModifier,Double> mapDM = Maps.newHashMap();
-                                        		mapDM.put(DamageModifier.BASE, damage);
-                                        		Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity)(damagerStats.player),entity,DamageCause.LIGHTNING,mapDM,(Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
-                                        	}
-                                        }
-                                        else if((entity instanceof LivingEntity)&& entity.getType()!=EntityType.ARMOR_STAND) {
-                                    		if(damagerStats!=null && damagerStats.magicArmorPen>0){
-                                    			entity.setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), AOEDamageAmount));
-                                    			entity.setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.magicArmorPen));
+                                            if (util_WorldGuard.playerInPVPRegion((Player) entity)) {
+                                                PlayerStats ps = Main.plugin.getPlayerStats((Player) entity);
+                                                ps.UpdateDefence();
+                                                double damage = AOEDamageAmount * (1 - (ps.magicPercentArmor * (1 - magicPen)));
+                                                if (spell.fireTicks >= 2) {
+                                                    entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks * 20 / 2));
+                                                }
+                                                Map<DamageModifier, Double> mapDM = Maps.newHashMap();
+                                                mapDM.put(DamageModifier.BASE, damage);
+                                                Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity) (damagerStats.player), entity, DamageCause.LIGHTNING, mapDM, (Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
                                             }
-                                        	if(spell.fireTicks>=2){
-                                        		//((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
-                                        		entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks*20/2));
-                                        	}
-                                    		Map<DamageModifier,Double> mapDM = Maps.newHashMap();
-                                    		mapDM.put(DamageModifier.BASE, AOEDamageAmount);
-                                    		Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity)(damagerStats.player),entity,DamageCause.LIGHTNING,mapDM,(Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
+                                        } else if ((entity instanceof LivingEntity) && entity.getType() != EntityType.ARMOR_STAND) {
+                                            if (damagerStats != null && damagerStats.magicArmorPen > 0) {
+                                                entity.setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), AOEDamageAmount));
+                                                entity.setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.magicArmorPen));
+                                            }
+                                            if (spell.fireTicks >= 2) {
+                                                //((LivingEntity) entity).setFireTicks(spell.fireTicks*20/2);
+                                                entity.setMetadata("FireTicks=", new FixedMetadataValue(Main.getInstance(), spell.fireTicks * 20 / 2));
+                                            }
+                                            Map<DamageModifier, Double> mapDM = Maps.newHashMap();
+                                            mapDM.put(DamageModifier.BASE, AOEDamageAmount);
+                                            Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent((Entity) (damagerStats.player), entity, DamageCause.LIGHTNING, mapDM, (Map<DamageModifier, ? extends Function<? super Double, Double>>) new EnumMap<DamageModifier, Function<? super Double, Double>>(ImmutableMap.of(DamageModifier.BASE, ZERO))));
                                         }
                                     }
                                 }
@@ -383,47 +383,45 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         return;
                     }
                     return;
-                } 
+                }
             }
-                //-------------------- Fisico---------------------------------
-                if (((getAttacker instanceof Player))
-                        && ((getDefender instanceof Player))) {
-                    /*if ((Main.plugin.getWorldGuard() != null) && ((util_WorldGuard.playerInPVPRegion((Player) getDefender)) || (util_WorldGuard.playerInInvincibleRegion((Player) getDefender)))) {
+            //-------------------- Fisico---------------------------------
+            if (((getAttacker instanceof Player))
+                    && ((getDefender instanceof Player))) {
+                /*if ((Main.plugin.getWorldGuard() != null) && ((util_WorldGuard.playerInPVPRegion((Player) getDefender)) || (util_WorldGuard.playerInInvincibleRegion((Player) getDefender)))) {
                         return;
                     }*/
-                    if (((Player) getAttacker).getName().equals(((Player) getDefender).getName())) {
-                        event.setCancelled(true);
-                        return;
-                    }
-                }
-                if (this.dodge.checkDodge(event,getAttacker,getDefender,defenderStats)) {
+                if (((Player) getAttacker).getName().equals(((Player) getDefender).getName())) {
+                    event.setCancelled(true);
                     return;
                 }
-                if (this.block.checkBlock(event,getAttacker,getDefender,defenderStats)) {
-                    return;
-                }
-                double getDefenderArmour = defenderStats !=null ? defenderStats.percentArmor:0;
-                double getAttackerDamage = 0.0D;
-                getAttackerDamage = event.getDamage();
-                if (getAttacker instanceof Player) {
-                    if (this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType() == Material.BOW) {
-                        //getAttackerDamage = attackerDamage((LivingEntity) getAttacker, getDefender, getDefender.getType(), eventDamage, eventDamage, getDefenderArmour, true, isTool);
-                    	getAttackerDamage = damagerStats.minDamage + Math.random() * (damagerStats.maxDamage-damagerStats.minDamage);
-                    	getAttackerDamage = getAttackerDamage /5;
-                    }else{
-                    	getAttackerDamage = damagerStats.minDamage + Math.random() * (damagerStats.maxDamage-damagerStats.minDamage);
-                    	
-                    }
-                }else if (getAttacker instanceof Projectile) {
-                	if(((Projectile)getAttacker).hasMetadata("Damage=")){
-                		getAttackerDamage = ((MetadataValue) ((Projectile)getAttacker).getMetadata("Damage=").get(0)).asDouble();
-                	}
-                }
-               
-                
+            }
+            if (this.dodge.checkDodge(event, getAttacker, getDefender, defenderStats)) {
+                return;
+            }
+            if (this.block.checkBlock(event, getAttacker, getDefender, defenderStats)) {
+                return;
+            }
+            double getDefenderArmour = defenderStats != null ? defenderStats.percentArmor : 0;
+            double getAttackerDamage = 0.0D;
+            getAttackerDamage = event.getDamage();
+            if (getAttacker instanceof Player) {
+                if (this.util_EntityManager.returnItemStackInMainHand(getAttacker).getType() == Material.BOW) {
+                    //getAttackerDamage = attackerDamage((LivingEntity) getAttacker, getDefender, getDefender.getType(), eventDamage, eventDamage, getDefenderArmour, true, isTool);
+                    getAttackerDamage = damagerStats.minDamage + Math.random() * (damagerStats.maxDamage - damagerStats.minDamage);
+                    getAttackerDamage = getAttackerDamage / 5;
+                } else {
+                    getAttackerDamage = damagerStats.minDamage + Math.random() * (damagerStats.maxDamage - damagerStats.minDamage);
 
-                //double reflectVal = this.reflect.reflectChanceOnHit(getDefender, isTool);
-                /*
+                }
+            } else if (getAttacker instanceof Projectile) {
+                if (((Projectile) getAttacker).hasMetadata("Damage=")) {
+                    getAttackerDamage = ((MetadataValue) ((Projectile) getAttacker).getMetadata("Damage=").get(0)).asDouble();
+                }
+            }
+
+            //double reflectVal = this.reflect.reflectChanceOnHit(getDefender, isTool);
+            /*
                 if ((reflectVal > 0.0D)
                         && (this.util_Random.random(100) <= reflectVal)) {
                     if ((getAttacker instanceof Player)) {
@@ -461,64 +459,64 @@ public class DamageSystem implements org.bukkit.event.Listener {
                         return;
                     }
                 }*/
-                Boolean isAttackInCooldown=true;
-                double armorPen=0;
-                if (getAttacker instanceof Player) {
-                	isAttackInCooldown=instance.damagefix.IsAttackInCooldown(((Player) getAttacker).getUniqueId());
-                	armorPen=damagerStats.armorPen;
-                }
-                if (getDefender instanceof Player) {
-                	getDefenderArmour = getDefenderArmour * (1-armorPen);
-                }
-                getAttackerDamage = instance.damagefix.FixDamage(event.getDamager(), getAttackerDamage);
-                if (getAttackerDamage < 0.9) {
-                    getAttackerDamage = 0;
-                    event.setDamage(getAttackerDamage);
-                    event.setCancelled(true);
-                    return;
-                }
-                double reducedDamage = getAttackerDamage * getDefenderArmour;
-                getAttackerDamage = getAttackerDamage - reducedDamage;
-                
-                if (getAttacker instanceof Player && getDefender instanceof LivingEntity) {
-                    Player player = (Player) getAttacker;
-                    if (!isAttackInCooldown&&getAttackerDamage>0) {
-                        this.lifeSteal.lifeStealChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, getAttackerDamage - reducedDamage, true);
-                        this.fire.fireChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
-                        this.ice.iceChanceOnHit((LivingEntity)getDefender, (LivingEntity) getAttacker, true);
-                        this.poison.poisonChanceOnHit((LivingEntity)getDefender, (LivingEntity) getAttacker, true);
-                        this.wither.witherChanceOnHit((LivingEntity)getDefender, (LivingEntity) getAttacker, true);
-                        this.harming.harmingChanceOnHit((LivingEntity)getDefender, (LivingEntity) getAttacker, true);
-                        this.blind.blindChanceOnHit((LivingEntity)getDefender, (LivingEntity) getAttacker, true);
-                        getAttackerDamage = checkCritical(damagerStats, getDefender, getAttackerDamage);
-                        getAttackerDamage = Backstab.checkStab(damagerStats, getDefender, getAttackerDamage, damagerStats.stabDamage);
-                    }
-
-                }
-                if (getAttacker instanceof Player && getDefender instanceof Player) {
-                    if (EspecialAtributes.HasDestroy((Player) getAttacker)) {
-                        if (!instance.damagefix.IsAttackInCooldown(((Player) getAttacker).getUniqueId())) {
-                            this.durability.durabilityCalcForArmour((Player) getDefender, 2, "damage");
-                        }
-                    }
-                }
-                if(damagerStats!=null && damagerStats.armorPen>0&& !event.getEntity().getType().equals(EntityType.PLAYER)){
-                	event.getEntity().setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), getAttackerDamage));
-                	event.getEntity().setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.armorPen));
-                }
-                
+            Boolean isAttackInCooldown = true;
+            double armorPen = 0;
+            if (getAttacker instanceof Player) {
+                isAttackInCooldown = instance.damagefix.IsAttackInCooldown(((Player) getAttacker).getUniqueId());
+                armorPen = damagerStats.armorPen;
+            }
+            if (getDefender instanceof Player) {
+                getDefenderArmour = getDefenderArmour * (1 - armorPen);
+            }
+            getAttackerDamage = instance.damagefix.FixDamage(event.getDamager(), getAttackerDamage);
+            if (getAttackerDamage < 0.9) {
+                getAttackerDamage = 0;
                 event.setDamage(getAttackerDamage);
+                event.setCancelled(true);
+                return;
+            }
+            double reducedDamage = getAttackerDamage * getDefenderArmour;
+            getAttackerDamage = getAttackerDamage - reducedDamage;
+
+            if (getAttacker instanceof Player && getDefender instanceof LivingEntity) {
+                Player player = (Player) getAttacker;
+                if (!isAttackInCooldown && getAttackerDamage > 0) {
+                    this.lifeSteal.lifeStealChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, getAttackerDamage - reducedDamage, true);
+                    this.fire.fireChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
+                    this.ice.iceChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
+                    this.poison.poisonChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
+                    this.wither.witherChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
+                    this.harming.harmingChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
+                    this.blind.blindChanceOnHit((LivingEntity) getDefender, (LivingEntity) getAttacker, true);
+                    getAttackerDamage = checkCritical(damagerStats, getDefender, getAttackerDamage);
+                    getAttackerDamage = Backstab.checkStab(damagerStats, getDefender, getAttackerDamage, damagerStats.stabDamage);
+                }
+
+            }
+            if (getAttacker instanceof Player && getDefender instanceof Player) {
+                if (EspecialAtributes.HasDestroy((Player) getAttacker)) {
+                    if (!instance.damagefix.IsAttackInCooldown(((Player) getAttacker).getUniqueId())) {
+                        this.durability.durabilityCalcForArmour((Player) getDefender, 2, "damage");
+                    }
+                }
+            }
+            if (damagerStats != null && damagerStats.armorPen > 0 && !event.getEntity().getType().equals(EntityType.PLAYER)) {
+                event.getEntity().setMetadata("DamageBefore=", new FixedMetadataValue(Main.getInstance(), getAttackerDamage));
+                event.getEntity().setMetadata("ArmorPen=", new FixedMetadataValue(Main.getInstance(), damagerStats.armorPen));
+            }
+
+            event.setDamage(getAttackerDamage);
         }
     }
-    
-    public static double checkCritical(PlayerStats ps,Entity e, double damage) {
-    	if(ps.critChance>Math.random()){
-        	damage = damage * (1+ps.critDamage);
-        	ps.player.sendMessage(ChatColor.RED+"Golpe Critico! (daño total "+df.format(damage)+")");
+
+    public static double checkCritical(PlayerStats ps, Entity e, double damage) {
+        if (ps.critChance > Math.random()) {
+            damage = damage * (1 + ps.critDamage);
+            ps.player.sendMessage(ChatColor.RED + "Golpe Critico! (daño total " + df.format(damage) + ")");
             if (e instanceof Player) {
-                ((Player) e).sendMessage(ChatColor.DARK_RED+"Recibido Golpe Critico! (daño total "+df.format(damage)+")");
+                ((Player) e).sendMessage(ChatColor.DARK_RED + "Recibido Golpe Critico! (daño total " + df.format(damage) + ")");
             }
-    	}
+        }
         return damage;
     }
 

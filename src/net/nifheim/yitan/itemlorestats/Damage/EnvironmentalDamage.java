@@ -261,6 +261,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
             }
         }
     }
+
     /*
     @EventHandler
     public void onLightningStrike(EntityDamageEvent event) {
@@ -290,7 +291,7 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
             }
         }
     }
-    */
+     */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onMagic(EntityDamageEvent event) {
         if ((event.getCause().equals(EntityDamageEvent.DamageCause.MAGIC))
@@ -406,7 +407,6 @@ public class EnvironmentalDamage implements org.bukkit.event.Listener {
             }
         }
     }
-
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onThorns(EntityDamageEvent event) {

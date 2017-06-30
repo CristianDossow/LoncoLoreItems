@@ -11,12 +11,13 @@ import org.bukkit.inventory.MerchantInventory;
 import net.nifheim.yitan.loncoloreitems.LoreItemMaker;
 
 public class MerchantClickListener implements Listener {
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-    	if(event.getClickedInventory() !=null && event.getClickedInventory().getType().equals(InventoryType.MERCHANT)){
-    		event.getSlotType().equals(InventoryType.SlotType.RESULT);
-    		ItemStack item = event.getCurrentItem();
-    		item=LoreItemMaker.CheckItemLore(item, (Player)event.getWhoClicked());
-    	}
+        if (event.getClickedInventory() != null && event.getClickedInventory().getType().equals(InventoryType.MERCHANT)) {
+            event.getSlotType().equals(InventoryType.SlotType.RESULT);
+            ItemStack item = event.getCurrentItem();
+            item = LoreItemMaker.CheckItemLore(item, (Player) event.getWhoClicked());
+        }
     }
 }

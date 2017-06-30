@@ -1,5 +1,5 @@
 package net.nifheim.yitan.StatsModifier;
 
 public enum StatModifierType {
-	ABSOLUTE,ACCUMULATIVE,MULTIPLICATIVE
+    ABSOLUTE, ACCUMULATIVE, MULTIPLICATIVE
 }

@@ -17,13 +17,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.boss.BossBar;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -38,13 +35,14 @@ import org.bukkit.scoreboard.Scoreboard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.citizensnpcs.Citizens;
 import net.milkbowl.vault.Vault;
+import net.nifheim.beelzebu.rpgcore.commands.StatsCommand;
 
 import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
+import net.nifheim.beelzebu.rpgcore.utils.DataManager;
 import net.nifheim.beelzebu.rpgcore.utils.MySQL;
 import net.nifheim.beelzebu.rpgcore.utils.PlaceholderAPI;
 import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
 
-import net.nifheim.yitan.itemlorestats.Commands.*;
 import net.nifheim.yitan.itemlorestats.Damage.DamageSystem;
 import net.nifheim.yitan.itemlorestats.Damage.EnvironmentalDamage;
 import net.nifheim.yitan.itemlorestats.Damage.PotionListener;
@@ -76,6 +74,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public static Main plugin;
     private static MySQL mysql;
+    private DataManager dataManager;
     public Main instance;
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
@@ -102,12 +101,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public EventListener eventlistener;
 
     public Classes classes = new Classes();
-    DamageSystem damageSystem = new DamageSystem(this);
+    private final DamageSystem damageSystem = new DamageSystem(this);
     public Durability durability = new Durability();
-    EnvironmentalDamage environmentalDamage = new EnvironmentalDamage();
+    public EnvironmentalDamage environmentalDamage = new EnvironmentalDamage();
     public GearStats gearStats = new GearStats();
     public GetSlots getSlots = new GetSlots();
-    ItemUpgrade itemUpgrade = new ItemUpgrade();
+    public ItemUpgrade itemUpgrade = new ItemUpgrade();
     public SetBonuses setBonuses = new SetBonuses();
     public Soulbound soulbound = new Soulbound();
     WriteDefaultFiles writeDefaultFiles = new WriteDefaultFiles();
@@ -119,14 +118,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     Util_Random util_Random = new Util_Random();
 
     SpigotStatCapWarning spigotStatCapWarning = new SpigotStatCapWarning();
-
-    CreateLore_Com createLore_Com = new CreateLore_Com();
-    CustomMaterial_Com customMaterial_Com = new CustomMaterial_Com();
-    Export_Com export_Com = new Export_Com();
-    Give_Com give_Com = new Give_Com();
-    Lore_Com lore_Com = new Lore_Com();
-    Name_Com name_Com = new Name_Com();
-    Repair_Com repair_Com = new Repair_Com();
 
     static public Scoreboard scoreboard;
 
@@ -279,6 +270,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         }
         messages = YamlConfiguration.loadConfiguration(messagesFile);
         checkDependencies();
+        getCommand("ils").setExecutor(new StatsCommand(this));
     }
 
     public void checkDependencies() {
@@ -468,306 +460,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         return (item.equals(new ItemStack(Material.WOOD_SPADE)) || (item.equals(new ItemStack(Material.STONE_SPADE))) || (item.equals(new ItemStack(Material.IRON_SPADE))) || (item.equals(new ItemStack(Material.GOLD_SPADE))) || (item.equals(new ItemStack(Material.DIAMOND_SPADE))));
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("ils")) {
-            if (args.length == 0) {
-                if ((sender instanceof Player)) {
-                    if ((sender.isOp()) || (sender.hasPermission("ils.commandlist"))) {
-                        sender.sendMessage(ChatColor.DARK_GRAY + "-----------------------------------------------------");
-                        sender.sendMessage(ChatColor.GOLD + "                             Item Lore Stats              ");
-                        sender.sendMessage(ChatColor.DARK_GRAY + "-----------------------------------------------------");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils reload");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils stats");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils version");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils name <text>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils lore <player_name> <line#> <text>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils give <player_name> <item_name>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils give <player_name> <item_name> <new_item_name>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils custom tool <item_type>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils custom armour helmet/chest/legs/boots <item_type>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils repair");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils upgrade hand/armour/all");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils combatLog");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils sell");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils export <item_name>");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils setMultiplier");
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "   /ils remake <lvl>");
-                    } else {
-                        sender.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
-                    }
-                } else {
-                    log("Item Lore Stats commands:");
-                    log("   /ils");
-                    log("   /ils reload");
-                    log("   /ils stats");
-                    log("   /ils version");
-                    log("   /ils name <text>");
-                    log("   /ils lore <player_name> <line#> <text>");
-                    log("   /ils give <player_name> <item_name>");
-                    log("   /ils give <player_name> <item_name>, <new_item_name>");
-                    log("   /ils custom tool <Item Type Name>");
-                    log("   /ils custom armour helmet/chest/legs/boots <Item Type Name>");
-                    log("   /ils repair");
-                    log("   /ils upgrade hand");
-                    log("   /ils upgrade armour");
-                    log("   /ils upgrade all");
-                    log("   /ils combatLog");
-                    log("   /ils sell");
-                    log("   /ils export <item_name>");
-                    log("   /ils setMultiplier");
-                    log("   /ils remake <lvl>");
-                }
-            }
-
-            if (args.length > 0) {
-
-                if (args[0].equalsIgnoreCase("name")) {
-                    this.name_Com.onNameCommand(sender, args);
-                }
-
-                if (args[0].equalsIgnoreCase("give")) {
-                    this.give_Com.onGiveCommand(sender, args);
-                }
-
-                if (args[0].equalsIgnoreCase("export")) {
-                    this.export_Com.onExportCommand(sender, args);
-                }
-
-                if (args[0].equalsIgnoreCase("lore")) {
-                    this.lore_Com.onLoreCommand(sender, args);
-                }
-
-                if (args[0].equalsIgnoreCase("repair")) {
-                    this.repair_Com.onRepairCommand(sender, args);
-                }
-
-                if (args[0].equalsIgnoreCase("custom")) {
-                    this.customMaterial_Com.onCustomMaterialCommand(sender, args);
-                }
-
-                if ((args[0].equalsIgnoreCase("test"))
-                        && ((sender instanceof Player))) {
-                    Player player = (Player) sender;
-
-                    player.hasPermission("ils.admin");
-                }
-
-                if (args[0].equalsIgnoreCase("reload")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-
-                        if (!player.hasPermission("ils.admin")) {
-                            player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
-                        } else {
-                            reloadConfig();
-                            player.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + ChatColor.GREEN + " Configuration Reloaded!"));
-                        }
-                        return true;
-                    }
-                    reloadConfig();
-                    log(rep("&8[&cLoncoLoreItems&8] &7Configuration Reloaded!"));
-                }
-
-                if (args[0].equalsIgnoreCase("createlore")) {
-                    this.createLore_Com.onCreateLoreCommand(sender, args);
-                } else if (args[0].equalsIgnoreCase("setMultiplier")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".healthMultiplier", 0.045D);
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".damageMultiplier", 0.004D);
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".expMultiplier", 0.004D);
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.x", player.getLocation().getBlockX());
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.y", player.getLocation().getBlockY());
-                            getConfig().set("npcModifier." + player.getWorld().getName() + ".location.z", player.getLocation().getBlockZ());
-                            saveConfig();
-                            player.sendMessage(ChatColor.LIGHT_PURPLE + "Successfully set the NPC multiplier to multiply health and damage from " + ChatColor.GOLD + player.getLocation().getBlockX() + ChatColor.LIGHT_PURPLE + ", " + ChatColor.GOLD + player.getLocation().getBlockY() + ChatColor.LIGHT_PURPLE + ", " + ChatColor.GOLD + player.getLocation().getBlockZ() + ChatColor.LIGHT_PURPLE + ".");
-                        } else {
-                            player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
-                        }
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("stats")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        CharacterSheet characterSheet = new CharacterSheet();
-
-                        characterSheet.returnStats(player, getHealthValue(player));
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("combatlog")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-
-                        if ((getConfig().getBoolean("combatMessages.outgoing.damageDone")) || (getConfig().getBoolean("combatMessages.incoming.damageTaken"))) {
-                            try {
-                                this.PlayerDataConfig = new YamlConfiguration();
-                                this.PlayerDataConfig.load(new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
-
-                                if (this.PlayerDataConfig.getBoolean("extra.combatLogVisible")) {
-                                    this.PlayerDataConfig.set("extra.combatLogVisible", false);
-                                    this.combatLogVisible.put(player.getName(), false);
-                                    player.sendMessage(ChatColor.LIGHT_PURPLE + "Combat Log " + ChatColor.RED + "disabled" + ChatColor.LIGHT_PURPLE + ".");
-                                } else if (!this.PlayerDataConfig.getBoolean("extra.combatLogVisible")) {
-                                    this.PlayerDataConfig.set("extra.combatLogVisible", true);
-                                    this.combatLogVisible.put(player.getName(), true);
-                                    player.sendMessage(ChatColor.LIGHT_PURPLE + "Combat Log " + ChatColor.GREEN + "enabled" + ChatColor.LIGHT_PURPLE + ".");
-                                } else if (this.PlayerDataConfig.get("extra.combatLogVisible") == null) {
-                                    this.PlayerDataConfig.set("extra.combatLogVisible", false);
-                                    this.combatLogVisible.put(player.getName(), false);
-                                    player.sendMessage(ChatColor.LIGHT_PURPLE + "Combat Log " + ChatColor.RED + "disabled" + ChatColor.LIGHT_PURPLE + ".");
-                                }
-
-                                this.PlayerDataConfig.save(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
-                            } catch (IOException | InvalidConfigurationException e) {
-                                log("*********** Failed to load player data for " + player.getName() + " when toggling combat log! ***********");
-                            }
-                        }
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("sell")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        this.util_Vault.removeMoneyForSale(player, itemInMainHand(player).getAmount());
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("health")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        player.sendMessage(ChatColor.RED + "[DEBUGGER] " + ChatColor.WHITE + player.getHealth() + " out of " + player.getMaxHealth());
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("speed")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        player.sendMessage(ChatColor.GOLD + "Your movement speed is " + ChatColor.WHITE + player.getWalkSpeed());
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("upgrade")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        if ((player.isOp()) || (player.hasPermission("ils.command.upgrade"))) {
-                            if (args.length >= 2) {
-                                if ((args[1].equalsIgnoreCase("armour")) || (args[1].equalsIgnoreCase("armor"))) {
-                                    this.itemUpgrade.increaseItemStatOnHelmet(player);
-                                    this.itemUpgrade.increaseItemStatOnChestplate(player);
-                                    this.itemUpgrade.increaseItemStatOnLeggings(player);
-                                    this.itemUpgrade.increaseItemStatOnBoots(player);
-                                } else if (args[1].equalsIgnoreCase("hand")) {
-                                    if (player.getInventory().getItemInMainHand() != null) {
-                                        this.itemUpgrade.increaseItemStatOnItemInHand(player, player.getInventory().getItemInMainHand(), "Main");
-                                    }
-
-                                    if (player.getInventory().getItemInOffHand() != null) {
-                                        this.itemUpgrade.increaseItemStatOnItemInHand(player, player.getInventory().getItemInOffHand(), "Off");
-                                    }
-                                } else if (args[1].equalsIgnoreCase("all")) {
-                                    this.itemUpgrade.increaseItemStatOnHelmet(player);
-                                    this.itemUpgrade.increaseItemStatOnChestplate(player);
-                                    this.itemUpgrade.increaseItemStatOnLeggings(player);
-                                    this.itemUpgrade.increaseItemStatOnBoots(player);
-
-                                    if (player.getInventory().getItemInMainHand() != null) {
-                                        this.itemUpgrade.increaseItemStatOnItemInHand(player, player.getInventory().getItemInMainHand(), "Main");
-                                    }
-
-                                    if (player.getInventory().getItemInOffHand() != null) {
-                                        this.itemUpgrade.increaseItemStatOnItemInHand(player, player.getInventory().getItemInOffHand(), "Off");
-                                    }
-                                } else {
-                                    player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.EnterTypeError", null, null, "", ""));
-                                }
-                            } else {
-                                player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.EnterTypeError", null, null, "", ""));
-                            }
-                        } else {
-                            player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.PermissionDeniedError", null, null, "", ""));
-                        }
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("zombie")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
-                            LivingEntity mob = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), EntityType.ZOMBIE);
-                            mob.setCustomName("ItemLoreStats Test Dummy");
-                            mob.setMaxHealth(2048.0D);
-                            mob.setHealth(2048.0D);
-                            if (itemInMainHand(player) != null) {
-                                mob.getEquipment().setItemInMainHand(itemInMainHand(player).clone());
-                            }
-                            if (itemInOffHand(player) != null) {
-                                mob.getEquipment().setItemInOffHand(itemInOffHand(player).clone());
-                            }
-                            if (player.getInventory().getHelmet() != null) {
-                                mob.getEquipment().setHelmet(player.getInventory().getHelmet().clone());
-                            }
-                            if (player.getInventory().getChestplate() != null) {
-                                mob.getEquipment().setChestplate(player.getInventory().getChestplate().clone());
-                            }
-                            if (player.getInventory().getLeggings() != null) {
-                                mob.getEquipment().setLeggings(player.getInventory().getLeggings().clone());
-                            }
-                            if (player.getInventory().getBoots() != null) {
-                                mob.getEquipment().setBoots(player.getInventory().getBoots().clone());
-                            }
-                            mob.setCustomNameVisible(true);
-                        }
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("skeleton")) {
-                    if ((sender instanceof Player)) {
-                        Player player = (Player) sender;
-                        if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
-                            LivingEntity mob = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), EntityType.SKELETON);
-                            mob.setCustomName("ItemLoreStats Test Dummy");
-                            mob.setMaxHealth(2048.0D);
-                            mob.setHealth(2048.0D);
-                            if (itemInMainHand(player) != null) {
-                                mob.getEquipment().setItemInMainHand(itemInMainHand(player).clone());
-                            }
-                            if (itemInOffHand(player) != null) {
-                                mob.getEquipment().setItemInOffHand(itemInOffHand(player).clone());
-                            }
-                            if (player.getInventory().getHelmet() != null) {
-                                mob.getEquipment().setHelmet(player.getInventory().getHelmet().clone());
-                            }
-                            if (player.getInventory().getChestplate() != null) {
-                                mob.getEquipment().setChestplate(player.getInventory().getChestplate().clone());
-                            }
-                            if (player.getInventory().getLeggings() != null) {
-                                mob.getEquipment().setLeggings(player.getInventory().getLeggings().clone());
-                            }
-                            if (player.getInventory().getBoots() != null) {
-                                mob.getEquipment().setBoots(player.getInventory().getBoots().clone());
-                            }
-                            mob.setCustomNameVisible(true);
-                        }
-                    } else {
-                        log("[ILS]" + this.util_GetResponse.getResponse("ErrorMessages.IngameOnlyError", null, null, "", ""));
-                    }
-                } else if (args[0].equalsIgnoreCase("test")) {
-                    Player player = (Player) sender;
-
-                    log("" + player.getInventory().getItemInMainHand().getData());
-                    log("" + player.getInventory().getItemInMainHand().getDurability());
-                }
-            }
-        }
-        eventlistener.onCommand(sender, cmd, commandLabel, args);
-        return false;
-    }
-
     public void swapItems(int slotA, int slotB, Inventory inv) {
         ItemStack itemStackA = inv.getItem(slotA);
         ItemStack itemStackB = inv.getItem(slotB);
@@ -906,7 +598,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public PlayerStats getPlayerStats(Player player) {
-
         if (playersStats.containsKey(player.getUniqueId())) {
             return playersStats.get(player.getUniqueId());
         } else {
@@ -923,5 +614,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
 
     public void log(String msg) {
         console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + msg));
+    }
+
+    public DataManager getDataManager(Player p) {
+        dataManager = new DataManager(p);
+        return dataManager;
     }
 }

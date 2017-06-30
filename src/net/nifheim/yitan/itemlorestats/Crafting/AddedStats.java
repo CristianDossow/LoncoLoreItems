@@ -7,7 +7,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 
 public class AddedStats implements org.bukkit.event.Listener {
-/*
+    /*
     Util_Colours util_Colours = new Util_Colours();
     Util_Format util_Format = new Util_Format();
 
@@ -26,5 +26,5 @@ public class AddedStats implements org.bukkit.event.Listener {
     @EventHandler
     public void addStatsToDroppedItem(EntityDeathEvent event) {
     }
-    */
+     */
 }

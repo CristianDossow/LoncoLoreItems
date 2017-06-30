@@ -12,7 +12,7 @@ public class CreatureSpawnListener implements Listener {
 
     @EventHandler
     public void modifyMobHealth(CreatureSpawnEvent event) {
-    	/*
+        /*
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(event.getEntity().getWorld().getName())) {
             LivingEntity entity = event.getEntity();
             Location entityLoc = entity.getLocation();

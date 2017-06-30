@@ -18,7 +18,7 @@ public class ItemMaker {
     private static final Main plugin = Main.getInstance();
     private static final FileConfiguration messages = plugin.getMessages();
 
-    public static ItemStack EnchantScroll(String enchant, String Type,List<String> description) {
+    public static ItemStack EnchantScroll(String enchant, String Type, List<String> description) {
 
         ItemStack scroll = new ItemStack(Material.PAPER, 1);
         ItemMeta im = scroll.getItemMeta();
@@ -28,10 +28,11 @@ public class ItemMaker {
         lore.add(ChatColor.GOLD + EspecialAtributes.enchantgiver);
         lore.add(ChatColor.GRAY + enchant);
         lore.add("");
-        if(description!=null)
-	        for(String desc : description){
-	        	lore.add(ChatColor.DARK_AQUA + desc);
-	        }
+        if (description != null) {
+            for (String desc : description) {
+                lore.add(ChatColor.DARK_AQUA + desc);
+            }
+        }
         im.setLore(lore);
         scroll.setItemMeta(im);
         return scroll;
@@ -56,19 +57,20 @@ public class ItemMaker {
         item.setDurability((short) 103);
         return item;
     }
+
     public static ItemStack itemLevelBoost(int poder) {
 
         ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName(ChatColor.GOLD+"Piedra Reformadora");
+        im.setDisplayName(ChatColor.GOLD + "Piedra Reformadora");
         ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.GOLD + EspecialAtributes.itemLevelBoost + " " + poder);
-        lore.add(ChatColor.DARK_AQUA+"Piedra mágica capaz de alterar la");
-        lore.add(ChatColor.DARK_AQUA+"composicion elemental de un objeto");
-        lore.add(ChatColor.DARK_AQUA+"y aumentar su nivel");
-        lore.add(ChatColor.RED+"Los Encantamientos se perderán y el");
-        lore.add(ChatColor.RED+"resultado es totalmente impredecible");
+        lore.add(ChatColor.DARK_AQUA + "Piedra mágica capaz de alterar la");
+        lore.add(ChatColor.DARK_AQUA + "composicion elemental de un objeto");
+        lore.add(ChatColor.DARK_AQUA + "y aumentar su nivel");
+        lore.add(ChatColor.RED + "Los Encantamientos se perderán y el");
+        lore.add(ChatColor.RED + "resultado es totalmente impredecible");
         im.setLore(lore);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -82,13 +84,13 @@ public class ItemMaker {
         ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName(ChatColor.GOLD+plugin.rep(messages.getString("Items.Spell Book.Name")+": " +spell.colorName+ spell.name));
+        im.setDisplayName(ChatColor.GOLD + plugin.rep(messages.getString("Items.Spell Book.Name") + ": " + spell.colorName + spell.name));
         ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + spell.name);
         spell.lore.stream().forEach((loreline) -> {
             lore.add(ChatColor.AQUA + loreline);
         });
-        LoreItemMaker.addEnchantSlots(lore,30);
+        LoreItemMaker.addEnchantSlots(lore, 30);
         im.setLore(lore);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -96,48 +98,52 @@ public class ItemMaker {
         item.setDurability((short) 98);
         return item;
     }
+
     public static ItemStack Weapon(int data) {
 
         ItemStack item = new ItemStack(Material.DIAMOND_SWORD, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName("Weapon Data: "+data);
+        im.setDisplayName("Weapon Data: " + data);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(im);
         item.setDurability((short) data);
         return item;
     }
+
     public static ItemStack Bow(int data) {
 
         ItemStack item = new ItemStack(Material.BOW, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName("Bow Data: "+data);
+        im.setDisplayName("Bow Data: " + data);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(im);
         item.setDurability((short) data);
         return item;
     }
+
     public static ItemStack Tool(int data) {
 
         ItemStack item = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName("Tool Data: "+data);
+        im.setDisplayName("Tool Data: " + data);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(im);
         item.setDurability((short) data);
         return item;
     }
+
     public static ItemStack Shield(int data) {
 
         ItemStack item = new ItemStack(Material.SHIELD, 1);
         ItemMeta im = item.getItemMeta();
         im.setUnbreakable(true);
-        im.setDisplayName("Shield Data: "+data);
+        im.setDisplayName("Shield Data: " + data);
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(im);

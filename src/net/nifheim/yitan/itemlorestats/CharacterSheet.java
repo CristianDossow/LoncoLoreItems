@@ -52,7 +52,7 @@ public class CharacterSheet {
     String level = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
     String onlydamage = Main.plugin.getConfig().getString("primaryStats.damage.name");
 
-    static String languageRegex= "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
+    static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 
     public double[] addDamageFromItem(ItemStack gear, double multiplier) {
         double damages[] = {0, 0};

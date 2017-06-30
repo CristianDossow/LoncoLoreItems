@@ -20,30 +20,32 @@ public class Util_WorldGuard {
     public Util_WorldGuard(Main instance) {
         this.main = instance;
     }
-    public boolean playersInPvPRegion(Player player1,Player player2) {
-    	if (playerInPVPRegion(player1) && playerInPVPRegion(player2)) 
-    	    return true;
-    	else
-    		return false;
+
+    public boolean playersInPvPRegion(Player player1, Player player2) {
+        if (playerInPVPRegion(player1) && playerInPVPRegion(player2)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean playerInPVPRegion(Player player) {
-    	ApplicableRegionSet set = (Main.plugin.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()));
-    	LocalPlayer localPlayer = Main.plugin.getWorldGuard().wrapPlayer(player);
-    	if (set.queryState(localPlayer, DefaultFlag.PVP)!= StateFlag.State.DENY) {
-    	    return true;
-    	}
-    	else
-    		return false;
+        ApplicableRegionSet set = (Main.plugin.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()));
+        LocalPlayer localPlayer = Main.plugin.getWorldGuard().wrapPlayer(player);
+        if (set.queryState(localPlayer, DefaultFlag.PVP) != StateFlag.State.DENY) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean playerInInvincibleRegion(Player player) {
-    ApplicableRegionSet set = Main.plugin.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation());
-    
-    if (set.allows(com.sk89q.worldguard.protection.flags.DefaultFlag.INVINCIBILITY)) {
-    return true;
-    }
-    return false;
+        ApplicableRegionSet set = Main.plugin.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation());
+
+        if (set.allows(com.sk89q.worldguard.protection.flags.DefaultFlag.INVINCIBILITY)) {
+            return true;
+        }
+        return false;
     }
     /*    public boolean entityInLevelRegion(LivingEntity entity) {
     for (ProtectedRegion reg : ItemLoreStats.plugin.getWorldGuard().getRegionManager(entity.getWorld()).getApplicableRegions(entity.getLocation())) {

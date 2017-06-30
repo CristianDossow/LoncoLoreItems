@@ -62,29 +62,29 @@ public class MySQL {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         }
         c = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?autoReconnect=true", user, passwd);
-            String createPlayers
-                    = "CREATE TABLE IF NOT EXISTS `" + prefix + "Players`"
-                    + "(`uuid` VARCHAR(50) NOT NULL,"
-                    + "`nick` VARCHAR(50) NOT NULL,"
-                    + "`characters` VARCHAR(777),"
-                    + "PRIMARY KEY (`uuid`));";
-            String createCharacters
-                    = "CREATE TABLE IF NOT EXISTS `" + prefix + "Characters`"
-                    + "(`id` INT NOT NULL AUTO_INCREMENT,"
-                    + "`uuid` VARCHAR(50) NOT NULL,"
-                    + "`name` VARCHAR (50) NOT NULL,"
-                    + "`maxhp` DOUBLE,"
-                    + "`hp` DOUBLE,"
-                    + "`maxmana` DOUBLE,"
-                    + "`mana` DOUBLE,"
-                    + "`stamina` DOUBLE,"
-                    + "`strength` DOUBLE,"
-                    + "`intelligence` DOUBLE,"
-                    + "PRIMARY KEY (`id`));";
+        String createPlayers
+                = "CREATE TABLE IF NOT EXISTS `" + prefix + "Players`"
+                + "(`uuid` VARCHAR(50) NOT NULL,"
+                + "`nick` VARCHAR(50) NOT NULL,"
+                + "`characters` VARCHAR(777),"
+                + "PRIMARY KEY (`uuid`));";
+        String createCharacters
+                = "CREATE TABLE IF NOT EXISTS `" + prefix + "Characters`"
+                + "(`id` INT NOT NULL AUTO_INCREMENT,"
+                + "`uuid` VARCHAR(50) NOT NULL,"
+                + "`name` VARCHAR (50) NOT NULL,"
+                + "`maxhp` DOUBLE,"
+                + "`hp` DOUBLE,"
+                + "`maxmana` DOUBLE,"
+                + "`mana` DOUBLE,"
+                + "`stamina` DOUBLE,"
+                + "`strength` DOUBLE,"
+                + "`intelligence` DOUBLE,"
+                + "PRIMARY KEY (`id`));";
 
-            Statement update = c.createStatement();
-            update.execute(createPlayers);
-            update.execute(createCharacters);
+        Statement update = c.createStatement();
+        update.execute(createPlayers);
+        update.execute(createCharacters);
     }
 
     public void Reconnect() {
@@ -107,4 +107,3 @@ public class MySQL {
         }
     }
 }
-

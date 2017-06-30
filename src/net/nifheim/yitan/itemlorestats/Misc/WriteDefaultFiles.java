@@ -24,7 +24,6 @@ public class WriteDefaultFiles implements org.bukkit.event.Listener {
 //
 //        return format;
 //    }
-
     public void checkExistence() {
         if (!new File(Main.plugin.getDataFolder() + File.separator + "SavedItems").exists()) {
             new File(Main.plugin.getDataFolder() + File.separator + "SavedItems").mkdirs();

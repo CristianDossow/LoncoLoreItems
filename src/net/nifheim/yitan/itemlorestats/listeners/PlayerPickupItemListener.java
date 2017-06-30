@@ -19,25 +19,25 @@ public class PlayerPickupItemListener implements Listener {
     public void ItemToStack(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem().getItemStack();
-        if(item.getType().equals(Material.DIAMOND_HOE)&&item.getDurability()!=0){
-            for( Entry<Integer, ? extends ItemStack> entry : player.getInventory().all(item.getType()).entrySet()){
-            	if(item.getAmount()>0&&entry.getValue().isSimilar(item)){
-            		if(entry.getValue().getAmount()+item.getAmount()>64){
-            			int dif =64 - entry.getValue().getAmount() ;
-            			entry.getValue().setAmount(entry.getValue().getAmount()+dif);
-            			event.getItem().getItemStack().setAmount(item.getAmount()-dif);
-            		}else{
-            			entry.getValue().setAmount(entry.getValue().getAmount()+item.getAmount());
-            			event.getItem().getItemStack().setAmount(0);
-            			event.getItem().remove();
-            			
-            		}
-            		event.setCancelled(true);
-            	}
+        if (item.getType().equals(Material.DIAMOND_HOE) && item.getDurability() != 0) {
+            for (Entry<Integer, ? extends ItemStack> entry : player.getInventory().all(item.getType()).entrySet()) {
+                if (item.getAmount() > 0 && entry.getValue().isSimilar(item)) {
+                    if (entry.getValue().getAmount() + item.getAmount() > 64) {
+                        int dif = 64 - entry.getValue().getAmount();
+                        entry.getValue().setAmount(entry.getValue().getAmount() + dif);
+                        event.getItem().getItemStack().setAmount(item.getAmount() - dif);
+                    } else {
+                        entry.getValue().setAmount(entry.getValue().getAmount() + item.getAmount());
+                        event.getItem().getItemStack().setAmount(0);
+                        event.getItem().remove();
+
+                    }
+                    event.setCancelled(true);
+                }
             }
         }
     }
-	
+
     @EventHandler
     public void onPickupCustomItem(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();

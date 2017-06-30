@@ -10,7 +10,7 @@ public class PlayerDropItemListener implements Listener {
 
     @EventHandler
     public void onDropItemEvent(PlayerDropItemEvent event) {
-    	Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();
+        Main.plugin.getPlayerStats(event.getPlayer()).UpdateAll();
         Player player = event.getPlayer();
         if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
             final Player playerFinal = player;

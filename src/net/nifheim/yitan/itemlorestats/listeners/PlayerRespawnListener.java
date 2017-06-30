@@ -23,7 +23,7 @@ public class PlayerRespawnListener implements Listener {
                     try {
                         Main.plugin.PlayerDataConfig = new YamlConfiguration();
                         Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
-                        
+
                         playerFinal.setExp((float) Main.plugin.PlayerDataConfig.getDouble("extra.xp"));
                         playerFinal.setLevel(Main.plugin.PlayerDataConfig.getInt("extra.level"));
                         Main.plugin.combatLogVisible.put(playerFinal.getName(), Main.plugin.PlayerDataConfig.getBoolean("extra.combatLogVisible"));

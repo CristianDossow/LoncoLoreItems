@@ -5,52 +5,53 @@ import org.bukkit.entity.Player;
 import net.nifheim.yitan.itemlorestats.PlayerStats;
 
 public class Skill {
-	public String name;
-	public long cd;
-	public Player player;
-	public PlayerStats ps;
-	
-	public Skill() {
-		super();
-		this.cd=0;
-		this.name="";
-	}
 
-	public void Execute(PlayerStats ps){
-		this.ps = ps;
-		this.player=ps.player;
-	}
+    public String name;
+    public long cd;
+    public Player player;
+    public PlayerStats ps;
 
-	public String getName() {
-		return name;
-	}
+    public Skill() {
+        super();
+        this.cd = 0;
+        this.name = "";
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void Execute(PlayerStats ps) {
+        this.ps = ps;
+        this.player = ps.player;
+    }
 
-	public long getCd() {
-		return cd;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCd(long cd) {
-		this.cd = cd;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Player getPlayer() {
-		return player;
-	}
+    public long getCd() {
+        return cd;
+    }
 
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
+    public void setCd(long cd) {
+        this.cd = cd;
+    }
 
-	public PlayerStats getPs() {
-		return ps;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	public void setPs(PlayerStats ps) {
-		this.ps = ps;
-	}
-	
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public PlayerStats getPs() {
+        return ps;
+    }
+
+    public void setPs(PlayerStats ps) {
+        this.ps = ps;
+    }
+
 }

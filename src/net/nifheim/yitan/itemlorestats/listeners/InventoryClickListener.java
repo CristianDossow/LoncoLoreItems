@@ -17,7 +17,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryClickListener implements Listener {
-	/*
+
+    /*
 	@EventHandler
     public void ItemToStack2(InventoryClickEvent event) {
 
@@ -43,27 +44,28 @@ public class InventoryClickListener implements Listener {
             }
         }
 	}*/
-	@EventHandler
+    @EventHandler
     public void ItemToStack(InventoryClickEvent event) {
-		Player player = (Player) event.getWhoClicked();
-		if(event.getCursor()!=null&&event.getCurrentItem()!=null&&event.getCurrentItem().getType().equals(Material.DIAMOND_HOE)&&event.getCurrentItem().getDurability()!=0 &&( event.getClick().equals(ClickType.LEFT))){
-			if(event.getCursor()!=null && event.getCurrentItem()!=null){
-				if(event.getCursor().isSimilar(event.getCurrentItem())){
-					
-	        		if(event.getCurrentItem().getAmount()+event.getCursor().getAmount()<=64){
-	        			int sum =event.getCurrentItem().getAmount()+event.getCursor().getAmount();
+        Player player = (Player) event.getWhoClicked();
+        if (event.getCursor() != null && event.getCurrentItem() != null && event.getCurrentItem().getType().equals(Material.DIAMOND_HOE) && event.getCurrentItem().getDurability() != 0 && (event.getClick().equals(ClickType.LEFT))) {
+            if (event.getCursor() != null && event.getCurrentItem() != null) {
+                if (event.getCursor().isSimilar(event.getCurrentItem())) {
 
-	        			//event.getCurrentItem().setAmount(sum);
-	        			player.setItemOnCursor(event.getCurrentItem());
-	        			player.getItemOnCursor().setAmount(sum);
-	        			event.setCurrentItem(null);
-	        			event.setCancelled(true);
-	        			player.updateInventory();
-	        		}
-				}
-			}
-		}
-	}
+                    if (event.getCurrentItem().getAmount() + event.getCursor().getAmount() <= 64) {
+                        int sum = event.getCurrentItem().getAmount() + event.getCursor().getAmount();
+
+                        //event.getCurrentItem().setAmount(sum);
+                        player.setItemOnCursor(event.getCurrentItem());
+                        player.getItemOnCursor().setAmount(sum);
+                        event.setCurrentItem(null);
+                        event.setCancelled(true);
+                        player.updateInventory();
+                    }
+                }
+            }
+        }
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if ((event.isCancelled()) || (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))) {
@@ -81,8 +83,7 @@ public class InventoryClickListener implements Listener {
                     || (event.getInventory().getType().equals(InventoryType.ENCHANTING))
                     || (event.getInventory().getType().equals(InventoryType.ENDER_CHEST))) {
                 Player player = (Player) event.getWhoClicked();
-                
-                
+
                 if (event.getCurrentItem() != null) {
                     ItemStack item = event.getCursor().clone();
 

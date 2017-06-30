@@ -26,7 +26,7 @@ public class PlayerJoinListener implements Listener {
     public PlayerJoinListener(Main main) {
         plugin = main;
     }
-    
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player playerFinal = event.getPlayer();
@@ -84,7 +84,7 @@ public class PlayerJoinListener implements Listener {
             Main.plugin.updateHealth(playerFinal);
             Main.plugin.updatePlayerSpeed(playerFinal);
             try {
-		//                StatsSaveAPI.saveAllStats(event.getPlayer());
+                //                StatsSaveAPI.saveAllStats(event.getPlayer());
                 StatsSaveAPI.setAllStats(event.getPlayer());
             } catch (SQLException ex) {
                 if (ex.getSQLState().equals("closed")) {

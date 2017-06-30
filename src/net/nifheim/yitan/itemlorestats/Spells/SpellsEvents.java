@@ -56,46 +56,46 @@ public class SpellsEvents implements org.bukkit.event.Listener {
     public void spellSelection(Player player) {
         if (Main.plugin.util_WorldGuard != null) {
 //            if (!ItemLoreStats.plugin.util_WorldGuard.playerInPVPRegion(player)) {
-                try {
-                    if (this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) == null) {
-                        return;
-                    }
-                    String spellName = this.gearStats.getSpellName(player.getInventory().getItemInMainHand());
-
-                    if (spellName == null) {
-                        return;
-                    }
-                    int spellCooldown = this.spellCreator.getCooldown(spellName);
-
-                    if (hasCooldown(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), spellCooldown)) {
-                        return;
-                    }
-                    this.spellCreator.spellBuilder(spellName, player);
-                    executeCommandList(player, spellName);
-                    Main.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
-
-                } catch (Exception e) {
-                    Main.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
-                }
-            }
-//        } else {
             try {
-                if (this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) != null) {
-                    String spellName = this.gearStats.getSpellName(player.getInventory().getItemInMainHand());
-
-                    if (spellName != null) {
-                        int spellCooldown = this.spellCreator.getCooldown(spellName);
-
-                        if (!hasCooldown(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), spellCooldown)) {
-                            this.spellCreator.spellBuilder(spellName, player);
-                            executeCommandList(player, spellName);
-                            Main.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
-                        }
-                    }
+                if (this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) == null) {
+                    return;
                 }
+                String spellName = this.gearStats.getSpellName(player.getInventory().getItemInMainHand());
+
+                if (spellName == null) {
+                    return;
+                }
+                int spellCooldown = this.spellCreator.getCooldown(spellName);
+
+                if (hasCooldown(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), spellCooldown)) {
+                    return;
+                }
+                this.spellCreator.spellBuilder(spellName, player);
+                executeCommandList(player, spellName);
+                Main.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
+
             } catch (Exception e) {
                 Main.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
             }
+        }
+//        } else {
+        try {
+            if (this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) != null) {
+                String spellName = this.gearStats.getSpellName(player.getInventory().getItemInMainHand());
+
+                if (spellName != null) {
+                    int spellCooldown = this.spellCreator.getCooldown(spellName);
+
+                    if (!hasCooldown(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), spellCooldown)) {
+                        this.spellCreator.spellBuilder(spellName, player);
+                        executeCommandList(player, spellName);
+                        Main.plugin.spellCooldowns.put(player.getName() + "." + spellName.replaceAll(" ", "").toLowerCase(), Long.valueOf(System.currentTimeMillis()));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Main.plugin.getLogger().log(Level.WARNING, player.getName() + " tried to cast " + this.gearStats.getSpellName(player.getInventory().getItemInMainHand()) + " but ItemLoreStats was unable to find the config for that spell.");
+        }
 //        }
 //        }
     }

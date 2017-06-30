@@ -35,16 +35,16 @@ public class LoreCraftingStats {
     static String lvlname = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
     static String destroy = EspecialAtributes.destroyname;
     static String voidbound = EspecialAtributes.voidbound;
-    
-	public static String weaponspeed = PlayerStatsFormules.weaponspeed;
-	public static String magicPower =PlayerStatsFormules.magicPower;
-	public static String magicArmor =PlayerStatsFormules.magicArmor;
-	public static String magicPen =PlayerStatsFormules.magicPen;
-	public static String manaMax = PlayerStatsFormules.manaMax;
-	public static String manaRegen = PlayerStatsFormules.manaRegen;
-	public static String cdReduction = PlayerStatsFormules.cdReduction;
-	public static String armorPen = PlayerStatsFormules.armorPen;
-	public static String backstab = PlayerStatsFormules.backstab;
+
+    public static String weaponspeed = PlayerStatsFormules.weaponspeed;
+    public static String magicPower = PlayerStatsFormules.magicPower;
+    public static String magicArmor = PlayerStatsFormules.magicArmor;
+    public static String magicPen = PlayerStatsFormules.magicPen;
+    public static String manaMax = PlayerStatsFormules.manaMax;
+    public static String manaRegen = PlayerStatsFormules.manaRegen;
+    public static String cdReduction = PlayerStatsFormules.cdReduction;
+    public static String armorPen = PlayerStatsFormules.armorPen;
+    public static String backstab = PlayerStatsFormules.backstab;
     //static String durabilitycolor = ItemLoreStats.plugin.getConfig().getString("bonusStats.durability.warningColours.above75%");
 
     static DecimalFormat df = new DecimalFormat("#.#");
@@ -63,23 +63,25 @@ public class LoreCraftingStats {
     static public String getLvL(int lvl) {
         return (ChatColor.DARK_GREEN + lvlname + ": " + ChatColor.GREEN + lvl);
     }
+
     static public String getBackstab(double Max) {
         //double statschance = Max;
-        double statsChanceMin = Max/2;
+        double statsChanceMin = Max / 2;
         double statsChanceMax = Max;
-        double stats = statsChanceMin+ Math.random() * (statsChanceMax - statsChanceMin);
+        double stats = statsChanceMin + Math.random() * (statsChanceMax - statsChanceMin);
         stats = stats * 100;
         return ChatColor.DARK_AQUA + backstab + ": " + ChatColor.AQUA + df.format(stats) + "%";
     }
+
     static public String getArmourPen(double Max) {
         //double statschance = Max;
-        double statsChanceMin = Max/2;
+        double statsChanceMin = Max / 2;
         double statsChanceMax = Max;
-        double stats = statsChanceMin+ Math.random() * (statsChanceMax - statsChanceMin);
+        double stats = statsChanceMin + Math.random() * (statsChanceMax - statsChanceMin);
         stats = stats * 100;
         return ChatColor.DARK_AQUA + armorPen + ": " + ChatColor.AQUA + df.format(stats) + "%";
     }
-    
+
     static public String getArmour(double lvl, ItemStack item, double multiplier) {
 
         double maxstrength = Armorxbase + (Armorxlvl * lvl);
@@ -114,9 +116,10 @@ public class LoreCraftingStats {
 
         double minstrength = maxstrength * 0.75;
         double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
-        armourtotal =armourtotal*multiplier;
+        armourtotal = armourtotal * multiplier;
         return ChatColor.DARK_AQUA + armour + ": " + ChatColor.AQUA + (int) armourtotal;
     }
+
     static public String getMagicArmour(double lvl, ItemStack item, double multiplier) {
 
         double maxstrength = Armorxbase + (Armorxlvl * lvl);
@@ -151,58 +154,64 @@ public class LoreCraftingStats {
 
         double minstrength = maxstrength * 0.75;
         double armourtotal = Math.random() * (maxstrength - minstrength) + minstrength;
-        armourtotal =armourtotal*multiplier;
+        armourtotal = armourtotal * multiplier;
         return ChatColor.LIGHT_PURPLE + magicArmor + ": " + ChatColor.DARK_PURPLE + (int) armourtotal;
     }
-    
+
     static public String getMagicPower(double lvl, double bonus, double variability) {
-    	double base = 10;
-    	double xlvl = 0.70; //top 80
-    	double max = base + (xlvl*lvl);
+        double base = 10;
+        double xlvl = 0.70; //top 80
+        double max = base + (xlvl * lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;
         total = total * bonus;
         return ChatColor.LIGHT_PURPLE + magicPower + ": " + ChatColor.DARK_PURPLE + (int) total;
     }
+
     static public String getManaRegenBonus(double lvl, double bonus, double variability) {
-    	double base = 0;
-    	double xlvl = 0.25; //25 top
-    	double max = base + (xlvl*lvl);
+        double base = 0;
+        double xlvl = 0.25; //25 top
+        double max = base + (xlvl * lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;
         total = total * bonus;
         return ChatColor.LIGHT_PURPLE + manaRegen + ": " + ChatColor.DARK_PURPLE + df.format(total);
     }
+
     static public String getManaBonus(double lvl, double bonus, double variability) {
-    	double base = 0;
-    	double xlvl = 9; //top 900
-    	double max = base + (xlvl*lvl);
+        double base = 0;
+        double xlvl = 9; //top 900
+        double max = base + (xlvl * lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;
         total = total * bonus;
         return ChatColor.LIGHT_PURPLE + manaMax + ": " + ChatColor.DARK_PURPLE + df.format(total);
     }
+
     static public String getCDR(double lvl, double bonus, double variability) {
-    	double base = 0;
-    	double xlvl = 0.5; //top 50%
-    	double max = base + (xlvl*lvl);
+        double base = 0;
+        double xlvl = 0.5; //top 50%
+        double max = base + (xlvl * lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;
         total = total * bonus;
-        return ChatColor.LIGHT_PURPLE + cdReduction + ": " + ChatColor.DARK_PURPLE + df.format(total)+"%";
+        return ChatColor.LIGHT_PURPLE + cdReduction + ": " + ChatColor.DARK_PURPLE + df.format(total) + "%";
     }
+
     static public String getMagicPen(double lvl, double bonus, double variability) {
-    	double base = 0;
-    	double xlvl = 0.5; //top 50%
-    	double max = base + (xlvl*lvl);
+        double base = 0;
+        double xlvl = 0.5; //top 50%
+        double max = base + (xlvl * lvl);
         double min = max * variability;
         double total = Math.random() * (max - min) + min;
         total = total * bonus;
-        return ChatColor.LIGHT_PURPLE + magicPen + ": " + ChatColor.DARK_PURPLE + df.format(total)+"%";
+        return ChatColor.LIGHT_PURPLE + magicPen + ": " + ChatColor.DARK_PURPLE + df.format(total) + "%";
     }
+
     static public String getRandomDamage(int lvl, double speed) {
-        return getRandomDamage(lvl, speed, 1 , 1);
+        return getRandomDamage(lvl, speed, 1, 1);
     }
+
     static public String getRandomDamage(int lvl, double speed, double bonus, double variability) {
         double mindamage = 0;
         double maxdamage = 0;
@@ -211,12 +220,12 @@ public class LoreCraftingStats {
         double dmgxlvl = speed / 5;
         //double rmarginxlvl = dmgxlvl / 2;
 
-        double basedmg = (speed * 2)+1;
+        double basedmg = (speed * 2) + 1;
         double dmg = basedmg + (dmgxlvl * lvl);
-        
-    	double maxDmg = dmg + (dmgxlvl*lvl);
+
+        double maxDmg = dmg + (dmgxlvl * lvl);
         double minDmg = maxDmg * variability;
-        
+
         double damage1 = Math.random() * (maxDmg - minDmg) + minDmg;
         double damage2 = Math.random() * (maxDmg - minDmg) + minDmg;
 
@@ -380,22 +389,22 @@ public class LoreCraftingStats {
         double dodgemax = 10; //maximo en % luego dividido en 4
 
         if (item.getType().toString().contains("LEATHER")) {
-        	dodgemax = 70;
+            dodgemax = 70;
         }
         if (item.getType().toString().contains("GOLD")) {
-        	dodgemax = 50;
+            dodgemax = 50;
         }
         if (item.getType().toString().contains("CHAINMAIL")) {
-        	dodgemax = 80;
+            dodgemax = 80;
         }
         if (item.getType().toString().contains("IRON")) {
-        	dodgemax = 35;
+            dodgemax = 35;
         }
         if (item.getType().toString().contains("DIAMOND")) {
-        	dodgemax = 20;
+            dodgemax = 20;
         }
-        dodgemax = dodgemax/4;
-        dodgemax = dodgemax * ((double)lvl/100);
+        dodgemax = dodgemax / 4;
+        dodgemax = dodgemax * ((double) lvl / 100);
         double dodgemin = dodgemax * 0.5;
         double dodgefinal = Math.random() * (dodgemax - dodgemin) + dodgemin;
 
