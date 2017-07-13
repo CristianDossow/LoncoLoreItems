@@ -32,11 +32,11 @@ public class Dodge {
     public boolean checkDodge(EntityDamageByEntityEvent e, Entity getAttacker, Entity getDefender, PlayerStats defenderStats) {
         if (dodgeChanceOnHit(getDefender, defenderStats)) {
             if (((getAttacker instanceof Player))
-                    && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyDodgedAttack"))) {
+                    && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.enemyDodgedAttack"))) {
                 ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyDodgeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
             }
             if (((getDefender instanceof Player))
-                    && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.dodgeAttack"))) {
+                    && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.dodgeAttack"))) {
                 ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.DodgeSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
             }
             e.setDamage(0);

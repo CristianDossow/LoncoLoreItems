@@ -31,11 +31,11 @@ public class DataManager {
         if (!dataFile.exists()) {
             try {
                 dataFile.createNewFile();
+                data = YamlConfiguration.loadConfiguration(dataFile);
             } catch (IOException ex) {
                 Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        data = YamlConfiguration.loadConfiguration(dataFile);
         return data;
     }
 

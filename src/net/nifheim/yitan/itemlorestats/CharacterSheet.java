@@ -9,14 +9,11 @@ import net.nifheim.yitan.itemlorestats.Util.Util_Material;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 public class CharacterSheet {
 
@@ -57,19 +54,15 @@ public class CharacterSheet {
     public double[] addDamageFromItem(ItemStack gear, double multiplier) {
         double damages[] = {0, 0};
         List<String> itemLore = gear.getItemMeta().getLore();
-        for (String line : itemLore) {
-            String lore = ChatColor.stripColor(line.toString());
-            lore = lore.toLowerCase();
-            if (lore.replaceAll(languageRegex, "").matches(onlydamage.toLowerCase())) {
-                if (lore.contains("-")) {
-                    damages[0] += Double.parseDouble(lore.split("-")[0].replaceAll("[^0-9.+-]", "")) * multiplier;
-                    damages[1] += Double.parseDouble(lore.split("-")[1].replaceAll("[^0-9.+-]", "")) * multiplier;
-                } else {
-                    damages[0] += Double.parseDouble(lore.replaceAll("[^0-9.+-]", "")) * multiplier;
-                    damages[1] += Double.parseDouble(lore.replaceAll("[^0-9.+-]", "")) * multiplier;
-                }
+        itemLore.stream().map((line) -> ChatColor.stripColor(line)).map((lore) -> lore.toLowerCase()).filter((lore) -> (lore.replaceAll(languageRegex, "").matches(onlydamage.toLowerCase()))).forEachOrdered((lore) -> {
+            if (lore.contains("-")) {
+                damages[0] += Double.parseDouble(lore.split("-")[0].replaceAll("[^0-9.+-]", "")) * multiplier;
+                damages[1] += Double.parseDouble(lore.split("-")[1].replaceAll("[^0-9.+-]", "")) * multiplier;
+            } else {
+                damages[0] += Double.parseDouble(lore.replaceAll("[^0-9.+-]", "")) * multiplier;
+                damages[1] += Double.parseDouble(lore.replaceAll("[^0-9.+-]", "")) * multiplier;
             }
-        }
+        });
 
         return damages;
     }
@@ -291,7 +284,7 @@ public class CharacterSheet {
     }
 
     public String getHealthRegenValue(Player player) {
-        double stat = Double.valueOf(player.getLevel()).doubleValue() * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
+        double stat = Double.valueOf(player.getLevel()) * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.healthRegen");
 
         if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
             stat += this.gearStats.getHealthRegenItemInHand(Main.plugin.itemInMainHand(player));
@@ -469,7 +462,7 @@ public class CharacterSheet {
     }
 
     public String getMovementSpeedValue(Player player) {
-        double stat = Double.valueOf(player.getLevel()).doubleValue() * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.speed") * 100;
+        double stat = Double.valueOf(player.getLevel()) * Main.plugin.getConfig().getDouble("additionalStatsPerLevel.speed") * 100;
 
         if (Main.plugin.isTool(Main.plugin.itemInMainHand(player).getType())) {
             stat += this.gearStats.getMovementSpeedItemInHand(Main.plugin.itemInMainHand(player));

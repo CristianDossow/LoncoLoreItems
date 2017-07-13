@@ -35,10 +35,10 @@ public class PlayerJoinListener implements Listener {
         // Async tasks
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             Main.plugin.playersStats.put(playerFinal.getUniqueId(), ps);
-        });
-
-        // Later async tasks
-        Main.plugin.getServer().getScheduler().runTaskLaterAsynchronously(Main.plugin, () -> {
+            // ----------------- NEW DATA
+            plugin.getDataManager(playerFinal).loadData();
+            
+            // ----------------- OLD DATA
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
 
@@ -70,11 +70,6 @@ public class PlayerJoinListener implements Listener {
                         Main.plugin.combatLogVisible.put(playerFinal.getName(), Main.plugin.PlayerDataConfig.getBoolean("extra.combatLogVisible"));
                     }
 
-                    if ((Main.plugin.getConfig().getBoolean("keepXPOnDeath"))) {
-                        //playerFinal.setExp((float)ItemLoreStats.plugin.PlayerDataConfig.getDouble("extra.xp"));
-                        //playerFinal.setLevel(ItemLoreStats.plugin.PlayerDataConfig.getInt("extra.level"));
-                    }
-
                     Main.plugin.updateHealth(playerFinal);
                 } catch (IOException | InvalidConfigurationException e) {
                     System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when logging in! ***********");
@@ -84,7 +79,6 @@ public class PlayerJoinListener implements Listener {
             Main.plugin.updateHealth(playerFinal);
             Main.plugin.updatePlayerSpeed(playerFinal);
             try {
-                //                StatsSaveAPI.saveAllStats(event.getPlayer());
                 StatsSaveAPI.setAllStats(event.getPlayer());
             } catch (SQLException ex) {
                 if (ex.getSQLState().equals("closed")) {
@@ -93,11 +87,11 @@ public class PlayerJoinListener implements Listener {
                     Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Something was wrong executing this query, the error code is: " + ex.getErrorCode(), ex.getCause());
                 }
             }
-        }, 3L);
-        //plugin.activateEnchant.onJoin(playerFinal);
+        });
 
         Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
+            plugin.getAccount(playerFinal).getLoadedCharacter();
             ps.UpdateAll();
-        }, 6L);
+        }, 5L);
     }
 }

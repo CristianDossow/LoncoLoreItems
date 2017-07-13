@@ -6,6 +6,7 @@ Status: LOGGEDIN
 
 1:
   Level: 10
+  XP: 10
   Branch: Fighter
   Class: Soldier
   Stats:
@@ -17,6 +18,9 @@ Status: LOGGEDIN
     Mana: 5
     MaxMana: 5
     ManaRegen: 1.0
+    Hunger: 0
+  Inventory:
+    
 2:
   Level: 2
   Branch: Mage

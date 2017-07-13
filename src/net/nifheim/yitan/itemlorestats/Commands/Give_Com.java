@@ -4,12 +4,8 @@ import net.nifheim.yitan.itemlorestats.GenerateFromFile;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import java.io.File;
-import java.io.PrintStream;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.PlayerInventory;
 
 public class Give_Com {
 
@@ -42,7 +38,7 @@ public class Give_Com {
                                     newItemName = newItemName.split(",")[0].trim();
                                 }
 
-                                if (new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
+                                if (new File(Main.getInstance().getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
                                     Player givePlayer = player.getServer().getPlayer(args[1]);
 
                                     if (givePlayer.getInventory().firstEmpty() == -1) {
@@ -91,7 +87,7 @@ public class Give_Com {
                             replaceNewItemName = newItemName.split(",")[1].trim();
                         }
 
-                        if (new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
+                        if (new File(Main.getInstance().getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
                             Player givePlayer = Bukkit.getServer().getPlayer(args[1]);
 
                             if (givePlayer.getInventory().firstEmpty() == -1) {

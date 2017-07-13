@@ -89,7 +89,7 @@ public class StatsCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("stats2")) {
                     if (sender instanceof Player) {
                         Player p = (Player) sender;
-                        PlayerStats ps = Main.plugin.getPlayerStats(p);
+                        PlayerStats ps = Main.getInstance().getPlayerStats(p);
                         ps.UpdateAll();
                         ps.ShowStats();
                         return true;
@@ -188,7 +188,7 @@ public class StatsCommand implements CommandExecutor {
                         }
                         try {
                             int amount = Integer.parseInt(args[2]);
-                            PlayerStats ps = Main.plugin.getPlayerStats(p);
+                            PlayerStats ps = Main.getInstance().getPlayerStats(p);
                             if (ps.manaCurrent + amount > ps.manaMax) {
                                 ps.manaCurrent = ps.manaMax;
                             }

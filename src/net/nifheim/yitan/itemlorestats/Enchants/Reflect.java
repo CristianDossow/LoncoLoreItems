@@ -10,8 +10,6 @@ import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
 import net.nifheim.yitan.itemlorestats.Util.Util_Format;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import net.nifheim.yitan.itemlorestats.Util.Util_Random;
-import java.util.HashMap;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
 
 public class Reflect {
@@ -28,18 +26,18 @@ public class Reflect {
     Util_Random util_Random = new Util_Random();
 
     public double reflectChanceOnHit(LivingEntity getAttacker, boolean isTool) {
-        if (this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return 0.0D;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Main.plugin.getConfig().getInt("secondaryStats.reflect.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Main.getInstance().getConfig().getInt("secondaryStats.reflect.internalCooldown"))) {
             if ((getAttacker instanceof org.bukkit.entity.Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".ref", Long.valueOf(System.currentTimeMillis()));
             }
 
             double reflect = 0.0D;
 
             if (isTool) {
-                reflect = this.util_Format.format(this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                reflect = this.util_Format.format(this.gearStats.getReflectGear(getAttacker) + this.gearStats.getReflectItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getReflectItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 reflect = this.util_Format.format(this.gearStats.getReflectGear(getAttacker));
             }

@@ -28,15 +28,15 @@ public class Wither {
     Util_Random util_Random = new Util_Random();
 
     public void witherChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".wit", Main.plugin.getConfig().getInt("secondaryStats.wither.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".wit", Main.getInstance().getConfig().getInt("secondaryStats.wither.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".wit", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".wit", System.currentTimeMillis());
             }
 
-            double witherPercent = 0.0D;
+            double witherPercent;
 
             if (isTool) {
-                witherPercent = this.util_Format.format(this.gearStats.getWitherGear(getAttacker) + this.gearStats.getWitherItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getWitherItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                witherPercent = this.util_Format.format(this.gearStats.getWitherGear(getAttacker) + this.gearStats.getWitherItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getWitherItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 witherPercent = this.util_Format.format(this.gearStats.getWitherGear(getAttacker));
             }
@@ -47,12 +47,12 @@ public class Wither {
 
             if (this.util_Random.random(100) <= witherPercent) {
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.wither"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.wither"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.WitherSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyWither"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyWither"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyWitherSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     } else if ((getAttacker instanceof LivingEntity)) {
@@ -64,7 +64,7 @@ public class Wither {
                     }
                 }
 
-                getDefender.addPotionEffect(new PotionEffect(org.bukkit.potion.PotionEffectType.WITHER, Main.plugin.getConfig().getInt("secondaryStats.wither.effectDuration") * 20, Main.plugin.getConfig().getInt("secondaryStats.wither.effectAmplifier")));
+                getDefender.addPotionEffect(new PotionEffect(org.bukkit.potion.PotionEffectType.WITHER, Main.getInstance().getConfig().getInt("secondaryStats.wither.effectDuration") * 20, Main.getInstance().getConfig().getInt("secondaryStats.wither.effectAmplifier")));
             }
         }
     }

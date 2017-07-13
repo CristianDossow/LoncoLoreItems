@@ -3,8 +3,6 @@ package net.nifheim.yitan.itemlorestats.Enchants;
 import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.ItemStack;
 
 public class Vanilla_Power {
 
@@ -13,11 +11,11 @@ public class Vanilla_Power {
     public boolean hasPower(LivingEntity entity) {
         if (entity != null) {
 
-            if (Main.plugin.isTool(Main.plugin.itemInMainHand(entity).getType())) {
+            if (Main.getInstance().isTool(Main.getInstance().itemInMainHand(entity).getType())) {
                 if (entity.getEquipment().getItemInMainHand().getEnchantments().containsKey(org.bukkit.enchantments.Enchantment.ARROW_DAMAGE)) {
                     return true;
                 }
-            } else if ((Main.plugin.isTool(Main.plugin.itemInOffHand(entity).getType()))
+            } else if ((Main.getInstance().isTool(Main.getInstance().itemInOffHand(entity).getType()))
                     && (entity.getEquipment().getItemInOffHand().getEnchantments().containsKey(org.bukkit.enchantments.Enchantment.ARROW_DAMAGE))) {
                 return true;
             }
@@ -41,7 +39,7 @@ public class Vanilla_Power {
 
         int enchantLevel = levelMain + levelOff;
 
-        value = damage + value / 100.0D * (Main.plugin.getConfig().getDouble("enchants.power.levelMultiplier") * enchantLevel);
+        value = damage + value / 100.0D * (Main.getInstance().getConfig().getDouble("enchants.power.levelMultiplier") * enchantLevel);
 
         return value;
     }

@@ -19,24 +19,24 @@ public class CreateLore_Com {
         if ((sender instanceof Player)) {
             Player player = (Player) sender;
             if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
-                String armour = Main.plugin.getConfig().getString("primaryStats.armour.name");
-                String critChance = Main.plugin.getConfig().getString("secondaryStats.critChance.name");
-                String critDamage = Main.plugin.getConfig().getString("secondaryStats.critDamage.name");
-                String damage = Main.plugin.getConfig().getString("primaryStats.damage.name");
-                String health = Main.plugin.getConfig().getString("primaryStats.health.name");
-                String healthRegen = Main.plugin.getConfig().getString("primaryStats.healthRegen.name");
-                String lifeSteal = Main.plugin.getConfig().getString("secondaryStats.lifeSteal.name");
-                String reflect = Main.plugin.getConfig().getString("secondaryStats.reflect.name");
-                String fire = Main.plugin.getConfig().getString("secondaryStats.fire.name");
-                String ice = Main.plugin.getConfig().getString("secondaryStats.ice.name");
-                String poison = Main.plugin.getConfig().getString("secondaryStats.poison.name");
-                String wither = Main.plugin.getConfig().getString("secondaryStats.wither.name");
-                String harming = Main.plugin.getConfig().getString("secondaryStats.harming.name");
-                String movementspeed = Main.plugin.getConfig().getString("secondaryStats.movementSpeed.name");
-                String weaponspeed = Main.plugin.getConfig().getString("bonusStats.weaponSpeed.name");
-                String xplevel = Main.plugin.getConfig().getString("bonusStats.xpLevel.name");
-                String soulbound = Main.plugin.getConfig().getString("bonusStats.soulbound.name");
-                String durability = Main.plugin.getConfig().getString("bonusStats.durability.name");
+                String armour = Main.getInstance().getConfig().getString("primaryStats.armour.name");
+                String critChance = Main.getInstance().getConfig().getString("secondaryStats.critChance.name");
+                String critDamage = Main.getInstance().getConfig().getString("secondaryStats.critDamage.name");
+                String damage = Main.getInstance().getConfig().getString("primaryStats.damage.name");
+                String health = Main.getInstance().getConfig().getString("primaryStats.health.name");
+                String healthRegen = Main.getInstance().getConfig().getString("primaryStats.healthRegen.name");
+                String lifeSteal = Main.getInstance().getConfig().getString("secondaryStats.lifeSteal.name");
+                String reflect = Main.getInstance().getConfig().getString("secondaryStats.reflect.name");
+                String fire = Main.getInstance().getConfig().getString("secondaryStats.fire.name");
+                String ice = Main.getInstance().getConfig().getString("secondaryStats.ice.name");
+                String poison = Main.getInstance().getConfig().getString("secondaryStats.poison.name");
+                String wither = Main.getInstance().getConfig().getString("secondaryStats.wither.name");
+                String harming = Main.getInstance().getConfig().getString("secondaryStats.harming.name");
+                String movementspeed = Main.getInstance().getConfig().getString("secondaryStats.movementSpeed.name");
+                String weaponspeed = Main.getInstance().getConfig().getString("bonusStats.weaponSpeed.name");
+                String xplevel = Main.getInstance().getConfig().getString("bonusStats.xpLevel.name");
+                String soulbound = Main.getInstance().getConfig().getString("bonusStats.soulbound.name");
+                String durability = Main.getInstance().getConfig().getString("bonusStats.durability.name");
 
                 ItemStack debugItem = new ItemStack(Material.LEATHER_HELMET, 1);
 

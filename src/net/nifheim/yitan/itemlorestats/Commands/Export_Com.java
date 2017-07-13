@@ -8,7 +8,6 @@ import java.io.File;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.PlayerInventory;
 
 public class Export_Com {
 
@@ -35,7 +34,7 @@ public class Export_Com {
                                     }
                                 }
 
-                                if (new File(Main.plugin.getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
+                                if (new File(Main.getInstance().getDataFolder() + File.separator + "SavedItems" + File.separator + newItemName + ".yml").exists()) {
                                     player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.ItemAlreadyExistsError", null, null, "", ""));
                                 } else {
                                     this.generateFromFile.exportWeapon(player, newItemName);

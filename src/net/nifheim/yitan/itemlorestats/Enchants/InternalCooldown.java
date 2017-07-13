@@ -8,13 +8,9 @@ public class InternalCooldown {
         if (getSeconds == 0) {
             return false;
         }
-        if (Main.plugin.internalCooldowns.get(playerName) != null) {
-            if (System.currentTimeMillis() > ((Long) Main.plugin.internalCooldowns.get(playerName)).longValue() + getSeconds * 1000) {
-                return false;
-            }
-            return true;
+        if (Main.getInstance().internalCooldowns.get(playerName) != null) {
+            return System.currentTimeMillis() <= (Main.getInstance().internalCooldowns.get(playerName)) + getSeconds * 1000;
         }
-
         return false;
     }
 }

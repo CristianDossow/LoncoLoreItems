@@ -27,18 +27,18 @@ public class Fire {
     Util_Random util_Random = new Util_Random();
 
     public void fireChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-        if (this.gearStats.getFireGear(getAttacker) + this.gearStats.getFireItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getFireItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getFireGear(getAttacker) + this.gearStats.getFireItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getFireItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".fir", Main.plugin.getConfig().getInt("secondaryStats.fire.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".fir", Main.getInstance().getConfig().getInt("secondaryStats.fire.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".fir", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".fir", Long.valueOf(System.currentTimeMillis()));
             }
 
             double firePercent = 0.0D;
 
             if (isTool) {
-                firePercent = this.util_Format.format(this.gearStats.getFireGear(getAttacker) + this.gearStats.getFireItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getFireItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                firePercent = this.util_Format.format(this.gearStats.getFireGear(getAttacker) + this.gearStats.getFireItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getFireItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 firePercent = this.util_Format.format(this.gearStats.getFireGear(getAttacker));
             }
@@ -49,12 +49,12 @@ public class Fire {
 
             if (this.util_Random.random(100) <= firePercent) {
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.fire"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.fire"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.FireSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyFire"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyFire"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyFireSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     } else if ((getAttacker instanceof LivingEntity)) {
@@ -66,7 +66,7 @@ public class Fire {
                     }
                 }
 
-                getDefender.setFireTicks(Main.plugin.getConfig().getInt("secondaryStats.fire.effectDuration") * 20);
+                getDefender.setFireTicks(Main.getInstance().getConfig().getInt("secondaryStats.fire.effectDuration") * 20);
             }
         }
     }

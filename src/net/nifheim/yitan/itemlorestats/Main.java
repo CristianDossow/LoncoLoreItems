@@ -35,6 +35,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.citizensnpcs.Citizens;
 import net.milkbowl.vault.Vault;
+import net.nifheim.beelzebu.rpgcore.characters.Account;
 import net.nifheim.beelzebu.rpgcore.commands.StatsCommand;
 
 import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
@@ -69,8 +70,9 @@ import net.nifheim.yitan.loncoloreitems.EventListener;
 
 import net.nifheim.yitan.loncoloremagics.SpellListeners;
 import net.nifheim.yitan.skills.SkillListener;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends org.bukkit.plugin.java.JavaPlugin {
+public class Main extends JavaPlugin {
 
     public static Main plugin;
     private static MySQL mysql;
@@ -134,7 +136,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     @Override
     public void onEnable() {
 
-        this.loadManagers();
+        loadManagers();
         Locale.setDefault(Locale.ROOT);
 
         plugin = this;
@@ -190,16 +192,16 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
 
-        this.spigotStatCapWarning.updateSpigotValues();
+        spigotStatCapWarning.updateSpigotValues();
 
         fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 10, 10);
 
-        Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
+        Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
             try {
-                PlayerStats ps = Main.plugin.getPlayerStats(player);
-                Main.plugin.PlayerDataConfig = new YamlConfiguration();
-                Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
-                ps.manaCurrent = Main.plugin.PlayerDataConfig.getDouble("extra.mana");
+                PlayerStats ps = getPlayerStats(player);
+                PlayerDataConfig = new YamlConfiguration();
+                PlayerDataConfig.load(new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                ps.manaCurrent = PlayerDataConfig.getDouble("extra.mana");
             } catch (IOException | InvalidConfigurationException e) {
                 System.out.println("*********** Failed to load player data for " + player.getName() + " when logging in! ***********");
             }
@@ -234,19 +236,19 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         manaBar.entrySet().forEach((m) -> {
             m.getValue().removeAll();
         });
-        Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
+        Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
             try {
-                PlayerStats ps = Main.plugin.getPlayerStats(player);
-                Main.plugin.PlayerDataConfig = new YamlConfiguration();
-                Main.plugin.PlayerDataConfig.load(new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
-                Main.plugin.PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
-                Main.plugin.PlayerDataConfig.set("extra.maxHealth", Math.round(player.getMaxHealth()));
-                Main.plugin.PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
-                Main.plugin.PlayerDataConfig.set("extra.xp", player.getExp());
-                Main.plugin.PlayerDataConfig.set("extra.level", player.getLevel());
-                Main.plugin.PlayerDataConfig.set("extra.mana", ps.manaCurrent);
-                Main.plugin.PlayerDataConfig.set("extra.combatLogVisible", Main.plugin.combatLogVisible.get(player.getName()));
-                Main.plugin.PlayerDataConfig.save(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
+                PlayerStats ps = getPlayerStats(player);
+                PlayerDataConfig = new YamlConfiguration();
+                PlayerDataConfig.load(new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
+                PlayerDataConfig.set("extra.maxHealth", Math.round(player.getMaxHealth()));
+                PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
+                PlayerDataConfig.set("extra.xp", player.getExp());
+                PlayerDataConfig.set("extra.level", player.getLevel());
+                PlayerDataConfig.set("extra.mana", ps.manaCurrent);
+                PlayerDataConfig.set("extra.combatLogVisible", combatLogVisible.get(player.getName()));
+                PlayerDataConfig.save(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
             } catch (IOException | InvalidConfigurationException e) {
                 System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
             }
@@ -314,7 +316,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             return null;
         }
 
-        this.util_WorldGuard = new Util_WorldGuard(plugin);
+        util_WorldGuard = new Util_WorldGuard(plugin);
         return (WorldGuardPlugin) WorldGuard;
     }
 
@@ -325,7 +327,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             return null;
         }
 
-        this.util_Vault = new Util_Vault(plugin);
+        util_Vault = new Util_Vault(plugin);
         return (Vault) Vault;
     }
 
@@ -336,7 +338,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             return null;
         }
 
-        this.util_Citizens = new Util_Citizens(plugin);
+        util_Citizens = new Util_Citizens(plugin);
         return (Citizens) Citizens;
     }
 
@@ -367,8 +369,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isTool(Material material) {
-        for (int i = 0; i < plugin.getConfig().getList("materials.tools").size(); i++) {
-            if (plugin.getConfig().getList("materials.tools").get(i).toString().split(":")[0].equals(material.toString())) {
+        for (int i = 0; i < getConfig().getList("materials.tools").size(); i++) {
+            if (getConfig().getList("materials.tools").get(i).toString().split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -376,8 +378,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isPotion(int potionID) {
-        for (int i = 0; i < plugin.getConfig().getList("materials.potions").size(); i++) {
-            if (Integer.parseInt(plugin.getConfig().getList("materials.potions").get(i).toString().split(":")[0]) == potionID) {
+        for (int i = 0; i < getConfig().getList("materials.potions").size(); i++) {
+            if (Integer.parseInt(getConfig().getList("materials.potions").get(i).toString().split(":")[0]) == potionID) {
                 return true;
             }
         }
@@ -385,10 +387,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isArmour(Material material) {
-        List<String> helmetList = (List<String>) plugin.getConfig().getList("materials.armour.helmet");
-        List<String> chestList = (List<String>) plugin.getConfig().getList("materials.armour.chest");
-        List<String> legsList = (List<String>) plugin.getConfig().getList("materials.armour.legs");
-        List<String> bootsList = (List<String>) plugin.getConfig().getList("materials.armour.boots");
+        List<String> helmetList = (List<String>) getConfig().getList("materials.armour.helmet");
+        List<String> chestList = (List<String>) getConfig().getList("materials.armour.chest");
+        List<String> legsList = (List<String>) getConfig().getList("materials.armour.legs");
+        List<String> bootsList = (List<String>) getConfig().getList("materials.armour.boots");
         List<String> armourList = new java.util.ArrayList();
 
         armourList.addAll(helmetList);
@@ -405,8 +407,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isHelmet(Material material) {
-        for (int i = 0; i < plugin.getConfig().getList("materials.armour.helmet").size(); i++) {
-            if (plugin.getConfig().getList("materials.armour.helmet").get(i).toString().split(":")[0].equals(material.toString())) {
+        for (int i = 0; i < getConfig().getList("materials.armour.helmet").size(); i++) {
+            if (getConfig().getList("materials.armour.helmet").get(i).toString().split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -414,8 +416,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isChestplate(Material material) {
-        for (int i = 0; i < plugin.getConfig().getList("materials.armour.chest").size(); i++) {
-            if (plugin.getConfig().getList("materials.armour.chest").get(i).toString().split(":")[0].equals(material.toString())) {
+        for (int i = 0; i < getConfig().getList("materials.armour.chest").size(); i++) {
+            if (getConfig().getList("materials.armour.chest").get(i).toString().split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -423,8 +425,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isLeggings(Material material) {
-        for (int i = 0; i < plugin.getConfig().getList("materials.armour.legs").size(); i++) {
-            if (plugin.getConfig().getList("materials.armour.legs").get(i).toString().split(":")[0].equals(material.toString())) {
+        for (int i = 0; i < getConfig().getList("materials.armour.legs").size(); i++) {
+            if (getConfig().getList("materials.armour.legs").get(i).toString().split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -432,8 +434,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public boolean isBoots(Material material) {
-        for (int i = 0; i < plugin.getConfig().getList("materials.armour.boots").size(); i++) {
-            if (plugin.getConfig().getList("materials.armour.boots").get(i).toString().split(":")[0].equals(material.toString())) {
+        for (int i = 0; i < getConfig().getList("materials.armour.boots").size(); i++) {
+            if (getConfig().getList("materials.armour.boots").get(i).toString().split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -468,7 +470,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     }
 
     public double getHealthValue(Player player) {
-        if (plugin.getConfig().getInt("baseHealth") == 0) {
+        if (getConfig().getInt("baseHealth") == 0) {
             return 0.0D;
         }
 
@@ -489,14 +491,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             newHP = maxHealth;
 
             if (isTool(itemInMainHand(player).getType())) {
-                newHP = (int) newHP + Double.valueOf(this.gearStats.getHealthItemInHand(itemInMainHand(player))).intValue();
+                newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInMainHand(player))).intValue();
             }
 
             if (isTool(itemInOffHand(player).getType())) {
-                newHP = (int) newHP + Double.valueOf(this.gearStats.getHealthItemInHand(itemInOffHand(player))).intValue();
+                newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInOffHand(player))).intValue();
             }
 
-            newHP = (int) newHP + Double.valueOf(this.gearStats.getHealthGear(player)).intValue();
+            newHP = (int) newHP + Double.valueOf(gearStats.getHealthGear(player)).intValue();
 
         }
 
@@ -506,7 +508,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public void updateHealth(Player player) {
         if ((!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
                 && (!player.hasMetadata("NPC"))) {
-            if (plugin.getConfig().getInt("baseHealth") == 0) {
+            if (getConfig().getInt("baseHealth") == 0) {
                 return;
             }
             double healthBoost = 0.0D;
@@ -524,14 +526,14 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             newHP = maxHealth;
 
             if (isTool(itemInMainHand(player).getType())) {
-                newHP = (int) newHP + Double.valueOf(this.gearStats.getHealthItemInHand(itemInMainHand(player))).intValue();
+                newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInMainHand(player))).intValue();
             }
 
             if (isTool(itemInOffHand(player).getType())) {
-                newHP = (int) newHP + Double.valueOf(this.gearStats.getHealthItemInHand(itemInOffHand(player))).intValue();
+                newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInOffHand(player))).intValue();
             }
 
-            newHP = (int) newHP + Double.valueOf(this.gearStats.getHealthGear(player)).intValue();
+            newHP = (int) newHP + Double.valueOf(gearStats.getHealthGear(player)).intValue();
 
             player.setMaxHealth(newHP);
 
@@ -551,10 +553,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 float speed = 0.2f;
                 float basespeed = 0.2f;
 
-                speed = (float) (Main.plugin.getConfig().getDouble("baseMovementSpeed"));
-                speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()) * Main.this.getConfig().getDouble("additionalStatsPerLevel.speed")));
+                speed = (float) (getConfig().getDouble("baseMovementSpeed"));
+                speed = (float) (speed + (basespeed * Double.valueOf(playerFinal.getLevel()) * Main.getConfig().getDouble("additionalStatsPerLevel.speed")));
 
-                speed = (float) (speed + (basespeed * Main.this.gearStats.getMovementSpeedGear(playerFinal) / 100));
+                speed = (float) (speed + (basespeed * Main.gearStats.getMovementSpeedGear(playerFinal) / 100));
 
                 if (speed > maxSpeed) {
 
@@ -564,7 +566,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
                 }
             }, 2L);
         } else {
-            player.setWalkSpeed((float) plugin.getConfig().getDouble("baseMovementSpeed"));
+            player.setWalkSpeed((float) getConfig().getDouble("baseMovementSpeed"));
         }
          */
     }
@@ -619,5 +621,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     public DataManager getDataManager(Player p) {
         dataManager = new DataManager(p);
         return dataManager;
+    }
+
+    public Account getAccount(Player p) {
+        return new Account(p);
     }
 }

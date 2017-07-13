@@ -7,10 +7,8 @@ import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class Repair_Com {
@@ -24,19 +22,18 @@ public class Repair_Com {
             if ((sender instanceof Player)) {
                 Player player = (Player) sender;
 
-                if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+                if (!Main.getInstance().getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
                     if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
                         if (player.getInventory().getItemInMainHand() != null) {
                             if (player.getInventory().getItemInMainHand().getType() != Material.AIR) {
                                 if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
                                     List<String> splitItemLore = player.getInventory().getItemInMainHand().getItemMeta().getLore();
 
-                                    for (String getItemStat : splitItemLore) {
-                                        String durabilityAmountColour = "";
-                                        String prefixColourOnly = "";
-                                        String durabilityRebuilder = "";
-
-                                        if (org.bukkit.ChatColor.stripColor(getItemStat).startsWith(Main.plugin.getConfig().getString("bonusStats.durability.name"))) {
+                                    splitItemLore.forEach((getItemStat) -> {
+                                        String durabilityAmountColour;
+                                        String prefixColourOnly;
+                                        String durabilityRebuilder;
+                                        if (org.bukkit.ChatColor.stripColor(getItemStat).startsWith(Main.getInstance().getConfig().getString("bonusStats.durability.name"))) {
                                             int maxAmount = Integer.parseInt(this.util_Colours.extractAndReplaceTooltipColour(org.bukkit.ChatColor.stripColor(getItemStat).split(": ")[1].split("/")[1]).replaceAll("&([0-9a-f])", ""));
                                             int index = splitItemLore.indexOf(getItemStat);
 
@@ -68,7 +65,7 @@ public class Repair_Com {
                                                 durabilityAmountColour = prefixColourOnly;
                                             }
 
-                                            durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + Main.plugin.getConfig().getString("bonusStats.durability.name") + ": " + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maxAmount + this.util_Colours.replaceTooltipColour(prefixColourOnly) + "/" + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maxAmount;
+                                            durabilityRebuilder = this.util_Colours.replaceTooltipColour(prefixColourOnly) + Main.getInstance().getConfig().getString("bonusStats.durability.name") + ": " + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maxAmount + this.util_Colours.replaceTooltipColour(prefixColourOnly) + "/" + this.util_Colours.replaceTooltipColour(durabilityAmountColour) + maxAmount;
 
                                             splitItemLore.set(index, durabilityRebuilder);
 
@@ -81,13 +78,13 @@ public class Repair_Com {
                                             player.getInventory().setItemInMainHand(repairedItem);
                                             player.getInventory().getItemInMainHand().setDurability((short) 0);
 
-                                            if (Main.plugin.getConfig().getString("durabilityAddedOnEachRepair.repairCostType").equalsIgnoreCase("Currency")) {
+                                            if (Main.getInstance().getConfig().getString("durabilityAddedOnEachRepair.repairCostType").equalsIgnoreCase("Currency")) {
                                                 player.sendMessage(this.util_GetResponse.getResponse("RepairMessages.RepairSuccessfulCurrency", player, player, player.getInventory().getItemInMainHand().getItemMeta().getDisplayName(), player.getInventory().getItemInMainHand().getItemMeta().getDisplayName()));
                                             } else {
                                                 player.sendMessage(this.util_GetResponse.getResponse("RepairMessages.RepairSuccessfulMaterial", player, player, player.getInventory().getItemInMainHand().getItemMeta().getDisplayName(), player.getInventory().getItemInMainHand().getItemMeta().getDisplayName()));
                                             }
                                         }
-                                    }
+                                    });
                                 } else {
                                     player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.NoLoreError", null, null, "", ""));
                                 }
@@ -101,7 +98,7 @@ public class Repair_Com {
                         if (player.getInventory().getItemInMainHand() != null) {
                             if (player.getInventory().getItemInMainHand().getType() != Material.AIR) {
                                 if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-                                    if ((Main.plugin.isTool(player.getInventory().getItemInMainHand().getType())) || (Main.plugin.isArmour(player.getInventory().getItemInMainHand().getType()))) {
+                                    if ((Main.getInstance().isTool(player.getInventory().getItemInMainHand().getType())) || (Main.getInstance().isArmour(player.getInventory().getItemInMainHand().getType()))) {
                                         this.repair.payAndRepair(player, player.getInventory().getItemInMainHand().getType());
                                     }
                                 } else {

@@ -10,8 +10,6 @@ import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
 import net.nifheim.yitan.itemlorestats.Util.Util_Format;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import net.nifheim.yitan.itemlorestats.Util.Util_Random;
-import java.util.HashMap;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -30,18 +28,18 @@ public class Ice {
     Util_Random util_Random = new Util_Random();
 
     public void iceChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-        if (this.gearStats.getIceGear(getAttacker) + this.gearStats.getIceItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getIceItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getIceGear(getAttacker) + this.gearStats.getIceItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getIceItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".ice", Main.plugin.getConfig().getInt("secondaryStats.ice.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".ice", Main.getInstance().getConfig().getInt("secondaryStats.ice.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".ice", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".ice", Long.valueOf(System.currentTimeMillis()));
             }
 
             double icePercent = 0.0D;
 
             if (isTool) {
-                icePercent = this.util_Format.format(this.gearStats.getIceGear(getAttacker) + this.gearStats.getIceItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getIceItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                icePercent = this.util_Format.format(this.gearStats.getIceGear(getAttacker) + this.gearStats.getIceItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getIceItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 icePercent = this.util_Format.format(this.gearStats.getIceGear(getAttacker));
             }
@@ -52,12 +50,12 @@ public class Ice {
 
             if (this.util_Random.random(100) <= icePercent) {
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.ice"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.ice"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.IceSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyIce"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyIce"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyIceSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     } else if ((getAttacker instanceof LivingEntity)) {
@@ -69,7 +67,7 @@ public class Ice {
                     }
                 }
 
-                getDefender.addPotionEffect(new PotionEffect(org.bukkit.potion.PotionEffectType.SLOW, Main.plugin.getConfig().getInt("secondaryStats.ice.effectDuration") * 20, Main.plugin.getConfig().getInt("secondaryStats.ice.effectAmplifier")));
+                getDefender.addPotionEffect(new PotionEffect(org.bukkit.potion.PotionEffectType.SLOW, Main.getInstance().getConfig().getInt("secondaryStats.ice.effectDuration") * 20, Main.getInstance().getConfig().getInt("secondaryStats.ice.effectAmplifier")));
             }
         }
     }

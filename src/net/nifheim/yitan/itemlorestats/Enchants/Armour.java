@@ -11,7 +11,6 @@ import net.nifheim.yitan.itemlorestats.Util.Util_Format;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import net.nifheim.yitan.itemlorestats.Util.Util_Random;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.inventory.ItemStack;
 
 public class Armour {
 
@@ -29,12 +28,12 @@ public class Armour {
     public double armourChanceOnHit(LivingEntity getDefender) {
         double stat = 0.0D;
 
-        if (Main.plugin.isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
-            stat += this.gearStats.getArmourItemInHand(Main.plugin.itemInMainHand(getDefender));
+        if (Main.getInstance().isTool(this.getSlots.returnItemInMainHand(getDefender).getType())) {
+            stat += this.gearStats.getArmourItemInHand(Main.getInstance().itemInMainHand(getDefender));
         }
 
-        if (Main.plugin.isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
-            stat += this.gearStats.getArmourItemInHand(Main.plugin.itemInOffHand(getDefender));
+        if (Main.getInstance().isTool(this.getSlots.returnItemInOffHand(getDefender).getType())) {
+            stat += this.gearStats.getArmourItemInHand(Main.getInstance().itemInOffHand(getDefender));
         }
 
         stat += this.gearStats.getArmourGear(getDefender);

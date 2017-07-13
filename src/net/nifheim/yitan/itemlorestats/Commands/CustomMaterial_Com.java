@@ -4,9 +4,7 @@ import net.nifheim.yitan.itemlorestats.Main;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import java.util.List;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.PlayerInventory;
 
 public class CustomMaterial_Com {
 
@@ -16,7 +14,7 @@ public class CustomMaterial_Com {
         if ((sender instanceof Player)) {
             Player player = (Player) sender;
 
-            if (!Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+            if (!Main.getInstance().getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
                 if ((player.isOp()) || (player.hasPermission("ils.admin"))) {
                     if (player.getInventory().getItemInMainHand() != null) {
                         if (player.getInventory().getItemInMainHand().getType() != Material.AIR) {
@@ -26,9 +24,9 @@ public class CustomMaterial_Com {
 
                                 if (args[0].equalsIgnoreCase("custom")) {
                                     if (args[1].equalsIgnoreCase("tool")) {
-                                        if (args[2].toString() != null) {
+                                        if (args[2] != null) {
                                             if (itemName != null) {
-                                                List toolsList = Main.plugin.getConfig().getList("materials.tools");
+                                                List toolsList = Main.getInstance().getConfig().getList("materials.tools");
 
                                                 for (int i = 0; i < args.length; i++) {
                                                     if (i >= 3) {
@@ -40,8 +38,8 @@ public class CustomMaterial_Com {
 
                                                 toolsList.add(itemName + ":" + rebuiltName.toUpperCase().replaceAll(" ", "_"));
 
-                                                Main.plugin.getConfig().set("materials.tools", toolsList);
-                                                Main.plugin.saveConfig();
+                                                Main.getInstance().getConfig().set("materials.tools", toolsList);
+                                                Main.getInstance().saveConfig();
 
                                                 player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.AddedToConfig", player, player, rebuiltName, rebuiltName));
                                             } else {
@@ -51,12 +49,12 @@ public class CustomMaterial_Com {
                                             player.sendMessage(this.util_GetResponse.getResponse("CustomItemMessages.CustomItemType", player, player, "", ""));
                                         }
                                     } else if (args[1].equalsIgnoreCase("armour")) {
-                                        if (args[2].toString() != null) {
+                                        if (args[2] != null) {
                                             if (args.length > 3) {
-                                                if (args[3].toString() != null) {
+                                                if (args[3] != null) {
                                                     if (itemName != null) {
-                                                        String armourType = args[2].toString().toLowerCase();
-                                                        List toolsList = Main.plugin.getConfig().getList("materials.armour." + armourType);
+                                                        String armourType = args[2].toLowerCase();
+                                                        List toolsList = Main.getInstance().getConfig().getList("materials.armour." + armourType);
 
                                                         for (int i = 0; i < args.length; i++) {
                                                             if (i >= 4) {
@@ -68,8 +66,8 @@ public class CustomMaterial_Com {
 
                                                         toolsList.add(itemName + ":" + rebuiltName.toUpperCase().replaceAll(" ", "_"));
 
-                                                        Main.plugin.getConfig().set("materials.armour." + armourType, toolsList);
-                                                        Main.plugin.saveConfig();
+                                                        Main.getInstance().getConfig().set("materials.armour." + armourType, toolsList);
+                                                        Main.getInstance().saveConfig();
 
                                                         player.sendMessage(this.util_GetResponse.getResponse("ErrorMessages.AddedToConfig", player, player, rebuiltName, rebuiltName));
                                                     } else {

@@ -11,8 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 public class InteractEvents implements org.bukkit.event.Listener {
 
@@ -27,19 +25,19 @@ public class InteractEvents implements org.bukkit.event.Listener {
     public void mainInteractEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (Main.plugin.getConfig().getBoolean("usingMcMMO")) {
+        if (Main.getInstance().getConfig().getBoolean("usingMcMMO")) {
             return;
         }
-        if (Main.plugin.getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
+        if (Main.getInstance().getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
             return;
         }
         if ((player.getGameMode().equals(GameMode.CREATIVE)) && (player.getInventory().getItemInMainHand().getType().equals(Material.SKULL_ITEM))) {
             return;
         }
         if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            if (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType())) {
+            if (Main.getInstance().isTool(player.getInventory().getItemInMainHand().getType())) {
                 this.spellsEvents.spellSelection(player);
-            } else if (Main.plugin.isArmour(player.getInventory().getItemInMainHand().getType())) {
+            } else if (Main.getInstance().isArmour(player.getInventory().getItemInMainHand().getType())) {
                 if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {
                     event.setCancelled(true);
                     player.updateInventory();
@@ -59,15 +57,15 @@ public class InteractEvents implements org.bukkit.event.Listener {
                 }
                 /*
          final Player playerFinal = player;
-         Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+         Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
            public void run() {
-             Main.plugin.updateHealth(playerFinal);
-             Main.plugin.updatePlayerSpeed(playerFinal);
-             Main.plugin.setBonuses.updateSetBonus(playerFinal);
+             Main.getInstance().updateHealth(playerFinal);
+             Main.getInstance().updatePlayerSpeed(playerFinal);
+             Main.getInstance().setBonuses.updateSetBonus(playerFinal);
            }
            
          }, 3L);*/
-            } else if ((event.getItem() != null) && (Main.plugin.isPotion(event.getItem().getDurability()))) {
+            } else if ((event.getItem() != null) && (Main.getInstance().isPotion(event.getItem().getDurability()))) {
                 if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {
                     event.setCancelled(true);
                     player.updateInventory();
@@ -89,7 +87,7 @@ public class InteractEvents implements org.bukkit.event.Listener {
         }
 
         if ((event.getAction() == Action.LEFT_CLICK_BLOCK)
-                && (Main.plugin.isTool(player.getInventory().getItemInMainHand().getType()))) {
+                && (Main.getInstance().isTool(player.getInventory().getItemInMainHand().getType()))) {
             if (!this.xpLevel.checkXPLevel(player, player.getInventory().getItemInMainHand())) {
                 event.setCancelled(true);
                 player.updateInventory();

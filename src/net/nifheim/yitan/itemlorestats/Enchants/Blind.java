@@ -28,18 +28,18 @@ public class Blind {
     Util_Random util_Random = new Util_Random();
 
     public void blindChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-        if (this.gearStats.getBlindGear(getAttacker) + this.gearStats.getBlindItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getBlindItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getBlindGear(getAttacker) + this.gearStats.getBlindItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getBlindItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".bli", Main.plugin.getConfig().getInt("secondaryStats.blind.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".bli", Main.getInstance().getConfig().getInt("secondaryStats.blind.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".bli", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".bli", Long.valueOf(System.currentTimeMillis()));
             }
 
             double blindPercent = 0.0D;
 
             if (isTool) {
-                blindPercent = this.util_Format.format(this.gearStats.getBlindGear(getAttacker) + this.gearStats.getBlindItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getBlindItemInHand(Main.plugin.itemInOffHand(getAttacker)));
+                blindPercent = this.util_Format.format(this.gearStats.getBlindGear(getAttacker) + this.gearStats.getBlindItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getBlindItemInHand(Main.getInstance().itemInOffHand(getAttacker)));
             } else {
                 blindPercent = this.util_Format.format(this.gearStats.getBlindGear(getAttacker));
             }
@@ -50,12 +50,12 @@ public class Blind {
 
             if (this.util_Random.random(100) <= blindPercent) {
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.blind"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.blind"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.BlindSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyBlind"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyBlind"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyBlindSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     } else if ((getAttacker instanceof LivingEntity)) {
@@ -67,7 +67,7 @@ public class Blind {
                     }
                 }
 
-                getDefender.addPotionEffect(new PotionEffect(org.bukkit.potion.PotionEffectType.BLINDNESS, Main.plugin.getConfig().getInt("secondaryStats.blind.effectDuration") * 20, Main.plugin.getConfig().getInt("secondaryStats.blind.effectAmplifier")));
+                getDefender.addPotionEffect(new PotionEffect(org.bukkit.potion.PotionEffectType.BLINDNESS, Main.getInstance().getConfig().getInt("secondaryStats.blind.effectDuration") * 20, Main.getInstance().getConfig().getInt("secondaryStats.blind.effectAmplifier")));
             }
         }
     }

@@ -10,9 +10,6 @@ import net.nifheim.yitan.itemlorestats.Util.Util_EntityManager;
 import net.nifheim.yitan.itemlorestats.Util.Util_Format;
 import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import net.nifheim.yitan.itemlorestats.Util.Util_Random;
-import java.util.HashMap;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -31,18 +28,18 @@ public class Poison {
     Util_Random util_Random = new Util_Random();
 
     public void poisonChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-        if (this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Main.plugin.getConfig().getInt("secondaryStats.poison.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Main.getInstance().getConfig().getInt("secondaryStats.poison.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".poi", Long.valueOf(System.currentTimeMillis()));
             }
 
             double poisonPercent = 0.0D;
 
             if (isTool) {
-                poisonPercent = this.util_Format.format(this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                poisonPercent = this.util_Format.format(this.gearStats.getPoisonGear(getAttacker) + this.gearStats.getPoisonItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getPoisonItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 poisonPercent = this.util_Format.format(this.gearStats.getPoisonGear(getAttacker));
             }
@@ -53,12 +50,12 @@ public class Poison {
 
             if (this.util_Random.random(100) <= poisonPercent) {
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.poison"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.poison"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.PoisonSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyPoison"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyPoison"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyPoisonSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     } else if ((getAttacker instanceof LivingEntity)) {

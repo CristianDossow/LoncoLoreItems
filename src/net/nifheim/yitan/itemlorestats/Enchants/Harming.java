@@ -32,18 +32,18 @@ public class Harming {
     Util_Random util_Random = new Util_Random();
 
     public void harmingChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, boolean isTool) {
-        if (this.gearStats.getHarmingGear(getAttacker) + this.gearStats.getHarmingItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getHarmingItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (this.gearStats.getHarmingGear(getAttacker) + this.gearStats.getHarmingItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getHarmingItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".har", Main.plugin.getConfig().getInt("secondaryStats.harming.internalCooldown"))) {
+        if (!this.internalCooldown.hasCooldown(this.util_EntityManager.returnEntityName(getAttacker) + ".har", Main.getInstance().getConfig().getInt("secondaryStats.harming.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".har", Long.valueOf(System.currentTimeMillis()));
+                Main.getInstance().internalCooldowns.put(this.util_EntityManager.returnEntityName(getAttacker) + ".har", Long.valueOf(System.currentTimeMillis()));
             }
 
             double harmingPercent = 0.0D;
 
             if (isTool) {
-                harmingPercent = this.util_Format.format(this.gearStats.getHarmingGear(getAttacker) + this.gearStats.getHarmingItemInHand(Main.plugin.itemInMainHand(getAttacker)) + this.gearStats.getHarmingItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                harmingPercent = this.util_Format.format(this.gearStats.getHarmingGear(getAttacker) + this.gearStats.getHarmingItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + this.gearStats.getHarmingItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 harmingPercent = this.util_Format.format(this.gearStats.getHarmingGear(getAttacker));
             }
@@ -54,12 +54,12 @@ public class Harming {
 
             if (this.util_Random.random(100) <= harmingPercent) {
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.harm"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.harm"))) {
                     ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.HarmSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyHarm"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyHarm"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyHarmSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                     } else if ((getAttacker instanceof LivingEntity)) {
@@ -72,9 +72,9 @@ public class Harming {
                 }
 
                 if (((getDefender instanceof Wither)) || ((getDefender instanceof Zombie)) || ((getDefender instanceof org.bukkit.entity.Skeleton)) || ((getDefender instanceof PigZombie))) {
-                    getDefender.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Main.plugin.getConfig().getInt("secondaryStats.harming.effectDuration") * 20, Main.plugin.getConfig().getInt("secondaryStats.harming.effectAmplifier")));
+                    getDefender.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Main.getInstance().getConfig().getInt("secondaryStats.harming.effectDuration") * 20, Main.getInstance().getConfig().getInt("secondaryStats.harming.effectAmplifier")));
                 } else {
-                    getDefender.addPotionEffect(new PotionEffect(PotionEffectType.HARM, Main.plugin.getConfig().getInt("secondaryStats.harming.effectDuration") * 20, Main.plugin.getConfig().getInt("secondaryStats.harming.effectAmplifier")));
+                    getDefender.addPotionEffect(new PotionEffect(PotionEffectType.HARM, Main.getInstance().getConfig().getInt("secondaryStats.harming.effectDuration") * 20, Main.getInstance().getConfig().getInt("secondaryStats.harming.effectAmplifier")));
                 }
             }
         }

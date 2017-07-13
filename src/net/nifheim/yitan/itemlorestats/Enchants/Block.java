@@ -1,7 +1,6 @@
 package net.nifheim.yitan.itemlorestats.Enchants;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -33,11 +32,11 @@ public class Block {
     public boolean checkBlock(EntityDamageByEntityEvent e, Entity getAttacker, Entity getDefender, PlayerStats defenderStats) {
         if (blockChanceOnHit(getDefender, defenderStats)) {
             if (((getAttacker instanceof Player))
-                    && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.enemyBlockedAttack"))) {
+                    && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.enemyBlockedAttack"))) {
                 ((Player) getAttacker).sendMessage(this.util_GetResponse.getResponse("DamageMessages.EnemyBlockSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
             }
             if (((getDefender instanceof Player))
-                    && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.blockAttack"))) {
+                    && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.blockAttack"))) {
                 ((Player) getDefender).sendMessage(this.util_GetResponse.getResponse("DamageMessages.BlockSuccess", getAttacker, getDefender, String.valueOf(0), String.valueOf(0)));
                 ((Player) getDefender).addPotionEffect(new org.bukkit.potion.PotionEffect(org.bukkit.potion.PotionEffectType.SLOW, 30, 1));
             }

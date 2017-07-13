@@ -27,19 +27,19 @@ public class LifeSteal {
     Util_Random util_Random = new Util_Random();
 
     public void lifeStealChanceOnHit(LivingEntity getDefender, LivingEntity getAttacker, double weaponDamage, boolean isTool) {
-        if (gearStats.getLifeStealGear(getAttacker) + gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + gearStats.getLifeStealItemInHand(Main.plugin.itemInOffHand(getAttacker)) <= 0.0D) {
+        if (gearStats.getLifeStealGear(getAttacker) + gearStats.getLifeStealItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + gearStats.getLifeStealItemInHand(Main.getInstance().itemInOffHand(getAttacker)) <= 0.0D) {
             return;
         }
-        if (!internalCooldown.hasCooldown(util_EntityManager.returnEntityName(getAttacker) + ".lif", Main.plugin.getConfig().getInt("secondaryStats.lifeSteal.internalCooldown"))) {
+        if (!internalCooldown.hasCooldown(util_EntityManager.returnEntityName(getAttacker) + ".lif", Main.getInstance().getConfig().getInt("secondaryStats.lifeSteal.internalCooldown"))) {
             if ((getAttacker instanceof Player)) {
-                Main.plugin.internalCooldowns.put(util_EntityManager.returnEntityName(getAttacker) + ".lif", System.currentTimeMillis());
+                Main.getInstance().internalCooldowns.put(util_EntityManager.returnEntityName(getAttacker) + ".lif", System.currentTimeMillis());
             }
 
-            double lifeStealHeal = 0.0D;
-            double lifeStealPercent = 0.0D;
+            double lifeStealHeal;
+            double lifeStealPercent;
 
             if (isTool) {
-                lifeStealPercent = util_Format.format(gearStats.getLifeStealGear(getAttacker) + gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)) + gearStats.getLifeStealItemInHand(Main.plugin.itemInMainHand(getAttacker)));
+                lifeStealPercent = util_Format.format(gearStats.getLifeStealGear(getAttacker) + gearStats.getLifeStealItemInHand(Main.getInstance().itemInMainHand(getAttacker)) + gearStats.getLifeStealItemInHand(Main.getInstance().itemInMainHand(getAttacker)));
             } else {
                 lifeStealPercent = util_Format.format(gearStats.getLifeStealGear(getAttacker));
             }
@@ -49,15 +49,15 @@ public class LifeSteal {
             }
 
             if (util_Random.random(100) <= lifeStealPercent) {
-                lifeStealHeal = Main.plugin.getConfig().getDouble("secondaryStats.lifeSteal.healPercentage") * weaponDamage;
+                lifeStealHeal = Main.getInstance().getConfig().getDouble("secondaryStats.lifeSteal.healPercentage") * weaponDamage;
 
                 if (((getAttacker instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.outgoing.lifeSteal"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.outgoing.lifeSteal"))) {
                     ((Player) getAttacker).sendMessage(util_GetResponse.getResponse("DamageMessages.LifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                 }
 
                 if (((getDefender instanceof Player))
-                        && (Main.plugin.getConfig().getBoolean("combatMessages.incoming.enemyLifeSteal"))) {
+                        && (Main.getInstance().getConfig().getBoolean("combatMessages.incoming.enemyLifeSteal"))) {
                     if ((getAttacker instanceof Player)) {
                         ((Player) getDefender).sendMessage(util_GetResponse.getResponse("DamageMessages.EnemyLifeStealSuccess", getAttacker, getDefender, String.valueOf((int) lifeStealHeal), String.valueOf((int) lifeStealHeal)));
                     } else if ((getAttacker instanceof LivingEntity)) {

@@ -6,13 +6,10 @@ import net.nifheim.yitan.itemlorestats.Util.Util_GetResponse;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class Lore_Com {
 
@@ -33,18 +30,18 @@ public class Lore_Com {
             if (args.length > 1) {
                 if (org.bukkit.Bukkit.getServer().getPlayer(args[1]) != null) {
                     Player player = org.bukkit.Bukkit.getServer().getPlayer(args[1]);
-                    if (Main.plugin.itemInMainHand(player) != null) {
-                        if (Main.plugin.itemInMainHand(player).getType() != Material.AIR) {
+                    if (Main.getInstance().itemInMainHand(player) != null) {
+                        if (Main.getInstance().itemInMainHand(player).getType() != Material.AIR) {
                             if (sender.hasPermission("ils.admin")) {
-                                if (Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName() != null) {
+                                if (Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName() != null) {
                                     if (args.length > 2) {
                                         if (isInteger(args[2])) {
                                             if (args.length > 3) {
                                                 if (args.length > 4) {
                                                     String newLineText = "";
                                                     List<String> getItemLore;
-                                                    if (Main.plugin.itemInMainHand(player).getItemMeta().hasLore()) {
-                                                        getItemLore = Main.plugin.itemInMainHand(player).getItemMeta().getLore();
+                                                    if (Main.getInstance().itemInMainHand(player).getItemMeta().hasLore()) {
+                                                        getItemLore = Main.getInstance().itemInMainHand(player).getItemMeta().getLore();
                                                     } else {
                                                         getItemLore = new java.util.ArrayList();
                                                     }
@@ -52,7 +49,7 @@ public class Lore_Com {
                                                     List<String> storeItemLore = getItemLore;
 
                                                     if (Integer.parseInt(args[2]) - 1 >= getItemLore.size()) {
-                                                        ItemStack getItemInHand = new ItemStack(Main.plugin.itemInMainHand(player));
+                                                        ItemStack getItemInHand = new ItemStack(Main.getInstance().itemInMainHand(player));
                                                         ItemMeta getItemInHandMeta = getItemInHand.getItemMeta();
 
                                                         for (int i = 0; i < args.length; i++) {
@@ -69,19 +66,19 @@ public class Lore_Com {
 
                                                         getItemInHand.setItemMeta(getItemInHandMeta);
 
-                                                        if (Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName() != null) {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName());
+                                                        if (Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName() != null) {
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName());
                                                             }
-                                                        } else if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                            player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getType().name().toString());
+                                                        } else if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                            player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getType().name());
                                                         }
 
                                                         player.getInventory().setItemInMainHand(new ItemStack(getItemInHand));
                                                     } else {
                                                         int lineNumber = Integer.parseInt(args[2]);
 
-                                                        ItemStack getItemInHand = new ItemStack(Main.plugin.itemInMainHand(player));
+                                                        ItemStack getItemInHand = new ItemStack(Main.getInstance().itemInMainHand(player));
                                                         ItemMeta getItemInHandMeta = getItemInHand.getItemMeta();
 
                                                         for (int i = 0; i < args.length; i++) {
@@ -98,27 +95,23 @@ public class Lore_Com {
 
                                                         getItemInHand.setItemMeta(getItemInHandMeta);
 
-                                                        if (Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName() != null) {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName());
+                                                        if (Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName() != null) {
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName());
                                                             }
                                                             final Player playerFinal = player;
-                                                            Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                                                public void run() {
-                                                                    Main.plugin.updateHealth(playerFinal);
-                                                                    Main.plugin.updatePlayerSpeed(playerFinal);
-                                                                }
+                                                            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                                                                Main.getInstance().updateHealth(playerFinal);
+                                                                Main.getInstance().updatePlayerSpeed(playerFinal);
                                                             }, 2L);
                                                         } else {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getType().name().toString());
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getType().name());
                                                             }
                                                             final Player playerFinal = player;
-                                                            Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                                                public void run() {
-                                                                    Main.plugin.updateHealth(playerFinal);
-                                                                    Main.plugin.updatePlayerSpeed(playerFinal);
-                                                                }
+                                                            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                                                                Main.getInstance().updateHealth(playerFinal);
+                                                                Main.getInstance().updatePlayerSpeed(playerFinal);
                                                             }, 2L);
                                                         }
 
@@ -150,18 +143,18 @@ public class Lore_Com {
                     }
                 } else {
                     Player player = (Player) sender;
-                    if (Main.plugin.itemInMainHand(player) != null) {
-                        if (Main.plugin.itemInMainHand(player).getType() != Material.AIR) {
+                    if (Main.getInstance().itemInMainHand(player) != null) {
+                        if (Main.getInstance().itemInMainHand(player).getType() != Material.AIR) {
                             if (sender.hasPermission("ils.admin")) {
-                                if (Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName() != null) {
+                                if (Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName() != null) {
                                     if (args.length > 1) {
                                         if (isInteger(args[1])) {
                                             if (args.length > 2) {
                                                 if (args.length > 3) {
                                                     String newLineText = "";
                                                     List<String> getItemLore;
-                                                    if (Main.plugin.itemInMainHand(player).getItemMeta().hasLore()) {
-                                                        getItemLore = Main.plugin.itemInMainHand(player).getItemMeta().getLore();
+                                                    if (Main.getInstance().itemInMainHand(player).getItemMeta().hasLore()) {
+                                                        getItemLore = Main.getInstance().itemInMainHand(player).getItemMeta().getLore();
                                                     } else {
                                                         getItemLore = new java.util.ArrayList();
                                                     }
@@ -169,7 +162,7 @@ public class Lore_Com {
                                                     List<String> storeItemLore = getItemLore;
 
                                                     if (Integer.parseInt(args[1]) - 1 >= getItemLore.size()) {
-                                                        ItemStack getItemInHand = new ItemStack(Main.plugin.itemInMainHand(player));
+                                                        ItemStack getItemInHand = new ItemStack(Main.getInstance().itemInMainHand(player));
                                                         ItemMeta getItemInHandMeta = getItemInHand.getItemMeta();
 
                                                         for (int i = 0; i < args.length; i++) {
@@ -186,27 +179,23 @@ public class Lore_Com {
 
                                                         getItemInHand.setItemMeta(getItemInHandMeta);
 
-                                                        if (Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName() != null) {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName());
+                                                        if (Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName() != null) {
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName());
                                                             }
                                                             final Player playerFinal = player;
-                                                            Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                                                public void run() {
-                                                                    Main.plugin.updateHealth(playerFinal);
-                                                                    Main.plugin.updatePlayerSpeed(playerFinal);
-                                                                }
+                                                            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                                                                Main.getInstance().updateHealth(playerFinal);
+                                                                Main.getInstance().updatePlayerSpeed(playerFinal);
                                                             }, 2L);
                                                         } else {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getType().name().toString());
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getType().name());
                                                             }
                                                             final Player playerFinal = player;
-                                                            Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                                                public void run() {
-                                                                    Main.plugin.updateHealth(playerFinal);
-                                                                    Main.plugin.updatePlayerSpeed(playerFinal);
-                                                                }
+                                                            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                                                                Main.getInstance().updateHealth(playerFinal);
+                                                                Main.getInstance().updatePlayerSpeed(playerFinal);
                                                             }, 2L);
                                                         }
 
@@ -214,7 +203,7 @@ public class Lore_Com {
                                                     } else {
                                                         int lineNumber = Integer.parseInt(args[1]);
 
-                                                        ItemStack getItemInHand = new ItemStack(Main.plugin.itemInMainHand(player));
+                                                        ItemStack getItemInHand = new ItemStack(Main.getInstance().itemInMainHand(player));
                                                         ItemMeta getItemInHandMeta = getItemInHand.getItemMeta();
 
                                                         for (int i = 0; i < args.length; i++) {
@@ -231,27 +220,23 @@ public class Lore_Com {
 
                                                         getItemInHand.setItemMeta(getItemInHandMeta);
 
-                                                        if (Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName() != null) {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getItemMeta().getDisplayName());
+                                                        if (Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName() != null) {
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getItemMeta().getDisplayName());
                                                             }
                                                             final Player playerFinal = player;
-                                                            Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                                                public void run() {
-                                                                    Main.plugin.updateHealth(playerFinal);
-                                                                    Main.plugin.updatePlayerSpeed(playerFinal);
-                                                                }
+                                                            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                                                                Main.getInstance().updateHealth(playerFinal);
+                                                                Main.getInstance().updatePlayerSpeed(playerFinal);
                                                             }, 2L);
                                                         } else {
-                                                            if (Main.plugin.getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
-                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.plugin.itemInMainHand(player).getType().name());
+                                                            if (Main.getInstance().getConfig().getBoolean("messages.loreSuccessfullyAdded")) {
+                                                                player.sendMessage(ChatColor.LIGHT_PURPLE + "Lore added to " + ChatColor.RESET + Main.getInstance().itemInMainHand(player).getType().name());
                                                             }
                                                             final Player playerFinal = player;
-                                                            Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                                                public void run() {
-                                                                    Main.plugin.updateHealth(playerFinal);
-                                                                    Main.plugin.updatePlayerSpeed(playerFinal);
-                                                                }
+                                                            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                                                                Main.getInstance().updateHealth(playerFinal);
+                                                                Main.getInstance().updatePlayerSpeed(playerFinal);
                                                             }, 2L);
                                                         }
 
