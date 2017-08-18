@@ -37,7 +37,7 @@ public class PlayerJoinListener implements Listener {
             Main.plugin.playersStats.put(playerFinal.getUniqueId(), ps);
             // ----------------- NEW DATA
             plugin.getDataManager(playerFinal).loadData();
-            
+
             // ----------------- OLD DATA
             if (!new File(Main.plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
@@ -90,7 +90,6 @@ public class PlayerJoinListener implements Listener {
         });
 
         Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
-            plugin.getAccount(playerFinal).getLoadedCharacter();
             ps.UpdateAll();
         }, 5L);
     }

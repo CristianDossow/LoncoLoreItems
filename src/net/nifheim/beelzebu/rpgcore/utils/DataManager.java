@@ -18,6 +18,7 @@ public class DataManager {
 
     private final Main plugin;
     private final Player player;
+    private File dataFolder;
     private File dataFile;
     private FileConfiguration data;
 
@@ -27,9 +28,11 @@ public class DataManager {
     }
 
     public FileConfiguration getData() {
-        dataFile = new File(plugin.getDataFolder() + "userdata/" + player.getName() + ".yml");
+        dataFolder = new File(plugin.getDataFolder(), "userdata/");
+        dataFile = new File(plugin.getDataFolder(), "userdata/" + player.getName() + ".yml");
         if (!dataFile.exists()) {
             try {
+                dataFolder.mkdirs();
                 dataFile.createNewFile();
                 data = YamlConfiguration.loadConfiguration(dataFile);
             } catch (IOException ex) {

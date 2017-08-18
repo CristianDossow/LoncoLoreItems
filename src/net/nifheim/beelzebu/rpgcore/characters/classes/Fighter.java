@@ -7,7 +7,7 @@ import net.nifheim.beelzebu.rpgcore.characters.branch.BranchType;
  *
  * @author Beelzebu
  */
-public class Fighter extends Branch {
+public abstract class Fighter extends Branch {
 
     private int level;
     private int hp;

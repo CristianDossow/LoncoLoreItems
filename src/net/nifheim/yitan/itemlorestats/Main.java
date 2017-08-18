@@ -36,7 +36,9 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.citizensnpcs.Citizens;
 import net.milkbowl.vault.Vault;
 import net.nifheim.beelzebu.rpgcore.characters.Account;
+import net.nifheim.beelzebu.rpgcore.commands.CharacterCommand;
 import net.nifheim.beelzebu.rpgcore.commands.StatsCommand;
+import net.nifheim.beelzebu.rpgcore.commands.TestCommand;
 
 import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
 import net.nifheim.beelzebu.rpgcore.utils.DataManager;
@@ -73,7 +75,7 @@ import net.nifheim.yitan.skills.SkillListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-
+    
     public static Main plugin;
     private static MySQL mysql;
     private DataManager dataManager;
@@ -86,9 +88,9 @@ public class Main extends JavaPlugin {
     private final File messagesFile = new File(getDataFolder(), "messages.yml");
     public static FileConfiguration messages;
     public static int checkdb;
-
+    
     public FileConfiguration PlayerDataConfig;
-
+    
     public Util_Citizens util_Citizens;
     public Util_Vault util_Vault;
     public Util_WorldGuard util_WorldGuard;
@@ -98,10 +100,10 @@ public class Main extends JavaPlugin {
     public HashMap<String, Double> setBonusesModifiers = new HashMap();
     public HashMap<UUID, PlayerStats> playersStats = new HashMap();
     public HashMap<Player, BossBar> manaBar = new HashMap();
-
+    
     public DamageFix damagefix;
     public EventListener eventlistener;
-
+    
     public Classes classes = new Classes();
     private final DamageSystem damageSystem = new DamageSystem(this);
     public Durability durability = new Durability();
@@ -118,34 +120,34 @@ public class Main extends JavaPlugin {
     Util_Format util_Format = new Util_Format();
     public Util_GetResponse util_GetResponse = new Util_GetResponse();
     Util_Random util_Random = new Util_Random();
-
+    
     SpigotStatCapWarning spigotStatCapWarning = new SpigotStatCapWarning();
-
+    
     static public Scoreboard scoreboard;
-
+    
     BukkitTask fastTasks;
-
+    
     public MySQL getMySQL() {
         return mysql;
     }
-
+    
     public static Main getInstance() {
         return plugin;
     }
-
+    
     @Override
     public void onEnable() {
-
+        
         loadManagers();
         Locale.setDefault(Locale.ROOT);
-
+        
         plugin = this;
         instance = this;
-
+        
         mysql = new MySQL();
         aba = new ActionBarAPI();
         aba.loadActionBar();
-
+        
         PluginManager plma = getServer().getPluginManager();
 
         //New events clases
@@ -181,21 +183,21 @@ public class Main extends JavaPlugin {
         plma.registerEvents(new RepairEvents(), this);
         plma.registerEvents(new MerchantClickListener(), this);
         plugin = this;
-
+        
         writeDefaultFiles.checkExistence();
-
+        
         getConfig().options().copyDefaults(true);
         getConfig().set("fileVersion", Integer.parseInt(getDescription().getVersion().replace(".", "")));
         saveConfig();
-
+        
         eventlistener = new EventListener(this);
         damagefix = new DamageFix(this);
         plma.registerEvents(eventlistener, this);
-
+        
         spigotStatCapWarning.updateSpigotValues();
-
+        
         fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 10, 10);
-
+        
         Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
             try {
                 PlayerStats ps = getPlayerStats(player);
@@ -224,7 +226,7 @@ public class Main extends JavaPlugin {
         scoreboard.getTeam("RedCT").setPrefix(ChatColor.RED + "");
         scoreboard.getTeam("YellowCT").setPrefix(ChatColor.YELLOW + "");
     }
-
+    
     @Override
     public void onDisable() {
         if (scoreboard != null) {
@@ -265,7 +267,7 @@ public class Main extends JavaPlugin {
             }
         });
     }
-
+    
     public void loadManagers() {
         if (!messagesFile.exists()) {
             copy(getResource("messages.yml"), messagesFile);
@@ -273,8 +275,10 @@ public class Main extends JavaPlugin {
         messages = YamlConfiguration.loadConfiguration(messagesFile);
         checkDependencies();
         getCommand("ils").setExecutor(new StatsCommand(this));
+        getCommand("character").setExecutor(new CharacterCommand(this));
+        getCommand("test").setExecutor(new TestCommand(this));
     }
-
+    
     public void checkDependencies() {
         if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             placeholderAPI = new PlaceholderAPI(this);
@@ -299,7 +303,7 @@ public class Main extends JavaPlugin {
             log("Unable to find Citizens!");
         }
     }
-
+    
     public static boolean isInteger(String str) {
         try {
             Integer.parseInt(str);
@@ -308,40 +312,40 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public WorldGuardPlugin getWorldGuard() {
         Plugin WorldGuard = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
-
+        
         if ((WorldGuard == null) || (!(WorldGuard instanceof WorldGuardPlugin))) {
             return null;
         }
-
+        
         util_WorldGuard = new Util_WorldGuard(plugin);
         return (WorldGuardPlugin) WorldGuard;
     }
-
+    
     public Vault getVault() {
         Plugin Vault = Bukkit.getServer().getPluginManager().getPlugin("Vault");
-
+        
         if ((Vault == null) || (!(Vault instanceof Vault))) {
             return null;
         }
-
+        
         util_Vault = new Util_Vault(plugin);
         return (Vault) Vault;
     }
-
+    
     public Citizens getCitizens() {
         Plugin Citizens = Bukkit.getServer().getPluginManager().getPlugin("Citizens");
-
+        
         if ((Citizens == null) || (!(Citizens instanceof Citizens))) {
             return null;
         }
-
+        
         util_Citizens = new Util_Citizens(plugin);
         return (Citizens) Citizens;
     }
-
+    
     public ItemStack itemInMainHand(LivingEntity entity) {
         ItemStack item = null;
         if (entity != null) {
@@ -351,10 +355,10 @@ public class Main extends JavaPlugin {
                 }
             }
         }
-
+        
         return item;
     }
-
+    
     public ItemStack itemInOffHand(LivingEntity entity) {
         ItemStack item = null;
         if (entity != null) {
@@ -364,10 +368,10 @@ public class Main extends JavaPlugin {
                 }
             }
         }
-
+        
         return item;
     }
-
+    
     public boolean isTool(Material material) {
         for (int i = 0; i < getConfig().getList("materials.tools").size(); i++) {
             if (getConfig().getList("materials.tools").get(i).toString().split(":")[0].equals(material.toString())) {
@@ -376,7 +380,7 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isPotion(int potionID) {
         for (int i = 0; i < getConfig().getList("materials.potions").size(); i++) {
             if (Integer.parseInt(getConfig().getList("materials.potions").get(i).toString().split(":")[0]) == potionID) {
@@ -385,19 +389,19 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isArmour(Material material) {
         List<String> helmetList = (List<String>) getConfig().getList("materials.armour.helmet");
         List<String> chestList = (List<String>) getConfig().getList("materials.armour.chest");
         List<String> legsList = (List<String>) getConfig().getList("materials.armour.legs");
         List<String> bootsList = (List<String>) getConfig().getList("materials.armour.boots");
         List<String> armourList = new java.util.ArrayList();
-
+        
         armourList.addAll(helmetList);
         armourList.addAll(chestList);
         armourList.addAll(legsList);
         armourList.addAll(bootsList);
-
+        
         for (int i = 0; i < armourList.size(); i++) {
             if (((String) armourList.get(i)).split(":")[0].equals(material.toString())) {
                 return true;
@@ -405,7 +409,7 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isHelmet(Material material) {
         for (int i = 0; i < getConfig().getList("materials.armour.helmet").size(); i++) {
             if (getConfig().getList("materials.armour.helmet").get(i).toString().split(":")[0].equals(material.toString())) {
@@ -414,7 +418,7 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isChestplate(Material material) {
         for (int i = 0; i < getConfig().getList("materials.armour.chest").size(); i++) {
             if (getConfig().getList("materials.armour.chest").get(i).toString().split(":")[0].equals(material.toString())) {
@@ -423,7 +427,7 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isLeggings(Material material) {
         for (int i = 0; i < getConfig().getList("materials.armour.legs").size(); i++) {
             if (getConfig().getList("materials.armour.legs").get(i).toString().split(":")[0].equals(material.toString())) {
@@ -432,7 +436,7 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isBoots(Material material) {
         for (int i = 0; i < getConfig().getList("materials.armour.boots").size(); i++) {
             if (getConfig().getList("materials.armour.boots").get(i).toString().split(":")[0].equals(material.toString())) {
@@ -441,42 +445,42 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
-
+    
     public boolean isSword(ItemStack item) {
         return (item.equals(new ItemStack(Material.WOOD_SWORD)) || (item.equals(new ItemStack(Material.STONE_SWORD))) || (item.equals(new ItemStack(Material.IRON_SWORD))) || (item.equals(new ItemStack(Material.GOLD_SWORD))) || (item.equals(new ItemStack(Material.DIAMOND_SWORD))));
     }
-
+    
     public boolean isHoe(ItemStack item) {
         return (item.equals(new ItemStack(Material.WOOD_HOE)) || (item.equals(new ItemStack(Material.STONE_HOE))) || (item.equals(new ItemStack(Material.IRON_HOE))) || (item.equals(new ItemStack(Material.GOLD_HOE))) || (item.equals(new ItemStack(Material.DIAMOND_HOE))));
     }
-
+    
     public boolean isAxe(ItemStack item) {
         return (item.equals(new ItemStack(Material.WOOD_AXE)) || (item.equals(new ItemStack(Material.STONE_AXE))) || (item.equals(new ItemStack(Material.IRON_AXE))) || (item.equals(new ItemStack(Material.GOLD_AXE))) || (item.equals(new ItemStack(Material.DIAMOND_AXE))));
     }
-
+    
     public boolean isPickAxe(ItemStack item) {
         return (item.equals(new ItemStack(Material.WOOD_PICKAXE)) || (item.equals(new ItemStack(Material.STONE_PICKAXE))) || (item.equals(new ItemStack(Material.IRON_PICKAXE))) || (item.equals(new ItemStack(Material.GOLD_PICKAXE))) || (item.equals(new ItemStack(Material.DIAMOND_PICKAXE))));
     }
-
+    
     public boolean isSpade(ItemStack item) {
         return (item.equals(new ItemStack(Material.WOOD_SPADE)) || (item.equals(new ItemStack(Material.STONE_SPADE))) || (item.equals(new ItemStack(Material.IRON_SPADE))) || (item.equals(new ItemStack(Material.GOLD_SPADE))) || (item.equals(new ItemStack(Material.DIAMOND_SPADE))));
     }
-
+    
     public void swapItems(int slotA, int slotB, Inventory inv) {
         ItemStack itemStackA = inv.getItem(slotA);
         ItemStack itemStackB = inv.getItem(slotB);
         inv.setItem(slotA, itemStackB);
         inv.setItem(slotB, itemStackA);
     }
-
+    
     public double getHealthValue(Player player) {
         if (getConfig().getInt("baseHealth") == 0) {
             return 0.0D;
         }
-
+        
         double healthBoost = 0.0D;
         double newHP = 0.0D;
-
+        
         if (player.hasPotionEffect(PotionEffectType.HEALTH_BOOST)) {
             for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                 if (player.hasPotionEffect(PotionEffectType.HEALTH_BOOST)) {
@@ -484,27 +488,27 @@ public class Main extends JavaPlugin {
                 }
             }
         }
-
+        
         if (!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
-
+            
             double maxHealth = getConfig().getDouble("baseHealth") + getConfig().getDouble("additionalStatsPerLevel.health") * player.getLevel() + healthBoost;
             newHP = maxHealth;
-
+            
             if (isTool(itemInMainHand(player).getType())) {
                 newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInMainHand(player))).intValue();
             }
-
+            
             if (isTool(itemInOffHand(player).getType())) {
                 newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInOffHand(player))).intValue();
             }
-
+            
             newHP = (int) newHP + Double.valueOf(gearStats.getHealthGear(player)).intValue();
-
+            
         }
-
+        
         return newHP;
     }
-
+    
     public void updateHealth(Player player) {
         if ((!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName()))
                 && (!player.hasMetadata("NPC"))) {
@@ -513,7 +517,7 @@ public class Main extends JavaPlugin {
             }
             double healthBoost = 0.0D;
             double newHP;
-
+            
             if (player.hasPotionEffect(PotionEffectType.HEALTH_BOOST)) {
                 for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                     if (player.hasPotionEffect(PotionEffectType.HEALTH_BOOST)) {
@@ -521,28 +525,28 @@ public class Main extends JavaPlugin {
                     }
                 }
             }
-
+            
             double maxHealth = getConfig().getDouble("baseHealth") + getConfig().getDouble("additionalStatsPerLevel.health") * player.getLevel() + healthBoost;
             newHP = maxHealth;
-
+            
             if (isTool(itemInMainHand(player).getType())) {
                 newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInMainHand(player))).intValue();
             }
-
+            
             if (isTool(itemInOffHand(player).getType())) {
                 newHP = (int) newHP + Double.valueOf(gearStats.getHealthItemInHand(itemInOffHand(player))).intValue();
             }
-
+            
             newHP = (int) newHP + Double.valueOf(gearStats.getHealthGear(player)).intValue();
-
+            
             player.setMaxHealth(newHP);
-
+            
             if (getConfig().getInt("healthScale") > 0) {
                 player.setHealthScale(getConfig().getDouble("healthScale"));
             }
         }
     }
-
+    
     public void updatePlayerSpeed(Player player) {
         /*
         if (!getConfig().getStringList("disabledInWorlds").contains(player.getWorld().getName())) {
@@ -570,7 +574,7 @@ public class Main extends JavaPlugin {
         }
          */
     }
-
+    
     public void copy(InputStream in, File file) {
         try {
             OutputStream out = new FileOutputStream(file);
@@ -585,7 +589,7 @@ public class Main extends JavaPlugin {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't copy the file " + file.getName() + " to the plugin data folder.", e.getCause());
         }
     }
-
+    
     public String rep(String str) {
         if (str == null) {
             return "";
@@ -594,11 +598,11 @@ public class Main extends JavaPlugin {
                 .replaceAll("%prefix%", getMessages().getString("Prefix"))
                 .replaceAll("&", "§");
     }
-
+    
     public FileConfiguration getMessages() {
         return messages;
     }
-
+    
     public PlayerStats getPlayerStats(Player player) {
         if (playersStats.containsKey(player.getUniqueId())) {
             return playersStats.get(player.getUniqueId());
@@ -609,20 +613,20 @@ public class Main extends JavaPlugin {
             return ps;
         }
     }
-
+    
     public void setPlayerStats(PlayerStats ps) {
         playersStats.put(ps.player.getUniqueId(), ps);
     }
-
+    
     public void log(String msg) {
         console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + msg));
     }
-
+    
     public DataManager getDataManager(Player p) {
         dataManager = new DataManager(p);
         return dataManager;
     }
-
+    
     public Account getAccount(Player p) {
         return new Account(p);
     }
