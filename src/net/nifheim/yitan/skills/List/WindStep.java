@@ -3,7 +3,6 @@ package net.nifheim.yitan.skills.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.CircleEffect;
