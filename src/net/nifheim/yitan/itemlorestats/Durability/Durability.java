@@ -297,14 +297,14 @@ public class Durability {
                     String durabilityRebuilder;
                     String durabilityAmountColour;
                     String prefixColourOnly;
-                    
+
                     int index = getItemLore.indexOf(getDurability);
                     String maximumValue = ChatColor.stripColor(getDurability).trim().replace("[", "").substring(this.durabilityName.length()).split(this.durabilitySplitter)[1].replace("]", "").trim();
                     int calculateNewValue = Integer.parseInt(ChatColor.stripColor(getDurability).trim().replace("[", "").replace(": ", "").trim().substring(this.durabilityName.length()).split(this.durabilitySplitter)[0].replace("§", "").replace("]", "").trim()) - amount;
-                    
+
                     double value = Double.valueOf(calculateNewValue).doubleValue() / Double.valueOf(maximumValue).doubleValue();
                     //((Player)getDefender).getInventory().getLeggings().setDurability((short)(int)Math.abs(value * ((Player)getDefender).getInventory().getLeggings().getType().getMaxDurability() - ((Player)getDefender).getInventory().getLeggings().getType().getMaxDurability()));
-                    
+
                     if (calculateNewValue + 1 > 1) {
                         if ((getDurability.split(this.durabilitySplitter)[1].trim().length() > 1) && (this.util_Colours.extractAndReplaceTooltipColour(getDurability.substring(0, 2)).contains("&"))) {
                             if (getDurability.length() > 4) {
@@ -319,7 +319,7 @@ public class Durability {
                         } else {
                             prefixColourOnly = this.util_Colours.replaceTooltipColour("&5&o");
                         }
-                        
+
                         if ((getDurability.split(this.durabilitySplitter)[1].trim().length() > 1) && (this.util_Colours.extractAndReplaceTooltipColour(getDurability.split(this.durabilitySplitter)[1].trim().substring(0, 2)).contains("&"))) {
                             if (getDurability.split(this.durabilitySplitter)[1].trim().length() > 4) {
                                 if (this.util_Colours.extractAndReplaceTooltipColour(getDurability.split(this.durabilitySplitter)[1].trim().substring(2, 4)).contains("&")) {
@@ -333,21 +333,21 @@ public class Durability {
                         } else {
                             durabilityAmountColour = prefixColourOnly;
                         }
-                        
+
                         if (this.vanilla_Unbreaking.armourHasUnbreaking(((Player) getDefender).getInventory().getLeggings())) {
                             calculateNewValue += this.vanilla_Unbreaking.calculateNewDurabilityLoss(((Player) getDefender).getInventory().getLeggings().getEnchantmentLevel(Enchantment.DURABILITY), durabilityLost);
                         }
-                        
+
                         durabilityRebuilder = calculateNewDurability(calculateNewValue, maximumValue, this.util_Colours.replaceTooltipColour(prefixColourOnly), this.util_Colours.replaceTooltipColour(durabilityAmountColour), ((Player) getDefender).getInventory().getLeggings(), (Player) getDefender);
-                        
+
                         getItemLore.set(index, durabilityRebuilder);
-                        
+
                         ItemStack getItem = new ItemStack(((Player) getDefender).getInventory().getLeggings());
                         ItemMeta getItemMeta = getItem.getItemMeta();
-                        
+
                         getItemMeta.setLore(getItemLore);
                         getItem.setItemMeta(getItemMeta);
-                        
+
                         ((Player) getDefender).getInventory().remove(((Player) getDefender).getInventory().getLeggings());
                         ((Player) getDefender).getInventory().setLeggings(new ItemStack(getItem));
                     } else {

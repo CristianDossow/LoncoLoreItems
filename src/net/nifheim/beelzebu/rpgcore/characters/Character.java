@@ -71,11 +71,11 @@ public class Character {
     }
 
     public void loadInventory() {
-            player.getInventory().setHelmet((data.getItemStack(id + "Inventory.Armor.Helmet")));
-            player.getInventory().setChestplate((data.getItemStack(id + "Inventory.Armor.Chestplate")));
-            player.getInventory().setLeggings((data.getItemStack(id + "Inventory.Armor.Leggings")));
-            player.getInventory().setBoots((data.getItemStack(id + "Inventory.Armor.Boots")));
-            player.getInventory().setItemInOffHand((data.getItemStack(id + "Inventory.Armor.Secondary")));
+        player.getInventory().setHelmet((data.getItemStack(id + "Inventory.Armor.Helmet")));
+        player.getInventory().setChestplate((data.getItemStack(id + "Inventory.Armor.Chestplate")));
+        player.getInventory().setLeggings((data.getItemStack(id + "Inventory.Armor.Leggings")));
+        player.getInventory().setBoots((data.getItemStack(id + "Inventory.Armor.Boots")));
+        player.getInventory().setItemInOffHand((data.getItemStack(id + "Inventory.Armor.Secondary")));
     }
 
     public void saveInventory() {
