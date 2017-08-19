@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.nifheim.beelzebu.rpgcore.characters.branch.BranchType;
-import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package net.nifheim.beelzebu.rpgcore.characters;
 
-import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 

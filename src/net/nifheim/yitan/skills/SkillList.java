@@ -9,8 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import net.nifheim.yitan.itemlorestats.Main;
-import net.nifheim.yitan.itemlorestats.PlayerStats;
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import net.nifheim.yitan.skills.List.WindStep;
 
 public class SkillList {

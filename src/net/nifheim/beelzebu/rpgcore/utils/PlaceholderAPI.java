@@ -1,7 +1,7 @@
 package net.nifheim.beelzebu.rpgcore.utils;
 
 import java.text.DecimalFormat;
-import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.lorestats.Main;
 import me.clip.placeholderapi.external.EZPlaceholderHook;
 import org.bukkit.entity.Player;
 

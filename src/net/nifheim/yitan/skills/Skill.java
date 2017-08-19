@@ -2,7 +2,7 @@ package net.nifheim.yitan.skills;
 
 import org.bukkit.entity.Player;
 
-import net.nifheim.yitan.itemlorestats.PlayerStats;
+import net.nifheim.yitan.lorestats.PlayerStats;
 
 public class Skill {
 

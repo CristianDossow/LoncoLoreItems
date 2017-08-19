@@ -1,6 +1,6 @@
 package net.nifheim.beelzebu.rpgcore.commands;
 
-import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

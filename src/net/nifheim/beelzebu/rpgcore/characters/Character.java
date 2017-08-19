@@ -2,7 +2,7 @@ package net.nifheim.beelzebu.rpgcore.characters;
 
 import java.util.UUID;
 import net.nifheim.beelzebu.rpgcore.utils.LocationSerializer;
-import net.nifheim.yitan.itemlorestats.Main;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;

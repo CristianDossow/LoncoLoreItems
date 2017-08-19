@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import net.nifheim.yitan.itemlorestats.Main;
-import net.nifheim.yitan.itemlorestats.PlayerStats;
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
