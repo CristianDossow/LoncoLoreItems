@@ -18,18 +18,18 @@ public class DataManager {
 
     private final Main plugin;
     private final Player player;
-    private File dataFolder;
-    private File dataFile;
+    private final File dataFolder;
+    private final File dataFile;
     private FileConfiguration data;
 
     public DataManager(Player p) {
         plugin = Main.getInstance();
         player = p;
+        dataFolder = new File(plugin.getDataFolder(), "userdata/");
+        dataFile = new File(plugin.getDataFolder(), "userdata/" + player.getName() + ".yml");
     }
 
     public FileConfiguration getData() {
-        dataFolder = new File(plugin.getDataFolder(), "userdata/");
-        dataFile = new File(plugin.getDataFolder(), "userdata/" + player.getName() + ".yml");
         if (!dataFile.exists()) {
             try {
                 dataFolder.mkdirs();
@@ -67,5 +67,9 @@ public class DataManager {
         } catch (IOException ex) {
             Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public File getFile() {
+        return dataFile;
     }
 }
