@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
  *
  * @author Beelzebu
  */
-public class Branch {
+public abstract class Branch {
 
     private final Main plugin = Main.getInstance();
     private final BranchType type;
