@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
+import net.nifheim.beelzebu.utils.StatsSaveAPI;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
 

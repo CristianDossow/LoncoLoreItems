@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.commands;
+package net.nifheim.beelzebu.commands;
 
 import java.io.File;
 import java.io.IOException;

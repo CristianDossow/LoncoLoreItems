@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.utils;
+package net.nifheim.beelzebu.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

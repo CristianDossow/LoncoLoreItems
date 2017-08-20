@@ -1,7 +1,7 @@
 package net.nifheim.yitan.items;
 
 import java.text.DecimalFormat;
-import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
+import net.nifheim.beelzebu.utils.ActionBarAPI;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

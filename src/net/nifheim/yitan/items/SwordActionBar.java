@@ -2,7 +2,7 @@ package net.nifheim.yitan.items;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
-import net.nifheim.beelzebu.rpgcore.utils.ActionBarAPI;
+import net.nifheim.beelzebu.utils.ActionBarAPI;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

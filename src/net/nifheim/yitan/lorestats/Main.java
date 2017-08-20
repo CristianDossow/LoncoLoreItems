@@ -1,5 +1,13 @@
 package net.nifheim.yitan.lorestats;
 
+import net.nifheim.beelzebu.commands.CharacterCommand;
+import net.nifheim.beelzebu.commands.TestCommand;
+import net.nifheim.beelzebu.commands.StatsCommand;
+import net.nifheim.beelzebu.utils.MySQL;
+import net.nifheim.beelzebu.utils.DataManager;
+import net.nifheim.beelzebu.utils.StatsSaveAPI;
+import net.nifheim.beelzebu.utils.PlaceholderAPI;
+import net.nifheim.beelzebu.utils.ActionBarAPI;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_Random;
@@ -43,9 +51,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.citizensnpcs.Citizens;
 import net.milkbowl.vault.Vault;
-import net.nifheim.beelzebu.rpgcore.characters.Account;
-import net.nifheim.beelzebu.rpgcore.commands.*;
-import net.nifheim.beelzebu.rpgcore.utils.*;
+import net.nifheim.beelzebu.characters.Account;
 import net.nifheim.yitan.lorestats.damage.DamageSystem;
 import net.nifheim.yitan.lorestats.damage.EnvironmentalDamage;
 import net.nifheim.yitan.lorestats.damage.PotionListener;

@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.characters.branch;
+package net.nifheim.beelzebu.characters.branch;
 
 /**
  *

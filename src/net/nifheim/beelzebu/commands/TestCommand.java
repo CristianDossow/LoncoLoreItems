@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.commands;
+package net.nifheim.beelzebu.commands;
 
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.command.Command;

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.nifheim.beelzebu.rpgcore.utils.StatsSaveAPI;
+import net.nifheim.beelzebu.utils.StatsSaveAPI;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.Bukkit;
@@ -37,7 +37,6 @@ public class PlayerJoinListener implements Listener {
             Main.getInstance().playersStats.put(playerFinal.getUniqueId(), ps);
             // ----------------- NEW DATA
             plugin.getDataManager(playerFinal).loadData();
-
             // ----------------- OLD DATA
             if (!new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {

@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.commands;
+package net.nifheim.beelzebu.commands;
 
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.command.Command;
@@ -34,7 +34,7 @@ public class CharacterCommand implements CommandExecutor {
             int id;
             try {
                 id = Integer.parseInt(args[1]);
-                plugin.getAccount(sender).loadCharacter(id);
+                plugin.getAccount(sender).loadCharacter(id).loadInventory();
             } catch (NumberFormatException ex) {
                 sender.sendMessage("The character id must be a number.");
             }

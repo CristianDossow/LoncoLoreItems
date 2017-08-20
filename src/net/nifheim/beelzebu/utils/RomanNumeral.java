@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.utils;
+package net.nifheim.beelzebu.utils;
 
 public class RomanNumeral {
 

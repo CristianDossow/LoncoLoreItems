@@ -1,10 +1,10 @@
-package net.nifheim.beelzebu.rpgcore.utils;
+package net.nifheim.beelzebu.utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.nifheim.beelzebu.rpgcore.characters.branch.BranchType;
+import net.nifheim.beelzebu.characters.branch.BranchType;
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

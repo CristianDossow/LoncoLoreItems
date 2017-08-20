@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.utils;
+package net.nifheim.beelzebu.utils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

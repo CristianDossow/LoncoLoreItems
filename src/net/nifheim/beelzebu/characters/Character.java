@@ -1,8 +1,8 @@
-package net.nifheim.beelzebu.rpgcore.characters;
+package net.nifheim.beelzebu.characters;
 
 import java.util.UUID;
-import net.nifheim.beelzebu.rpgcore.utils.DataManager;
-import net.nifheim.beelzebu.rpgcore.utils.LocationSerializer;
+import net.nifheim.beelzebu.utils.DataManager;
+import net.nifheim.beelzebu.utils.LocationSerializer;
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

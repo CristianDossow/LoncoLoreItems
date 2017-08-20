@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.utils;
+package net.nifheim.beelzebu.utils;
 
 import java.text.DecimalFormat;
 import net.nifheim.yitan.lorestats.Main;
