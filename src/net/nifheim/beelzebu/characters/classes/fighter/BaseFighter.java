@@ -1,4 +1,4 @@
-package net.nifheim.beelzebu.rpgcore.classes.fighter;
+package net.nifheim.beelzebu.characters.classes.fighter;
 
 import net.nifheim.beelzebu.characters.branch.BranchType;
 import net.nifheim.beelzebu.characters.classes.Fighter;
