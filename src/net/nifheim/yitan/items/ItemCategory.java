@@ -1,10 +1,9 @@
 package net.nifheim.yitan.items;
 
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-
-import net.nifheim.yitan.lorestats.Main;
 
 public class ItemCategory {
 

@@ -1,7 +1,7 @@
 package net.nifheim.yitan.lorestats.damage;
 
-import net.nifheim.yitan.lorestats.durability.Durability;
 import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.durability.Durability;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

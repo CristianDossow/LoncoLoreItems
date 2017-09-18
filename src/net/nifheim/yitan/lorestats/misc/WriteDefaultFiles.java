@@ -1,9 +1,9 @@
 package net.nifheim.yitan.lorestats.misc;
 
-import net.nifheim.yitan.lorestats.Main;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

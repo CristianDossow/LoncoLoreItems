@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import net.nifheim.beelzebu.utils.StatsSaveAPI;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.Bukkit;
-
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

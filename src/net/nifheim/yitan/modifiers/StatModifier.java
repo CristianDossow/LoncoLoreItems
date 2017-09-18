@@ -3,8 +3,6 @@ package net.nifheim.yitan.modifiers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.nifheim.yitan.skills.List.WindStep;
-
 public class StatModifier {
 
     int id;

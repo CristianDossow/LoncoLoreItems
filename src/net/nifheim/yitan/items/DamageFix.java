@@ -2,14 +2,12 @@ package net.nifheim.yitan.items;
 
 import java.util.HashMap;
 import java.util.UUID;
-
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
-
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
 
 public class DamageFix {
 

@@ -1,9 +1,9 @@
 package net.nifheim.yitan.lorestats.itemgeneration;
 
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.utils.Util_Random;
 import java.util.List;
 import java.util.logging.Level;
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.utils.Util_Random;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Prefix {

@@ -3,13 +3,11 @@ package net.nifheim.yitan.lorestats;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import net.nifheim.yitan.items.ItemCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import net.nifheim.yitan.items.ItemCategory;
 
 public class PlayerStatsFormules {
 

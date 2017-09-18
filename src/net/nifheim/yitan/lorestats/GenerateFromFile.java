@@ -1,7 +1,7 @@
 package net.nifheim.yitan.lorestats;
 
-import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import java.io.File;
+import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

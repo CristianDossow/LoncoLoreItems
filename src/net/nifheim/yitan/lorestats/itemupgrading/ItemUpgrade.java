@@ -1,9 +1,9 @@
 package net.nifheim.yitan.lorestats.itemupgrading;
 
+import java.util.List;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -1,16 +1,14 @@
 package net.nifheim.yitan.lorestats;
 
-import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import net.nifheim.yitan.items.EspecialAtributes;
+import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
 import net.nifheim.yitan.lorestats.utils.Util_RPGInventory;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;

@@ -1,12 +1,8 @@
 package net.nifheim.yitan.lorestats.listeners;
 
-import net.nifheim.yitan.lorestats.Main;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 
 public class CreatureSpawnListener implements Listener {
 

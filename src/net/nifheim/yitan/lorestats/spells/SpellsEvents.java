@@ -1,10 +1,10 @@
 package net.nifheim.yitan.lorestats.spells;
 
+import java.io.File;
+import java.util.logging.Level;
 import net.nifheim.yitan.lorestats.GearStats;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
-import java.io.File;
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

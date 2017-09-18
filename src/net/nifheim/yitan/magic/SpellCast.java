@@ -1,14 +1,13 @@
 package net.nifheim.yitan.magic;
 
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.Location;
 import org.bukkit.entity.LlamaSpit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
-
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
 
 public class SpellCast {
 

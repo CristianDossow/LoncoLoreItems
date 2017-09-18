@@ -1,14 +1,11 @@
 package net.nifheim.yitan.lorestats;
 
+import java.util.List;
 import net.nifheim.yitan.items.EspecialAtributes;
-
 import net.nifheim.yitan.lorestats.enchants.Vanilla_Sharpness;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
 import net.nifheim.yitan.lorestats.utils.Util_Material;
-
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

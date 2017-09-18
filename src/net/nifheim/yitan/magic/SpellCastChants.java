@@ -1,21 +1,19 @@
 package net.nifheim.yitan.magic;
 
-import java.util.Iterator;
-import java.util.List;
-
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.CircleEffect;
 import de.slikey.effectlib.effect.HelixEffect;
 import de.slikey.effectlib.util.ParticleEffect;
+import java.util.Iterator;
+import java.util.List;
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import net.nifheim.yitan.modifiers.StatModifier;
 import net.nifheim.yitan.modifiers.StatModifierType;
 import net.nifheim.yitan.modifiers.StatType;
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class SpellCastChants extends BukkitRunnable {
 

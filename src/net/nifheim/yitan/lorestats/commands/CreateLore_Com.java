@@ -1,14 +1,12 @@
 package net.nifheim.yitan.lorestats.commands;
 
+import java.util.ArrayList;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
-import java.util.ArrayList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class CreateLore_Com {

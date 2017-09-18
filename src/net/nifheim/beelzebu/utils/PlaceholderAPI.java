@@ -1,8 +1,8 @@
 package net.nifheim.beelzebu.utils;
 
 import java.text.DecimalFormat;
-import net.nifheim.yitan.lorestats.Main;
 import me.clip.placeholderapi.external.EZPlaceholderHook;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.entity.Player;
 
 public class PlaceholderAPI extends EZPlaceholderHook {

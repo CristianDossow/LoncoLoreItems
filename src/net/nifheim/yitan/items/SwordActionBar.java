@@ -3,12 +3,10 @@ package net.nifheim.yitan.items;
 import java.text.DecimalFormat;
 import java.util.Objects;
 import net.nifheim.beelzebu.utils.ActionBarAPI;
-
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import net.nifheim.yitan.lorestats.Main;
 
 public class SwordActionBar extends BukkitRunnable {
 

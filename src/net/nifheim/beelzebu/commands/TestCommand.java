@@ -1,5 +1,6 @@
 package net.nifheim.beelzebu.commands;
 
+import net.nifheim.beelzebu.utils.ItemSerializer;
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,12 +24,12 @@ public class TestCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             if (args[0].equalsIgnoreCase("items")) {
-                plugin.getConfig().set("Test.ItemSerialized", p.getInventory().getItemInMainHand());
+                plugin.getConfig().set("Test.ItemSerialized", ItemSerializer.serialize(p.getInventory().getItemInMainHand()));
                 plugin.saveConfig();
                 plugin.reloadConfig();
                 p.sendMessage("serialized");
             } else if (args[0].equalsIgnoreCase("itemd")) {
-                p.getInventory().setItemInMainHand(plugin.getConfig().getItemStack("Test.ItemSerialized"));
+                p.getInventory().setItemInMainHand(ItemSerializer.deserialize(plugin.getConfig().getString("Test.ItemSerialized")));
             } else {
                 p.sendMessage("");
             }

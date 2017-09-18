@@ -1,9 +1,9 @@
 package net.nifheim.yitan.lorestats.utils;
 
-import net.nifheim.yitan.lorestats.Main;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.entity.Entity;
 
 public class Util_Citizens {

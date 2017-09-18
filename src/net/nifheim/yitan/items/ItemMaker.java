@@ -3,15 +3,13 @@ package net.nifheim.yitan.items;
 import java.util.ArrayList;
 import java.util.List;
 import net.nifheim.yitan.lorestats.Main;
-
+import net.nifheim.yitan.magic.Spell;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import net.nifheim.yitan.magic.Spell;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class ItemMaker {
 

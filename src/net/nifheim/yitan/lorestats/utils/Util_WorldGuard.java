@@ -1,11 +1,10 @@
 package net.nifheim.yitan.lorestats.utils;
 
-import net.nifheim.yitan.lorestats.Main;
-
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.entity.Player;
 
 public class Util_WorldGuard {

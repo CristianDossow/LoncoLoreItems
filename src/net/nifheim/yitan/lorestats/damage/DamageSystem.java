@@ -1,37 +1,18 @@
 package net.nifheim.yitan.lorestats.damage;
 
-import java.text.DecimalFormat;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.metadata.Metadatable;
-import org.bukkit.plugin.Plugin;
-
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
+import java.text.DecimalFormat;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import net.md_5.bungee.api.ChatColor;
+import net.nifheim.yitan.items.Backstab;
+import net.nifheim.yitan.items.EspecialAtributes;
+import net.nifheim.yitan.items.ItemCategory;
+import net.nifheim.yitan.items.LoreItemMaker;
 import net.nifheim.yitan.lorestats.Classes;
 import net.nifheim.yitan.lorestats.GearStats;
 import net.nifheim.yitan.lorestats.Main;
@@ -55,6 +36,7 @@ import net.nifheim.yitan.lorestats.enchants.Reflect;
 import net.nifheim.yitan.lorestats.enchants.Vanilla_Power;
 import net.nifheim.yitan.lorestats.enchants.Vanilla_Sharpness;
 import net.nifheim.yitan.lorestats.enchants.Wither;
+import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
 import net.nifheim.yitan.lorestats.utils.Util_Citizens;
 import net.nifheim.yitan.lorestats.utils.Util_EntityManager;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
@@ -62,14 +44,29 @@ import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
 import net.nifheim.yitan.lorestats.utils.Util_Material;
 import net.nifheim.yitan.lorestats.utils.Util_Random;
 import net.nifheim.yitan.lorestats.utils.Util_WorldGuard;
-import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
-import net.nifheim.yitan.items.Backstab;
-import net.nifheim.yitan.items.EspecialAtributes;
-import net.nifheim.yitan.items.ItemCategory;
-import net.nifheim.yitan.items.LoreItemMaker;
 import net.nifheim.yitan.magic.Spell;
 import net.nifheim.yitan.magic.SpellCast;
 import net.nifheim.yitan.magic.SpellsList;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.metadata.Metadatable;
+import org.bukkit.plugin.Plugin;
 
 public class DamageSystem implements org.bukkit.event.Listener {
 

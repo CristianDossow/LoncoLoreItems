@@ -2,14 +2,12 @@ package net.nifheim.yitan.lorestats.damage;
 
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
 public class PotionListener implements org.bukkit.event.Listener {

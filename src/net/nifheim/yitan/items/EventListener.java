@@ -1,11 +1,15 @@
 package net.nifheim.yitan.items;
 
+import io.lumine.xikage.mythicmobs.MythicMobs;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
+import net.nifheim.yitan.lorestats.PlayerStatsFormules;
+import net.nifheim.yitan.lorestats.durability.Durability;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -38,12 +42,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
-
-import io.lumine.xikage.mythicmobs.MythicMobs;
-import net.nifheim.yitan.lorestats.durability.Durability;
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
-import net.nifheim.yitan.lorestats.PlayerStatsFormules;
 
 public class EventListener implements Listener {
 

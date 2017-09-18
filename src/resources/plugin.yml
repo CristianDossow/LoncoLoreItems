@@ -1,4 +1,4 @@
-main: net.nifheim.yitan.itemlorestats.Main
+main: net.nifheim.yitan.lorestats.Main
 name: LoncoLoreItems
 version: ${project.version}
 author: YitanTribal, Beelzebu

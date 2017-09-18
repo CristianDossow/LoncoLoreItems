@@ -1,7 +1,6 @@
 package net.nifheim.yitan.lorestats.listeners;
 
 import net.nifheim.yitan.lorestats.Main;
-
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

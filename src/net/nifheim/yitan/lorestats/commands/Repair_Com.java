@@ -1,10 +1,10 @@
 package net.nifheim.yitan.lorestats.commands;
 
+import java.util.List;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.repair.Repair;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

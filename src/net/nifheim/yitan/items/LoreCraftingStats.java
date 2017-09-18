@@ -2,12 +2,10 @@ package net.nifheim.yitan.items;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
-
-import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
-
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStatsFormules;
+import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
 
 public class LoreCraftingStats {
 

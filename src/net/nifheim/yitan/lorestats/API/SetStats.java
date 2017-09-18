@@ -1,8 +1,8 @@
 package net.nifheim.yitan.lorestats.API;
 
+import java.util.List;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

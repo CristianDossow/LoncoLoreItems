@@ -1,10 +1,8 @@
 package net.nifheim.yitan.lorestats.itemupgrading;
 
 import net.nifheim.yitan.lorestats.Main;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
-import org.bukkit.inventory.PlayerInventory;
 
 public class PlayerLevelEvents implements org.bukkit.event.Listener {
 

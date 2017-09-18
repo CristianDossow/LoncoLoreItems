@@ -3,8 +3,6 @@ package net.nifheim.yitan.items;
 import java.util.ArrayList;
 import java.util.List;
 import net.nifheim.yitan.lorestats.Main;
-
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

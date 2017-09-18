@@ -1,7 +1,7 @@
 package net.nifheim.yitan.lorestats.spells;
 
-import net.nifheim.yitan.lorestats.Main;
 import java.io.File;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;

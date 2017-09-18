@@ -1,7 +1,9 @@
 package net.nifheim.yitan.lorestats.durability;
 
 import java.util.List;
-
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.enchants.Vanilla_Unbreaking;
+import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -15,10 +17,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.enchants.Vanilla_Unbreaking;
-import net.nifheim.yitan.lorestats.utils.Util_Colours;
 
 public class DurabilityEvents implements org.bukkit.event.Listener {
 

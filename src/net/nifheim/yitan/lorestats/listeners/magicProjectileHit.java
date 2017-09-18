@@ -1,9 +1,17 @@
 package net.nifheim.yitan.lorestats.listeners;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.Map;
-
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
+import net.nifheim.yitan.lorestats.utils.Util_WorldGuard;
+import net.nifheim.yitan.magic.Spell;
+import net.nifheim.yitan.magic.SpellsList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -15,17 +23,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
-import net.nifheim.yitan.lorestats.utils.Util_WorldGuard;
-import net.nifheim.yitan.magic.Spell;
-import net.nifheim.yitan.magic.SpellsList;
 
 /**
  * no es un evento propiamente tal, pero el projecthitevent no reconoce al

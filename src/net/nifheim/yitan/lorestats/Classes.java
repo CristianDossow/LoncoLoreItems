@@ -1,8 +1,8 @@
 package net.nifheim.yitan.lorestats;
 
+import java.util.ArrayList;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
-import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

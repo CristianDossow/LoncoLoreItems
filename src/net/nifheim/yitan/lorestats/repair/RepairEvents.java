@@ -1,7 +1,6 @@
 package net.nifheim.yitan.lorestats.repair;
 
 import net.nifheim.yitan.lorestats.Main;
-
 import org.bukkit.Material;
 
 public class RepairEvents implements org.bukkit.event.Listener {

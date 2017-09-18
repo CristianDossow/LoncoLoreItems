@@ -1,10 +1,10 @@
 package net.nifheim.yitan.lorestats.itemgeneration;
 
+import java.util.logging.Level;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
 import net.nifheim.yitan.lorestats.utils.Util_Random;
-import java.util.logging.Level;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class StatRanges {

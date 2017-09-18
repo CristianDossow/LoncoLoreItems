@@ -1,8 +1,5 @@
 package net.nifheim.yitan.magic;
 
-import org.bukkit.entity.Projectile;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.ConeEffect;
 import de.slikey.effectlib.effect.DragonEffect;
@@ -10,6 +7,8 @@ import de.slikey.effectlib.effect.SphereEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.listeners.magicProjectileHit;
+import org.bukkit.entity.Projectile;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class SpellParticles extends BukkitRunnable {
 

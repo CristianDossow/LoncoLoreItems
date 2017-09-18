@@ -1,8 +1,8 @@
 package net.nifheim.yitan.lorestats.itemgeneration;
 
-import net.nifheim.yitan.lorestats.Main;
 import java.io.File;
 import java.io.IOException;
+import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;

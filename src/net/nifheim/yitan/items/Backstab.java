@@ -1,10 +1,8 @@
 package net.nifheim.yitan.items;
 
+import java.text.DecimalFormat;
 import net.md_5.bungee.api.ChatColor;
 import net.nifheim.yitan.lorestats.PlayerStats;
-
-import java.text.DecimalFormat;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 

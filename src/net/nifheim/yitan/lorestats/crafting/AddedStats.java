@@ -1,11 +1,5 @@
 package net.nifheim.yitan.lorestats.crafting;
 
-import net.nifheim.yitan.lorestats.utils.Util_Colours;
-import net.nifheim.yitan.lorestats.utils.Util_Format;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.inventory.PrepareItemCraftEvent;
-
 public class AddedStats implements org.bukkit.event.Listener {
     /*
     Util_Colours util_Colours = new Util_Colours();

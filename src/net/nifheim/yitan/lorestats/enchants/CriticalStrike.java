@@ -1,9 +1,9 @@
 package net.nifheim.yitan.lorestats.enchants;
 
-import net.nifheim.yitan.lorestats.durability.Durability;
 import net.nifheim.yitan.lorestats.GearStats;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.SetBonuses;
+import net.nifheim.yitan.lorestats.durability.Durability;
 import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
 import net.nifheim.yitan.lorestats.utils.Util_EntityManager;
 import net.nifheim.yitan.lorestats.utils.Util_Format;

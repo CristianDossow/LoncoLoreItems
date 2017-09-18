@@ -1,9 +1,9 @@
 package net.nifheim.yitan.lorestats.itemgeneration;
 
+import java.util.List;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_Random;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 

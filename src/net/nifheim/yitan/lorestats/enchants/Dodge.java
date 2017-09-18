@@ -1,20 +1,19 @@
 package net.nifheim.yitan.lorestats.enchants;
 
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
 import net.nifheim.yitan.lorestats.GearStats;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
 import net.nifheim.yitan.lorestats.SetBonuses;
 import net.nifheim.yitan.lorestats.durability.Durability;
+import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
 import net.nifheim.yitan.lorestats.utils.Util_Colours;
 import net.nifheim.yitan.lorestats.utils.Util_EntityManager;
 import net.nifheim.yitan.lorestats.utils.Util_Format;
 import net.nifheim.yitan.lorestats.utils.Util_GetResponse;
 import net.nifheim.yitan.lorestats.utils.Util_Random;
-import net.nifheim.yitan.lorestats.utils.InvSlot.GetSlots;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Dodge {
 

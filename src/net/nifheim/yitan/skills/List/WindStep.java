@@ -1,18 +1,17 @@
 package net.nifheim.yitan.skills.List;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Sound;
-
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.effect.CircleEffect;
 import de.slikey.effectlib.util.ParticleEffect;
+import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import net.nifheim.yitan.modifiers.StatModifier;
 import net.nifheim.yitan.modifiers.StatModifierType;
 import net.nifheim.yitan.modifiers.StatType;
-import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
 import net.nifheim.yitan.skills.Skill;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.Sound;
 
 public class WindStep extends Skill {
 

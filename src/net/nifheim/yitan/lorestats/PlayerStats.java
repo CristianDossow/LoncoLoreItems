@@ -4,13 +4,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import net.nifheim.yitan.modifiers.StatModifier;
 import net.nifheim.yitan.modifiers.StatModifierType;
 import net.nifheim.yitan.modifiers.StatType;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class PlayerStats {
 
