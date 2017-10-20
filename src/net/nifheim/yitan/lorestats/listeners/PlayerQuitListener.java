@@ -2,10 +2,6 @@ package net.nifheim.yitan.lorestats.listeners;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.nifheim.beelzebu.utils.StatsSaveAPI;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -30,11 +26,6 @@ public class PlayerQuitListener implements Listener {
             plugin.playersStats.remove(event.getPlayer().getUniqueId());
         });
 
-        try {
-            StatsSaveAPI.saveAllStats(event.getPlayer());
-        } catch (SQLException ex) {
-            Logger.getLogger(PlayerQuitListener.class.getName()).log(Level.SEVERE, null, ex);
-        }
         if ((event.getPlayer() instanceof Player)) {
             Player player = event.getPlayer();
             Main.getInstance().damagefix.attackCooldownsEnd.remove(player.getUniqueId());

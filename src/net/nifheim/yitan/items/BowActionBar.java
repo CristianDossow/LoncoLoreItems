@@ -29,10 +29,10 @@ public class BowActionBar extends BukkitRunnable {
                 double weaponspeed = EspecialAtributes.getWeaponSpeed(player.getInventory().getItemInMainHand());
                 Long fulltime = (long) (weaponspeed * 1000);
                 if ((double) time / (double) fulltime < 1) {
-                    ActionBarAPI.sendActionBar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.GREEN + "" + ChatColor.BOLD + (int) ((double) time / (double) fulltime * 100) + "%", 10);
+                    ActionBarAPI.sendActionBar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.GREEN + "" + ChatColor.BOLD + (int) ((double) time / (double) fulltime * 100) + "%");
                 } else {
 
-                    ActionBarAPI.sendActionBar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.RED + "" + ChatColor.BOLD + "Listo!", 40);
+                    ActionBarAPI.sendActionBar(player, ChatColor.YELLOW + "" + ChatColor.BOLD + "Poder: " + ChatColor.RED + "" + ChatColor.BOLD + "Listo!");
                     if (startime + fulltime + 2000 < System.currentTimeMillis()) {
                         this.cancel();
                     }

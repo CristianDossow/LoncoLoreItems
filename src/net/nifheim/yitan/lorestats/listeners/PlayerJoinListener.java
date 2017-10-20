@@ -2,10 +2,6 @@ package net.nifheim.yitan.lorestats.listeners;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.nifheim.beelzebu.utils.StatsSaveAPI;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.Bukkit;
@@ -75,15 +71,6 @@ public class PlayerJoinListener implements Listener {
 
             Main.getInstance().updateHealth(playerFinal);
             Main.getInstance().updatePlayerSpeed(playerFinal);
-            try {
-                StatsSaveAPI.setAllStats(event.getPlayer());
-            } catch (SQLException ex) {
-                if (ex.getSQLState().equals("closed")) {
-                    Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Seems that the database connection is closed.");
-                } else {
-                    Logger.getLogger(PlayerJoinListener.class.getName()).log(Level.WARNING, "Something was wrong executing this query, the error code is: " + ex.getErrorCode(), ex.getCause());
-                }
-            }
         });
 
         Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {

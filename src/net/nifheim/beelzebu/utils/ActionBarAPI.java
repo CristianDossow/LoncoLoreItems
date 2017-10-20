@@ -3,10 +3,8 @@ package net.nifheim.beelzebu.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class ActionBarAPI {
 
@@ -57,39 +55,9 @@ public class ActionBarAPI {
         }
     }
 
-    public static void sendActionBar(final Player player, final String message, int duration) {
-        sendActionBar(player, message);
-
-        if (duration >= 0) {
-            // Sends empty message at the end of the duration. Allows messages shorter than 3 seconds, ensures precision.
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    sendActionBar(player, "");
-                }
-            }.runTaskLater(Main.getInstance(), duration + 1);
-        }
-
-        // Re-sends the messages every 3 seconds so it doesn't go away from the player's screen.
-//        while (duration > 60) {
-//            duration -= 60;
-//            int sched = duration % 60;
-//            new BukkitRunnable() {
-//                @Override
-//                public void run() {
-//                    sendActionBar(player, message);
-//                }
-//            }.runTaskLater(Main.getInstance(), (long) sched);
-//        }
-    }
-
     public static void sendActionBarToAllPlayers(String message) {
-        sendActionBarToAllPlayers(message, -1);
-    }
-
-    public static void sendActionBarToAllPlayers(String message, int duration) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            sendActionBar(p, message, duration);
-        }
+        Bukkit.getOnlinePlayers().forEach((p) -> {
+            sendActionBar(p, message);
+        });
     }
 }

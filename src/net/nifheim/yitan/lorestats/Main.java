@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -21,9 +21,7 @@ import net.nifheim.beelzebu.commands.StatsCommand;
 import net.nifheim.beelzebu.commands.TestCommand;
 import net.nifheim.beelzebu.utils.ActionBarAPI;
 import net.nifheim.beelzebu.utils.DataManager;
-import net.nifheim.beelzebu.utils.MySQL;
 import net.nifheim.beelzebu.utils.PlaceholderAPI;
-import net.nifheim.beelzebu.utils.StatsSaveAPI;
 import net.nifheim.yitan.items.DamageFix;
 import net.nifheim.yitan.items.EventListener;
 import net.nifheim.yitan.lorestats.damage.DamageSystem;
@@ -51,7 +49,7 @@ import net.nifheim.yitan.skills.SkillListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.boss.BossBar;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -71,7 +69,6 @@ import org.bukkit.scoreboard.Scoreboard;
 public class Main extends JavaPlugin {
 
     private static Main plugin;
-    private static MySQL mysql;
     private DataManager dataManager;
     public Main instance;
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
@@ -88,12 +85,11 @@ public class Main extends JavaPlugin {
     public Util_Citizens util_Citizens;
     public Util_Vault util_Vault;
     public Util_WorldGuard util_WorldGuard;
-    public HashMap<String, Long> spellCooldowns = new HashMap();
-    public HashMap<String, Long> internalCooldowns = new HashMap();
-    public HashMap<String, Boolean> combatLogVisible = new HashMap();
-    public HashMap<String, Double> setBonusesModifiers = new HashMap();
-    public HashMap<UUID, PlayerStats> playersStats = new HashMap();
-    public HashMap<Player, BossBar> manaBar = new HashMap();
+    public HashMap<String, Long> spellCooldowns = new HashMap<>();
+    public HashMap<String, Long> internalCooldowns = new HashMap<>();
+    public HashMap<String, Boolean> combatLogVisible = new HashMap<>();
+    public HashMap<String, Double> setBonusesModifiers = new HashMap<>();
+    public HashMap<UUID, PlayerStats> playersStats = new HashMap<>();
 
     public DamageFix damagefix;
     public EventListener eventlistener;
@@ -121,10 +117,6 @@ public class Main extends JavaPlugin {
 
     BukkitTask fastTasks;
 
-    public MySQL getMySQL() {
-        return mysql;
-    }
-
     public static Main getInstance() {
         return plugin;
     }
@@ -138,7 +130,6 @@ public class Main extends JavaPlugin {
         plugin = this;
         instance = this;
 
-        mysql = new MySQL();
         aba = new ActionBarAPI();
         aba.loadActionBar();
 
@@ -190,7 +181,7 @@ public class Main extends JavaPlugin {
 
         spigotStatCapWarning.updateSpigotValues();
 
-        fastTasks = new MainFastRunnable(Main.getInstance()).runTaskTimer(Main.getInstance(), 10, 10);
+        fastTasks = new MainFastRunnable(this).runTaskTimerAsynchronously(this, 20, 10);
 
         Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
             try {
@@ -198,19 +189,13 @@ public class Main extends JavaPlugin {
                 PlayerDataConfig = new YamlConfiguration();
                 PlayerDataConfig.load(new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
                 ps.manaCurrent = PlayerDataConfig.getDouble("extra.mana");
-            } catch (IOException | InvalidConfigurationException e) {
+            }
+            catch (IOException | InvalidConfigurationException e) {
                 System.out.println("*********** Failed to load player data for " + player.getName() + " when logging in! ***********");
             }
         });
-        mysql.SQLConnection();
         Bukkit.getOnlinePlayers().forEach((player) -> {
-            try {
-                getPlayerStats(player);
-                StatsSaveAPI.saveAllStats(player);
-                StatsSaveAPI.setAllStats(player);
-            } catch (SQLException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
-            }
+            getPlayerStats(player);
         });
         scoreboard = Bukkit.getServer().getScoreboardManager().getMainScoreboard();
         scoreboard.registerNewTeam("BlueCT");
@@ -229,23 +214,21 @@ public class Main extends JavaPlugin {
             scoreboard.getTeam("YellowCT").unregister();
         }
         Bukkit.getScheduler().cancelTasks(this);
-        manaBar.entrySet().forEach((m) -> {
-            m.getValue().removeAll();
-        });
         Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
             try {
                 PlayerStats ps = getPlayerStats(player);
                 PlayerDataConfig = new YamlConfiguration();
                 PlayerDataConfig.load(new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
                 PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
-                PlayerDataConfig.set("extra.maxHealth", Math.round(player.getMaxHealth()));
+                PlayerDataConfig.set("extra.maxHealth", Math.round(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
                 PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
                 PlayerDataConfig.set("extra.xp", player.getExp());
                 PlayerDataConfig.set("extra.level", player.getLevel());
                 PlayerDataConfig.set("extra.mana", ps.manaCurrent);
                 PlayerDataConfig.set("extra.combatLogVisible", combatLogVisible.get(player.getName()));
                 PlayerDataConfig.save(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
-            } catch (IOException | InvalidConfigurationException e) {
+            }
+            catch (IOException | InvalidConfigurationException e) {
                 System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
             }
         });
@@ -253,12 +236,7 @@ public class Main extends JavaPlugin {
             getDescription().getVersion()
         }));
         Bukkit.getOnlinePlayers().forEach((player) -> {
-            try {
-                getPlayerStats(player);
-                StatsSaveAPI.saveAllStats(player);
-            } catch (SQLException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't set the stats to the player " + player.getName() + " the error code is: " + ex.getErrorCode(), ex.getCause());
-            }
+            getPlayerStats(player);
         });
     }
 
@@ -302,7 +280,8 @@ public class Main extends JavaPlugin {
         try {
             Integer.parseInt(str);
             return true;
-        } catch (NumberFormatException nfe) {
+        }
+        catch (NumberFormatException nfe) {
         }
         return false;
     }
@@ -385,11 +364,11 @@ public class Main extends JavaPlugin {
     }
 
     public boolean isArmour(Material material) {
-        List<String> helmetList = (List<String>) getConfig().getList("materials.armour.helmet");
-        List<String> chestList = (List<String>) getConfig().getList("materials.armour.chest");
-        List<String> legsList = (List<String>) getConfig().getList("materials.armour.legs");
-        List<String> bootsList = (List<String>) getConfig().getList("materials.armour.boots");
-        List<String> armourList = new java.util.ArrayList();
+        List<String> helmetList = getConfig().getStringList("materials.armour.helmet");
+        List<String> chestList = getConfig().getStringList("materials.armour.chest");
+        List<String> legsList = getConfig().getStringList("materials.armour.legs");
+        List<String> bootsList = getConfig().getStringList("materials.armour.boots");
+        List<String> armourList = new ArrayList<>();
 
         armourList.addAll(helmetList);
         armourList.addAll(chestList);
@@ -397,7 +376,7 @@ public class Main extends JavaPlugin {
         armourList.addAll(bootsList);
 
         for (int i = 0; i < armourList.size(); i++) {
-            if (((String) armourList.get(i)).split(":")[0].equals(material.toString())) {
+            if (armourList.get(i).split(":")[0].equals(material.toString())) {
                 return true;
             }
         }
@@ -533,7 +512,7 @@ public class Main extends JavaPlugin {
 
             newHP = (int) newHP + Double.valueOf(gearStats.getHealthGear(player)).intValue();
 
-            player.setMaxHealth(newHP);
+            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(newHP);
 
             if (getConfig().getInt("healthScale") > 0) {
                 player.setHealthScale(getConfig().getDouble("healthScale"));
@@ -579,7 +558,8 @@ public class Main extends JavaPlugin {
             }
             out.close();
             in.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Can't copy the file " + file.getName() + " to the plugin data folder.", e.getCause());
         }
     }

@@ -310,10 +310,9 @@ public class PlayerStatsFormules {
                         if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
                             try {
                                 value += (Double.parseDouble(lore.replaceAll("[^0-9.+-]", "")) * multiplier);
-                            } catch (NumberFormatException e) {
-
                             }
-
+                            catch (NumberFormatException e) {
+                            }
                         }
                     }
                 }
@@ -322,7 +321,7 @@ public class PlayerStatsFormules {
         return value;
     }
 
-    static public int getItemLvl(ItemStack gear) {
+    public static int getItemLvl(ItemStack gear) {
         String stat = level.replaceAll(languageRegex, "");
         int value = 0;
         if (gear != null) {
@@ -330,15 +329,14 @@ public class PlayerStatsFormules {
                 if (gear.getItemMeta().getLore() != null) {
                     List<String> itemLore = gear.getItemMeta().getLore();
                     for (String line : itemLore) {
-                        String lore = ChatColor.stripColor(line.toString());
+                        String lore = ChatColor.stripColor(line);
                         lore = lore.toLowerCase();
                         if (lore.replaceAll(languageRegex, "").matches(stat.toLowerCase())) {
                             try {
                                 value += (Integer.parseInt(lore.replaceAll("[^0-9.+-]", "")));
-                            } catch (NumberFormatException e) {
-
                             }
-
+                            catch (NumberFormatException ignore) {
+                            }
                         }
                     }
                 }
