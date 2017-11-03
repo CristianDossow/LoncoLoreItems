@@ -3,6 +3,7 @@ package net.nifheim.yitan.magic;
 import de.slikey.effectlib.util.ParticleEffect;
 import java.util.ArrayList;
 import java.util.List;
+import net.nifheim.yitan.magic.spells.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Sound;
@@ -12,36 +13,17 @@ public class SpellsList {
     static String languageRegex = "[^A-Za-zñÑáéíóúÁÉÍÓÚ_]";
 
     public static Spell magicDard() {
-        Spell spell = new Spell("Dardo Mágico", 1, 1, 1, ParticleEffect.FIREWORKS_SPARK);
-        spell.directDamageAmount = 1;
-        spell.particleEffectSphere.add(ParticleEffect.FIREWORKS_SPARK);
-        spell.particleEffectSphereradio = 0.3;
-        spell.manaCost = 25;
-        spell.cooldown = 3000;
-        spell.lore.add("Hechizo básico");
-        spell.colorName = ChatColor.RED;
-        spell.soundOnCast = Sound.ENTITY_FIREWORK_LAUNCH;
-        spell.soundOnHit = Sound.ENTITY_PLAYER_BREATH;
+        Spell spell = new MagicDardSpell();
         return spell;
     }
 
     public static Spell fireBall() {
-        Spell spell = new Spell("Bola de Fuego", 1, 1, 1, ParticleEffect.FLAME);
-        spell.directDamageAmount = 1.2;
-        spell.particleEffectSphere.add(ParticleEffect.FLAME);
-        spell.particleEffectSphereradio = 0.3;
-        spell.lore.add("Hechizo de fuego");
-        spell.manaCost = 40;
-        spell.cooldown = 4000;
-        spell.fireTicks = 4;
-        spell.colorName = ChatColor.RED;
-        spell.soundOnCast = Sound.ENTITY_GHAST_SHOOT;
-        spell.soundOnHit = Sound.BLOCK_FIRE_AMBIENT;
+        Spell spell = new FireBallSpell();
         return spell;
     }
 
     public static Spell fireBlast() {
-        Spell spell = new Spell("Estallido de fuego", 1, 1, 1, ParticleEffect.FLAME);
+        Spell spell = new Spell("Estallido de fuego", 1, 1, 1, ParticleEffect.FLAME) {};
         spell.directDamageAmount = 1.4;
         spell.aoeDamageAmount = 0.5;
         spell.aoeDamageRange = 2;
@@ -65,7 +47,7 @@ public class SpellsList {
     }
 
     public static Spell thunder() {
-        Spell spell = new Spell("Ira Eléctrica", 1, 1, 1, ParticleEffect.VILLAGER_ANGRY);
+        Spell spell = new Spell("Ira Eléctrica", 1, 1, 1, ParticleEffect.VILLAGER_ANGRY) {};
         spell.directDamageAmount = 2;
         spell.particleEffectSphere.add(ParticleEffect.VILLAGER_ANGRY);
         spell.particleEffectSphereradio = 0.2;
@@ -83,7 +65,7 @@ public class SpellsList {
     }
 
     public static Spell Cataclism() {
-        Spell spell = new Spell("Cataclismo", 1, 1, 1, ParticleEffect.EXPLOSION_HUGE);
+        Spell spell = new Spell("Cataclismo", 1, 1, 1, ParticleEffect.EXPLOSION_HUGE) {};
         spell.particlesAmount = 1;
         spell.directDamageAmount = 3;
         spell.aoeDamageAmount = 1;
@@ -107,7 +89,7 @@ public class SpellsList {
     }
 
     public static Spell Explosion() {
-        Spell spell = new Spell("Explosion", 1, 1, 1, ParticleEffect.EXPLOSION_HUGE);
+        Spell spell = new Spell("Explosion", 1, 1, 1, ParticleEffect.EXPLOSION_HUGE) {};
         spell.particlesAmount = 4;
         spell.directDamageAmount = 20;
         spell.aoeDamageAmount = 5;

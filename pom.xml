@@ -9,8 +9,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <minimize>true</minimize>
-        <optimize>true</optimize>
     </properties>
     <repositories>
         <repository>
@@ -47,7 +45,7 @@
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <artifactId>spigot</artifactId>
             <version>1.12-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -114,13 +112,6 @@
                                     <include>de.slikey</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>de.slikey</pattern>
-                                    <shadedPattern>net.nifheim.yitan.itemlorestats.slikey</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <minimizeJar>${minimize}</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>

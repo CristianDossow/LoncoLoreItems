@@ -3,7 +3,6 @@ package net.nifheim.yitan.lorestats.listeners;
 import java.io.File;
 import java.io.IOException;
 import net.nifheim.yitan.lorestats.Main;
-import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,22 +14,21 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinListener implements Listener {
 
     private final Main plugin;
-    private static PlayerStats ps;
 
     public PlayerJoinListener(Main main) {
         plugin = main;
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        final Player playerFinal = event.getPlayer();
-        ps = new PlayerStats(playerFinal);
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        final Player playerFinal = e.getPlayer();
 
         // Async tasks
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            Main.getInstance().playersStats.put(playerFinal.getUniqueId(), ps);
             // ----------------- NEW DATA
-            plugin.getDataManager(playerFinal).loadData();
+            plugin.getAccount(p);
+            plugin.getAccount(p).getData().loadData();
             // ----------------- OLD DATA
             if (!new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
@@ -45,14 +43,14 @@ public class PlayerJoinListener implements Listener {
                     Main.getInstance().PlayerDataConfig.set("extra.xp", 0.0F);
                     Main.getInstance().PlayerDataConfig.set("extra.level", 0);
                     Main.getInstance().PlayerDataConfig.save(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml");
-                } catch (IOException e) {
+                } catch (IOException ex) {
                     System.out.println("*********** Failed to save player data for " + playerFinal.getName() + " when logging in! ***********");
                 }
             } else if (new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml").exists()) {
                 try {
                     Main.getInstance().PlayerDataConfig = new YamlConfiguration();
                     Main.getInstance().PlayerDataConfig.load(new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + playerFinal.getName() + ".yml"));
-                    ps.manaCurrent = Main.getInstance().PlayerDataConfig.getDouble("extra.mana");
+                    plugin.getPlayerStats(playerFinal).manaCurrent = Main.getInstance().PlayerDataConfig.getDouble("extra.mana");
                     playerFinal.setMaxHealth(Main.getInstance().PlayerDataConfig.getDouble("extra.maxHealth"));
                     playerFinal.setHealth(Main.getInstance().PlayerDataConfig.getDouble("extra.logoutHealth"));
                     playerFinal.setFoodLevel(Main.getInstance().PlayerDataConfig.getInt("extra.hunger"));
@@ -64,7 +62,7 @@ public class PlayerJoinListener implements Listener {
                     }
 
                     Main.getInstance().updateHealth(playerFinal);
-                } catch (IOException | InvalidConfigurationException e) {
+                } catch (IOException | InvalidConfigurationException ex) {
                     System.out.println("*********** Failed to load player data for " + playerFinal.getName() + " when logging in! ***********");
                 }
             }
@@ -74,7 +72,8 @@ public class PlayerJoinListener implements Listener {
         });
 
         Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
-            ps.UpdateAll();
+            plugin.getPlayerStats(playerFinal);
+            plugin.getPlayerStats(playerFinal).UpdateAll();
         }, 5L);
     }
 }

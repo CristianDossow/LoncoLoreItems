@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Sound;
 
-public class Spell {
+public abstract class Spell {
 
     public String name;
     public ChatColor colorName;
@@ -43,11 +43,10 @@ public class Spell {
 
     public int onHitType;
 
-    Sound soundOnCast;
-    Sound soundOnHit;
+    public Sound soundOnCast;
+    public Sound soundOnHit;
 
     public Spell(String name, int lvl, int castype, double speed, ParticleEffect hitEffect) {
-        super();
         this.colorName = ChatColor.GOLD;
         this.particleColor = Color.WHITE;
         this.name = name;

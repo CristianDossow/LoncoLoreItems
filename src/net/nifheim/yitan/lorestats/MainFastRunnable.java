@@ -9,17 +9,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class MainFastRunnable extends BukkitRunnable {
 
-    private final Main instance;
-    //HashMap<Player, BossBar> manaBar = new HashMap();
+    private final Main plugin;
 
-    public MainFastRunnable(Main plugin) {
-        this.instance = plugin;
+    public MainFastRunnable(Main main) {
+        plugin = main;
     }
 
     @Override
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            PlayerStats ps = instance.getPlayerStats(player);
+            PlayerStats ps = plugin.getPlayerStats(player);
             ps.ManaRegen(0.25);
             List<StatModifier> tr = new ArrayList<>();
             for (StatModifier sm : ps.Buffs) {
@@ -51,7 +50,7 @@ public class MainFastRunnable extends BukkitRunnable {
             if (ps.DeBuffs.removeAll(tr)) {
                 ps.UpdateAll();
             }
-            instance.setPlayerStats(ps);
+            plugin.setPlayerStats(ps.getUuid(), ps);
         }
     }
 }

@@ -51,7 +51,7 @@ public class SpellCastChants extends BukkitRunnable {
                 StatModifierType.MULTIPLICATIVE, 1, spell.warmup, "Preparando Hechizo");
         ps.addDeBuff(sm1);
         ps.addDeBuff(sm2);
-        instance.setPlayerStats(ps);
+        instance.setPlayerStats(ps.getUuid(), ps);
         em = new EffectManager(plugin);
         if (spell.particleEffectSphere != null) {
             for (ParticleEffect peffect : spell.particleWarmupEffect) {

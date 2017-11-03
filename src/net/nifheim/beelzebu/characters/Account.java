@@ -1,7 +1,7 @@
 package net.nifheim.beelzebu.characters;
 
+import net.nifheim.beelzebu.utils.AccountData;
 import net.nifheim.yitan.lorestats.Main;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -12,50 +12,59 @@ public class Account {
 
     private final Main plugin = Main.getInstance();
     private final Player player;
-    private final FileConfiguration data;
+    private final AccountData data;
+    private Character character;
 
     public Account(Player p) {
         player = p;
-        data = plugin.getDataManager(player).getData();
+        data = new AccountData(player);
     }
 
-    public AccountStatus getStatus(Player player) {
-        return AccountStatus.valueOf(data.getString("Status"));
+    public AccountData getData() {
+        return data;
+    }
+
+    public AccountStatus getStatus() {
+        return data.getStatus();
     }
 
     public Character loadCharacter(int ID) {
         if (ID == -1) {
             return null;
-        } else if (ID > getCharacterLimit(player) - 1) {
+        } else if (ID > getCharacterLimit() - 1) {
             return null;
         } else {
-            data.set("Status", AccountStatus.LOGGEDIN);
-            data.set("Active", ID);
-            return new Character(player, ID);
+            data.setStatus(AccountStatus.LOGGEDIN, ID);
+            character = new Character(player, ID);
+            character.loadInventory();
+            character.loadStats();
+            return character;
         }
     }
 
-    public int getCharacterLimit(Player player) {
-        return data.getInt("MaxCharacters");
+    public int getCharacterLimit() {
+        return data.getDataFile().getInt("MaxAccounts", 3);
     }
 
-    public int getActiveCharacter() {
-        if (AccountStatus.valueOf(data.getString("Status")).equals(AccountStatus.LOGGEDOUT)) {
-            return data.getInt("Selected");
+    public int getActiveCharacterID() {
+        if (data.getStatus().equals(AccountStatus.LOGGEDOUT)) {
+            return data.getActiveCharacter();
         }
         return getLastActiveCharacter();
     }
 
     public int getLastActiveCharacter() {
-        return data.getInt("LastActive");
+        return data.getLastActiveCharacter();
     }
 
     public void logout() {
         getLoadedCharacter().saveStats();
+        getLoadedCharacter().saveInventory();
         getLoadedCharacter().setLastLocation(player.getLocation());
+        data.setStatus(AccountStatus.LOGGEDOUT, getActiveCharacterID());
     }
 
     public Character getLoadedCharacter() {
-        return loadCharacter(getActiveCharacter());
+        return character;
     }
 }

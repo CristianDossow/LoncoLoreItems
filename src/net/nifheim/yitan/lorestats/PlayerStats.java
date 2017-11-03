@@ -266,11 +266,11 @@ public class PlayerStats {
     }
 
     public void ManaRegen(Double multiplier) {
-        double manaRegen = this.manaRegen * multiplier;
-        if (manaCurrent + manaRegen > manaMax) {
+        double newmanaRegen = this.manaRegen * multiplier;
+        if (manaCurrent + newmanaRegen > manaMax) {
             this.manaCurrent = this.manaMax;
         } else {
-            this.manaCurrent = this.manaCurrent + manaRegen;
+            this.manaCurrent = this.manaCurrent + newmanaRegen;
         }
     }
 
@@ -341,23 +341,14 @@ public class PlayerStats {
         return player;
     }
 
-    //public void setPlayer(Player player) {
-    //    this.player = player;
-    //}
     public UUID getUuid() {
         return uuid;
     }
 
-    //public void setUuid(UUID uuid) {
-    //    this.uuid = uuid;
-    //}
     public String getName() {
         return name;
     }
 
-    //public void setName(String name) {
-    //    this.name = name;
-    //}
     public double getBaseDamage() {
         return baseDamage;
     }

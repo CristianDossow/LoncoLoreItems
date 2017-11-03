@@ -37,10 +37,10 @@ public abstract class Branch {
     }
 
     public void setBranchForPlayer(Player player, BranchType type) {
-        plugin.getDataManager(player).getData().set("Branch", type.toString());
+        plugin.getAccount(player).getData().getDataFile().set("Branch", type.toString());
     }
 
     public BranchType getBranchForPlayer(Player player) {
-        return plugin.getDataManager(player).getBranch(player);
+        return plugin.getAccount(player).getData().getBranch();
     }
 }

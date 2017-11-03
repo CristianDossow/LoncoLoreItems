@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.citizensnpcs.Citizens;
@@ -20,7 +22,6 @@ import net.nifheim.beelzebu.commands.CharacterCommand;
 import net.nifheim.beelzebu.commands.StatsCommand;
 import net.nifheim.beelzebu.commands.TestCommand;
 import net.nifheim.beelzebu.utils.ActionBarAPI;
-import net.nifheim.beelzebu.utils.DataManager;
 import net.nifheim.beelzebu.utils.PlaceholderAPI;
 import net.nifheim.yitan.items.DamageFix;
 import net.nifheim.yitan.items.EventListener;
@@ -69,7 +70,6 @@ import org.bukkit.scoreboard.Scoreboard;
 public class Main extends JavaPlugin {
 
     private static Main plugin;
-    private DataManager dataManager;
     public Main instance;
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
     public static String rep;
@@ -89,7 +89,8 @@ public class Main extends JavaPlugin {
     public HashMap<String, Long> internalCooldowns = new HashMap<>();
     public HashMap<String, Boolean> combatLogVisible = new HashMap<>();
     public HashMap<String, Double> setBonusesModifiers = new HashMap<>();
-    public HashMap<UUID, PlayerStats> playersStats = new HashMap<>();
+    private final HashMap<UUID, PlayerStats> playerStats = new HashMap<>();
+    private final Map<Player, Account> accounts = new ConcurrentHashMap<>();
 
     public DamageFix damagefix;
     public EventListener eventlistener;
@@ -181,7 +182,7 @@ public class Main extends JavaPlugin {
 
         spigotStatCapWarning.updateSpigotValues();
 
-        fastTasks = new MainFastRunnable(this).runTaskTimerAsynchronously(this, 20, 10);
+        fastTasks = new MainFastRunnable(this).runTaskTimer(this, 20, 10);
 
         Bukkit.getOnlinePlayers().stream().filter((player) -> (new File(getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists())).forEachOrdered((player) -> {
             try {
@@ -578,30 +579,31 @@ public class Main extends JavaPlugin {
     }
 
     public PlayerStats getPlayerStats(Player player) {
-        if (playersStats.containsKey(player.getUniqueId())) {
-            return playersStats.get(player.getUniqueId());
-        } else {
-            PlayerStats ps = new PlayerStats(player);
-            ps.UpdateAll();
-            playersStats.put(player.getUniqueId(), ps);
-            return ps;
+        if (!playerStats.containsKey(player.getUniqueId())) {
+            playerStats.put(player.getUniqueId(), new PlayerStats(player));
         }
+        playerStats.get(player.getUniqueId()).UpdateAll();
+        return playerStats.get(player.getUniqueId());
+    }
+    
+    public void setPlayerStats(UUID uuid, PlayerStats ps) {
+        playerStats.put(uuid, ps);
     }
 
-    public void setPlayerStats(PlayerStats ps) {
-        playersStats.put(ps.player.getUniqueId(), ps);
+    public void removePlayerStats(UUID uuid) {
+        if (playerStats.get(uuid) != null) {
+            playerStats.remove(uuid);
+        }
     }
 
     public void log(String msg) {
         console.sendMessage(rep("&8[&cLoncoLoreItems&8] &7" + msg));
     }
 
-    public DataManager getDataManager(Player p) {
-        dataManager = new DataManager(p);
-        return dataManager;
-    }
-
     public Account getAccount(Player p) {
-        return new Account(p);
+        if (!accounts.containsKey(p)) {
+            accounts.put(p, new Account(p));
+        }
+        return accounts.get(p);
     }
 }

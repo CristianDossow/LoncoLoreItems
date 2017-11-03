@@ -1,13 +1,14 @@
 package net.nifheim.beelzebu.characters;
 
 import java.util.UUID;
-import net.nifheim.beelzebu.utils.DataManager;
+import net.nifheim.beelzebu.utils.AccountData;
+import net.nifheim.beelzebu.utils.ItemSerializer;
 import net.nifheim.beelzebu.utils.LocationSerializer;
 import net.nifheim.yitan.lorestats.Main;
+import net.nifheim.yitan.lorestats.PlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -17,24 +18,27 @@ public class Character {
 
     private final Main plugin = Main.getInstance();
     private final Player player;
+    private final PlayerStats playerStats;
     private final UUID uuid;
-    private int id = 0;
-    private final DataManager data;
+    private final int id;
+    private final AccountData data;
 
     public Character(Player p, int ID) {
         player = p;
+        playerStats = new PlayerStats(player);
         uuid = p.getUniqueId();
         id = ID;
-        plugin.getDataManager(player).loadData();
-        data = plugin.getDataManager(player);
+        data = plugin.getAccount(p).getData();
+        data.loadData();
     }
 
     public Character(UUID uid, int ID) {
         player = Bukkit.getPlayer(uid);
+        playerStats = new PlayerStats(player);
         uuid = uid;
         id = ID;
-        plugin.getDataManager(player).loadData();
-        data = plugin.getDataManager(player);
+        data = plugin.getAccount(player).getData();
+        data.loadData();
     }
 
     public Player getPlayer() {
@@ -54,12 +58,16 @@ public class Character {
     }
 
     public Location getLastLocation() {
-        return LocationSerializer.locationFromString(data.getData().getString(getID() + "Lastlocation"));
+        return LocationSerializer.locationFromString(data.getDataFile().getString(getID() + "Lastlocation"));
     }
 
     public void setLastLocation(Location location) {
-        data.getData().set("Lastlocation", LocationSerializer.locationToString(location));
-        plugin.getDataManager(player).saveData();
+        data.getDataFile().set("Lastlocation", LocationSerializer.locationToString(location));
+        data.saveData();
+    }
+
+    public PlayerStats getStats() {
+        return playerStats;
     }
 
     public void loadStats() {
@@ -72,11 +80,14 @@ public class Character {
 
     public void loadInventory() {
         try {
-            player.getInventory().setHelmet((data.getData().getItemStack(id + "Inventory.Armor.Helmet")));
-            player.getInventory().setChestplate((data.getData().getItemStack(id + "Inventory.Armor.Chestplate")));
-            player.getInventory().setLeggings((data.getData().getItemStack(id + "Inventory.Armor.Leggings")));
-            player.getInventory().setBoots((data.getData().getItemStack(id + "Inventory.Armor.Boots")));
-            player.getInventory().setItemInOffHand((data.getData().getItemStack(id + "Inventory.Armor.Secondary")));
+            player.getInventory().setHelmet(ItemSerializer.deserialize(data.getDataFile().getString(id + ".Inventory.Armor.Helmet")));
+            player.getInventory().setChestplate(ItemSerializer.deserialize(data.getDataFile().getString(id + ".Inventory.Armor.Chestplate")));
+            player.getInventory().setLeggings(ItemSerializer.deserialize(data.getDataFile().getString(id + ".Inventory.Armor.Leggings")));
+            player.getInventory().setBoots(ItemSerializer.deserialize(data.getDataFile().getString(id + ".Inventory.Armor.Boots")));
+            player.getInventory().setItemInOffHand(ItemSerializer.deserialize(data.getDataFile().getString(id + ".Inventory.Armor.Secondary")));
+            for (int i = 0; i < 36; i++) {
+                player.getInventory().setItem(i, ItemSerializer.deserialize(data.getDataFile().getString(id + ".Inventory.Content." + i)));
+            }
         }
         catch (NullPointerException ex) {
         }
@@ -84,15 +95,13 @@ public class Character {
 
     public void saveInventory() {
         try {
-            data.getData().set(id + "Inventory.Armor.Helmet", (player.getInventory().getHelmet()));
-            data.getData().set(id + "Inventory.Armor.Chestplate", (player.getInventory().getChestplate()));
-            data.getData().set(id + "Inventory.Armor.Leggings", (player.getInventory().getLeggings()));
-            data.getData().set(id + "Inventory.Armor.Boots", (player.getInventory().getBoots()));
-            data.getData().set(id + "Inventory.Armor.Secondary", (player.getInventory().getItemInOffHand()));
+            data.getDataFile().set(id + ".Inventory.Armor.Helmet", ItemSerializer.serialize(player.getInventory().getHelmet()));
+            data.getDataFile().set(id + ".Inventory.Armor.Chestplate", ItemSerializer.serialize(player.getInventory().getChestplate()));
+            data.getDataFile().set(id + ".Inventory.Armor.Leggings", ItemSerializer.serialize(player.getInventory().getLeggings()));
+            data.getDataFile().set(id + ".Inventory.Armor.Boots", ItemSerializer.serialize(player.getInventory().getBoots()));
+            data.getDataFile().set(id + ".Inventory.Armor.Secondary", ItemSerializer.serialize(player.getInventory().getItemInOffHand()));
             for (int i = 0; i < 36; i++) {
-                for (ItemStack is : player.getInventory().getContents()) {
-                    data.getData().set(id + "Inventory.Content" + i, (is));
-                }
+                data.getDataFile().set(id + ".Inventory.Content." + i, ItemSerializer.serialize(player.getInventory().getContents()[i]));
             }
         }
         catch (NullPointerException ex) {

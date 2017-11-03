@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.nifheim.beelzebu.characters.AccountStatus;
 import net.nifheim.beelzebu.characters.branch.BranchType;
 import net.nifheim.yitan.lorestats.Main;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
  *
  * @author Beelzebu
  */
-public class DataManager {
+public class AccountData {
 
     private final Main plugin;
     private final Player player;
@@ -22,53 +23,70 @@ public class DataManager {
     private final File dataFile;
     private FileConfiguration data;
 
-    public DataManager(Player p) {
+    public AccountData(Player p) {
         plugin = Main.getInstance();
         player = p;
         dataFolder = new File(plugin.getDataFolder(), "userdata/");
         dataFile = new File(plugin.getDataFolder(), "userdata/" + player.getName() + ".yml");
+        data = YamlConfiguration.loadConfiguration(dataFile);
     }
 
-    public FileConfiguration getData() {
+    public FileConfiguration getDataFile() {
         if (!dataFile.exists()) {
             try {
                 dataFolder.mkdirs();
                 dataFile.createNewFile();
                 data = YamlConfiguration.loadConfiguration(dataFile);
-            } catch (IOException ex) {
-                Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (IOException ex) {
+                Logger.getLogger(AccountData.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return data;
     }
 
     public void loadData() {
-        getData();
+        getDataFile();
     }
 
-    public boolean isLogged(Player player) {
-        return getData().getBoolean("Logged");
+    public boolean isLogged() {
+        return getDataFile().getBoolean("Logged");
     }
 
-    public int getActiveCharacter(Player player) {
-        if (isLogged(player)) {
-            return getData().getInt("Selected");
+    public AccountStatus getStatus() {
+        return AccountStatus.valueOf(getDataFile().getString("Status"));
+    }
+
+    public void setStatus(AccountStatus status, int id) {
+        getDataFile().set("Status", AccountStatus.LOGGEDIN.toString());
+        getDataFile().set("Active", id);
+        saveData();
+    }
+
+    public int getActiveCharacter() {
+        if (isLogged()) {
+            return getDataFile().getInt("Selected");
         }
         return 0;
     }
 
-    public BranchType getBranch(Player player) {
-        return BranchType.valueOf(getActiveCharacter(player) + getData().getString("Branch"));
+    public int getLastActiveCharacter() {
+        return getDataFile().getInt("LastActive");
+    }
+
+    public BranchType getBranch() {
+        return BranchType.valueOf(getDataFile().getString("Branch"));
     }
 
     public void saveData() {
         try {
             data.save(dataFile);
-        } catch (IOException ex) {
-            Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
+            Logger.getLogger(AccountData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public File getFile() {
         return dataFile;
     }

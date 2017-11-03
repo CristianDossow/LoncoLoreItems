@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import net.nifheim.yitan.lorestats.Main;
 import net.nifheim.yitan.lorestats.PlayerStats;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -20,53 +21,55 @@ public class PlayerQuitListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent e) {
         // Async tasks
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            plugin.playersStats.remove(event.getPlayer().getUniqueId());
+            plugin.getAccount(e.getPlayer()).logout();
+            plugin.removePlayerStats(e.getPlayer().getUniqueId());
         });
 
-        if ((event.getPlayer() instanceof Player)) {
-            Player player = event.getPlayer();
-            Main.getInstance().damagefix.attackCooldownsEnd.remove(player.getUniqueId());
-            Main.getInstance().damagefix.attackCooldowns.remove(player.getUniqueId());
-            if (!new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+        if ((e.getPlayer() instanceof Player)) {
+            Player player = e.getPlayer();
+            plugin.damagefix.attackCooldownsEnd.remove(player.getUniqueId());
+            plugin.damagefix.attackCooldowns.remove(player.getUniqueId());
+            if (!new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 if (!player.isDead()) {
-                    player.setMaxHealth(20.0D);
+                    player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                     if (player.getHealth() > 20.0D) {
                         player.setHealth(20.0D);
                     }
                 } else {
-                    player.setMaxHealth(20.0D);
+                    player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                 }
-            } else if (new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
+            } else if (new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml").exists()) {
                 try {
-                    PlayerStats ps = Main.getInstance().getPlayerStats(player);
-                    Main.getInstance().PlayerDataConfig = new YamlConfiguration();
-                    Main.getInstance().PlayerDataConfig.load(new File(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
+                    PlayerStats ps = plugin.getPlayerStats(player);
+                    plugin.PlayerDataConfig = new YamlConfiguration();
+                    plugin.PlayerDataConfig.load(new File(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml"));
 
-                    Main.getInstance().PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
-                    Main.getInstance().PlayerDataConfig.set("extra.maxHealth", Math.round(player.getMaxHealth()));
-                    Main.getInstance().PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
-                    Main.getInstance().PlayerDataConfig.set("extra.xp", player.getExp());
-                    Main.getInstance().PlayerDataConfig.set("extra.level", player.getLevel());
-                    Main.getInstance().PlayerDataConfig.set("extra.mana", ps.manaCurrent);
-                    Main.getInstance().PlayerDataConfig.set("extra.combatLogVisible", Main.getInstance().combatLogVisible.get(player.getName()));
-                    Main.getInstance().PlayerDataConfig.save(Main.getInstance().getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
+                    plugin.PlayerDataConfig.set("extra.logoutHealth", Math.round(player.getHealth()));
+                    plugin.PlayerDataConfig.set("extra.maxHealth", Math.round(player.getMaxHealth()));
+                    plugin.PlayerDataConfig.set("extra.hunger", player.getFoodLevel());
+                    plugin.PlayerDataConfig.set("extra.xp", player.getExp());
+                    plugin.PlayerDataConfig.set("extra.level", player.getLevel());
+                    plugin.PlayerDataConfig.set("extra.mana", ps.manaCurrent);
+                    plugin.PlayerDataConfig.set("extra.combatLogVisible", plugin.combatLogVisible.get(player.getName()));
+                    plugin.PlayerDataConfig.save(plugin.getDataFolder() + File.separator + "PlayerData" + File.separator + player.getName() + ".yml");
 
                     if (!player.isDead()) {
-                        player.setMaxHealth(20.0D);
+                        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                         if (player.getHealth() > 20.0D) {
                             player.setHealth(20.0D);
                         }
                     } else {
-                        player.setMaxHealth(20.0D);
+                        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                     }
-                } catch (IOException | InvalidConfigurationException e) {
+                }
+                catch (IOException | InvalidConfigurationException ex) {
                     System.out.println("*********** Failed to save player data for " + player.getName() + " when logging out! ***********");
                 }
             }
-            Main.getInstance().playersStats.remove(player.getUniqueId());
+            plugin.removePlayerStats(e.getPlayer().getUniqueId());
         }
     }
 }

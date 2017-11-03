@@ -60,7 +60,7 @@ public class ItemSerializer {
         } else {
             item += "false;null;null;";
         }
-        return item;
+        return item.replaceAll(":", "\\:");
     }
 
     /**
@@ -82,14 +82,14 @@ public class ItemSerializer {
                 is.addUnsafeEnchantment(Enchantment.getByName(en[0]), Integer.valueOf(en[1]));
             }
         }
-        if (meta[4].equals(true)) {
+        if (!meta[4].equals("true")) {
             isMeta.setUnbreakable(true);
         }
-        if (meta[5] != null) {
-            isMeta.setDisplayName(meta[5]);
+        if (!meta[5].equals("null")) {
+            isMeta.setDisplayName(meta[5].replaceAll("\\:", ":"));
         }
-        if (meta[6] != null) {
-            String[] lore = meta[6].split(",");
+        if (!meta[6].equals("null")) {
+            String[] lore = meta[6].replaceAll("\\:", ":").split(",");
             isMeta.getLore().addAll(Arrays.asList(lore));
         }
         is.setItemMeta(isMeta);
