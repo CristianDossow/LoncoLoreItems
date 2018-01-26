@@ -1,12 +1,16 @@
-main: net.nifheim.yitan.itemlorestats.Main
+main: net.nifheim.yitan.lorestats.Main
 name: LoncoLoreItems
 version: ${project.version}
 author: YitanTribal, Beelzebu
 description: The RPG Core of Nifheim Minecraft
-softdepend: [ActionBarAPI, WorldGuard, Vault, Citizens, ArmorWeight, MVdWPlaceholderAPI]
+softdepend: [WorldGuard, Vault, Citizens, MythicMobs]
 commands:
   ils:
     description: The core ILS command.
+  test:
+    description: Command for tests
+  character:
+    description: Characters base command
 permissions:
   ils.admin: 
     description: Player/group is granted admin privilege.
@@ -17,3 +21,8 @@ permissions:
   ils.commandlist:
     description: Allows players to use the /ils command to view the available ils commands.
     default: op
+    
+ # Honor:
+     # Calc = while diff < 5 = 5×((2^diff)×0,5)
+     # 5 lvls = -5 hp
+     # 

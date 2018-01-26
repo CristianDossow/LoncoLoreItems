@@ -1,0 +1,22 @@
+Prefix: "&8[&cLoncoLoreItems&8]&7"
+Lores:
+    Enchants:
+        Header: "&7Encantamientos:"
+        Empty: "&d ➣ ???"
+Items:
+    Enchant Scroll:
+        Name: "&6Pergamino Antiguo Encantado"
+    Repairer Stone:
+        Name: "&6Piedra de reparación"
+        Lore:
+        - '&7Piedra mágica que puede reparar los'
+        - '&7daños causados por el desgaste en'
+        - '&7cualquier objeto.'
+    Spell Book:
+        Name: "&6Libro de Echizo"
+Especial Atributes:
+    Destroy: "Destrucción"
+    Atack Speed: "vataque"
+    Void Bound: "Retorno del End"
+    Unknow Item: "Artículo no identificado"
+    Repairer: "Reparación"

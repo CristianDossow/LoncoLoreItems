@@ -1,0 +1,31 @@
+Logged: true
+Selected: 1
+LastActive: 3
+MaxCharacters: 3
+Status: LOGGEDIN
+
+1:
+  Level: 10
+  XP: 10
+  Branch: Fighter
+  Class: Soldier
+  Stats:
+    Strengh: 10
+    Speed: 1.1
+    HP: 10
+    MaxHP: 10
+    HPRegen: 1.5
+    Mana: 5
+    MaxMana: 5
+    ManaRegen: 1.0
+    Hunger: 0
+  Inventory:
+    1:
+2:
+  Level: 2
+  Branch: Mage
+  Class: BaseMage
+3:
+  Level: 41
+  Branch: Demon
+  Class: Demon
